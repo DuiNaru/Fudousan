@@ -18,7 +18,8 @@ public class MemberController {
     
     @RequestMapping(value="mypageCustomer", method=RequestMethod.GET)
     public String joinForm(Model model){
-        logger.info("mypageCustomer start");
+        logger.info("my5858585858585858pageCustomer start");
+        
         logger.info("mypageCustomer end");
         return "user/mypageCustomer";
     }
