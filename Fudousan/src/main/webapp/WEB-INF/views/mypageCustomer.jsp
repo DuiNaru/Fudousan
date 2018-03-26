@@ -12,6 +12,7 @@
 <body>
 	<table>
 		<tr>
+			<h1>test</h1>
 			<th><input type="text" name="product_search"></th><th><input type="button" value="검색"></th>
 		</tr>
 	</table>
