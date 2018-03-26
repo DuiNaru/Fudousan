@@ -8,7 +8,7 @@
 <body>
 <div class="container">
 	<div>
-		123
+		123ddddd
 	</div>
 </div> 
 	<h1><a href="user/mypageCustomer" style="color: blue;">손님페이지</a></h1>
