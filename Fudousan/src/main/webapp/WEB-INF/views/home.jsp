@@ -4,13 +4,12 @@
 <html>
 <head>
 	<title>Home</title>
-	<script src="jqeury-3.3.1.js"></script>
 </head>
 <body>
 <div class="container">
 	<div>
 		
 	</div>
-</div>
+</div> //container end
 </body>
 </html>
