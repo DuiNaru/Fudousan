@@ -11,10 +11,13 @@
 </head>
 <body>
 	<table>
+		<tr></tr>
 		<tr>
-			<h1>test</h1>
+			<td><h3>3D 작성 매물 확인</h3></td>
 			<th><input type="text" name="product_search"></th><th><input type="button" value="검색"></th>
+			
 		</tr>
+		<tr></tr>
 	</table>
 </body>
 </html>
