@@ -14,11 +14,9 @@ public class MemberController {
 
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
     
-    @Autowired
-    
     @RequestMapping(value="mypageCustomer", method=RequestMethod.GET)
     public String joinForm(Model model){
-        logger.info("my5858585858585858pageCustomer start");
+        logger.info("mypageCustomer start");
         
         logger.info("mypageCustomer end");
         return "user/mypageCustomer";
