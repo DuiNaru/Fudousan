@@ -14,10 +14,11 @@
 		<tr></tr>
 		<tr>
 			<td><h3>3D 작성 매물 확인</h3></td>
-			<th><input type="text" name="product_search"></th><th><input type="button" value="검색"></th>
-			
+			<th><input type="text" name="product_search"></th><th><input type="button" value="검색"></th><br>
 		</tr>
-		<tr></tr>
+		<tr>
+			<td><h3>매물</h3><input type="button" value="꾸미기" id="projectUpdate"></td>
+		</tr>
 	</table>
 </body>
 </html>
