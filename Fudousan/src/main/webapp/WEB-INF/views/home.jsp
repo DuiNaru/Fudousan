@@ -8,8 +8,7 @@
 </head>
 <body>
 <h1>
-	안해민!!!S
-	안해민
+	안해민 머지후 머지후
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
