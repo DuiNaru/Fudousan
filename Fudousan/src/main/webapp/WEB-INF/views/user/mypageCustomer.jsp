@@ -18,7 +18,9 @@
 			<th><input type="text" name="pro_type_search"></th><th><input type="button" onclick="product_search()" value="검색"></th><br>
 		</tr>
 		<tr>
-			<td><h3>매물</h3><input type="button" value="꾸미기" onclick="ggumigi()"></td>
+			<c:forEach var="maemul" items="${maemul_list}">
+				<td>${maemul.name}<input type="button" value="꾸미기" onclick="ggumigi(${maemul.num})"></td>
+			</c:forEach>
 		</tr>
 	</table>
 </body>
