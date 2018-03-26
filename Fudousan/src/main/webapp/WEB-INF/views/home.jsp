@@ -8,9 +8,9 @@
 <body>
 <div class="container">
 	<div>
-		111222233333
+		
 	</div>
-</div> //container end
+</div> 
 	<h1><a href="user/mypageCustomer" style="color: blue;">손님페이지</a></h1>
 </body>
 </html>
