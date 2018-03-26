@@ -8,15 +8,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.real.fudousan.memeber.service.MemberService;
+
 @Controller
 @RequestMapping(value="user")
 public class MemberController {
 
+	private MemberService service;
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
     
     @RequestMapping(value="mypageCustomer", method=RequestMethod.GET)
     public String joinForm(Model model){
         logger.info("mypageCustomer start");
+        
+        /*service.login(id, pw);*/
         
         logger.info("mypageCustomer end");
         return "user/mypageCustomer";
