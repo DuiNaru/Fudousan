@@ -6,9 +6,9 @@
 	<title>Home</title>
 </head>
 <body>
-<div class="container">cbcbvcvb
+<div class="container">
 	<div>
-		ㅇㄹㅇㄹㅇㄹㅇㄹㅇㄹcxvajvajsvkljaskljkl
+		123
 	</div>
 </div> 
 	<h1><a href="user/mypageCustomer" style="color: blue;">손님페이지</a></h1>
