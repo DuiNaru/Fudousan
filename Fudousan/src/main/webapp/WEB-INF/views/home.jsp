@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page session="false" %>
 <html>
 <head>
@@ -7,9 +8,8 @@
 </head>
 <body>
 <h1>
-	Hello world!  
-	Hello world!  
-	Hello world!  
+	안해민!!!S
+	안해민
 </h1>
 
 <P>  The time on the server is ${serverTime}. </P>
