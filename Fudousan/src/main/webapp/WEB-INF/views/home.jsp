@@ -7,13 +7,23 @@
 </head>
 <body>
 <div class="container">
-	<div>
-<<<<<<< HEAD
-		123ddddd
-=======
-		
->>>>>>> be25294fd77af2a2d42b379d3095d740fdafac3d
+	<div class="header">
 	</div>
+	
+	<!-- coding start here 
+	
+	ex) <div id="구역 이름(예: 매물 관리 페이지 )">
+		
+		여기부터 코딩 시작하시면 됩니다. 
+	
+		</div>	
+	-->
+	
+	
+	
+	<div class="footer">
+	</div>
+	
 </div> 
 	<h1><a href="user/mypageCustomer" style="color: blue;">손님페이지</a></h1>
 </body>
