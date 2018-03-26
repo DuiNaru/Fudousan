@@ -7,10 +7,10 @@
 	<script src="jqeury-3.3.1.js"></script>
 </head>
 <body>
-<h1>
-	안해민 머지후 머지후
-</h1>
-
-<P>  The time on the server is ${serverTime}. </P>
+<div class="container">
+	<div>
+		
+	</div>
+</div>
 </body>
 </html>
