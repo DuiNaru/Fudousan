@@ -8,7 +8,11 @@
 <body>
 <div class="container">
 	<div>
+<<<<<<< HEAD
 		123ddddd
+=======
+		
+>>>>>>> be25294fd77af2a2d42b379d3095d740fdafac3d
 	</div>
 </div> 
 	<h1><a href="user/mypageCustomer" style="color: blue;">손님페이지</a></h1>
