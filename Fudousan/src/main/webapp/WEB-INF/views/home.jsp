@@ -2,9 +2,23 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page session="false" %>
 <html>
+
+
 <head>
 	<title>Home</title>
+<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css">
+<link type="text/javascript" href="resources/js/bootstrap.min.js">
+<link type="text/javascript" href="resources/js/jquery-3.3.1.js">	
+	
+<style type="text/css">
+
+
+
+</style>
 </head>
+
+
+
 <body>
 <div class="container">
 	<div class="header">
