@@ -45,28 +45,11 @@
 
 	<h1><a href="user/mypageCustomer" style="color: blue;">손님페이지</a></h1>
 	
-<script src="resources/js/jquery-3.3.1.js"></script>
-<script src="resources/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-	function formCheck(){
-		var memberID = $('#memberID');
-		var password = $('#password');
-		
-		if (memberID.val() == ''){
-			alert('Input your name');
-			memberID.focus();
-			
-			return false;
-		}
-		else if (password.val() == ''){
-			alert('Input your password');
-			password.focus();
-			
-			return false;
-		}
-		
-		return true;
-	}
-</script>
+<<<<<<< HEAD
+
+=======
+</div> 
+	<h1><a href="mypagecustomer" style="color: blue;">손님페이지</a></h1>
+>>>>>>> 14db216b2afe09badffeebda82bb0170370eddb3
 </body>
 </html>
