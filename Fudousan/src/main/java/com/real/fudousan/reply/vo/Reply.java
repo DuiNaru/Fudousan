@@ -3,6 +3,9 @@ package com.real.fudousan.reply.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.real.fudousan.estate.vo.Estate;
+import com.real.fudousan.member.vo.Member;
+
 /**
  * 댓글 모델 클래스.
  * 
@@ -17,8 +20,8 @@ public class Reply implements Serializable {
 	/** REPLY_ID. */
 	private Integer replyId;
 
-	/** 매물. */
-	private Estate estate;
+	/** 매물 아이디. */
+	private int estateId;
 
 	/** 회원. */
 	private Member member;
@@ -28,142 +31,4 @@ public class Reply implements Serializable {
 
 	/** DATE. */
 	private Date date;
-
-	/**
-	 * 생성자.
-	 */
-	public Reply() {
-	}
-
-	/**
-	 * REPLY_ID을 설정합니다..
-	 * 
-	 * @param replyId
-	 *            REPLY_ID
-	 */
-	public void setReplyId(Integer replyId) {
-		this.replyId = replyId;
-	}
-
-	/**
-	 * REPLY_ID을 가져옵니다..
-	 * 
-	 * @return REPLY_ID
-	 */
-	public Integer getReplyId() {
-		return this.replyId;
-	}
-
-	/**
-	 * 매물을 설정합니다..
-	 * 
-	 * @param estate
-	 *            매물
-	 */
-	public void setEstate(Estate estate) {
-		this.estate = estate;
-	}
-
-	/**
-	 * 매물을 가져옵니다..
-	 * 
-	 * @return 매물
-	 */
-	public Estate getEstate() {
-		return this.estate;
-	}
-
-	/**
-	 * 회원을 설정합니다..
-	 * 
-	 * @param member
-	 *            회원
-	 */
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
-	/**
-	 * 회원을 가져옵니다..
-	 * 
-	 * @return 회원
-	 */
-	public Member getMember() {
-		return this.member;
-	}
-
-	/**
-	 * TEXT을 설정합니다..
-	 * 
-	 * @param text
-	 *            TEXT
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	/**
-	 * TEXT을 가져옵니다..
-	 * 
-	 * @return TEXT
-	 */
-	public String getText() {
-		return this.text;
-	}
-
-	/**
-	 * DATE을 설정합니다..
-	 * 
-	 * @param date
-	 *            DATE
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	/**
-	 * DATE을 가져옵니다..
-	 * 
-	 * @return DATE
-	 */
-	public Date getDate() {
-		return this.date;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((replyId == null) ? 0 : replyId.hashCode());
-		return result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Reply other = (Reply) obj;
-		if (replyId == null) {
-			if (other.replyId != null) {
-				return false;
-			}
-		} else if (!replyId.equals(other.replyId)) {
-			return false;
-		}
-		return true;
-	}
-
 }
