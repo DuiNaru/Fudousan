@@ -1,5 +1,7 @@
 package com.real.fudousan.member.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,7 @@ public class MemberController {
     }
     
     @RequestMapping(value="login", method=RequestMethod.POST)
-    public String login(String id, String password){
+    public String login(String id, String password, HttpSession session){
     	logger.info("로그인 시작");
     	
     	boolean loginCheck = service.login(id, password);
@@ -36,8 +38,20 @@ public class MemberController {
     		return "";
     	}
     	else {
+    		session.setAttribute("loginID", id);
+    		
     		logger.info("로그인 성공");
     		return "";
     	}
+    }
+    
+    @RequestMapping(value="logout", method=RequestMethod.GET)
+    public String logout(HttpSession session){
+    	logger.info("로그아웃 시작");
+    	
+    	session.removeAttribute("loginID");
+    	
+    	logger.info("로그아웃 성공");
+    	return "";
     }
 }
