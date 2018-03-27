@@ -1,4 +1,4 @@
-package com.real.fudousan.memeber.controller;
+package com.real.fudousan.member.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.real.fudousan.memeber.service.MemberService;
+import com.real.fudousan.member.service.MemberService;
 
 @Controller
 @RequestMapping(value="user")
