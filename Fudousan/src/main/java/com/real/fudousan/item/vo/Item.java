@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.real.fudousan.roomitem.vo.Roomitem;
+import com.real.fudousan.roomitem.vo.RoomItem;
 
 /**
  * 3D 방 내부 아이템 들 모델 클래스.
