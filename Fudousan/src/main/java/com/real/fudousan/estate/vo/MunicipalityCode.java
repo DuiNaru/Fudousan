@@ -19,5 +19,5 @@ public class Municipalitycode implements Serializable {
 	private Integer municipalitycodeId;
 
 	/** NAME. */
-	private String name;
+	private String codeName;
 }

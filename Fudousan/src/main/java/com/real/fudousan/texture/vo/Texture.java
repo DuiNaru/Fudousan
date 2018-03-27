@@ -39,7 +39,7 @@ public class Texture implements Serializable {
 	private String file;
 
 	/** DATE. */
-	private Date date;
+	private Date creDate;
 
 	/** DEL_DATE. */
 	private Date delDate;

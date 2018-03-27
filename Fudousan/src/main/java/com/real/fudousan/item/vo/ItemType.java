@@ -19,5 +19,5 @@ public class ItemType implements Serializable {
 	private Integer itemTypeId;
 
 	/** NAME. */
-	private String name;
+	private String itmeTypeName;
 }

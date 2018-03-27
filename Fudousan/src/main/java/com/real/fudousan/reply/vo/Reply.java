@@ -30,5 +30,5 @@ public class Reply implements Serializable {
 	private String text;
 
 	/** DATE. */
-	private Date date;
+	private Date creDate;
 }

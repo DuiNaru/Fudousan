@@ -27,7 +27,7 @@ public class Advice implements Serializable {
 	private int roomId;
 
 	/** DATE. */
-	private Date date;
+	private Date creDate;
 
 	/** ID. */
 	private String id;

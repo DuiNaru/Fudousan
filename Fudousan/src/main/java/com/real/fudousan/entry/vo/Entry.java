@@ -24,7 +24,7 @@ public class Entry implements Serializable {
 	private Estate estate;
 
 	/** DATE. */
-	private Date date;
+	private Date creDate;
 
 	/** PRICE. */
 	private Integer price;

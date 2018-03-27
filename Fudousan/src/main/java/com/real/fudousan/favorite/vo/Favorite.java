@@ -24,5 +24,5 @@ public class Favorite implements Serializable {
 	private Estate estate;
 
 	/** DATE. */
-	private Date date;
+	private Date creDate;
 }

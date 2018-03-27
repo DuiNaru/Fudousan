@@ -29,7 +29,7 @@ public class MemberFile implements Serializable {
 	private String serverName;
 
 	/** DATE. */
-	private Date date;
+	private Date creDate;
 
 	/** TITLE. */
 	private String title;

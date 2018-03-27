@@ -33,7 +33,7 @@ public class Room implements Serializable {
 	private String map;
 
 	/** DATE. */
-	private Date date;
+	private Date creDate;
 
 	/** DEL_DATE. */
 	private Date delDate;

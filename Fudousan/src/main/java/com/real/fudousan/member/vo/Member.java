@@ -43,7 +43,7 @@ public class Member implements Serializable {
 	private String text;
 
 	/** 가입 날. */
-	private Date date;
+	private Date creDate;
 
 	/** 탈퇴 날. */
 	private Date delDate;

@@ -24,13 +24,13 @@ public class Item implements Serializable {
 	private ItemType itemType;
 
 	/** NAME. */
-	private String name;
+	private String itemName;
 
 	/** TEXT. */
 	private String text;
 
 	/** FILE. */
-	private String file;
+	private String textureFile;
 
 	/** 아이템 참고 사이트 목록. */
 	private Set<RefSite> refSiteSet;

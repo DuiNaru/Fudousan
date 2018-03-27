@@ -54,7 +54,7 @@ public class Agency implements Serializable {
 	private Integer confirm;
 
 	/** DATE. */
-	private Date date;
+	private Date creDate;
 
 	/** DEL_DATE. */
 	private Date delDate;

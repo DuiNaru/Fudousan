@@ -21,7 +21,7 @@ public class RefSite implements Serializable {
 	private String url;
 
 	/** DATE. */
-	private Date date;
+	private Date creDate;
 
 	/** TEXT. */
 	private String text;

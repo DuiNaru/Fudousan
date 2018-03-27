@@ -16,8 +16,8 @@ public class RoomWall implements Serializable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** 3D 방. */
-	private Room room;
+	/** 3D 방 ID. */
+	private int roomId;
 
 	/** 방 벽 연결 지점. */
 	private RoomWallConnector roomWallConnector1;
