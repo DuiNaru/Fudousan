@@ -3,6 +3,9 @@ package com.real.fudousan.entry.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.real.fudousan.agency.vo.Agency;
+import com.real.fudousan.estate.vo.Estate;
+
 /**
  * 매물을 올린 부동산 업체 모델 클래스.
  * 
@@ -25,131 +28,4 @@ public class Entry implements Serializable {
 
 	/** PRICE. */
 	private Integer price;
-
-	/**
-	 * 생성자.
-	 */
-	public Entry() {
-	}
-
-	/**
-	 * 부동산중개사무소을 설정합니다..
-	 * 
-	 * @param agency
-	 *            부동산중개사무소
-	 */
-	public void setAgency(Agency agency) {
-		this.agency = agency;
-	}
-
-	/**
-	 * 부동산중개사무소을 가져옵니다..
-	 * 
-	 * @return 부동산중개사무소
-	 */
-	public Agency getAgency() {
-		return this.agency;
-	}
-
-	/**
-	 * 매물을 설정합니다..
-	 * 
-	 * @param estate
-	 *            매물
-	 */
-	public void setEstate(Estate estate) {
-		this.estate = estate;
-	}
-
-	/**
-	 * 매물을 가져옵니다..
-	 * 
-	 * @return 매물
-	 */
-	public Estate getEstate() {
-		return this.estate;
-	}
-
-	/**
-	 * DATE을 설정합니다..
-	 * 
-	 * @param date
-	 *            DATE
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	/**
-	 * DATE을 가져옵니다..
-	 * 
-	 * @return DATE
-	 */
-	public Date getDate() {
-		return this.date;
-	}
-
-	/**
-	 * PRICE을 설정합니다..
-	 * 
-	 * @param price
-	 *            PRICE
-	 */
-	public void setPrice(Integer price) {
-		this.price = price;
-	}
-
-	/**
-	 * PRICE을 가져옵니다..
-	 * 
-	 * @return PRICE
-	 */
-	public Integer getPrice() {
-		return this.price;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((agency == null) ? 0 : agency.hashCode());
-		result = prime * result + ((estate == null) ? 0 : estate.hashCode());
-		return result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Entry other = (Entry) obj;
-		if (agency == null) {
-			if (other.agency != null) {
-				return false;
-			}
-		} else if (!agency.equals(other.agency)) {
-			return false;
-		}
-		if (estate == null) {
-			if (other.estate != null) {
-				return false;
-			}
-		} else if (!estate.equals(other.estate)) {
-			return false;
-		}
-		return true;
-	}
-
 }

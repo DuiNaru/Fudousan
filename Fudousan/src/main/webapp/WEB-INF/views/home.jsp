@@ -37,7 +37,7 @@
 		
 	</div>
 
-	<h1><a href="user/mypageCustomer" style="color: blue;">손님페이지</a></h1>
+	<h1><a href="user/mypagecustomer" style="color: blue;">손님페이지</a></h1>
 
 <script src="resources/js/jquery-3.3.1.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>

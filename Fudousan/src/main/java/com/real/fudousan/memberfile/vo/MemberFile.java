@@ -3,6 +3,8 @@ package com.real.fudousan.memberfile.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.real.fudousan.member.vo.Member;
+
 /**
  * 디자이너 프로필 파일 모델 클래스.
  * 
@@ -17,8 +19,8 @@ public class MemberFile implements Serializable {
 	/** MEMBER_FILE_ID. */
 	private Integer memberFileId;
 
-	/** 회원. */
-	private Member member;
+	/** 회원 아이디. */
+	private int memberId;
 
 	/** 원래 파일 이름. */
 	private String originName;
@@ -34,180 +36,4 @@ public class MemberFile implements Serializable {
 
 	/** TEXT. */
 	private String text;
-
-	/**
-	 * 생성자.
-	 */
-	public MemberFile() {
-	}
-
-	/**
-	 * MEMBER_FILE_ID을 설정합니다..
-	 * 
-	 * @param memberFileId
-	 *            MEMBER_FILE_ID
-	 */
-	public void setMemberFileId(Integer memberFileId) {
-		this.memberFileId = memberFileId;
-	}
-
-	/**
-	 * MEMBER_FILE_ID을 가져옵니다..
-	 * 
-	 * @return MEMBER_FILE_ID
-	 */
-	public Integer getMemberFileId() {
-		return this.memberFileId;
-	}
-
-	/**
-	 * 회원을 설정합니다..
-	 * 
-	 * @param member
-	 *            회원
-	 */
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
-	/**
-	 * 회원을 가져옵니다..
-	 * 
-	 * @return 회원
-	 */
-	public Member getMember() {
-		return this.member;
-	}
-
-	/**
-	 * 원래 파일 이름을 설정합니다..
-	 * 
-	 * @param originName
-	 *            원래 파일 이름
-	 */
-	public void setOriginName(String originName) {
-		this.originName = originName;
-	}
-
-	/**
-	 * 원래 파일 이름을 가져옵니다..
-	 * 
-	 * @return 원래 파일 이름
-	 */
-	public String getOriginName() {
-		return this.originName;
-	}
-
-	/**
-	 * 서버 파일 이름을 설정합니다..
-	 * 
-	 * @param serverName
-	 *            서버 파일 이름
-	 */
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
-	}
-
-	/**
-	 * 서버 파일 이름을 가져옵니다..
-	 * 
-	 * @return 서버 파일 이름
-	 */
-	public String getServerName() {
-		return this.serverName;
-	}
-
-	/**
-	 * DATE을 설정합니다..
-	 * 
-	 * @param date
-	 *            DATE
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	/**
-	 * DATE을 가져옵니다..
-	 * 
-	 * @return DATE
-	 */
-	public Date getDate() {
-		return this.date;
-	}
-
-	/**
-	 * TITLE을 설정합니다..
-	 * 
-	 * @param title
-	 *            TITLE
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	/**
-	 * TITLE을 가져옵니다..
-	 * 
-	 * @return TITLE
-	 */
-	public String getTitle() {
-		return this.title;
-	}
-
-	/**
-	 * TEXT을 설정합니다..
-	 * 
-	 * @param text
-	 *            TEXT
-	 */
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	/**
-	 * TEXT을 가져옵니다..
-	 * 
-	 * @return TEXT
-	 */
-	public String getText() {
-		return this.text;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((memberFileId == null) ? 0 : memberFileId.hashCode());
-		return result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		MemberFile other = (MemberFile) obj;
-		if (memberFileId == null) {
-			if (other.memberFileId != null) {
-				return false;
-			}
-		} else if (!memberFileId.equals(other.memberFileId)) {
-			return false;
-		}
-		return true;
-	}
-
 }

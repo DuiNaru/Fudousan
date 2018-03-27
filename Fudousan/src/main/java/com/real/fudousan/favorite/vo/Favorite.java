@@ -3,6 +3,9 @@ package com.real.fudousan.favorite.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.real.fudousan.estate.vo.Estate;
+import com.real.fudousan.member.vo.Member;
+
 /**
  * 찜하기 모델 클래스.
  * 
@@ -14,120 +17,12 @@ public class Favorite implements Serializable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** 회원. */
-	private Member member;
+	/** 회원 ID. */
+	private int memberId;
 
 	/** 매물. */
 	private Estate estate;
 
 	/** DATE. */
 	private Date date;
-
-	/**
-	 * 생성자.
-	 */
-	public Favorite() {
-	}
-
-	/**
-	 * 회원을 설정합니다..
-	 * 
-	 * @param member
-	 *            회원
-	 */
-	public void setMember(Member member) {
-		this.member = member;
-	}
-
-	/**
-	 * 회원을 가져옵니다..
-	 * 
-	 * @return 회원
-	 */
-	public Member getMember() {
-		return this.member;
-	}
-
-	/**
-	 * 매물을 설정합니다..
-	 * 
-	 * @param estate
-	 *            매물
-	 */
-	public void setEstate(Estate estate) {
-		this.estate = estate;
-	}
-
-	/**
-	 * 매물을 가져옵니다..
-	 * 
-	 * @return 매물
-	 */
-	public Estate getEstate() {
-		return this.estate;
-	}
-
-	/**
-	 * DATE을 설정합니다..
-	 * 
-	 * @param date
-	 *            DATE
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	/**
-	 * DATE을 가져옵니다..
-	 * 
-	 * @return DATE
-	 */
-	public Date getDate() {
-		return this.date;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((member == null) ? 0 : member.hashCode());
-		result = prime * result + ((estate == null) ? 0 : estate.hashCode());
-		return result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Favorite other = (Favorite) obj;
-		if (member == null) {
-			if (other.member != null) {
-				return false;
-			}
-		} else if (!member.equals(other.member)) {
-			return false;
-		}
-		if (estate == null) {
-			if (other.estate != null) {
-				return false;
-			}
-		} else if (!estate.equals(other.estate)) {
-			return false;
-		}
-		return true;
-	}
-
 }

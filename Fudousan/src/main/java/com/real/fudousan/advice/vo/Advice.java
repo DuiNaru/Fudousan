@@ -17,14 +17,14 @@ public class Advice implements Serializable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** 회원. */
-	private Member requestMember;
+	/** 신청한 회원. */
+	private int requestMemberId;
 
-	/** 회원. */
-	private Member requestedMemeberIdmember;
+	/** 신청받은 회원. */
+	private int requestedMemeberId;
 
 	/** 3D 방. */
-	private Room room;
+	private int roomId;
 
 	/** DATE. */
 	private Date date;
@@ -34,177 +34,4 @@ public class Advice implements Serializable {
 
 	/** REQUEST_DATE. */
 	private Date requestDate;
-
-	/**
-	 * 생성자.
-	 */
-	public Advice() {
-	}
-
-	/**
-	 * 회원을 설정합니다..
-	 * 
-	 * @param requestMember
-	 *            회원
-	 */
-	public void setRequestMember(Member requestMember) {
-		this.requestMember = requestMember;
-	}
-
-	/**
-	 * 회원을 가져옵니다..
-	 * 
-	 * @return 회원
-	 */
-	public Member getRequestMember() {
-		return this.requestMember;
-	}
-
-	/**
-	 * 회원을 설정합니다..
-	 * 
-	 * @param requestedMemeberIdmember
-	 *            회원
-	 */
-	public void setRequestedMemeberIdmember(Member requestedMemeberIdmember) {
-		this.requestedMemeberIdmember = requestedMemeberIdmember;
-	}
-
-	/**
-	 * 회원을 가져옵니다..
-	 * 
-	 * @return 회원
-	 */
-	public Member getRequestedMemeberIdmember() {
-		return this.requestedMemeberIdmember;
-	}
-
-	/**
-	 * 3D 방을 설정합니다..
-	 * 
-	 * @param room
-	 *            3D 방
-	 */
-	public void setRoom(Room room) {
-		this.room = room;
-	}
-
-	/**
-	 * 3D 방을 가져옵니다..
-	 * 
-	 * @return 3D 방
-	 */
-	public Room getRoom() {
-		return this.room;
-	}
-
-	/**
-	 * DATE을 설정합니다..
-	 * 
-	 * @param date
-	 *            DATE
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-	/**
-	 * DATE을 가져옵니다..
-	 * 
-	 * @return DATE
-	 */
-	public Date getDate() {
-		return this.date;
-	}
-
-	/**
-	 * ID을 설정합니다..
-	 * 
-	 * @param id
-	 *            ID
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	/**
-	 * ID을 가져옵니다..
-	 * 
-	 * @return ID
-	 */
-	public String getId() {
-		return this.id;
-	}
-
-	/**
-	 * REQUEST_DATE을 설정합니다..
-	 * 
-	 * @param requestDate
-	 *            REQUEST_DATE
-	 */
-	public void setRequestDate(Date requestDate) {
-		this.requestDate = requestDate;
-	}
-
-	/**
-	 * REQUEST_DATE을 가져옵니다..
-	 * 
-	 * @return REQUEST_DATE
-	 */
-	public Date getRequestDate() {
-		return this.requestDate;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((requestMember == null) ? 0 : requestMember.hashCode());
-		result = prime * result + ((requestedMemeberIdmember == null) ? 0 : requestedMemeberIdmember.hashCode());
-		result = prime * result + ((room == null) ? 0 : room.hashCode());
-		return result;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		Advice other = (Advice) obj;
-		if (requestMember == null) {
-			if (other.requestMember != null) {
-				return false;
-			}
-		} else if (!requestMember.equals(other.requestMember)) {
-			return false;
-		}
-		if (requestedMemeberIdmember == null) {
-			if (other.requestedMemeberIdmember != null) {
-				return false;
-			}
-		} else if (!requestedMemeberIdmember.equals(other.requestedMemeberIdmember)) {
-			return false;
-		}
-		if (room == null) {
-			if (other.room != null) {
-				return false;
-			}
-		} else if (!room.equals(other.room)) {
-			return false;
-		}
-		return true;
-	}
-
 }
