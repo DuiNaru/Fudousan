@@ -17,14 +17,14 @@ public class MemberController {
 	private MemberService service;
     private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
     
-    @RequestMapping(value="mypageCustomer", method=RequestMethod.GET)
+    @RequestMapping(value="mypagecustomer", method=RequestMethod.GET)
     public String joinForm(Model model){
-        logger.info("mypageCustomer start");
+        logger.info("mypagecustomer start");
         
         /*service.login(id, pw);*/
         
-        logger.info("mypageCustomer end");
-        return "user/mypageCustomer";
+        logger.info("mypagecustomer end");
+        return "user/mypagecustomer";
     }
     
 
