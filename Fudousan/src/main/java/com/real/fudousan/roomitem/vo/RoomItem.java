@@ -22,7 +22,7 @@ public class Roomitem implements Serializable {
 	/** 3D 방 아이디. */
 	private int roomId;
 
-	/** 3D 방 내부 아이템 들. */
+	/** 3D 방 아이템. */
 	private Item item;
 
 	/** X. */
