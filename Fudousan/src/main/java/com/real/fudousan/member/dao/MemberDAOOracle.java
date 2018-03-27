@@ -1,7 +1,10 @@
 package com.real.fudousan.member.dao;
 
+import org.springframework.stereotype.Repository;
+
 import com.real.fudousan.member.vo.Member;
 
+@Repository
 public class MemberDAOOracle implements MemberDAO {
 
 	@Override

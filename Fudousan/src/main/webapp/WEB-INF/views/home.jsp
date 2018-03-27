@@ -10,6 +10,27 @@
 </style>
 </head>
 <body>
+<<<<<<< HEAD
+<div class="container">
+	<div class="header">
+	</div>
+	
+	<!-- coding start here 
+	
+	ex) <div id="구역 이름(예: 매물 관리 페이지 )">
+		
+		여기부터 코딩 시작하시면 됩니다. 
+	
+		</div>	
+	-->
+
+	
+	
+	
+	
+	
+	<div class="footer">
+=======
 	<div class="container">
 		<div class="header">
 		
@@ -38,6 +59,7 @@
 		<div class="footer">
 		</div>
 		
+>>>>>>> 90dba70ba8c02d7fd21a38b2315958e2e0007bf7
 	</div>
 
 	<h1><a href="user/mypagecustomer" style="color: blue;">손님페이지</a></h1>

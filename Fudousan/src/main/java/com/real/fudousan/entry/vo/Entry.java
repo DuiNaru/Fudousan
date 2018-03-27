@@ -28,4 +28,5 @@ public class Entry implements Serializable {
 
 	/** PRICE. */
 	private Integer price;
+	
 }

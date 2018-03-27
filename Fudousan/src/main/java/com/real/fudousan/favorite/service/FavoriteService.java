@@ -1,5 +1,28 @@
 package com.real.fudousan.favorite.service;
 
-public class FavoriteService {
+import java.util.List;
 
+import com.real.fudousan.favorite.vo.Favorite;
+
+public class FavoriteService {
+	/**
+	 * 내가 찜한 매물 확인
+	 * @param id
+	 * @return
+	 */
+	public List<Favorite> viewMyFavorite(String id) {
+		
+		return null;
+	}
+	
+	/**
+	 * 찜하기
+	 * @param id
+	 * @param estateId
+	 * @return
+	 */
+	public boolean add(String id, int estateId) {
+		
+		return false;
+	}
 }
