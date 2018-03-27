@@ -18,5 +18,12 @@ public class HomeController {
     	logger.info(this.getClass().getName() + "End");
     	return "home";
     }
+
+    @RequestMapping(value="/prototype", method=RequestMethod.GET)
+    public String prototype() {
+    	logger.info(this.getClass().getName() + "Start");
+    	logger.info(this.getClass().getName() + "End");
+    	return "prototype/prototype";
+    }
 	
 }
