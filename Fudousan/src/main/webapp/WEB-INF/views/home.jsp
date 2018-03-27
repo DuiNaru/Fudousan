@@ -39,6 +39,6 @@
 	</div>
 	
 </div> 
-	<h1><a href="mypagecustomer" style="color: blue;">손님페이지</a></h1>
+	<h1><a href="user/mypagecustomer" style="color: blue;">손님페이지</a></h1>
 </body>
 </html>
