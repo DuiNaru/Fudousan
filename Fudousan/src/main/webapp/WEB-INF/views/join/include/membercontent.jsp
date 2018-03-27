@@ -9,7 +9,6 @@
 <body>
 	<table>
 		<tr>
-
 					</tr>
 					<tr>
 						<td>名前</td>
