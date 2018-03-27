@@ -55,4 +55,15 @@ public class AdviceService {
 		
 		return false;
 	}
+	
+	/**
+	 * 이메일1이 이메일2한테 요청
+	 * @param email1
+	 * @param email2
+	 * @return
+	 */
+	public boolean request(String email1, String email2) {
+		
+		return false;
+	}
 }
