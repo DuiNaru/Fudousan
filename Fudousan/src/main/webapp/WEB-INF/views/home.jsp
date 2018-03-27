@@ -1,20 +1,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page session="false" %>
 <html>
-
-
 <head>
 	<title>Home</title>
 <link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css">
 
 <style type="text/css">
 
-
-
 </style>
 </head>
-
 <body>
 	<div class="container">
 		<div class="header">
@@ -45,6 +39,28 @@
 
 	<h1><a href="user/mypageCustomer" style="color: blue;">손님페이지</a></h1>
 
-</div>
+<script src="resources/js/jquery-3.3.1.js"></script>
+<script src="resources/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function formCheck(){
+		var memberID = $('#memberID');
+		var password = $('#password');
+		
+		if (memberID.val() == ''){
+			alert('Input your name');
+			memberID.focus();
+			
+			return false;
+		}
+		else if (password.val() == ''){
+			alert('Input your password');
+			password.focus();
+			
+			return false;
+		}
+		
+		return true;
+	}
+</script>
 </body>
 </html>
