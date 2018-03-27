@@ -15,33 +15,7 @@
 		<!-- 회원가입(사용자) -->
 		<div id="join">
 			<form action="">
-				<table>
-					<tr>
-						<td>メール</td>
-						<td><input type="text" placeholder="email"></td>
-					</tr>
-					<tr>
-						<td>パスワード</td>
-						<td><input type="password" placeholder="password"></td>
-					</tr>	
-					<tr>
-						<td>電話番後</td>
-						<td><input type="text" placeholder="phone"></td>
-					</tr>
-					<tr>
-						<td>プロフィール写真</td>
-						<td><input type="file"></td>
-					</tr>
-					<tr>
-						<td>デザイナー有無</td>
-						<td>
-							<input type="radio" name="designer" value="yes">
-							<input type="radio" name="designer" value="no">
-						</td>
-					</tr>
-				
-				</table>
-				
+				<%@include file="include/membercontent.jsp" %>
 			</form>
 		</div>
 		

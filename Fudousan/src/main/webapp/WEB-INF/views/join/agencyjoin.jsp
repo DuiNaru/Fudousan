@@ -11,16 +11,15 @@
 <div class="container">
 		<div class="header">
 			<h1>HEADER</h1>
+			<div id="join">
+			<form action="">
+				<%@include file="include/membercontent.jsp" %>
+			</form>
 		</div>
-	
-		<!-- 회원가입(중개업자) -->
-		
-		
 		<div class="footer">
 			<h1>FOOTER</h1>
 		</div>
-		
 	</div>
-
+</div>
 </body>
 </html>
