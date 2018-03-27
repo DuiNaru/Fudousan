@@ -35,8 +35,15 @@ public class RoomDAOOracle implements RoomDAO {
 	@Override
 	public ArrayList<Room> allMyRoom() {
 		logger.info("RoomDAOOracle_allMyRoom_start");
+		RoomDAO mapper = sqlsession.getMapper(RoomDAO.class);
+		ArrayList<Room> rlist = null;
+		try{
+			rlist = mapper.allMyRoom();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		logger.info("RoomDAOOracle_allMyRoom_end");
-		return null;
+		return rlist;
 	}
 
 }
