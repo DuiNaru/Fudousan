@@ -130,8 +130,8 @@
 <!-- 거래 상황 -->
 取引の事情等<input type="text">
 
-<input type="submit" value="등록">
-<input type="reset" value="초기화">
+<input type="submit" value="登録">
+<input type="reset" value="初期化">
 </form>
 
 
