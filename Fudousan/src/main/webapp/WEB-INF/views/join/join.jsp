@@ -7,6 +7,22 @@
 <title>Join</title>
 </head>
 <body>
-
+<div class="container">
+		<div class="header">
+			<h1>HEADER</h1>
+		</div>
+	
+		<!-- 회원가입(사용자) -->
+		<div id="join">
+			<form action="">
+				<%@include file="include/membercontent.jsp" %>
+			</form>
+		</div>
+		
+		<div class="footer">
+			<h1>FOOTER</h1>
+		</div>
+		
+</div>
 </body>
 </html>

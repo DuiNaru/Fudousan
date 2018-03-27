@@ -11,24 +11,15 @@
 <div class="container">
 		<div class="header">
 			<h1>HEADER</h1>
-		</div>
-	
-		<!-- 회원가입(사용자) -->
-		<div id="join">
+			<div id="join">
 			<form action="">
-				<input type="text" placeholder="email">
-				<input type="password" placeholder="password">
-				<input type="text" placeholder="phone">
-				<input type="text" placeholder="picture">
-				<input type="radio">
+				<%@include file="include/membercontent.jsp" %>
 			</form>
 		</div>
-		
 		<div class="footer">
 			<h1>FOOTER</h1>
 		</div>
-		
 	</div>
-
+</div>
 </body>
 </html>

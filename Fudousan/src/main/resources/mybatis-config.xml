@@ -10,4 +10,49 @@
 	<mappers>
 		<mapper resource="mapper/customerMapper.xml" />
 	</mappers> -->
+	
+	<typeAliases>
+		<typeAlias type="com.real.fudousan.advice.vo.Advice" alias="advice"/>
+		<typeAlias type="com.real.fudousan.agency.vo.Agency" alias="agency"/>
+		<typeAlias type="com.real.fudousan.entry.vo.Entry" alias="entry"/>
+		<typeAlias type="com.real.fudousan.estate.vo.Estate" alias="estate"/>
+		<typeAlias type="com.real.fudousan.favorite.vo.Favorite" alias="favorite"/>
+		
+		<typeAlias type="com.real.fudousan.item.vo.Item" alias="item"/>
+		<typeAlias type="com.real.fudousan.item.vo.ItemType" alias="itemtype"/>
+		<typeAlias type="com.real.fudousan.item.vo.RefSite" alias="refsite"/>
+		
+		<typeAlias type="com.real.fudousan.member.vo.Member" alias="member"/>
+		<typeAlias type="com.real.fudousan.member.vo.Permission" alias="ok"/>
+		
+		<typeAlias type="com.real.fudousan.memberfile.vo.MemberFile" alias="mfile"/>
+		
+		<typeAlias type="com.real.fudousan.reply.vo.Reply" alias="reply"/>
+		
+		<typeAlias type="com.real.fudousan.room.vo.Room" alias="room"/>
+		
+		<typeAlias type="com.real.fudousan.roomitem.vo.RoomItem" alias="ri"/>
+		
+		<typeAlias type="com.real.fudousan.roomwall.vo.RoomWall" alias="rw"/>
+		<typeAlias type="com.real.fudousan.roomwall.vo.RoomWallConnector" alias="rwc"/>
+		
+		<typeAlias type="com.real.fudousan.texture.vo.Texture" alias="t"/>
+		<typeAlias type="com.real.fudousan.texture.vo.TextureType" alias="tt"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mapper/adviceMapper.xml" />
+		<mapper resource="mapper/agencyMapper.xml" />
+		<mapper resource="mapper/entryMapper.xml" />
+		<mapper resource="mapper/estateMapper.xml" />
+		<mapper resource="mapper/favoriteMapper.xml" />
+		<mapper resource="mapper/ItemMapper.xml" />
+		<mapper resource="mapper/memberfileMapper.xml" />
+		<mapper resource="mapper/memberMapper.xml" />
+		<mapper resource="mapper/replyMapper.xml" />
+		<mapper resource="mapper/roomitemMapper.xml" />
+		<mapper resource="mapper/roomMapper.xml" />
+		<mapper resource="mapper/roomwallMapper.xml" />
+		<mapper resource="mapper/textureMapper.xml" />
+	</mappers>
 </configuration>
