@@ -6,9 +6,8 @@
 <head>
 <script src="resources/jquery-3.3.1.js"></script>
 <script> 
-function ggumigi(){
+function ggumigi(maemunNum){
 	var searchText = document.getElementById("pro_type_search").value;
-	var maemunNum = document.getElementById("maemulNum").value;
 	var maemunName = document.getElementById("maemulName").value;
 	
 	if(maemulNum == ''){
@@ -17,7 +16,7 @@ function ggumigi(){
 		return false;
 	}
 	
-	location.href ="usersearch?searchText="+searchText+"&maemunNum="+maemunNum+"&maemunName="+maemunName;
+	location.href ="myMaemulList?searchText="+searchText+"&maemunNum="+maemunNum+"&maemunName="+maemunName;
 	
 }
 

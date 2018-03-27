@@ -10,4 +10,9 @@
 	<mappers>
 		<mapper resource="mapper/customerMapper.xml" />
 	</mappers> -->
+	
+	<typeAliases>
+		<typeAlias type="com.real.fudousan.estate.vo.Estate" alias="estate"></typeAlias>
+	</typeAliases>
+	
 </configuration>

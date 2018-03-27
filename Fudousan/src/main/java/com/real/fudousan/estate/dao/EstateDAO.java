@@ -1,5 +1,7 @@
 package com.real.fudousan.estate.dao;
 
-public interface EstateDAO {
+import java.util.ArrayList;
 
+public interface EstateDAO {
+	public ArrayListt<Estate> toto();
 }
