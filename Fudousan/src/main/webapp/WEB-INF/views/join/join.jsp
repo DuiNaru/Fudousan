@@ -15,6 +15,7 @@
 		<!-- 회원가입(사용자) -->
 		<div id="join">
 			<form action="">
+			<h1>会員登録</h1>
 				<%@include file="include/membercontent.jsp" %>
 			</form>
 		</div>

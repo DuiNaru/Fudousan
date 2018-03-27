@@ -8,10 +8,8 @@
 </head>
 <body>
 	<table>
-					<tr>
-						<th>
-							<h1>エージェント登録</h1>
-						</th>
+		<tr>
+
 					</tr>
 					<tr>
 						<td>名前</td>
@@ -42,9 +40,9 @@
 					<tr>
 						<td>プロフィール写真</td>
 						<td><input type="file"></td>
-					</tr>
+		<!--  --></tr>
 				
-				</table>
+	</table>
 				
 </body>
 </html>
