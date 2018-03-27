@@ -2,8 +2,11 @@ package com.real.fudousan.advice.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.real.fudousan.advice.vo.Advice;
 
+@Service
 public class AdviceService {
 
 	/**
