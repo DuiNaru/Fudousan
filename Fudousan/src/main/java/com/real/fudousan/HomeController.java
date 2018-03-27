@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.real.fudousan.memeber.controller.MemberController;
+import com.real.fudousan.member.controller.MemberController;
 
 @Controller
 public class HomeController {

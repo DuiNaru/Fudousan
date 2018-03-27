@@ -1,6 +1,6 @@
-package com.real.fudousan.memeber.dao;
+package com.real.fudousan.member.dao;
 
-import com.real.fudousan.memeber.vo.Member;
+import com.real.fudousan.member.vo.Member;
 
 public class MemberDAOOracle implements MemberDAO {
 

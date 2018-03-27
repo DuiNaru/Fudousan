@@ -1,6 +1,6 @@
-package com.real.fudousan.memeber.service;
+package com.real.fudousan.member.service;
 
-import com.real.fudousan.memeber.dao.MemberDAO;
+import com.real.fudousan.member.dao.MemberDAO;
 
 public class MemberService {
 	
