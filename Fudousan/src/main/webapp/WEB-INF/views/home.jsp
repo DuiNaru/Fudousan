@@ -41,26 +41,6 @@
 
 <script src="resources/js/jquery-3.3.1.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-	function formCheck(){
-		var memberID = $('#memberID');
-		var password = $('#password');
-		
-		if (memberID.val() == ''){
-			alert('Input your name');
-			memberID.focus();
-			
-			return false;
-		}
-		else if (password.val() == ''){
-			alert('Input your password');
-			password.focus();
-			
-			return false;
-		}
-		
-		return true;
-	}
-</script>
+<script src="resources/js/login.js"></script>
 </body>
 </html>
