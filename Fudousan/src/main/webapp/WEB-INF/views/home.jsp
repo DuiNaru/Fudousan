@@ -44,12 +44,7 @@
 	</div>
 
 	<h1><a href="user/mypageCustomer" style="color: blue;">손님페이지</a></h1>
-	
-<<<<<<< HEAD
 
-=======
-</div> 
-	<h1><a href="mypagecustomer" style="color: blue;">손님페이지</a></h1>
->>>>>>> 14db216b2afe09badffeebda82bb0170370eddb3
+</div>
 </body>
 </html>
