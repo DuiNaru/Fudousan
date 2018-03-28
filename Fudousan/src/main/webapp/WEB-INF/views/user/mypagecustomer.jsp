@@ -6,7 +6,7 @@
 <head>
 <script src="resources/jquery-3.3.1.js"></script>
 <script> 
-function roomSearch(){
+/* function roomSearch(){
 	var roomSearch = document.getElementById("roomSearch").value; //방검색
 	var memberId = document.getElementById("memberId").value; //사용자아이디
 	if(roomSearch == ''){
@@ -26,7 +26,7 @@ function favoriteSearch(){
 		return false;
 	}
 	location.href ="searchFavorite?favoSearch="+favoSearch+"&memberId="+memberId;
-}
+} */
 
 
 </script>
@@ -41,8 +41,7 @@ function favoriteSearch(){
 		<div id=customerMaemulCheck>
 			<tr>
 				<td><h3>3D 작성 매물 확인</h3></td>
-				<th><input type="text" id ="roomSearch" name="roomSearch">
-				<input type="hidden" id="memberId" name="memberId" value=1></th>
+				<th><input type="text" id ="roomSearch" name="roomSearch"></th>
 				<th><input type="button" onclick="roomSearch()" value="검색"></th>
 				<br>
 				
