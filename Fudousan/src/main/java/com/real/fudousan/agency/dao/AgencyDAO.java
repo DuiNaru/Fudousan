@@ -5,5 +5,17 @@ import java.util.List;
 import com.real.fudousan.agency.vo.Agency;
 
 public interface AgencyDAO {
-	public List<Agency> selectByConfirmed(int confirm);
+	/**
+	 * 허가 값으로 검색한다.
+	 * @param confirm 허가 값
+	 * @return
+	 */
+	public List<Agency> selectByConfirm(int confirm);
+	/**
+	 * 특정 agency를 해당 confirm 값으로 변경한다.
+	 * @param agencyId 특정 agency ID
+	 * @param confirm 변경하고자하는 confirm 값
+	 * @return
+	 */
+	public boolean updateConfirm(int agencyId, int confirm);
 }

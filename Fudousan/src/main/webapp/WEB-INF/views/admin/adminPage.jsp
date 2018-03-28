@@ -6,17 +6,22 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>관리자 페이지</title>
-<link href="<c:url value="/resources/css/bootstrap.min.css"/>">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+<script type="text/javascript">
+	function confirm(agencyId) {
+		location.href="./confirm?agencyId="+agencyId;
+	}
+</script>
 </head>
 <body class="container">
 	<header class="col-sm-12">헤더ttt</header>
 	<div class="col-sm-12">
 		<div class="col-sm-8">
 			<label class="col-sm-12">공인중개사 가입신청 현황</label>
-			<c:forEach var="agency" items="${agencyList }">
+			<c:forEach var="agency" items="${agencylist }">
 				<div class="col-sm-12 form-group">
 					<label><c:out value="${agency.name }"/></label>
-					<button class="btn btn-default">승인</button>
+					<button class="btn btn-default" onclick="confirm(${agency.agencyId})">승인</button>
 				</div>
 			</c:forEach>
 		</div>
