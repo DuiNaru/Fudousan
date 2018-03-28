@@ -7,7 +7,7 @@
 <mapper namespace="com.real.fudousan.room.dao.RoomDAO">
 
 <!-- 일반고객이 자신이 작성 한 매물 검색하는것 -->
-<select id="searchRoomInfo" resultType="room">
+<select id="searchRoomInfo" resultType="room" parameterType="int">
 	select
 		roomId
 		,estateId
@@ -26,7 +26,7 @@
 </select>
 	
 <!-- 일반 고객이 자신의 마이페이지에 접속하면 자신이 작성한 매물 전체 출력 -->
-<select id="allMyRoom" resultType="room">
+<select id="allMyRoom" resultType="room" parameterType="int">
 	select
 		roomId
 		,estateId

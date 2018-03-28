@@ -31,7 +31,7 @@ public class MemberController {
 	private FavoriteService Fservice;
     
 	@RequestMapping(value="mypageNormalUser", method=RequestMethod.GET)
-	public String mypageNormalUser(Model model, int memberId){	
+	public String mypageNormalUser(Model model, Integer memberId){	
 		logger.info("MC 일반 사용자의 마이페이지 접속  Start");
         List<Room> rlist = Rservice.showAllRoom(memberId);
         List<Favorite> flist = Fservice.showAllFavorite(memberId);
