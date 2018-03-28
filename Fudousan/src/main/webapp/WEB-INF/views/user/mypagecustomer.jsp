@@ -42,7 +42,7 @@ function favoriteSearch(){
 			<tr>
 				<td><h3>3D 작성 매물 확인</h3></td>
 				<th><input type="text" id ="roomSearch" name="roomSearch">
-				<input type="hidden" id="memberId" name="memberId" value="abc"></th>
+				<input type="hidden" id="memberId" name="memberId" value=1></th>
 				<th><input type="button" onclick="roomSearch()" value="검색"></th>
 				<br>
 				
