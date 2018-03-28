@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.real.fudousan.room.dao.RoomDAO">
+<mapper namespace="com.real.fudousan.room.dao.RoomMapper">
 
 <!-- 일반고객이 자신이 작성 한 매물 검색하는것 -->
 <select id="searchRoomInfo" resultType="room" parameterType="int">

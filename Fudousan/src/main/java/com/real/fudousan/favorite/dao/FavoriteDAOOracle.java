@@ -23,7 +23,7 @@ public class FavoriteDAOOracle implements FavoriteDAO {
 	@Override
 	public List<Favorite> allFavorite(Integer memberId) {
 		logger.info("사용자가 찜했던 모든 방 불러오기 - Start");
-		FavoriteDAO mapper = sqlsession.getMapper(FavoriteDAO.class);
+		FavoriteMapper mapper = sqlsession.getMapper(FavoriteMapper.class);
 		List<Favorite> flist = null;
 		try{
 			flist = mapper.allFavorite(memberId);
@@ -38,7 +38,7 @@ public class FavoriteDAOOracle implements FavoriteDAO {
 	public List<Favorite> searchFavorite(int memberId,int estateId) {
 		logger.info("사용자 찜목록 검색- Start");
 		
-		FavoriteDAO mapper = sqlsession.getMapper(FavoriteDAO.class);
+		FavoriteMapper mapper = sqlsession.getMapper(FavoriteMapper.class);
 		List<Favorite> fslist = null;
 		try{
 			fslist = mapper.searchFavorite(memberId,estateId);
