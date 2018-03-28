@@ -46,7 +46,7 @@
 		<mapper resource="mapper/entryMapper.xml" />
 		<mapper resource="mapper/estateMapper.xml" />
 		<mapper resource="mapper/favoriteMapper.xml" />
-		<mapper resource="mapper/ItemMapper.xml" />
+		<mapper resource="mapper/itemMapper.xml" />
 		<mapper resource="mapper/memberfileMapper.xml" />
 		<mapper resource="mapper/memberMapper.xml" />
 		<mapper resource="mapper/replyMapper.xml" />

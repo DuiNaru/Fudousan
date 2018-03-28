@@ -30,7 +30,7 @@ public class Agency implements Serializable {
 	private String name;
 
 	/** 사업번호. */
-	private int biznum;
+	private String biznum;
 
 	/** 주소 대분류. */
 	private String addressMain;
