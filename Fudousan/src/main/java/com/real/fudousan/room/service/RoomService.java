@@ -32,7 +32,7 @@ public class RoomService {
 	 * @param 
 	 * @return 사용자가 작성한  매물들의 리스트
 	 */
-	public List<Room> showAllRoom(int memberId) {
+	public List<Room> showAllRoom(Integer memberId) {
 		List<Room> rlist = null;
 		rlist = dao.allMyRoom(memberId);
 		return rlist;

@@ -8,6 +8,6 @@ import com.real.fudousan.room.vo.Room;
 public interface RoomDAO {
 	public List<Room> searchRoomInfo(int estateId,int memberId);
 	
-	public List<Room> allMyRoom(int memberId);
+	public List<Room> allMyRoom(Integer memberId);
 
 }
