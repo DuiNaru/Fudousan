@@ -6,7 +6,7 @@ import com.real.fudousan.room.vo.Room;
 
 
 public interface RoomDAO {
-	public List<Room> searchRoomInfo(int estateId,int memberId);
+	public List<Room> searchRoomInfo(int roomSearch,int memberId);
 	
 	public List<Room> allMyRoom(Integer memberId);
 

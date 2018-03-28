@@ -21,12 +21,12 @@ public class RoomDAOOracle implements RoomDAO {
 	
 	//사용자가 자신이 작성한 매물리스트에서 검색해서 정보 가져오기
 	@Override
-	public List<Room> searchRoomInfo(int estateId, int memberId) {
+	public List<Room> searchRoomInfo(int roomSearch, int memberId) {
 		logger.info("RoomDAOOracle_searchRoomInfo_start");
-		RoomDAO mapper = sqlsession.getMapper(RoomDAO.class);
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
 		List<Room> srlist = null;
 		try{
-			srlist = mapper.searchRoomInfo(estateId, memberId);
+			srlist = mapper.searchRoomInfo(roomSearch, memberId);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -37,7 +37,7 @@ public class RoomDAOOracle implements RoomDAO {
 	@Override
 	public List<Room> allMyRoom(Integer memberId) {
 		logger.info("RoomDAOOracle_allMyRoom_start");
-		RoomDAO mapper = sqlsession.getMapper(RoomDAO.class);
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
 		List<Room> rlist = null;
 		try{
 			rlist = mapper.allMyRoom(memberId);
