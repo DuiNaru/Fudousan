@@ -35,7 +35,6 @@ public class MemberController {
 		logger.info("MC 일반 사용자의 마이페이지 접속  Start");
         List<Room> rlist = Rservice.showAllRoom(memberId);
         List<Favorite> flist = Fservice.showAllFavorite(memberId);
-     
         model.addAttribute("rlist", rlist);
         model.addAttribute("flist", flist);
         logger.info("MC 일반 사용자의 마이페이지 접속  End");

@@ -35,7 +35,7 @@ public class RoomDAOOracle implements RoomDAO {
 	}
 
 	@Override
-	public List<Room> allMyRoom(int memberId) {
+	public List<Room> allMyRoom(Integer memberId) {
 		logger.info("RoomDAOOracle_allMyRoom_start");
 		RoomDAO mapper = sqlsession.getMapper(RoomDAO.class);
 		List<Room> rlist = null;
