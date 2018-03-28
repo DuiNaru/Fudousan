@@ -17,7 +17,6 @@
   <option value='2'>マンション</option>
 </select>
 
-
 <!-- 지역 이름 입력 -->	
 <select name='지역이름' size='7'>
   <option value='' selected>-- 選択 --</option>
@@ -90,7 +89,7 @@
   <!-- 히로시마현 -->
   <option value='34'>広島県</option>
   <!-- 야마구치현 -->
-  <option value='35'>広島県</option>
+  <option value='35'>山口県</option>
   <!-- 도쿠시마현 -->
   <option value='36'>徳島県</option>
   <!-- 가가와현 -->
@@ -114,7 +113,7 @@
   <!-- 가고시마현 -->
   <option value='46'>鹿児島県</option>
   <!-- 오키나와 -->
-  <option value='47'>鹿児島県</option>
+  <option value='47'>沖縄県</option>
 </select>
 
  <!-- 도시 이름 입력(도도부현) -->
