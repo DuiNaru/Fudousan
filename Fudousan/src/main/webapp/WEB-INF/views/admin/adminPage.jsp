@@ -9,13 +9,16 @@
 <link href="<c:url value="/resources/css/bootstrap.min.css"/>">
 </head>
 <body class="container">
-	<header class="col-sm-12">헤더</header>
+	<header class="col-sm-12">헤더ttt</header>
 	<div class="col-sm-12">
 		<div class="col-sm-8">
 			<label class="col-sm-12">공인중개사 가입신청 현황</label>
-			<div>
-				
-			</div>
+			<c:forEach var="agency" items="${agencyList }">
+				<div class="col-sm-12 form-group">
+					<label><c:out value="${agency.name }"/></label>
+					<button class="btn btn-default">승인</button>
+				</div>
+			</c:forEach>
 		</div>
 		<div class="col-sm-4">
 			<label>아이템 정보 관리</label>

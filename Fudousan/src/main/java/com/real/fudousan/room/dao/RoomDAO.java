@@ -1,12 +1,13 @@
 package com.real.fudousan.room.dao;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.real.fudousan.room.vo.Room;
 
+
 public interface RoomDAO {
-	public Room searchRoomInfo(int estateId,int memberId);
+	public List<Room> searchRoomInfo(int estateId,int memberId);
 	
-	public ArrayList<Room> allMyRoom();
+	public List<Room> allMyRoom(int memberId);
 
 }

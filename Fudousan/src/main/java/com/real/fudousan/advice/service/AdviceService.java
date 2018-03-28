@@ -2,12 +2,16 @@ package com.real.fudousan.advice.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.real.fudousan.advice.dao.AdviceDAO;
 import com.real.fudousan.advice.vo.Advice;
 
 @Service
 public class AdviceService {
+	@Autowired
+	private AdviceDAO dao;
 
 	/**
 	 * 신청한 모든 목록

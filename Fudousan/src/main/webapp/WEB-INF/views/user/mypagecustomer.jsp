@@ -6,19 +6,28 @@
 <head>
 <script src="resources/jquery-3.3.1.js"></script>
 <script> 
-function ggumigi(maemunNum){
-	var searchText = document.getElementById("pro_type_search").value;
-	var maemunName = document.getElementById("maemulName").value;
-	
-	if(maemulNum == ''){
-		alert("검색할 이름을 입력해주세요");
-		$('#pro_type_search').focus();
+function roomSearch(){
+	var roomSearch = document.getElementById("roomSearch").value; //방검색
+	var memberId = document.getElementById("memberId").value; //사용자아이디
+	if(roomSearch == ''){
+		alert("검색할 방의 이름을 입력해주세요");
+		$('#roomSearch').focus();
 		return false;
 	}
-	
-	location.href ="myMaemulList?searchText="+searchText+"&maemunNum="+maemunNum+"&maemunName="+maemunName;
-	
+	location.href ="searchMyRoom?roomSearch="+roomSearch+"&memberId="+memberId;
 }
+
+function favoriteSearch(){
+	var favoSearch = document.getElementById("favoSearch").value; //방검색
+	var memberId = document.getElementById("memberId").value; //사용자아이디
+	if(roomSearch == ''){
+		alert("검색할 방의 이름을 입력해주세요");
+		$('#roomSearch').focus();
+		return false;
+	}
+	location.href ="searchFavorite?favoSearch="+favoSearch+"&memberId="+memberId;
+}
+
 
 </script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -32,12 +41,18 @@ function ggumigi(maemunNum){
 		<div id=customerMaemulCheck>
 			<tr>
 				<td><h3>3D 작성 매물 확인</h3></td>
-				<th><input type="text" id ="pro_type_search" name="pro_type_search"></th><th><input type="button" onclick="product_search()" value="검색"></th><br>
+				<th><input type="text" id ="roomSearch" name="roomSearch">
+				<input type="hidden" id="memberId" name="memberId" value="abc"></th>
+				<th><input type="button" onclick="roomSearch()" value="검색"></th>
+				<br>
+				
 			</tr>
 			<tr>
-				<c:forEach var="maemul" items="${maemul_list}">
-			 		<td>${maemul.name}<input type="button" value="꾸미기" onclick="ggumigi(${maemul.num})">
-			 			<input type="hidden" id="maemulNum" name="maemulNum" value="${maemul.num }">
+				<c:forEach var="room" items="${rlist}">
+			 		<td>
+			 			${room.estateId}
+			 		    <input type="button" value="꾸미기" onclick="ggumigi(${room.estateId})">
+			 			
 			 		</td>
 				</c:forEach>
 			</tr>
@@ -46,12 +61,11 @@ function ggumigi(maemunNum){
 		<div id=showSelection>
 			<tr>
 				<td><h3>찜한 매물 확인</h3><br></td>
-				<th><input type="text" name="pro_type_search"></th><th><input type="button" onclick="product_search()" value="검색"></th><br>
+				<th><input type="text" name="favoSearch" id="favoSearch"></th><th><input type="button" onclick="favoriteSearch()" value="검색"></th><br>
 			</tr>
 			<tr>
-				<c:forEach var="maemul" items="${maemul_list}">
-			 		<td>${maemul.picture}<input type="button" value="팝업정보" onclick="popupInfoMaemul(${maemul.num})">
-			 		<input type="hidden" id="maemulName" name="maemulName" value=${maemul.name }>
+				<c:forEach var="favorite" items="${flist}">
+			 		<td>${favorite.estate}<input type="button" value="팝업정보" onclick="popupInfoMaemul(${favorite.estate})">
 			 		</td>
 				</c:forEach>
 			</tr>

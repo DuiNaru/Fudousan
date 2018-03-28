@@ -41,6 +41,6 @@
 	from
 		room
 	where
-		estateId = #{estateId}
+		memberId = #{memberId}
 </select>
 </mapper>

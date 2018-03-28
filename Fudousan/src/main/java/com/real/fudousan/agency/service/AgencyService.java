@@ -2,21 +2,28 @@ package com.real.fudousan.agency.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.real.fudousan.agency.dao.AgencyDAO;
 import com.real.fudousan.agency.vo.Agency;
-import com.real.fudousan.member.vo.Member;
 
 @Service
 public class AgencyService {
+	private static final Logger logger = LoggerFactory.getLogger(AgencyService.class);
+	@Autowired
+	private AgencyDAO dao;
 
 	/**
 	 * 비 승인된 부동산 중개소 리스트
-	 * @param mebmer
 	 * @return
 	 */
-	public List<Agency> unConfirmedList(Member mebmer) {
+	public List<Agency> unConfirmedList() {
+		logger.info("unConirmedList Start");
 		
+		logger.info("unConirmedList End");
 		return null;
 	}
 	

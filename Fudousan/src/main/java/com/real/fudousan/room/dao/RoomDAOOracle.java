@@ -1,6 +1,7 @@
 package com.real.fudousan.room.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -20,27 +21,26 @@ public class RoomDAOOracle implements RoomDAO {
 	
 	//사용자가 자신이 작성한 매물리스트에서 검색해서 정보 가져오기
 	@Override
-	public Room searchRoomInfo(int estateId, int memberId) {
+	public List<Room> searchRoomInfo(int estateId, int memberId) {
 		logger.info("RoomDAOOracle_searchRoomInfo_start");
 		RoomDAO mapper = sqlsession.getMapper(RoomDAO.class);
-		Room room = null;
+		List<Room> srlist = null;
 		try{
-			room = mapper.searchRoomInfo(estateId, memberId);
+			srlist = mapper.searchRoomInfo(estateId, memberId);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		logger.info("RoomDAOOracle_searchRoomInfo_end");
-		return room;
+		return srlist;
 	}
 
-	//사용자가 마이페이지에 접속하면 자신의 매물리스트에 있는 정보 전부 가져온다
 	@Override
-	public ArrayList<Room> allMyRoom() {
+	public List<Room> allMyRoom(int memberId) {
 		logger.info("RoomDAOOracle_allMyRoom_start");
 		RoomDAO mapper = sqlsession.getMapper(RoomDAO.class);
-		ArrayList<Room> rlist = null;
+		List<Room> rlist = null;
 		try{
-			rlist = mapper.allMyRoom();
+			rlist = mapper.allMyRoom(memberId);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -48,4 +48,6 @@ public class RoomDAOOracle implements RoomDAO {
 		return rlist;
 	}
 
+	//사용자가 마이페이지에 접속하면 자신의 매물리스트에 있는 정보 전부 가져온다
+	
 }

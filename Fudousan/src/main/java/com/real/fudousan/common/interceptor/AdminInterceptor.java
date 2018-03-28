@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class AdminInterceptor extends HandlerInterceptorAdapter {
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private static final Logger logger = LoggerFactory.getLogger(AdminInterceptor.class);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -23,6 +23,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 		logger.debug("preHandler session(loginId) : " + id);
 		if (id.equals("admin")) {
 			result &= true;
+		} else {
+			result = false;
 		}
 		
 		logger.debug("preHandler result : " + result);

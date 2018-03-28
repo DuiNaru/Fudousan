@@ -22,4 +22,66 @@ public class TransType implements Serializable {
 
 	/** 거래 유형 이름. */
 	private String transName;
+
+	public Integer getTransTypeId() {
+		return transTypeId;
+	}
+
+	public void setTransTypeId(Integer transTypeId) {
+		this.transTypeId = transTypeId;
+	}
+
+	public String getTransName() {
+		return transName;
+	}
+
+	public void setTransName(String transName) {
+		this.transName = transName;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public TransType() {
+		super();
+	}
+
+	public TransType(Integer transTypeId, String transName) {
+		super();
+		this.transTypeId = transTypeId;
+		this.transName = transName;
+	}
+
+	@Override
+	public String toString() {
+		return "TransType [transTypeId=" + transTypeId + ", transName=" + transName + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((transTypeId == null) ? 0 : transTypeId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TransType other = (TransType) obj;
+		if (transTypeId == null) {
+			if (other.transTypeId != null)
+				return false;
+		} else if (!transTypeId.equals(other.transTypeId))
+			return false;
+		return true;
+	}
+	
+	
 }
