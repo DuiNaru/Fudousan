@@ -5,10 +5,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-function
-
 
 <title>공인중개사 수정 </title>
+<script>
+function reset(){
+	if(confirm("정말로 초기화 할 건가요?") == true){
+		document.form.submit();
+	}else{
+		return ;
+	}
+}
+</script>
 </head>
 <body>
 
