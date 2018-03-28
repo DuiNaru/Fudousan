@@ -25,20 +25,32 @@
 </style>
 </head>
 <body>
-	<!-- <div class="container">
-		
-		로그인
-		<div>
-			<form method="post" onsubmit="formCheck()">
-				ID <input type="text" id="memberID" name="memberID">
-				Password <input type="password" id="password" name="password">
-				<button type="button" onclick="formCheck()">Login</button>
-			</form>
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Login</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				
+				<div class="modal-body">
+					<form method="post" onsubmit="formCheck()">
+						ID <input type="text" id="memberID" name="memberID">
+						Password <input type="password" id="password" name="password">
+						<button type="button" onclick="formCheck()">Login</button>
+					</form>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
 		</div>
-	
 	</div>
 
-	<h1><a href="mypageNormalUser" style="color: blue;">손님페이지</a></h1> -->
+	<!-- <h1><a href="mypageNormalUser" style="color: blue;">손님페이지</a></h1> -->
 	
 
    <!-- Header -->
@@ -62,7 +74,7 @@
 		     
 		    
 		      <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
-		        <li><a href="#">Login</a></li>
+		        <li><button type="button" data-toggle="modal" data-target="#loginModal">Login</button></li>
 		    
 		         <li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
