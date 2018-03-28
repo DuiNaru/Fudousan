@@ -3,11 +3,10 @@ package com.real.fudousan.favorite.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.real.fudousan.favorite.dao.FavoriteDAO;
 import com.real.fudousan.favorite.vo.Favorite;
@@ -25,7 +24,7 @@ public class FavoriteService {
 	 * @param id
 	 * @return
 	 */
-	public List<Favorite> showAllFavorite(int memberId){
+	public List<Favorite> showAllFavorite(Integer memberId){
 		logger.info("FS 사용자의 찜목록을 소환합니다 Start");
 		List<Favorite> flist = null; //담을그릇
 		flist = dao.allFavorite(memberId); //그릇에 담기
