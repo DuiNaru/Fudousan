@@ -48,4 +48,16 @@ public class AdminController {
 		logger.info("adminpage() End");
 		return "admin/adminPage";
 	}
+	
+	@RequestMapping(value="/confirm", method=RequestMethod.GET)
+	public String confirm(int agencyId) {
+		logger.info("confirm(" + agencyId + ") Start");
+		
+		if(!agencyService.confirm(agencyId)) {
+			logger.info("confirm false");
+		}
+		
+		logger.info("confirm(" + agencyId +") End");
+		return "redirect:/admin/";
+	}
 }

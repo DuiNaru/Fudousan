@@ -17,7 +17,7 @@ public class AgencyDAOOracle implements AgencyDAO {
 	private SqlSession session;
 	
 	@Override
-	public List<Agency> selectByConfirmed(int confirm) {
+	public List<Agency> selectByConfirm(int confirm) {
 		logger.info("selectByConfirmed(" + confirm + ") Start");
 		List<Agency> result = null;
 		
@@ -30,6 +30,23 @@ public class AgencyDAOOracle implements AgencyDAO {
 		}
 		
 		logger.info("selectByConfirmed(" + confirm + ") End");
+		return result;
+	}
+
+	@Override
+	public boolean updateConfirm(int agencyId, int confirm) {
+		logger.info("updateConfirm(" + agencyId + ", " + confirm + ") Start");
+		boolean result = false;
+		
+		try {
+			AgencyMapper mapper = session.getMapper(AgencyMapper.class);
+			result = mapper.updateConfirm(agencyId, confirm);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = false;
+		}
+		
+		logger.info("updateConfirm(" + agencyId + ", " + confirm + ") End");
 		return result;
 	}
 	

@@ -24,8 +24,8 @@
 	</resultMap>
 	
 	<resultMap type="transtype" id="transtypeResultMap">
-			<id property="transTypeId" column="trans_type_id"/>
-			<result property="transName" column="trans_name"/>
+		<id property="transTypeId" column="trans_type_id"/>
+		<result property="transName" column="trans_name"/>
 	</resultMap>
 	
 	<resultMap type="member" id="memberResultMap">
@@ -93,4 +93,13 @@
 		WHERE
 			confirm = #{confirm}
 	</select>
+	
+	<update id="updateConfirm">
+		UPDATE
+			agency
+		SET
+			confirm = #{1}
+		WHERE
+			agency_id = #{0}
+	</update>
 </mapper>

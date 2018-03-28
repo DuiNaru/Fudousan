@@ -23,7 +23,7 @@ public class AgencyService {
 	public List<Agency> unConfirmedList() {
 		logger.info("unConirmedList Start");
 		List<Agency> result = null;
-		result = dao.selectByConfirmed(0);
+		result = dao.selectByConfirm(0);
 		logger.info("unConirmedList End");
 		return result;
 	}
@@ -65,5 +65,14 @@ public class AgencyService {
 	 */
 	public List<Agency> getAgency(String main, String middle, String small) {
 		 return null;
+	}
+	
+	public boolean confirm(int agencyId) {
+		logger.info("confirm(" + agencyId + ") Start");
+		boolean result = false;
+		
+		result = dao.updateConfirm(agencyId, 1);
+		logger.info("confirm(" + agencyId + ") End");
+		return result;
 	}
 }
