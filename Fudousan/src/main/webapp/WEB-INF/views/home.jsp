@@ -25,6 +25,7 @@
 </style>
 </head>
 <body>
+	<!-- 로그인 모달 -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -36,11 +37,9 @@
 				</div>
 				
 				<div class="modal-body">
-					<form method="post" onsubmit="formCheck()">
-						ID <input type="text" id="memberID" name="memberID">
-						Password <input type="password" id="password" name="password">
-						<button type="button" onclick="formCheck()">Login</button>
-					</form>
+					ID <input type="text" id="memberID" name="memberID">
+					Password <input type="password" id="password" name="password">
+					<button type="button" onclick="formCheck()">Login</button>
 				</div>
 				
 				<div class="modal-footer">
@@ -49,6 +48,7 @@
 			</div>
 		</div>
 	</div>
+	<!-- 로그인 모달 끝 -->
 
 	<!-- <h1><a href="mypageNormalUser" style="color: blue;">손님페이지</a></h1> -->
 	
@@ -74,7 +74,7 @@
 		     
 		    
 		      <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
-		        <li><button type="button" data-toggle="modal" data-target="#loginModal">Login</button></li>
+		        <li><a data-toggle="modal" href="#loginModal">Login</a></li>
 		    
 		         <li class="dropdown">
 			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
@@ -152,7 +152,7 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlZMVBrvQGWP2QTDvf5ur7HrtEC3xlOf0 &callback=initMap">
     </script>
      
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="resources/js/jquery-3.3.1.js"></script>
 	<script src="resources/js/login.js"></script>
     <script src="resources/js/bootstrap.min.js"></script>
 
