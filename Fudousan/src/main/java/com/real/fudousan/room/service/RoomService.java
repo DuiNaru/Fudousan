@@ -1,12 +1,15 @@
 package com.real.fudousan.room.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.real.fudousan.room.dao.RoomDAO;
 import com.real.fudousan.room.vo.Room;
 
+@Service
 public class RoomService {
 	
 	@Autowired
@@ -18,22 +21,20 @@ public class RoomService {
 	 * @param memberId
 	 * @return 검색자의 매물정보중 검색대상
 	 */
-	public Room showMyRoom(int estateId, int memberId) {
-		Room myroom = null;
-		myroom = dao.searchRoomInfo(estateId, memberId);
-		
-		return myroom;
+	public List<Room> showMyRoom(int estateId, int memberId) {
+		List<Room> srlist = null;
+		srlist = dao.searchRoomInfo(estateId, memberId);
+		return srlist;
 	}
 	
 	/**
 	 * 사용자 페이지에서 자기가 작성한 매물 리스트 보기
-	 * @param room
+	 * @param 
 	 * @return 사용자가 작성한  매물들의 리스트
 	 */
-	public ArrayList<Room> showAllRoom() {
-		ArrayList<Room> rlist = null;
-		rlist = dao.allMyRoom();
-		
+	public List<Room> showAllRoom(int memberId) {
+		List<Room> rlist = null;
+		rlist = dao.allMyRoom(memberId);
 		return rlist;
 	}
 	

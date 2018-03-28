@@ -5,6 +5,27 @@
 
 
 <mapper namespace="com.real.fudousan.favorite.dao.FavoriteDAO">
-
+	<select id="allFavorite" resultType="favorite" parameterType="int">
+		select
+			memberId
+			,estate
+			,creDate
+		from
+			favorite
+		where
+			memberId = #{memberId}
+	</select>
+	
+	<select id="searchFavorite" resultType="favorite" parameterType="int">
+		select
+			memberId
+			,estate
+			,creDate
+		from
+			favorite
+		where
+			memberId = #{memberID} and estate = #{estateId}
+	</select>
+	
 	
 </mapper>

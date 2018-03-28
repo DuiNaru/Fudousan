@@ -1,5 +1,8 @@
 package com.real.fudousan.room.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +22,19 @@ public class RoomController {
 	private RoomService service;
 	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
-	public String searchMyRoom(Model model,int estateId,int memberId){
+	public String searchMyRoom(Model model,int roomSearch,int memberId){
 		logger.info("RoomController-searchMyRoom_Start");
-		Room myroom = service.showMyRoom(estateId, memberId);
-		model.addAttribute("myroom",myroom);
+		List<Room> srlist = service.showMyRoom(roomSearch, memberId);
+		model.addAttribute("srlist",srlist);
+		logger.info("RoomController-searchMyRoom_End");
+		return "user/mypagecustomer";
+	}
+	
+	@RequestMapping(value="allMyRooms" , method=RequestMethod.GET)
+	public String allMyRooms(Model model,int memberId){
+		logger.info("RoomController-searchMyRoom_Start");
+		List<Room> allRooms = service.showAllRoom(memberId);
+		model.addAttribute("rlist",allRooms);
 		logger.info("RoomController-searchMyRoom_End");
 		return "user/mypagecustomer";
 	}
