@@ -4,6 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+function
+
+
 <title>공인중개사 수정 </title>
 </head>
 <body>
@@ -166,7 +170,7 @@
 取引の事情等<input type="text">
 
 <input type="submit" value="登録">
-<input type="reset" value="初期化">
+<input type="reset" value="初期化" onclick="reset">
 
 </form>
 
