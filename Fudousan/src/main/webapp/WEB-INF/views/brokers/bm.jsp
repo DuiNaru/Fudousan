@@ -31,8 +31,6 @@ function snapshot_delete(){
 
 
 
-
-
  <!-- 헤더 영역 -->
 
 <hr>
@@ -44,13 +42,11 @@ function snapshot_delete(){
 <input type="radio" name="cr_page">비공개
 <input type="button" value="삭제" onclick="estateId_delete"> 
 <!-- 매물 수정으로 이동 -->
-<input type="button" value="수정" onclick="location.href='bc.jsp'">
+<input type="button" value="수정" onclick="location.href='/brokers/bc.jsp'">
 <!-- 매물 작성으로 이동 -->
 
-<input type="button" value="매물 작성" onclick="location.href='br.jsp'"/>
+<input type="button" value="매물 작성" onclick="location.href='/brokers/br.jsp'"/>
 <hr>
-
-
 
 <h3> 매물 3D 모델링 관리</h3>
 <!-- 모델링 스냅 샷 자리  -->

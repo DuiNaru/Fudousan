@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>공인 중개사 입력</title>
 </head>
 <body>
 
@@ -12,7 +12,7 @@
  <!-- 헤더 영역 -->
  
  
- <form action="">
+ <form action="" action="post">
 <!-- 거래종류 입력 -->
 <select name='거래종류' size='7'>
   <option value='' selected>-- 選択 --</option>
@@ -40,44 +40,83 @@
   <option value='07'>福島県</option>
   <!-- 이바라키현 -->
   <option value='08'>茨城県</option>
+  <!-- 토치 기현 -->
   <option value='09'>栃木県</option>
+  <!-- 군마현 -->
   <option value='10'>群馬県</option>
+  <!-- 사이타마 현 -->
   <option value='11'>埼玉県</option>
+  <!-- 치바현 -->
   <option value='12'>千葉県</option>
+ <!--  도쿄도 -->
   <option value='13'>東京都</option>
+  <!-- 가나가와 현 -->
   <option value='14'>神奈川県</option>
+  <!-- 니가타 현 -->
   <option value='15'>新潟県</option>
+  <!-- 도야마 현 -->
   <option value='16'>新潟県</option>
+  <!-- 이시카와 현 -->
   <option value='17'>石川県</option>
+  <!-- 후쿠이 현 -->
   <option value='18'>福井県</option>
+  <!-- 야마나시 현 -->
   <option value='19'>山梨県</option>
+  <!-- 나가노 현 -->
   <option value='20'>長野県</option>
+  <!-- 기후현 -->
   <option value='21'>岐阜県</option>
+  <!-- 스지오카현 -->
   <option value='22'>静岡県</option>
+  <!-- 아이치현 -->
   <option value='23'>愛知県</option>
+  <!-- 미에현 -->
   <option value='24'>三重県</option>
+  <!-- 시가현 -->
   <option value='25'>滋賀県</option>
+  <!-- 교토부 -->
   <option value='26'>京都府</option>
+  <!-- 오사카부 -->
   <option value='27'>大阪府</option>
+  <!-- 효고현 -->
   <option value='28'>兵庫県</option>
+  <!-- 나라현 -->
   <option value='29'>奈良県</option>
+  <!-- 와카야마현 -->
   <option value='30'>和歌山県</option>
+  <!-- 돗토리현 -->
   <option value='31'>鳥取県</option>
+  <!-- 시마네현 -->
   <option value='32'>島根県</option>
+  <!-- 오카야마현 -->
   <option value='33'>岡山県</option>
+  <!-- 히로시마현 -->
   <option value='34'>広島県</option>
+  <!-- 야마구치현 -->
   <option value='35'>広島県</option>
+  <!-- 도쿠시마현 -->
   <option value='36'>徳島県</option>
+  <!-- 가가와현 -->
   <option value='37'>香川県</option>
+  <!-- 에히메현 -->
   <option value='38'>愛媛県</option>
+  <!-- 고치현 -->
   <option value='39'>高知県</option>
+  <!-- 후쿠오카현 -->
   <option value='40'>福岡県</option>
+  <!-- 사가현 -->
   <option value='41'>佐賀県</option>
+  <!-- 나가사키현 -->
   <option value='42'>長崎県</option>
+  <!-- 구마모토현 -->
   <option value='43'>熊本県</option>
+  <!-- 오이타현 -->
   <option value='44'>大分県</option>
+  <!-- 미야자키현 -->
   <option value='45'>宮崎県</option>
+  <!-- 가고시마현 -->
   <option value='46'>鹿児島県</option>
+  <!-- 오키나와 -->
   <option value='47'>鹿児島県</option>
 </select>
 
