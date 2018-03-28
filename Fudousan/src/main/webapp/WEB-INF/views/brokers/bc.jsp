@@ -9,7 +9,7 @@
 <body>
 
 
-<form action="">
+<form action="" method="post">
 <!-- 거래종류 입력 -->
 <select name='거래종류' size='7'>
   <option value='' selected>-- 選択 --</option>
@@ -167,6 +167,7 @@
 
 <input type="submit" value="登録">
 <input type="reset" value="初期化">
+
 </form>
 
 
