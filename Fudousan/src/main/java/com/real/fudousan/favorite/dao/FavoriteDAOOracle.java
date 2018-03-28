@@ -1,5 +1,7 @@
 package com.real.fudousan.favorite.dao;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import com.real.fudousan.favorite.vo.Favorite;
 
@@ -47,5 +48,4 @@ public class FavoriteDAOOracle implements FavoriteDAO {
 		logger.info("사사용자 찜목록 검색 - Start");
 		return fslist;
 	}
-
 }

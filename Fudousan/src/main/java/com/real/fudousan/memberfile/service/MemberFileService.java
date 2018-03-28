@@ -1,5 +1,8 @@
 package com.real.fudousan.memberfile.service;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class MemberFileService {
 
 	/**

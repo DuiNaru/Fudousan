@@ -4,6 +4,6 @@ import java.util.List;
 
 import com.real.fudousan.agency.vo.Agency;
 
-public interface AgencyDAO {
+public interface AgencyMapper {
 	public List<Agency> selectByConfirmed(int confirm);
 }

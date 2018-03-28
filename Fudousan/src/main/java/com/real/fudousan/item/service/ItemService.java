@@ -1,7 +1,12 @@
 package com.real.fudousan.item.service;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.real.fudousan.item.vo.Item;
 
+@Service
 public class ItemService {
 	/**
 	 * 아이템을 추가한다.
@@ -39,6 +44,11 @@ public class ItemService {
 	 * @return
 	 */
 	public Item viewItem(int itemId) {
+		
+		return null;
+	}
+	
+	public List<Item> allList() {
 		
 		return null;
 	}

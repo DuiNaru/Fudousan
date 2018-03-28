@@ -2,8 +2,11 @@ package com.real.fudousan.entry.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.real.fudousan.entry.vo.Entry;
 
+@Service
 public class EntryService {
 
 	/**

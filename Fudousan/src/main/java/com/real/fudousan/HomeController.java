@@ -10,19 +10,19 @@ import com.real.fudousan.member.controller.MemberController;
 
 @Controller
 public class HomeController {
-    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     
     @RequestMapping(value="/", method=RequestMethod.GET)
     public String Home() {
-    	logger.info(this.getClass().getName() + "Start");
-    	logger.info(this.getClass().getName() + "End");
+    	logger.info("Home Start");
+    	logger.info("Home End");
     	return "home";
     }
 
     @RequestMapping(value="/prototype", method=RequestMethod.GET)
     public String prototype() {
-    	logger.info(this.getClass().getName() + "Start");
-    	logger.info(this.getClass().getName() + "End");
+    	logger.info("prototype Start");
+    	logger.info("prototype End");
     	return "prototype/prototype";
     }
 	
