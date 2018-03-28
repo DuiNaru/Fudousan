@@ -38,7 +38,7 @@ public class MemberController {
         model.addAttribute("rlist", rlist);
         model.addAttribute("flist", flist);
         logger.info("MC 일반 사용자의 마이페이지 접속  End");
-        return  "mypagecustomer";
+        return  "user/mypagecustomer";
 	}
 	
 	
