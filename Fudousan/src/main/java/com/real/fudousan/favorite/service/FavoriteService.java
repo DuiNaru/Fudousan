@@ -2,8 +2,11 @@ package com.real.fudousan.favorite.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.real.fudousan.favorite.vo.Favorite;
 
+@Service
 public class FavoriteService {
 	/**
 	 * 내가 찜한 매물 확인

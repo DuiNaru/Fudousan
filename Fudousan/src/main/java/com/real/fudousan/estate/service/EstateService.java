@@ -1,7 +1,10 @@
 package com.real.fudousan.estate.service;
 
+import org.springframework.stereotype.Service;
+
 import com.real.fudousan.estate.vo.Estate;
 
+@Service
 public class EstateService {
 	/**
 	 * 해당 매물 정보를 가져온다.

@@ -1,7 +1,10 @@
 package com.real.fudousan.item.service;
 
+import org.springframework.stereotype.Service;
+
 import com.real.fudousan.item.vo.Item;
 
+@Service
 public class ItemService {
 	/**
 	 * 아이템을 추가한다.

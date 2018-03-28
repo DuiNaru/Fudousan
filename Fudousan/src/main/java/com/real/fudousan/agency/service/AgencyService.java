@@ -2,9 +2,12 @@ package com.real.fudousan.agency.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.member.vo.Member;
 
+@Service
 public class AgencyService {
 
 	/**
