@@ -22,9 +22,10 @@ public class AgencyService {
 	 */
 	public List<Agency> unConfirmedList() {
 		logger.info("unConirmedList Start");
-		
+		List<Agency> result = null;
+		result = dao.selectByConfirmed(0);
 		logger.info("unConirmedList End");
-		return null;
+		return result;
 	}
 	
 	/**

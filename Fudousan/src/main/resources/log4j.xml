@@ -11,7 +11,7 @@
 	</appender>
 	
 	<!-- Application Loggers -->
-	<logger name="com.scitmaster.fudousan">
+	<logger name="com.real.fudousan">
 		<level value="debug" />
 	</logger>
 	

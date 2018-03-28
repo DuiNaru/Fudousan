@@ -54,20 +54,18 @@
 			, address_middle 
 			, address_small 
 			, address_sub 
-			, agency_id 
+			, agency_id
 			, biznum
 			, confirm
-			, agency.cre_date 
-			, agency.del_date
+			, agency.cre_date cre_date
+			, agency.del_date del_date
 			, gps_x 
 			, gps_y 
-			, name
-			, agency.text
-			-- TransType
-			, trans_type_id
+			, agency.name name
+			, agency.text text
+			, agency.trans_type_id trans_type_id
 			, trans_name
-			-- 멤버(member)
-			, member_id
+			, agency.member_id member_id
 			, email
 			, password
 			, phone
@@ -76,8 +74,7 @@
 			, member.cre_date member_cre_date
 			, member.del_date member_del_date
 			, designer
-			-- Permission
-			, permission_id
+			, permission.permission_id
 			, permission.name permission_name
 		FROM
 			agency
@@ -88,7 +85,7 @@
 		JOIN
 			trans_type
 		ON
-			member.trans_type_id = trans_type.trans_type_id
+			agency.trans_type_id = trans_type.trans_type_id
 		JOIN
 			permission
 		ON
