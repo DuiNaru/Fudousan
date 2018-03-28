@@ -14,7 +14,7 @@
  
  <form action="">
 <!-- 거래종류 입력 -->
-<select name='거래종류입력' size='7'>
+<select name='거래종류' size='7'>
   <option value='' selected>-- 選択 --</option>
   <option value='1'>アパート</option>
   <option value='2'>マンション</option>
