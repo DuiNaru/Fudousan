@@ -21,7 +21,7 @@ function favoriteSearch(){
 	var favoSearch = document.getElementById("favoSearch").value; //방검색
 	var memberId = document.getElementById("memberId").value; //사용자아이디
 	if(roomSearch == ''){
-		alert("검색할 방의 이름을 입력해주세요");
+		alert("검색할 찜한 방의 이름을 입력해주세요");
 		$('#roomSearch').focus();
 		return false;
 	}
@@ -42,19 +42,19 @@ function favoriteSearch(){
 			<tr>
 				<td><h3>3D 작성 매물 확인</h3></td>
 				<th><input type="text" id ="roomSearch" name="roomSearch">
-				<input type="hidden" id="memberId" name="memberId" value=0></th>
+				<input type="hidden" id="memberId" name="memberId" value=1></th>
 				<th><input type="button" onclick="roomSearch()" value="검색"></th>
 				<br>
 				
 			</tr>
 			<tr>
-				<%-- <c:forEach var="room" items="${rlist}">
+				<c:forEach var="room" items="${rlist}">
 			 		<td>
 			 			${room.estateId}
 			 		    <input type="button" value="꾸미기" onclick="ggumigi(${room.estateId})">
 			 			
 			 		</td>
-				</c:forEach> --%>
+				</c:forEach>
 			</tr>
 		</div>
 		
@@ -64,10 +64,10 @@ function favoriteSearch(){
 				<th><input type="text" name="favoSearch" id="favoSearch"></th><th><input type="button" onclick="favoriteSearch()" value="검색"></th><br>
 			</tr>
 			<tr>
-				<%-- <c:forEach var="favorite" items="${flist}">
+				 <c:forEach var="favorite" items="${flist}">
 			 		<td>${favorite.estate}<input type="button" value="팝업정보" onclick="popupInfoMaemul(${favorite.estate})">
 			 		</td>
-				</c:forEach> --%>
+				</c:forEach>
 			</tr>
 		</div>
 	

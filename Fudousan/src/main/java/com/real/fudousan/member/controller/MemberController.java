@@ -33,8 +33,11 @@ public class MemberController {
 	@RequestMapping(value="mypageNormalUser", method=RequestMethod.GET)
 	public String mypageNormalUser(Model model, Integer memberId){	
 		logger.info("MC 일반 사용자의 마이페이지 접속  Start");
+		memberId = 777;
         List<Room> rlist = Rservice.showAllRoom(memberId);
         List<Favorite> flist = Fservice.showAllFavorite(memberId);
+        
+        
         model.addAttribute("rlist", rlist);
         model.addAttribute("flist", flist);
         logger.info("MC 일반 사용자의 마이페이지 접속  End");

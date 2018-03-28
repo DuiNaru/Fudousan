@@ -4,10 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.real.fudousan.room.dao.RoomDAO">
+<mapper namespace="com.real.fudousan.room.dao.RoomMapper">
 
 <!-- 일반고객이 자신이 작성 한 매물 검색하는것 -->
-<select id="searchRoomInfo" resultType="room" parameterType="int">
+<select id="searchRoomInfo" resultType="room">
 	select
 		roomId
 		,estateId
@@ -18,11 +18,11 @@
 		,height
 		,floorTexture
 		,ceilingTexture
-		,memberId
+		,member_id AS memberId
 	from
 		room
 	where
-		estateId = #{estateId} and memberId = #{memberId}
+		estateId = #{0} and member_id = #{1}
 </select>
 	
 <!-- 일반 고객이 자신의 마이페이지에 접속하면 자신이 작성한 매물 전체 출력 -->
@@ -37,10 +37,11 @@
 		,height
 		,floorTexture
 		,ceilingTexture
-		,memberId
+		,member_id AS memberId
 	from
 		room
 	where
-		memberId = #{memberId}
+		member_id = #{member_id}
+		<!-- member_id = #{0} 파라메터가 1개니까 뭘 써도 상관없다-->
 </select>
 </mapper>
