@@ -35,13 +35,13 @@ public class FavoriteDAOOracle implements FavoriteDAO {
 	}
 
 	@Override
-	public List<Favorite> searchFavorite(int memberId,int estateId) {
+	public List<Favorite> searchFavorite(int memberId,int favoSearch) {
 		logger.info("사용자 찜목록 검색- Start");
 		
 		FavoriteMapper mapper = sqlsession.getMapper(FavoriteMapper.class);
 		List<Favorite> fslist = null;
 		try{
-			fslist = mapper.searchFavorite(memberId,estateId);
+			fslist = mapper.searchFavorite(memberId,favoSearch);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -22,9 +22,9 @@ public class FavoriteController {
 	
 	
 	@RequestMapping(value="searchFavorite",method=RequestMethod.GET)
-	public String saerchFavorite(Model model,int memberId, int estateId){
+	public String saerchFavorite(Model model,int memberId, int favoSearch){
 		List<Favorite> seacrhFavorite = null;
-		seacrhFavorite = service.showSearchFavorite(memberId, estateId);
+		seacrhFavorite = service.showSearchFavorite(memberId, favoSearch);
 		model.addAttribute("fslist",seacrhFavorite);
 		return "user/mypagecustomer";
 	}
