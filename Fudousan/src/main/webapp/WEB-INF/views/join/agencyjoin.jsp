@@ -131,10 +131,7 @@
 		    		</span>
 				</div>
 			</div>
-
-        
-        
-
+			
             <div class="form-group">
                <label for="InputDesigner">디자이너 이십니까?</label>
                <div class="btn-group" data-toggle="buttons">
@@ -146,6 +143,19 @@
 				  </label>
 				</div>
             </div>
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
          
             
             <div class="form-group text-center">
