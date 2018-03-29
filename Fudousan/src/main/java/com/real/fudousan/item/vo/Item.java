@@ -29,8 +29,11 @@ public class Item implements Serializable {
 	/** TEXT. */
 	private String text;
 
-	/** FILE. */
-	private String textureFile;
+	/** FILE_DIRECTORY. */
+	private String fileDirectory;
+	
+	/** MODEL_FILE_NAME. */
+	private String modelFileName;
 
 	/** 아이템 참고 사이트 목록. */
 	private Set<RefSite> refSiteSet;
