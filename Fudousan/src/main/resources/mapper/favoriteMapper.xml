@@ -155,16 +155,18 @@
 		<result property="renovation" 				column="Renovation"/>
 		<result property="remarks" 					column="Remarks"/>
 		<result property="delDate" 					column="DEL_DATE"/>
-		<association property="MunicipalityCode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
-		<association property="transtype" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
+		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
+		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
 	</resultMap>
+	
+		<!-- associationdml property는 속하는 객체의 vo변수명이다. -->
 	
 	<resultMap type="transtype" id="transTypeResultMap">
 		<id 	property="transTypeId" column="TRANS_TYPE_ID"/>
 		<result property="transName"   column="TRANS_NAME"/>
 	</resultMap>
 
-	<resultMap type="MunicipalityCode" id="MunicipalityCodeResultMap">
+	<resultMap type="municipalitycode" id="MunicipalityCodeResultMap">
 		<id 	property="municipalitycodeId" column="MunicipalityCode_ID"/>
 		<result property="codeName" 		  column="CODE_NAME"/>
 	</resultMap>

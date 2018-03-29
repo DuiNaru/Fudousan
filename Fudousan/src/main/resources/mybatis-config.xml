@@ -17,7 +17,7 @@
 		<typeAlias type="com.real.fudousan.entry.vo.Entry" alias="entry"/>
 		<typeAlias type="com.real.fudousan.estate.vo.Estate" alias="estate"/>
 		<typeAlias type="com.real.fudousan.estate.vo.TransType" alias="transtype"/>
-		<typeAlias type="com.real.fudousan.estate.vo.MunicipalityCode" alias="MunicipalityCode"/>
+		<typeAlias type="com.real.fudousan.estate.vo.MunicipalityCode" alias="municipalitycode"/>
 		<typeAlias type="com.real.fudousan.favorite.vo.Favorite" alias="favorite"/>
 		
 		<typeAlias type="com.real.fudousan.item.vo.Item" alias="item"/>
