@@ -11,7 +11,6 @@
 		<div class="header">
 			<h1>HEADER</h1>
 		</div>
-	
 		<!-- 회원가입(사용자) -->
 		<div id="join">
 			<form action="">

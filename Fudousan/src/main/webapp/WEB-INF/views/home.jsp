@@ -25,6 +25,9 @@
 </style>
 </head>
 <body>
+<!-- //테스트중 -->
+<a href="bc">okh test</a>
+
 	<!-- 로그인 모달 -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
@@ -155,6 +158,7 @@
     <script src="resources/js/jquery-3.3.1.js"></script>
 	<script src="resources/js/login.js"></script>
     <script src="resources/js/bootstrap.min.js"></script>
+<!-- --- -->
 
 
 </body>
