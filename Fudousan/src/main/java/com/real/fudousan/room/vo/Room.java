@@ -50,6 +50,7 @@ public class Room implements Serializable {
 	/** 회원 아이디. */
 	private int memberId;
 	
+	public Room(){}
 	public Room(Integer roomId, int estateId, String snapshot, String map, Date creDate, Date delDate, Integer heigth,
 			Texture floorTexture, Texture ceilingTexture, int memberId) {
 		super();

@@ -37,6 +37,8 @@ public class MemberController {
         List<Room> rlist = Rservice.showAllRoom(memberId);
         List<Favorite> flist = Fservice.showAllFavorite(memberId);
         
+        logger.info("room 리스트 출력 결과 : "+rlist);
+        logger.info("favorite 리스트 출력 결과 : "+ flist);
         
         model.addAttribute("rlist", rlist);
         model.addAttribute("flist", flist);

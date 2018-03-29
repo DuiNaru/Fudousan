@@ -20,4 +20,40 @@ public class MunicipalityCode implements Serializable {
 
 	/** NAME. */
 	private String codeName;
+
+	public MunicipalityCode() {}
+
+	public MunicipalityCode(Integer municipalitycodeId, String codeName) {
+		super();
+		this.municipalitycodeId = municipalitycodeId;
+		this.codeName = codeName;
+	}
+
+	public Integer getMunicipalitycodeId() {
+		return municipalitycodeId;
+	}
+
+	public void setMunicipalitycodeId(Integer municipalitycodeId) {
+		this.municipalitycodeId = municipalitycodeId;
+	}
+
+	public String getCodeName() {
+		return codeName;
+	}
+
+	public void setCodeName(String codeName) {
+		this.codeName = codeName;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "MunicipalityCode [municipalitycodeId=" + municipalitycodeId + ", codeName=" + codeName + "]";
+	}
+	
+	
+	
 }

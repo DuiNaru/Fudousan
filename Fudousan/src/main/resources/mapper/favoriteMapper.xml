@@ -164,7 +164,7 @@
 		<result property="transName"   column="TRANS_NAME"/>
 	</resultMap>
 
-	<resultMap type="MunicipalityCode" id="MunicipalityCode_IDResultMap">
+	<resultMap type="MunicipalityCode" id="MunicipalityCodeResultMap">
 		<id 	property="municipalitycodeId" column="MunicipalityCode_ID"/>
 		<result property="codeName" 		  column="CODE_NAME"/>
 	</resultMap>

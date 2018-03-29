@@ -22,6 +22,8 @@ public class TransType implements Serializable {
 
 	/** 거래 유형 이름. */
 	private String transName;
+	
+	
 
 	public Integer getTransTypeId() {
 		return transTypeId;

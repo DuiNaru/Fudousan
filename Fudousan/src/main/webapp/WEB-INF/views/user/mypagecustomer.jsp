@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="resources/jquery-3.3.1.js"></script>
+<script src="resources/js/jquery-3.3.1.js"></script>
 <script> 
 function roomSearch(){
 	var roomSearch = document.getElementById("roomSearch").value; //방검색
@@ -49,8 +49,7 @@ function favoriteSearch(){
 			</tr>
 			<tr>
 				<c:forEach var="room" items="${rlist}">
-			 		<td>
-			 			${room.estateId}
+			 		<td>${room.snapshot} ${room.map}
 			 		    <input type="button" value="꾸미기" onclick="ggumigi(${room.estateId})">
 			 			
 			 		</td>
@@ -65,7 +64,7 @@ function favoriteSearch(){
 			</tr>
 			<tr>
 				 <c:forEach var="favorite" items="${flist}">
-			 		<td>${favorite.estate}<input type="button" value="팝업정보" onclick="popupInfoMaemul(${favorite.estate})">
+			 		<td>${favorite.memberId}${favorite.creDate}<input type="button" value="팝업정보" onclick="popupInfoMaemul(${favorite.estate})">
 			 		</td>
 				</c:forEach>
 			</tr>
