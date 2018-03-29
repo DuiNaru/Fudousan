@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -10,7 +11,8 @@
     <title>boot</title>
 
     <!-- 부트스트랩 -->
-    <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
+	
 	
 	 <!-- font awesome -->
     
@@ -90,7 +92,7 @@
           <form role="form">
             <div class="form-group">
               <label for="InputName">name</label>
-              <input type="text" class="form-control" id="InputEmail" placeholder="이름">
+              <input type="text" class="form-control" id="InputName" placeholder="이름">
             </div>
             <div class="form-group">
               <label for="InputPassword1">password1</label>
@@ -179,11 +181,10 @@
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
-    <script src="../resources/js/bootstrap.min.js"></script>
+    <script src="<c:url value="/resources/js/bootstrap.min.js"></c:url>"></script>
+    
     
 <script type="text/javascript">
-
-
 function bs_input_file() {
 	$(".input-file").before(
 		function() {
@@ -213,12 +214,13 @@ function bs_input_file() {
 $(function() {
 	bs_input_file();
 });
-
-
-
-
-
 </script>
+
+
+
+
+
+
     
     
   </body>

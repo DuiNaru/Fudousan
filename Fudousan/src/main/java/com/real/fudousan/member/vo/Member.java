@@ -53,6 +53,9 @@ public class Member implements Serializable {
 
 	/** 디자이너 유무. */
 	private Integer designer;
+	
+	/** MEMBER_NAME. */
+	private String memberName;
 
 	public Integer getMemberId() {
 		return memberId;
@@ -134,6 +137,14 @@ public class Member implements Serializable {
 		this.designer = designer;
 	}
 
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -143,7 +154,7 @@ public class Member implements Serializable {
 	}
 
 	public Member(Integer memberId, String email, String password, String phone, String picture, String text,
-			Date creDate, Date delDate, Permission permission, Integer designer) {
+			Date creDate, Date delDate, Permission permission, Integer designer, String memberName) {
 		super();
 		this.memberId = memberId;
 		this.email = email;
@@ -155,13 +166,14 @@ public class Member implements Serializable {
 		this.delDate = delDate;
 		this.permission = permission;
 		this.designer = designer;
+		this.memberName = memberName;
 	}
 
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", email=" + email + ", password=" + password + ", phone=" + phone
 				+ ", picture=" + picture + ", text=" + text + ", creDate=" + creDate + ", delDate=" + delDate
-				+ ", permission=" + permission + ", designer=" + designer + "]";
+				+ ", permission=" + permission + ", designer=" + designer + ", memberName" + memberName + "]";
 	}
 
 	@Override
