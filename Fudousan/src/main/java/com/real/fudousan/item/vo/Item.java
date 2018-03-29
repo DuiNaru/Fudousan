@@ -37,4 +37,114 @@ public class Item implements Serializable {
 
 	/** 아이템 참고 사이트 목록. */
 	private Set<RefSite> refSiteSet;
+
+	public Item() {
+		super();
+	}
+
+	public Item(Integer itemId, ItemType itemType, String itemName, String text, String fileDirectory,
+			String modelFileName, Set<RefSite> refSiteSet) {
+		super();
+		this.itemId = itemId;
+		this.itemType = itemType;
+		this.itemName = itemName;
+		this.text = text;
+		this.fileDirectory = fileDirectory;
+		this.modelFileName = modelFileName;
+		this.refSiteSet = refSiteSet;
+	}
+
+	public Integer getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
+	}
+
+	public ItemType getItemType() {
+		return itemType;
+	}
+
+	public void setItemType(ItemType itemType) {
+		this.itemType = itemType;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public String getFileDirectory() {
+		return fileDirectory;
+	}
+
+	public void setFileDirectory(String fileDirectory) {
+		this.fileDirectory = fileDirectory;
+	}
+
+	public String getModelFileName() {
+		return modelFileName;
+	}
+
+	public void setModelFileName(String modelFileName) {
+		this.modelFileName = modelFileName;
+	}
+
+	public Set<RefSite> getRefSiteSet() {
+		return refSiteSet;
+	}
+
+	public void setRefSiteSet(Set<RefSite> refSiteSet) {
+		this.refSiteSet = refSiteSet;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [itemId=" + itemId + ", itemType=" + itemType + ", itemName=" + itemName + ", text=" + text
+				+ ", fileDirectory=" + fileDirectory + ", modelFileName=" + modelFileName + ", refSiteSet=" + refSiteSet
+				+ "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((itemId == null) ? 0 : itemId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Item other = (Item) obj;
+		if (itemId == null) {
+			if (other.itemId != null)
+				return false;
+		} else if (!itemId.equals(other.itemId))
+			return false;
+		return true;
+	}
+	
+	
 }

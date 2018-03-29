@@ -1,5 +1,7 @@
 package com.real.fudousan.item.dao;
 
-public interface ItemMapper {
+import com.real.fudousan.item.vo.Item;
 
+public interface ItemMapper {
+	public int insert(Item item);
 }

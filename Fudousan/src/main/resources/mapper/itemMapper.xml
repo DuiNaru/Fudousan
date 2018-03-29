@@ -6,5 +6,23 @@
 
 <mapper namespace="com.real.fudousan.item.dao.ItemMapper">
 
+
+	<insert id="insert" parameterType="item" keyColumn="item_id" keyProperty="itemId">
+		INSERT INTO
+			item
+			(
+				item_type_id,
+				item_name,
+				text,
+				model_file_name
+			)
+		VALUES
+			(
+				#{itemType.itemTypeId},
+				#{itemName},
+				#{text},
+				#{modelFileName}
+			)
+	</insert>
 	
 </mapper>

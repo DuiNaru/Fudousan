@@ -20,4 +20,64 @@ public class ItemType implements Serializable {
 
 	/** NAME. */
 	private String itmeTypeName;
+
+	public Integer getItemTypeId() {
+		return itemTypeId;
+	}
+
+	public void setItemTypeId(Integer itemTypeId) {
+		this.itemTypeId = itemTypeId;
+	}
+
+	public String getItmeTypeName() {
+		return itmeTypeName;
+	}
+
+	public void setItmeTypeName(String itmeTypeName) {
+		this.itmeTypeName = itmeTypeName;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public ItemType() {
+		super();
+	}
+
+	public ItemType(Integer itemTypeId, String itmeTypeName) {
+		super();
+		this.itemTypeId = itemTypeId;
+		this.itmeTypeName = itmeTypeName;
+	}
+
+	@Override
+	public String toString() {
+		return "ItemType [itemTypeId=" + itemTypeId + ", itmeTypeName=" + itmeTypeName + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((itemTypeId == null) ? 0 : itemTypeId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ItemType other = (ItemType) obj;
+		if (itemTypeId == null) {
+			if (other.itemTypeId != null)
+				return false;
+		} else if (!itemTypeId.equals(other.itemTypeId))
+			return false;
+		return true;
+	}
 }
