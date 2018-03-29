@@ -55,7 +55,7 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand" href="#" style="margin-bottom: 10px;">
+		      <a class="navbar-brand" href="../" style="margin-bottom: 10px;">
 		      	<img alt="Fudousan" src="../resources/image/logo2.png">
 		      </a>
 		    </div>
@@ -95,11 +95,11 @@
               <input type="text" class="form-control" id="InputName" placeholder="이름">
             </div>
             <div class="form-group">
-              <label for="InputPassword1">password1</label>
+              <label for="InputPassword1">password</label>
               <input type="password" class="form-control" id="InputPassword1" placeholder="비밀번호">
             </div>
             <div class="form-group">
-              <label for="InputPassword2">password2</label>
+              <label for="InputPassword2">confirm password</label>
               <input type="password" class="form-control" id="InputPassword2" placeholder="비밀번호 확인">
               <p class="help-block">비밀번호 확인을 위해 다시한번 입력 해 주세요</p>
             </div>
@@ -114,7 +114,7 @@
             
 			
 			<div class="input-group">
-			     <label for="InputText">Text</label>
+			     <label for="InputText">Member Introduce</label>
 			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요"></textarea>     
 			  
 			</div>
@@ -132,8 +132,6 @@
 				</div>
 			</div>
 
-        
-        
 
             <div class="form-group">
                <label for="InputDesigner">디자이너 이십니까?</label>
@@ -147,7 +145,24 @@
 				</div>
             </div>
          
-            
+         
+            <div class="form-group">
+                <label>약관 동의</label>
+              <div data-toggle="buttons">
+              <label class="btn btn-primary active">
+                  <span class="fa fa-check"></span>
+                  <input id="agree" type="checkbox" autocomplete="off" checked>
+              </label>
+              <a href="#">이용약관</a>에 동의합니다.
+              </div>
+            </div>
+         
+         
+         
+         
+         
+         
+       
             <div class="form-group text-center">
               <button type="submit" class="btn btn-info">회원가입<i class="fa fa-check spaceLeft"></i></button>
               <button type="submit" class="btn btn-warning">가입취소<i class="fa fa-times spaceLeft"></i></button>
