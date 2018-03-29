@@ -36,7 +36,7 @@
      
        
       }
-      
+   
     
       
 	</style>
@@ -82,7 +82,6 @@
  
  <!--  join form  -->
  
- 
  <article class="container">
         <div class="page-header">
           <h1>회원가입 <small>basic form</small></h1>
@@ -90,124 +89,85 @@
         <div class="col-md-6 col-md-offset-3">
           <form role="form">
             <div class="form-group">
-              <label for="InputEmail">이메일 주소</label>
-              <input type="email" class="form-control" id="InputEmail" placeholder="이메일 주소">
+              <label for="InputName">name</label>
+              <input type="text" class="form-control" id="InputEmail" placeholder="이름">
             </div>
             <div class="form-group">
-              <label for="InputPassword1">비밀번호</label>
+              <label for="InputPassword1">password1</label>
               <input type="password" class="form-control" id="InputPassword1" placeholder="비밀번호">
             </div>
             <div class="form-group">
-              <label for="InputPassword2">비밀번호 확인</label>
+              <label for="InputPassword2">password2</label>
               <input type="password" class="form-control" id="InputPassword2" placeholder="비밀번호 확인">
               <p class="help-block">비밀번호 확인을 위해 다시한번 입력 해 주세요</p>
             </div>
             <div class="form-group">
-              <label for="username">이름</label>
-              <input type="text" class="form-control" id="username" placeholder="이름을 입력해 주세요">
+              <label for="InputEmail">email</label>
+              <input type="email" class="form-control" id="InputEmail" placeholder="이메일 주소">
             </div>
             <div class="form-group">
-              <label for="username">휴대폰 인증</label>
-              <div class="input-group">
-                <input type="tel" class="form-control" id="username" placeholder="- 없이 입력해 주세요">
-                <span class="input-group-btn">
-                  <button class="btn btn-success">인증번호 전송<i class="fa fa-mail-forward spaceLeft"></i></button>
-                </span>
-              </div>
+              <label for="InputText">phone</label>
+              <input type="text" class="form-control" id="userphone" placeholder="전화번호를 입력해 주세요">
             </div>
+            
             <div class="form-group">
-              <label for="username">인증번호 입력</label>
-              <div class="input-group">
-                <input type="text" class="form-control" id="username" placeholder="인증번호">
-                <span class="input-group-btn">
-                  <button class="btn btn-success">인증번호 입력<i class="fa fa-edit spaceLeft"></i></button>
-                </span>
-              </div>
+              <label for="InputText">text</label>
+              <input type="text" class="form-control" id="usertext" placeholder="전화번호를 입력해 주세요">
             </div>
+          
+		
+			<div class="form-group">
+			    <label for="InputPhoto">photo</label>
+				<div class="input-group input-file" name="Fichier1">
+					<span class="input-group-btn">
+		        		<button class="btn btn-default btn-choose" type="button">Choose</button>
+		    		</span>
+		    		<input type="text" class="form-control" placeholder='Choose a file...' />
+		    		<span class="input-group-btn">
+		       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
+		    		</span>
+				</div>
+			</div>
+
+        
+        
+
             <div class="form-group">
-                <label>약관 동의</label>
-              <div data-toggle="buttons">
-              <label class="btn btn-primary active">
-                  <span class="fa fa-check"></span>
-                  <input id="agree" type="checkbox" autocomplete="off" checked>
-              </label>
-              <a href="#">이용약관</a>에 동의합니다.
-              </div>
+               <label for="InputDesigner">디자이너 이십니까?</label>
+               <div class="btn-group" data-toggle="buttons">
+				  <label class="btn btn-secondary active">
+				    <input type="radio" name="options" id="option1" autocomplete="off" checked> Yes
+				  </label>
+				  <label class="btn btn-secondary">
+				    <input type="radio" name="options" id="option2" autocomplete="off"> No
+				  </label>
+				</div>
             </div>
+         
+            
             <div class="form-group text-center">
               <button type="submit" class="btn btn-info">회원가입<i class="fa fa-check spaceLeft"></i></button>
               <button type="submit" class="btn btn-warning">가입취소<i class="fa fa-times spaceLeft"></i></button>
             </div>
           </form>
         </div>
- 
- 
- 
- 
 </article>
-<div class="container">
-	
-	
-	<div class="input-group">
-	  <span class="input-group-addon" id="basic-addon1">エージェント名</span>
-	  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-	</div>
-	
-	
-	<div class="input-group">
-	  <span class="input-group-addon" id="basic-addon1">営業鑑札番号</span>
-	  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-	</div>
-	
-	
-	<div class="input-group">
-	  <span class="input-group-addon" id="basic-addon1">住所（都道府県名）</span>
-	  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-	</div>
-	
-	
-	<div class="input-group">
-	  <span class="input-group-addon" id="basic-addon1">住所（市区町村名）</span>
-	  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-	</div>
-	
-	
-	<div class="input-group">
-	  <span class="input-group-addon" id="basic-addon1">住所（地区名）</span>
-	  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-	</div>
-	
-		<div class="input-group">
-	  <span class="input-group-addon" id="basic-addon1">住所（詳細）</span>
-	  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-</div>
-	
-	
-	
-	
-	
-	
-	
-  
+ 
+ 
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ <!-- script -->
 
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
     </script>
@@ -220,5 +180,46 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="../resources/js/bootstrap.min.js"></script>
+    
+<script type="text/javascript">
+
+
+function bs_input_file() {
+	$(".input-file").before(
+		function() {
+			if ( ! $(this).prev().hasClass('input-ghost') ) {
+				var element = $("<input type='file' class='input-ghost' style='visibility:hidden; height:0'>");
+				element.attr("name",$(this).attr("name"));
+				element.change(function(){
+					element.next(element).find('input').val((element.val()).split('\\').pop());
+				});
+				$(this).find("button.btn-choose").click(function(){
+					element.click();
+				});
+				$(this).find("button.btn-reset").click(function(){
+					element.val(null);
+					$(this).parents(".input-file").find('input').val('');
+				});
+				$(this).find('input').css("cursor","pointer");
+				$(this).find('input').mousedown(function() {
+					$(this).parents('.input-file').prev().click();
+					return false;
+				});
+				return element;
+			}
+		}
+	);
+}
+$(function() {
+	bs_input_file();
+});
+
+
+
+
+
+</script>
+    
+    
   </body>
 </html>
