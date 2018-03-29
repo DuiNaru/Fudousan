@@ -60,4 +60,18 @@ public class AdminController {
 		logger.info("confirm(" + agencyId +") End");
 		return "redirect:/admin/";
 	}
+	
+	@RequestMapping(value="itemAddPage", method=RequestMethod.GET)
+	public String itemAddPage() {
+		logger.info("itemAddPage Start");
+		logger.info("itemAddPage End");
+		return "/admin/itemaddpage";
+	}
+
+	@RequestMapping(value="itemAdd", method=RequestMethod.POST)
+	public String itemAdd() {
+		logger.info("itemAdd Start");
+		logger.info("itemAdd End");
+		return "redirect:/admin/";
+	}
 }

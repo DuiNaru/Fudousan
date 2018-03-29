@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>관리 페이지</title>
 <script>
 function estateId_delete(){
 	if(confirm("정말로 삭제할 건가요?") == true){
