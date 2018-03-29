@@ -86,7 +86,7 @@
  
  <article class="container">
         <div class="page-header">
-          <h1>회원가입 <small>basic form</small></h1>
+          <h1>공인중개업자 회원가입 <small>Agency basic form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <form role="form">
@@ -112,28 +112,26 @@
               <input type="text" class="form-control" id="userphone" placeholder="전화번호를 입력해 주세요">
             </div>
             
-            <div class="form-group">
-              <label for="InputText">text</label>
-              <input type="text" class="form-control" id="usertext" placeholder="전화번호를 입력해 주세요">
-            </div>
-          
+			
+			<div class="input-group">
+			     <label for="InputText">Text</label>
+			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요"></textarea>     
+			  
+			</div>
 		
 			<div class="form-group">
 			    <label for="InputPhoto">photo</label>
 				<div class="input-group input-file" name="Fichier1">
 					<span class="input-group-btn">
-		        		<button class="btn btn-default btn-choose" type="button">Choose</button>
+		        		<button class="btn btn-default btn-choose" type="button">선택</button>
 		    		</span>
-		    		<input type="text" class="form-control" placeholder='Choose a file...' />
+		    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요' />
 		    		<span class="input-group-btn">
 		       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
 		    		</span>
 				</div>
 			</div>
-
-        
-        
-
+			
             <div class="form-group">
                <label for="InputDesigner">디자이너 이십니까?</label>
                <div class="btn-group" data-toggle="buttons">
@@ -145,6 +143,19 @@
 				  </label>
 				</div>
             </div>
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
          
             
             <div class="form-group text-center">
@@ -180,41 +191,12 @@
 
     <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    
     <!-- 모든 컴파일된 플러그인을 포함합니다 (아래), 원하지 않는다면 필요한 각각의 파일을 포함하세요 -->
     <script src="<c:url value="/resources/js/bootstrap.min.js"></c:url>"></script>
     
-    
-<script type="text/javascript">
-function bs_input_file() {
-	$(".input-file").before(
-		function() {
-			if ( ! $(this).prev().hasClass('input-ghost') ) {
-				var element = $("<input type='file' class='input-ghost' style='visibility:hidden; height:0'>");
-				element.attr("name",$(this).attr("name"));
-				element.change(function(){
-					element.next(element).find('input').val((element.val()).split('\\').pop());
-				});
-				$(this).find("button.btn-choose").click(function(){
-					element.click();
-				});
-				$(this).find("button.btn-reset").click(function(){
-					element.val(null);
-					$(this).parents(".input-file").find('input').val('');
-				});
-				$(this).find('input').css("cursor","pointer");
-				$(this).find('input').mousedown(function() {
-					$(this).parents('.input-file').prev().click();
-					return false;
-				});
-				return element;
-			}
-		}
-	);
-}
-$(function() {
-	bs_input_file();
-});
-</script>
+ 	<!-- join.js -->
+    <script src="<c:url value="/resources/js/join.js"></c:url>"></script>
 
 
 
