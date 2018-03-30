@@ -1,5 +1,7 @@
 package com.real.fudousan.member.dao;
 
-public interface MemberMapper {
+import com.real.fudousan.member.vo.Member;
 
+public interface MemberMapper {
+	public Member selectMember(Member member);
 }

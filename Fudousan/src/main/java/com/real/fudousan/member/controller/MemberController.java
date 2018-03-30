@@ -11,10 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.member.service.MemberService;
+import com.real.fudousan.member.vo.Member;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
 
@@ -52,21 +54,29 @@ public class MemberController {
         return "";
     }
     
+    @ResponseBody
     @RequestMapping(value="login", method=RequestMethod.POST)
-    public String login(String id, String password, HttpSession session){
+    public int login(HttpSession session, String email, String password){
     	logger.info("로그인 시작");
     	
-    	boolean loginCheck = service.login(id, password);
+    	Member member = new Member();
+    	member.setEmail(email);
+    	member.setPassword(password);
     	
-    	if (loginCheck == false){
-    		logger.info("로그인 실패");
-    		return "";
+    	int loginCheck = service.login(member);
+    	
+    	if (loginCheck == 1){
+    		logger.info("로그인 실패 - 아이디 없음");
+    		return 1;
+    	}
+    	else if (loginCheck == 2){
+    		return 2;
     	}
     	else {
-    		session.setAttribute("loginID", id);
+    		session.setAttribute("loginEmail", email);
     		
     		logger.info("로그인 성공");
-    		return "";
+    		return 0;
     	}
     }
     
@@ -74,9 +84,9 @@ public class MemberController {
     public String logout(HttpSession session){
     	logger.info("로그아웃 시작");
     	
-    	session.removeAttribute("loginID");
+    	session.removeAttribute("loginEmail");
     	
     	logger.info("로그아웃 성공");
-    	return "";
+    	return "home";
     }
 }

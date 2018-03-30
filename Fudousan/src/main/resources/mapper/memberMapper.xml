@@ -5,6 +5,17 @@
 
 
 <mapper namespace="com.real.fudousan.member.dao.MemberMapper">
-
-	
+	<select id="selectMember" parameterType="member" resultType="member">
+		SELECT
+			*
+		FROM
+			member
+		WHERE
+			<if test="email != null">
+				email=#{email}
+			</if>
+			<if test="phone != null">
+				phone=#{phone}
+			</if>
+	</select>
 </mapper>

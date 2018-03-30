@@ -14,25 +14,20 @@ public class MemberService {
 
 	/**
 	 * 로그인
-	 * @param id 아이디
-	 * @param pw 비밀번호
-	 * @return
+	 * @param member
+	 * @return [1: not found id] [2: incorrect password] [3: login success]
 	 */
-	public boolean login(String id, String pw) {
-		if(dao.select(id, pw) == null) {
-			return false;
-		}
-		return true;
-	}
-	
-	/**
-	 * 로그아웃
-	 * @param id 아이디
-	 * @return
-	 */
-	public boolean logout(String id) {
+	public int login(Member member) {
+		Member result = dao.select(member);
 		
-		return false;
+		if (result == null){
+			return 1;
+		}
+		else if (!result.getPassword().equals(member.getPassword())){
+			return 2;
+		}
+		
+		return 0;
 	}
 	
 	/**

@@ -162,8 +162,6 @@ function onDocumentMouseMove(event) {
 			var intersects = raycaster.intersectObjects([plane]);
 			console.log(intersects);
 			for ( var i = 0; i < intersects.length; i++ ) {
-				console.log(intersects[ i ]);
-				console.log(chair);
 				chair.position.copy(intersects[i].point);
 			}
 		}
@@ -172,4 +170,6 @@ function onDocumentMouseMove(event) {
 function onDocumentMouseUp(event) {
 	isSelected = false;
 	controls.enabled = true;
+	console.log(chair);
+	
 }
