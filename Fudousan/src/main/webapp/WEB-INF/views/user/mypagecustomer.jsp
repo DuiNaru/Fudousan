@@ -51,7 +51,6 @@ function favoriteSearch(){
 				<c:forEach var="room" items="${rlist}">
 			 		<td>${room.snapshot} ${room.map}
 			 		    <input type="button" value="꾸미기" onclick="ggumigi(${room.estateId})">
-			 			
 			 		</td>
 				</c:forEach>
 			</tr>
