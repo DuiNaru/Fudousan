@@ -7,4 +7,6 @@ import com.real.fudousan.advice.vo.Advice;
 public interface AdviceMapper {
 
 	public List<Advice> normalUserHelpCall(int id);
+	
+	public List<Advice> reverseCall(int id);
 }

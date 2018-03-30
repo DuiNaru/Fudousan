@@ -30,8 +30,9 @@ public class AdviceService {
 	 * @return
 	 */
 	public List<Advice> getRequestedList(int id) {
-		
-		return null;
+		List<Advice> reverseCall = null;
+		reverseCall = dao.reverseCall(id);
+		return reverseCall;
 	}
 	
 	/**

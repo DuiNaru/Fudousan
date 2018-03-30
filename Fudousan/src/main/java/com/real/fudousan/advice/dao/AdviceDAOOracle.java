@@ -33,4 +33,18 @@ public class AdviceDAOOracle implements AdviceDAO {
 		return helpCall;
 	}
 
+	@Override
+	public List<Advice> reverseCall(int id) {
+		logger.info("Advice_DAOORACLE_역요청 받기 Start");
+		AdviceMapper mapper = sqlsession.getMapper(AdviceMapper.class);
+		List<Advice> reverseCall = null;
+		try{
+			reverseCall = mapper.reverseCall(id);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("Advice_DAOORACLE_역요청 받기 End");
+		return reverseCall;
+	}
+
 }

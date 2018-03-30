@@ -78,8 +78,8 @@ function favoriteSearch(){
 			</tr>
 			<tr>
 				<td><h3>인테리어 업자가 보낸 요청 목록</h3><br></td>
-				<c:forEach var="helpRes" items="${helpResList}">
-			 		<td>${helpRes.name}님이 ${user.name }님의 요청을 ${helpRes.answer } </td>
+				<c:forEach var="helpRes" items="${rclist}">
+			 		<td>${helpRes.requestedMemeberId}님이 ${user.requestMemberId }님의 요청을 승락하셨습니다. </td>
 				</c:forEach>
 			</tr>
 		</div>
