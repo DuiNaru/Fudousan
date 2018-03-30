@@ -12,5 +12,12 @@ public class MemberDAOOracle implements MemberDAO {
 		// TODO 직접 Mybatis로 id와 pw 검색해서 Member 반환
 		return null;
 	}
+	
+	// 회원 가입  
+	@Override
+	public int insertMember(Member member){
+		
+		return 0; 
+	}
 
 }
