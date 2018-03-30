@@ -18,9 +18,10 @@ public class AdviceService {
 	 * @param id 신청한 사람
 	 * @return
 	 */
-	public List<Advice> getRequestList(String id) {
-		
-		return null;
+	public List<Advice> getRequestList(int id) {
+		List<Advice> HelpCall = null;
+		HelpCall = dao.normalUserHelpCall(id);
+		return HelpCall;
 	}
 	
 	/**
@@ -28,7 +29,7 @@ public class AdviceService {
 	 * @param id
 	 * @return
 	 */
-	public List<Advice> getRequestedList(String id) {
+	public List<Advice> getRequestedList(int id) {
 		
 		return null;
 	}

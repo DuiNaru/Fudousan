@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.real.fudousan.advice.service.AdviceService;
+import com.real.fudousan.advice.vo.Advice;
 import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.member.service.MemberService;
@@ -29,6 +31,8 @@ public class MemberController {
 	private RoomService Rservice;
 	@Autowired
 	private FavoriteService Fservice;
+	@Autowired
+	private AdviceService Aservice;
     
 	@RequestMapping(value="mypageNormalUser", method=RequestMethod.GET)
 	public String mypageNormalUser(Model model, Integer memberId){	
@@ -36,12 +40,13 @@ public class MemberController {
 		memberId = 1;
         List<Room> rlist = Rservice.showAllRoom(memberId);
         List<Favorite> flist = Fservice.showAllFavorite(memberId);
-        
-        logger.info("room 리스트 출력 결과 : "+rlist);
-        logger.info("favorite 리스트 출력 결과 : "+ flist);
-        
+        List<Advice> alist = Aservice.getRequestList(memberId);
+        logger.info("사용자가 꾸미는 매물 리스트 출력 결과 : "+rlist);
+        logger.info("사용자의 찜목록  출력 결과 : "+ flist);
+        logger.info("사용자가 도움을 요청한 기록 출력 결과 : "+ alist);
         model.addAttribute("rlist", rlist);
         model.addAttribute("flist", flist);
+        model.addAttribute("alist", alist);
         logger.info("MC 일반 사용자의 마이페이지 접속  End");
         return  "user/mypagecustomer";
 	}
