@@ -33,5 +33,13 @@
 	where REQUEST_MEMBER_ID = #{requestMemberId} and STATE = 1
 </select>
 
+<update id="cancleAdvice" parameterType="advice">
+	update
+		advice
+	set 
+		state = 2
+	where
+		REQUEST_MEMBER_ID = #{requestMemberId} and REQUESTED_MEMEBER_ID = #{requestedMemeberId}
+</update>
 	
 </mapper>

@@ -47,4 +47,18 @@ public class AdviceDAOOracle implements AdviceDAO {
 		return reverseCall;
 	}
 
+	@Override
+	public boolean cancleAdvice(Advice advice) {
+		logger.info("캔슬어드바이스  Oracle Start");
+		AdviceMapper mapper = sqlsession.getMapper(AdviceMapper.class);
+		boolean realcancle = false;
+		try{
+			realcancle = mapper.cancleAdvice(advice);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("캔슬어드바이스  Oracle End");
+		return realcancle;
+	}
+
 }
