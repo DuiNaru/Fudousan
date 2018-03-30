@@ -34,4 +34,7 @@ public class Advice implements Serializable {
 
 	/** REQUEST_DATE. */
 	private Date requestDate;
+
+	/** STATE. */
+	private int state;
 }

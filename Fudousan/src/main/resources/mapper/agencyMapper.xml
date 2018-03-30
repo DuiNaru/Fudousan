@@ -39,6 +39,7 @@
 		<result property="phone" column="phone"/>
 		<result property="picture" column="picture"/>
 		<result property="text" column="member_text"/>
+		<result property="memberName" column="member_name"/>
 		<!-- Permission -->
 		<association property="permission" column="permission_id" javaType="com.real.fudousan.member.vo.Permission" resultMap="permissionResultMap"/>
 	</resultMap>
@@ -71,6 +72,7 @@
 			, phone
 			, picture
 			, member.text member_text
+			, member_name
 			, member.cre_date member_cre_date
 			, member.del_date member_del_date
 			, designer
