@@ -7,7 +7,17 @@
 <mapper namespace="com.real.fudousan.member.dao.MemberMapper">
 	<select id="selectMember" parameterType="member" resultType="member">
 		SELECT
-			*
+			member_id as "memberId",
+			email,
+			password,
+			phone,
+			picture,
+			text,
+			cre_date as "creDate",
+			del_date as "delDate",
+			permission_id as "permission",
+			designer,
+			member_name as "memberName"
 		FROM
 			member
 		WHERE
