@@ -16,7 +16,7 @@
 	<header class="col-sm-12">헤더</header>
 	<div class="col-sm-12">
 		<div class="col-sm-8">
-			<label class="col-sm-12">公認仲介士申請リスト</label>
+			<label class="col-sm-12">申し込み中不動産屋リスト</label>
 			<c:forEach var="agency" items="${agencylist }">
 				<div class="col-sm-12 form-group">
 					<label><c:out value="${agency.name }"/></label>

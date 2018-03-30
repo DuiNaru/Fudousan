@@ -6,8 +6,11 @@
 
 <mapper namespace="com.real.fudousan.item.dao.ItemMapper">
 
+	<select id="selectAll">
+	
+	</select>
 
-	<insert id="insert" parameterType="item" keyColumn="item_id" keyProperty="itemId">
+	<insert id="insert" parameterType="item">
 		INSERT INTO
 			item
 			(
@@ -23,6 +26,9 @@
 				#{text},
 				#{modelFileName}
 			)
+		<selectKey resultType="int" keyProperty="itemId" order="AFTER">
+			SELECT seq_item_id.currval FROM dual
+		</selectKey>
 	</insert>
 	
 </mapper>

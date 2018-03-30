@@ -25,7 +25,8 @@ public class FavoriteController {
 	public String saerchFavorite(Model model,int memberId, int favoSearch){
 		List<Favorite> seacrhFavorite = null;
 		seacrhFavorite = service.showSearchFavorite(memberId, favoSearch);
-		model.addAttribute("fslist",seacrhFavorite);
+		logger.info("찜하기 매물의 검색값  : "+favoSearch);
+		model.addAttribute("flist",seacrhFavorite);
 		return "user/mypagecustomer";
 	}
 }

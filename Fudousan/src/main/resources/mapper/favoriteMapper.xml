@@ -114,7 +114,7 @@
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
 		where
-			memberId = #{memberId} and estate = #{estateId}
+			favorite.MEMBER_ID = #{0} and favorite.ESTATE_ID = #{1}
 	</select>
 
 	

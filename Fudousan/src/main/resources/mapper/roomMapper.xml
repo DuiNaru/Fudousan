@@ -15,7 +15,7 @@
 		,map
 		,cre_date
 		,del_date
-		,height
+		,heigth
 		,floor_Texture_id
 		,ceiling_Texture_id
 		,member_id AS memberId
