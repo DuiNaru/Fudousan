@@ -22,6 +22,10 @@
 </style>
 </head>
 <body>
+<!-- //테스트중 -->
+<a href="okhtest">[okh test]</a> 
+<a href="mypageNormalUser" style="color: blue;">ahm test</a>
+
 	<!-- 로그인 모달 -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
@@ -47,7 +51,7 @@
 	</div>
 	<!-- 로그인 모달 끝 -->
 
-	<!-- <h1><a href="mypageNormalUser" style="color: blue;">손님페이지</a></h1> -->
+	<!--  -->
 	
 	<!-- Header -->
 	<nav class="navbar navbar-default" style="margin: auto 0"> 
