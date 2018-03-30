@@ -1,5 +1,7 @@
 package com.real.fudousan.item.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,12 +23,29 @@ public class ItemDAOOracle implements ItemDAO {
 		int result = -1;
 		try {
 			ItemMapper mapper = session.getMapper(ItemMapper.class);
-			result = mapper.insert(item);
+			mapper.insert(item);
+			// ID 가져오기
+			result = item.getItemId();
 		} catch(Exception e) {
 			e.printStackTrace();
 			result = -1;
 		}
 		logger.info("insert(" + item + ") End");
+		return result;
+	}
+
+	@Override
+	public List<Item> selectAll() {
+		logger.info("selectAll() Start");
+		List<Item> result = null;
+		try {
+			ItemMapper mapper = session.getMapper(ItemMapper.class);
+			result = mapper.selectAll();
+		} catch(Exception e) {
+			e.printStackTrace();
+			result = null;
+		}
+		logger.info("selectAll() End");
 		return result;
 	}
 

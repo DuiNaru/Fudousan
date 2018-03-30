@@ -30,7 +30,7 @@ public class ItemService {
 	 */
 	@Transactional
 	public int addItem(Item item, List<MultipartFile> files) {
-		logger.info("addItem(" + item + ") Start");
+		logger.info("addItem(" + item + ", " + files +  ") Start");
 		int result = -1;
 		if((result = itemDao.insert(item)) >= 0 && files != null) {
 			logger.info("DAO insert -> item ID : " + result);
@@ -38,7 +38,7 @@ public class ItemService {
 				FileService.saveFile(file, modelFileBaseDirectory + result, true);
 			}
 		}
-		logger.info("addItem(" + item + ") End");
+		logger.info("addItem(" + item + ", " + files +  ") End");
 		return result;
 	}
 	
@@ -73,7 +73,11 @@ public class ItemService {
 	}
 	
 	public List<Item> allList() {
+		logger.info("allList() Start");
+		List<Item> result = null;
+		result = itemDao.selectAll();
 		
-		return null;
+		logger.info("allList() end");
+		return result;
 	}
 }
