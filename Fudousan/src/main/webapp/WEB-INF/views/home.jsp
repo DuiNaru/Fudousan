@@ -26,7 +26,8 @@
 </head>
 <body>
 <!-- //테스트중 -->
-<a href="bc">okh test</a> <a href="mypageNormalUser" style="color: blue;">ahm test</a>
+<a href="okhtest">[okh test]</a> 
+<a href="mypageNormalUser" style="color: blue;">ahm test</a>
 
 	<!-- 로그인 모달 -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
