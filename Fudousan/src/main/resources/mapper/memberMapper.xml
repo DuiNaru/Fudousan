@@ -18,4 +18,31 @@
 				phone=#{phone}
 			</if>
 	</select>
+	
+	
+	<insert id="insertMember" parameterType="member">
+		insert into member 
+		{
+			email
+			,password
+			,phone
+			,picture
+			,text
+			,designer
+			,membername
+		
+		}
+		values 
+			name = #{name}
+			,password = #{password}
+			,phone = #{phone}
+			,picture = #{picture}
+			,text = #{text}
+			, designer = #{designer}
+			,membername = #{membername
+			} 
+	
+	
+	
+	</insert>
 </mapper>
