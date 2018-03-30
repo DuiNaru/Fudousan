@@ -53,13 +53,6 @@ public class MemberController {
         return  "user/mypagecustomer";
 	}
 	
-	
-    @RequestMapping(value="join", method=RequestMethod.GET)
-    public String joinForm(Model model){
-        logger.info("가입 시작");
-        logger.info("가입 끝");
-        return "";
-    }
     
     @ResponseBody
     @RequestMapping(value="login", method=RequestMethod.POST)

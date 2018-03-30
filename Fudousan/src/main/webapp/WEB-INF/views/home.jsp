@@ -2,9 +2,15 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
-	<title>Home</title>
-<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css">
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+    <title>boot</title>
 
+    <!-- 부트스트랩 -->
+    <link href="<c:url value="resources/css/bootstrap.min.css"/>" rel="stylesheet">
+	
 <style type="text/css">
 	  /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -83,9 +89,9 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Customer Join</a></li>
+							<li><a href="join/join">Customer Join</a></li>
 							<li class="divider"></li>
-							<li><a href="#">Agency Join</a></li>
+							<li><a href="join/agencyjoin">Agency Join</a></li>
 						</ul>
 					</li>
 				</ul>

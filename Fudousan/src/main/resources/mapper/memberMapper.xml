@@ -39,8 +39,7 @@
 			,picture = #{picture}
 			,text = #{text}
 			, designer = #{designer}
-			,membername = #{membername
-			} 
+			,membername = #{membername} 
 	
 	
 	
