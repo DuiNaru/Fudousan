@@ -28,19 +28,12 @@
 </style>
 </head>
 <body>
-<!-- //테스트중 -->
-<a href="okhtest">[okh test]</a> 
-<a href="mypageNormalUser" style="color: blue;">ahm test</a>
-
 	<!-- 로그인 모달 -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title">Login</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
+					<h4 class="modal-title">Login</h4>
 				</div>
 				
 				<div class="modal-body">
@@ -56,8 +49,6 @@
 		</div>
 	</div>
 	<!-- 로그인 모달 끝 -->
-
-	<!--  -->
 	
 	<!-- Header -->
 	<nav class="navbar navbar-default" style="margin: auto 0"> 
@@ -80,9 +71,11 @@
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
 				<c:if test="${sessionScope.loginEmail == null}">
+					<li id="loginNameTag"></li>
 					<li id="loginAtag"><a data-toggle="modal" href="#loginModal">Login</a></li>
 				</c:if>
 				<c:if test="${sessionScope.loginEmail != null}">
+					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout">Logout</a></li>
 				</c:if>
 				
@@ -94,6 +87,9 @@
 							<li><a href="join/agencyjoin">Agency Join</a></li>
 						</ul>
 					</li>
+					
+					<li><a href="okhtest">[okh test]</a></li>
+					<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->

@@ -2,6 +2,7 @@ package com.real.fudousan.member.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.member.dao.MemberDAO;
@@ -17,17 +18,10 @@ public class MemberService {
 	 * @param member
 	 * @return [1: not found id] [2: incorrect password] [3: login success]
 	 */
-	public int login(Member member) {
+	public Member login(Member member) {
 		Member result = dao.select(member);
 		
-		if (result == null){
-			return 1;
-		}
-		else if (!result.getPassword().equals(member.getPassword())){
-			return 2;
-		}
-		
-		return 0;
+		return result;
 	}
 	
 	/**

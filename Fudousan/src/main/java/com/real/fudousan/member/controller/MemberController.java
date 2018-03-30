@@ -56,27 +56,31 @@ public class MemberController {
     
     @ResponseBody
     @RequestMapping(value="login", method=RequestMethod.POST)
-    public int login(HttpSession session, String email, String password){
+    public String login(HttpSession session, String email, String password){
     	logger.info("로그인 시작");
     	
     	Member member = new Member();
     	member.setEmail(email);
     	member.setPassword(password);
     	
-    	int loginCheck = service.login(member);
+    	Member loginMember = service.login(member);
     	
-    	if (loginCheck == 1){
+    	if (loginMember == null){
     		logger.info("로그인 실패 - 아이디 없음");
-    		return 1;
+    		
+    		return "1";
     	}
-    	else if (loginCheck == 2){
-    		return 2;
+    	else if (!loginMember.getPassword().equals(password)){
+    		logger.info("로그인 실패 - 비밀번호 틀림");
+    		
+    		return "2";
     	}
     	else {
     		session.setAttribute("loginEmail", email);
+    		session.setAttribute("loginMemberName", loginMember.getMemberName());
     		
     		logger.info("로그인 성공");
-    		return 0;
+    		return loginMember.getMemberName();
     	}
     }
     
@@ -87,6 +91,6 @@ public class MemberController {
     	session.removeAttribute("loginEmail");
     	
     	logger.info("로그아웃 성공");
-    	return "home";
+    	return "redirect:/";
     }
 }
