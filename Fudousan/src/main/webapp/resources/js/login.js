@@ -1,19 +1,46 @@
+$(function(){
+	$('#loginBtn').on('click', function(){
+		formCheck();
+	});
+})
+
 function formCheck(){
-	var memberID = $('#memberID');
+	var memberEmail = $('#memberEmail');
 	var password = $('#password');
 	
-	if (memberID.val() == ''){
+	if (memberEmail.val() == ''){
 		alert('Input your name');
 		memberID.focus();
-		
-		return false;
 	}
-	if (password.val() == ''){
+	else if (password.val() == ''){
 		alert('Input your password');
 		password.focus();
-		
-		return false;
 	}
-	
-	return true;
+	else {
+		$.ajax({
+			url: 'login',
+			type: 'post',
+			data: {email: memberEmail.val(), password: password.val()},
+			dataType: 'text',
+			success: function(result){
+				if (result == '1'){
+					alert('Not found ID');
+				}
+				else if (result == '2'){
+					alert('Incorrect password');
+				}
+				else {
+					$('#loginModal').modal('hide');
+					
+					$('#loginAtag').html('<a href="/fudousan/logout">Logout</a>');
+					
+					var str = '<a>' + result + ', Welcome!</a>';
+					$('#loginNameTag').html(str);
+				}
+			},
+			error: function(err){
+				console.log(err);
+			}
+		});
+	}
 }

@@ -3,14 +3,19 @@ package com.real.fudousan.room.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.real.fudousan.room.controller.RoomController;
 import com.real.fudousan.room.dao.RoomDAO;
 import com.real.fudousan.room.vo.Room;
 
 @Service
 public class RoomService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
 	
 	@Autowired
 	private RoomDAO dao;
@@ -24,6 +29,7 @@ public class RoomService {
 	public List<Room> showMyRoom(int roomSearch, int memberId) {
 		List<Room> srlist = null;
 		srlist = dao.searchRoomInfo(roomSearch, memberId);
+		/*logger.info("srlist에 들어온값 "+srlist.get(0));*/
 		return srlist;
 	}
 	

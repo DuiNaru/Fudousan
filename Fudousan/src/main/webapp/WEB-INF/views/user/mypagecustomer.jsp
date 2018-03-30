@@ -51,7 +51,6 @@ function favoriteSearch(){
 				<c:forEach var="room" items="${rlist}">
 			 		<td>${room.snapshot} ${room.map}
 			 		    <input type="button" value="꾸미기" onclick="ggumigi(${room.estateId})">
-			 			
 			 		</td>
 				</c:forEach>
 			</tr>
@@ -73,8 +72,8 @@ function favoriteSearch(){
 		<div id="showHelper">
 			<tr>
 				<td><h3>내가 인테리어 업자에게 보낸 요청</h3><br></td>
-				<c:forEach var="helper" items="${helperList}">
-			 		<td>${helper.name}님에게 ${helper.pname } </td>
+				<c:forEach var="helper" items="${alist}">
+			 		<td>${helper.requestedMemeberId}님에게 도움을 요청하셨습니다.</td><br>
 				</c:forEach>
 			</tr>
 			<tr>

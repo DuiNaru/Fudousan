@@ -5,6 +5,53 @@
 
 
 <mapper namespace="com.real.fudousan.member.dao.MemberMapper">
-
+	<select id="selectMember" parameterType="member" resultType="member">
+		SELECT
+			member_id as "memberId",
+			email,
+			password,
+			phone,
+			picture,
+			text,
+			cre_date as "creDate",
+			del_date as "delDate",
+			permission_id as "permission",
+			designer,
+			member_name as "memberName"
+		FROM
+			member
+		WHERE
+			<if test="email != null">
+				email=#{email}
+			</if>
+			<if test="phone != null">
+				phone=#{phone}
+			</if>
+	</select>
 	
+	
+	<insert id="insertMember" parameterType="member">
+		insert into member 
+		{
+			email
+			,password
+			,phone
+			,picture
+			,text
+			,designer
+			,membername
+		
+		}
+		values 
+			name = #{name}
+			,password = #{password}
+			,phone = #{phone}
+			,picture = #{picture}
+			,text = #{text}
+			, designer = #{designer}
+			,membername = #{membername} 
+	
+	
+	
+	</insert>
 </mapper>

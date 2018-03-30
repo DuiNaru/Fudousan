@@ -5,7 +5,18 @@
 
 
 <mapper namespace="com.real.fudousan.advice.dao.AdviceMapper">
-
+<select id="normalUserHelpCall" resultType="advice" parameterType="advice">
+	select 
+		REQUEST_MEMBER_ID
+		,REQUESTED_MEMEBER_ID
+		,ROOM_ID
+		,CRE_DATE
+		,ID
+		,REQUEST_DATE
+	from 
+		advice
+	where REQUEST_MEMBER_ID = #{requestMemberId}
+</select>
 
 	
 </mapper>

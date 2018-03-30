@@ -34,4 +34,90 @@ public class Advice implements Serializable {
 
 	/** REQUEST_DATE. */
 	private Date requestDate;
+
+	/** STATE. */
+	private int state;
+
+	public Advice() {	}
+
+	public Advice(int requestMemberId, int requestedMemeberId, int roomId, Date creDate, String id, Date requestDate,
+			int state) {
+		super();
+		this.requestMemberId = requestMemberId;
+		this.requestedMemeberId = requestedMemeberId;
+		this.roomId = roomId;
+		this.creDate = creDate;
+		this.id = id;
+		this.requestDate = requestDate;
+		this.state = state;
+	}
+
+	public int getRequestMemberId() {
+		return requestMemberId;
+	}
+
+	public void setRequestMemberId(int requestMemberId) {
+		this.requestMemberId = requestMemberId;
+	}
+
+	public int getRequestedMemeberId() {
+		return requestedMemeberId;
+	}
+
+	public void setRequestedMemeberId(int requestedMemeberId) {
+		this.requestedMemeberId = requestedMemeberId;
+	}
+
+	public int getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+
+	public Date getCreDate() {
+		return creDate;
+	}
+
+	public void setCreDate(Date creDate) {
+		this.creDate = creDate;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Date getRequestDate() {
+		return requestDate;
+	}
+
+	public void setRequestDate(Date requestDate) {
+		this.requestDate = requestDate;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Advice [requestMemberId=" + requestMemberId + ", requestedMemeberId=" + requestedMemeberId + ", roomId="
+				+ roomId + ", creDate=" + creDate + ", id=" + id + ", requestDate=" + requestDate + ", state=" + state
+				+ "]";
+	}
+	
+	
 }
