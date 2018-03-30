@@ -3,29 +3,172 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
+<!-- 쿼리는 DB랑 맞추고  맵은 셀렉트한 쿼리문에 맞춘다. -->
 <mapper namespace="com.real.fudousan.favorite.dao.FavoriteMapper">
-	<select id="allFavorite" resultType="favorite" parameterType="int">
+	<select id="allFavorite" resultMap="FavoriteAll" parameterType="int">
 		select
-			memberId
-			,estate
-			,creDate
+			MEMBER_ID
+			,CRE_DATE
+			,favorite.estate_id estate_id
+			,estate.MunicipalityCode_ID MunicipalityCode_ID
+			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
+			,Region
+			,Prefecture
+			,Municipality
+			,DistrictName
+			,NearestStation
+			,TimeToNearestStation
+			,TradePrice
+			,PricePerUnit
+			,FloorPlan
+			,Area
+			,UnitPrice
+			,LandShape
+			,Frontage
+			,TotalFloorArea
+			,BuildingYear
+			,Structure
+			,Use
+			,Purpose
+			,Direction
+			,Classification
+			,Breadth
+			,CityPlanning
+			,CoverageRatio
+			,FloorAreaRatio
+			,Period
+			,Renovation
+			,Remarks
+			,DEL_DATE
+			,TRANS_NAME
+			,CODE_NAME
 		from
 			favorite
+		join
+			estate
+		on
+			favorite.ESTATE_ID = estate.ESTATE_ID
+		join
+			municipalitycode
+		on
+			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
+		join
+			trans_type
+		on
+			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
 		where
-			memberId = #{memberId}
+			MEMBER_ID = #{MEMBER_ID}
 	</select>
 	
-	<select id="searchFavorite" resultType="favorite" parameterType="int">
+	
+	
+ 	<select id="searchFavorite" resultMap="FavoriteAll" parameterType="int">
 		select
-			memberId
-			,estate
-			,creDate
+			MEMBER_ID
+			,CRE_DATE
+			,favorite.estate_id estate_id
+			,estate.MunicipalityCode_ID MunicipalityCode_ID
+			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
+			,Region
+			,Prefecture
+			,Municipality
+			,DistrictName
+			,NearestStation
+			,TimeToNearestStation
+			,TradePrice
+			,PricePerUnit
+			,FloorPlan
+			,Area
+			,UnitPrice
+			,LandShape
+			,Frontage
+			,TotalFloorArea
+			,BuildingYear
+			,Structure
+			,Use
+			,Purpose
+			,Direction
+			,Classification
+			,Breadth
+			,CityPlanning
+			,CoverageRatio
+			,FloorAreaRatio
+			,Period
+			,Renovation
+			,Remarks
+			,DEL_DATE
+			,TRANS_NAME
+			,CODE_NAME
 		from
 			favorite
+		join
+			estate
+		on
+			favorite.ESTATE_ID = estate.ESTATE_ID
+		join
+			municipalitycode
+		on
+			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
+		join
+			trans_type
+		on
+			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
 		where
-			memberId = #{memberID} and estate = #{estateId}
+			favorite.MEMBER_ID = #{0} and favorite.ESTATE_ID = #{1}
 	</select>
+
 	
+	
+	<resultMap type="favorite" id="FavoriteAll">
+		<id 		 property="memberId" column="MEMBER_ID"/>
+		<result 	 property="creDate"  column="CRE_DATE"/>
+		<association property="estate"   column="estate_id" javaType="com.real.fudousan.estate.vo.Estate" resultMap="estateResultMap"/>
+	</resultMap>
+	<!-- 객체 별칭이 type  property가 vo 필드명   column이 DB이름-->
+	<resultMap type="estate" id="estateResultMap">
+		<id 	property="estateId" 				column="ESTATE_ID"/>
+		<result property="region" 					column="Region"/>
+		<result property="prefecture" 				column="Prefecture"/>
+		<result property="municipality" 			column="Municipality"/>
+		<result property="districtname" 			column="DistrictName"/>
+		<result property="neareststation" 			column="NearestStation"/>
+		<result property="timetoneareststation"		column="TimeToNearestStation"/>
+		<result property="tradeprice" 				column="TradePrice"/>
+		<result property="priceperunit" 			column="PricePerUnit"/>
+		<result property="floorplan" 				column="FloorPlan"/>
+		<result property="area" 					column="Area"/>
+		<result property="unitprice" 				column="UnitPrice"/>
+		<result property="landshape" 				column="LandShape"/>
+		<result property="frontage" 				column="Frontage"/>
+		<result property="totalfloorarea" 			column="TotalFloorArea"/>
+		<result property="buildingyear" 			column="BuildingYear"/>
+		<result property="structure" 				column="Structure"/>
+		<result property="use" 						column="Use"/>
+		<result property="purpose" 					column="Purpose"/>
+		<result property="direction" 				column="Direction"/>
+		<result property="classification" 			column="Classification"/>
+		<result property="breadth" 					column="Breadth"/>
+		<result property="cityplanning" 			column="CityPlanning"/>
+		<result property="coverageratio" 			column="CoverageRatio"/>
+		<result property="floorarearatio" 			column="FloorAreaRatio"/>
+		<result property="period" 					column="Period"/>
+		<result property="renovation" 				column="Renovation"/>
+		<result property="remarks" 					column="Remarks"/>
+		<result property="delDate" 					column="DEL_DATE"/>
+		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
+		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
+	</resultMap>
+	
+		<!-- associationdml property는 속하는 객체의 vo변수명이다. -->
+	
+	<resultMap type="transtype" id="transTypeResultMap">
+		<id 	property="transTypeId" column="TRANS_TYPE_ID"/>
+		<result property="transName"   column="TRANS_NAME"/>
+	</resultMap>
+
+	<resultMap type="municipalitycode" id="MunicipalityCodeResultMap">
+		<id 	property="municipalitycodeId" column="MunicipalityCode_ID"/>
+		<result property="codeName" 		  column="CODE_NAME"/>
+	</resultMap>
 	
 </mapper>

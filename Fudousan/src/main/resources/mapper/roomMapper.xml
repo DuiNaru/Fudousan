@@ -9,34 +9,34 @@
 <!-- 일반고객이 자신이 작성 한 매물 검색하는것 -->
 <select id="searchRoomInfo" resultType="room">
 	select
-		roomId
-		,estateId
+		room_id
+		,estate_id
 		,snapshot
 		,map
-		,creDate
-		,delDate
-		,height
-		,floorTexture
-		,ceilingTexture
+		,cre_date
+		,del_date
+		,heigth
+		,floor_Texture_id
+		,ceiling_Texture_id
 		,member_id AS memberId
 	from
 		room
 	where
-		estateId = #{0} and member_id = #{1}
+		estate_Id = #{0} and member_id = #{1}
 </select>
 	
 <!-- 일반 고객이 자신의 마이페이지에 접속하면 자신이 작성한 매물 전체 출력 -->
 <select id="allMyRoom" resultType="room" parameterType="int">
 	select
-		roomId
-		,estateId
-		,snapshot
-		,map
-		,creDate
-		,delDate
-		,height
-		,floorTexture
-		,ceilingTexture
+		ROOM_ID
+		,ESTATE_ID
+		,SNAPSHOT
+		,MAP
+		,CRE_DATE
+		,DEL_DATE
+		,HEIGTH
+		,FLOOR_TEXTURE_ID
+		,CEILING_TEXTURE_ID
 		,member_id AS memberId
 	from
 		room

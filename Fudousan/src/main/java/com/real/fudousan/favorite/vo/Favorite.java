@@ -25,4 +25,49 @@ public class Favorite implements Serializable {
 
 	/** DATE. */
 	private Date creDate;
+
+	public Favorite(){}
+	
+	public Favorite(int memberId, Estate estate, Date creDate) {
+		super();
+		this.memberId = memberId;
+		this.estate = estate;
+		this.creDate = creDate;
+	}
+
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
+	public Estate getEstate() {
+		return estate;
+	}
+
+	public void setEstate(Estate estate) {
+		this.estate = estate;
+	}
+
+	public Date getCreDate() {
+		return creDate;
+	}
+
+	public void setCreDate(Date creDate) {
+		this.creDate = creDate;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
+	
+	@Override
+	public String toString() {
+		return "Favorite [memberId=" + memberId + ", estate=" + estate + ", creDate=" + creDate + "]";
+	}
+
 }

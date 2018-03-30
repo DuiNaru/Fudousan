@@ -24,8 +24,9 @@ public class RoomController {
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
 	public String searchMyRoom(Model model,int roomSearch,int memberId){
 		logger.info("RoomController-searchMyRoom_Start");
+		logger.info("매물 이름 검색한 결과 :  " + roomSearch);
 		List<Room> srlist = service.showMyRoom(roomSearch, memberId);
-		model.addAttribute("srlist",srlist);
+		model.addAttribute("rlist",srlist);
 		logger.info("RoomController-searchMyRoom_End");
 		return "user/mypagecustomer";
 	}

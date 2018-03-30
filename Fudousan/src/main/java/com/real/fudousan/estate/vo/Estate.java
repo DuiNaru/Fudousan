@@ -113,4 +113,317 @@ public class Estate implements Serializable {
 
 	/** DEL_DATE. */
 	private Date delDate;
+
+	public Estate() {}
+
+	public Estate(Integer estateId, TransType transType, String region, MunicipalityCode municipalitycode,
+			String prefecture, String municipality, String districtname, String neareststation,
+			Integer timetoneareststation, Integer tradeprice, Integer priceperunit, String floorplan, Integer area,
+			Integer unitprice, String landshape, Integer frontage, Integer totalfloorarea, String buildingyear,
+			String structure, String use, String purpose, String direction, String classification, Integer breadth,
+			String cityplanning, Integer coverageratio, Integer floorarearatio, String period, String renovation,
+			String remarks, Date delDate) {
+		super();
+		this.estateId = estateId;
+		this.transType = transType;
+		this.region = region;
+		this.municipalitycode = municipalitycode;
+		this.prefecture = prefecture;
+		this.municipality = municipality;
+		this.districtname = districtname;
+		this.neareststation = neareststation;
+		this.timetoneareststation = timetoneareststation;
+		this.tradeprice = tradeprice;
+		this.priceperunit = priceperunit;
+		this.floorplan = floorplan;
+		this.area = area;
+		this.unitprice = unitprice;
+		this.landshape = landshape;
+		this.frontage = frontage;
+		this.totalfloorarea = totalfloorarea;
+		this.buildingyear = buildingyear;
+		this.structure = structure;
+		this.use = use;
+		this.purpose = purpose;
+		this.direction = direction;
+		this.classification = classification;
+		this.breadth = breadth;
+		this.cityplanning = cityplanning;
+		this.coverageratio = coverageratio;
+		this.floorarearatio = floorarearatio;
+		this.period = period;
+		this.renovation = renovation;
+		this.remarks = remarks;
+		this.delDate = delDate;
+	}
+
+	public Integer getEstateId() {
+		return estateId;
+	}
+
+	public void setEstateId(Integer estateId) {
+		this.estateId = estateId;
+	}
+
+	public TransType getTransType() {
+		return transType;
+	}
+
+	public void setTransType(TransType transType) {
+		this.transType = transType;
+	}
+
+	public String getRegion() {
+		return region;
+	}
+
+	public void setRegion(String region) {
+		this.region = region;
+	}
+
+	public MunicipalityCode getMunicipalitycode() {
+		return municipalitycode;
+	}
+
+	public void setMunicipalitycode(MunicipalityCode municipalitycode) {
+		this.municipalitycode = municipalitycode;
+	}
+
+	public String getPrefecture() {
+		return prefecture;
+	}
+
+	public void setPrefecture(String prefecture) {
+		this.prefecture = prefecture;
+	}
+
+	public String getMunicipality() {
+		return municipality;
+	}
+
+	public void setMunicipality(String municipality) {
+		this.municipality = municipality;
+	}
+
+	public String getDistrictname() {
+		return districtname;
+	}
+
+	public void setDistrictname(String districtname) {
+		this.districtname = districtname;
+	}
+
+	public String getNeareststation() {
+		return neareststation;
+	}
+
+	public void setNeareststation(String neareststation) {
+		this.neareststation = neareststation;
+	}
+
+	public Integer getTimetoneareststation() {
+		return timetoneareststation;
+	}
+
+	public void setTimetoneareststation(Integer timetoneareststation) {
+		this.timetoneareststation = timetoneareststation;
+	}
+
+	public Integer getTradeprice() {
+		return tradeprice;
+	}
+
+	public void setTradeprice(Integer tradeprice) {
+		this.tradeprice = tradeprice;
+	}
+
+	public Integer getPriceperunit() {
+		return priceperunit;
+	}
+
+	public void setPriceperunit(Integer priceperunit) {
+		this.priceperunit = priceperunit;
+	}
+
+	public String getFloorplan() {
+		return floorplan;
+	}
+
+	public void setFloorplan(String floorplan) {
+		this.floorplan = floorplan;
+	}
+
+	public Integer getArea() {
+		return area;
+	}
+
+	public void setArea(Integer area) {
+		this.area = area;
+	}
+
+	public Integer getUnitprice() {
+		return unitprice;
+	}
+
+	public void setUnitprice(Integer unitprice) {
+		this.unitprice = unitprice;
+	}
+
+	public String getLandshape() {
+		return landshape;
+	}
+
+	public void setLandshape(String landshape) {
+		this.landshape = landshape;
+	}
+
+	public Integer getFrontage() {
+		return frontage;
+	}
+
+	public void setFrontage(Integer frontage) {
+		this.frontage = frontage;
+	}
+
+	public Integer getTotalfloorarea() {
+		return totalfloorarea;
+	}
+
+	public void setTotalfloorarea(Integer totalfloorarea) {
+		this.totalfloorarea = totalfloorarea;
+	}
+
+	public String getBuildingyear() {
+		return buildingyear;
+	}
+
+	public void setBuildingyear(String buildingyear) {
+		this.buildingyear = buildingyear;
+	}
+
+	public String getStructure() {
+		return structure;
+	}
+
+	public void setStructure(String structure) {
+		this.structure = structure;
+	}
+
+	public String getUse() {
+		return use;
+	}
+
+	public void setUse(String use) {
+		this.use = use;
+	}
+
+	public String getPurpose() {
+		return purpose;
+	}
+
+	public void setPurpose(String purpose) {
+		this.purpose = purpose;
+	}
+
+	public String getDirection() {
+		return direction;
+	}
+
+	public void setDirection(String direction) {
+		this.direction = direction;
+	}
+
+	public String getClassification() {
+		return classification;
+	}
+
+	public void setClassification(String classification) {
+		this.classification = classification;
+	}
+
+	public Integer getBreadth() {
+		return breadth;
+	}
+
+	public void setBreadth(Integer breadth) {
+		this.breadth = breadth;
+	}
+
+	public String getCityplanning() {
+		return cityplanning;
+	}
+
+	public void setCityplanning(String cityplanning) {
+		this.cityplanning = cityplanning;
+	}
+
+	public Integer getCoverageratio() {
+		return coverageratio;
+	}
+
+	public void setCoverageratio(Integer coverageratio) {
+		this.coverageratio = coverageratio;
+	}
+
+	public Integer getFloorarearatio() {
+		return floorarearatio;
+	}
+
+	public void setFloorarearatio(Integer floorarearatio) {
+		this.floorarearatio = floorarearatio;
+	}
+
+	public String getPeriod() {
+		return period;
+	}
+
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+
+	public String getRenovation() {
+		return renovation;
+	}
+
+	public void setRenovation(String renovation) {
+		this.renovation = renovation;
+	}
+
+	public String getRemarks() {
+		return remarks;
+	}
+
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+
+	public Date getDelDate() {
+		return delDate;
+	}
+
+	public void setDelDate(Date delDate) {
+		this.delDate = delDate;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Estate [estateId=" + estateId + ", transType=" + transType + ", region=" + region
+				+ ", municipalitycode=" + municipalitycode + ", prefecture=" + prefecture + ", municipality="
+				+ municipality + ", districtname=" + districtname + ", neareststation=" + neareststation
+				+ ", timetoneareststation=" + timetoneareststation + ", tradeprice=" + tradeprice + ", priceperunit="
+				+ priceperunit + ", floorplan=" + floorplan + ", area=" + area + ", unitprice=" + unitprice
+				+ ", landshape=" + landshape + ", frontage=" + frontage + ", totalfloorarea=" + totalfloorarea
+				+ ", buildingyear=" + buildingyear + ", structure=" + structure + ", use=" + use + ", purpose="
+				+ purpose + ", direction=" + direction + ", classification=" + classification + ", breadth=" + breadth
+				+ ", cityplanning=" + cityplanning + ", coverageratio=" + coverageratio + ", floorarearatio="
+				+ floorarearatio + ", period=" + period + ", renovation=" + renovation + ", remarks=" + remarks
+				+ ", delDate=" + delDate + "]";
+	}
+	
+	
+	
 }

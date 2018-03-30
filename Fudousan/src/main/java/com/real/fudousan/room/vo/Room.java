@@ -49,4 +49,114 @@ public class Room implements Serializable {
 
 	/** 회원 아이디. */
 	private int memberId;
+	
+	public Room(){}
+	public Room(Integer roomId, int estateId, String snapshot, String map, Date creDate, Date delDate, Integer heigth,
+			Texture floorTexture, Texture ceilingTexture, int memberId) {
+		super();
+		this.roomId = roomId;
+		this.estateId = estateId;
+		this.snapshot = snapshot;
+		this.map = map;
+		this.creDate = creDate;
+		this.delDate = delDate;
+		this.heigth = heigth;
+		this.floorTexture = floorTexture;
+		this.ceilingTexture = ceilingTexture;
+		this.memberId = memberId;
+	}
+
+	public Integer getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(Integer roomId) {
+		this.roomId = roomId;
+	}
+
+	public int getEstateId() {
+		return estateId;
+	}
+
+	public void setEstateId(int estateId) {
+		this.estateId = estateId;
+	}
+
+	public String getSnapshot() {
+		return snapshot;
+	}
+
+	public void setSnapshot(String snapshot) {
+		this.snapshot = snapshot;
+	}
+
+	public String getMap() {
+		return map;
+	}
+
+	public void setMap(String map) {
+		this.map = map;
+	}
+
+	public Date getCreDate() {
+		return creDate;
+	}
+
+	public void setCreDate(Date creDate) {
+		this.creDate = creDate;
+	}
+
+	public Date getDelDate() {
+		return delDate;
+	}
+
+	public void setDelDate(Date delDate) {
+		this.delDate = delDate;
+	}
+
+	public Integer getHeigth() {
+		return heigth;
+	}
+
+	public void setHeigth(Integer heigth) {
+		this.heigth = heigth;
+	}
+
+	public Texture getFloorTexture() {
+		return floorTexture;
+	}
+
+	public void setFloorTexture(Texture floorTexture) {
+		this.floorTexture = floorTexture;
+	}
+
+	public Texture getCeilingTexture() {
+		return ceilingTexture;
+	}
+
+	public void setCeilingTexture(Texture ceilingTexture) {
+		this.ceilingTexture = ceilingTexture;
+	}
+
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Room [roomId=" + roomId + ", estateId=" + estateId + ", snapshot=" + snapshot + ", map=" + map
+				+ ", creDate=" + creDate + ", delDate=" + delDate + ", heigth=" + heigth + ", floorTexture="
+				+ floorTexture + ", ceilingTexture=" + ceilingTexture + ", memberId=" + memberId + "]";
+	}
+	
+	
+	
 }

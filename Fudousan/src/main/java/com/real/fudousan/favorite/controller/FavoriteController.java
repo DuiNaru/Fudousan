@@ -22,10 +22,11 @@ public class FavoriteController {
 	
 	
 	@RequestMapping(value="searchFavorite",method=RequestMethod.GET)
-	public String saerchFavorite(Model model,int memberId, int estateId){
+	public String saerchFavorite(Model model,int memberId, int favoSearch){
 		List<Favorite> seacrhFavorite = null;
-		seacrhFavorite = service.showSearchFavorite(memberId, estateId);
-		model.addAttribute("fslist",seacrhFavorite);
+		seacrhFavorite = service.showSearchFavorite(memberId, favoSearch);
+		logger.info("찜하기 매물의 검색값  : "+favoSearch);
+		model.addAttribute("flist",seacrhFavorite);
 		return "user/mypagecustomer";
 	}
 }
