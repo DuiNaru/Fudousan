@@ -36,12 +36,10 @@ public class AdviceController {
 		Advice advice = new Advice();
 		advice.setRequestMemberId(customer);
 		advice.setRequestedMemeberId(interior);
+		
 		boolean tfresult = false;
 		tfresult = Aservice.cancelAdvice(advice);
 		model.addAttribute("tfresult",tfresult);
-		logger.info("tfresult : "+tfresult);
-		logger.info("Advice_Controller 사용자의 도움요청 취소 End");
-		
 		
         List<Favorite> flist = Fservice.showAllFavorite(customer);
         List<Advice> alist = Aservice.getRequestList(customer);
@@ -52,7 +50,7 @@ public class AdviceController {
         model.addAttribute("flist", flist);
         model.addAttribute("alist", alist);
         model.addAttribute("rclist", rclist);
-		
+		logger.info("Advice_Controller 사용자의 도움요청 취소 End");
 	       return  "user/mypagecustomer";
 	}
 }
