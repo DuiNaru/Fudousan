@@ -26,5 +26,12 @@ public class MemberDAOOracle implements MemberDAO {
 		
 		return result;
 	}
+	
+	// 회원 가입  
+	@Override
+	public int insertMember(Member member){
+		
+		return 0; 
+	}
 
 }

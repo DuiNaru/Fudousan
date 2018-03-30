@@ -93,7 +93,7 @@
  
  <article class="container">
         <div class="page-header">
-          <h1>공인중개업자 회원가입 <small>Agency basic form</small></h1>
+          <h1>공인중개업자 회원정보 수정 <small>Agency basic update form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <form role="form">
@@ -284,23 +284,13 @@
 			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="중개소 소개를 입력해 주세요"></textarea>       
 			</div>
          	
-         	<br>
-            <div class="form-group">
-                <label>약관 동의</label>
-              <div data-toggle="buttons">
-              <label class="btn btn-primary active">
-                  <span class="fa fa-check"></span>
-                  <input id="agree" type="checkbox" autocomplete="off" checked>
-              </label>
-              <a href="#">이용약관</a>에 동의합니다.
-              </div>
-            </div>
+  
          
          
  			<br>
             <div class="form-group text-center">
-              <button type="submit" class="btn btn-info">회원가입<i class="fa fa-check spaceLeft"></i></button>
-              <button type="submit" class="btn btn-warning">가입취소<i class="fa fa-times spaceLeft"></i></button>
+              <button type="submit" class="btn btn-info">회원정보 수정<i class="fa fa-check spaceLeft"></i></button>
+              <button type="submit" class="btn btn-warning">회원정보 수정 취소<i class="fa fa-times spaceLeft"></i></button>
             </div>
             
           </form>

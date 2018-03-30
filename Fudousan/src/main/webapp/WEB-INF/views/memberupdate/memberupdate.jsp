@@ -86,7 +86,7 @@
  
  <article class="container">
         <div class="page-header">
-          <h1>회원가입 <small>basic form</small></h1>
+          <h1>회원정보수정 <small>basic update form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <form role="form" action="insertMember" method="post">
@@ -141,21 +141,11 @@
 				  </label>
 				</div>
             </div>
-         
-            <div class="form-group">
-                <label>약관 동의</label>
-              <div data-toggle="buttons">
-              <label class="btn btn-primary active">
-                  <span class="fa fa-check"></span>
-                  <input id="agree" type="checkbox" autocomplete="off" >
-              </label>
-              <a href="#">이용약관</a>에 동의합니다.
-              </div>
-            </div>
+        
          
             <div class="form-group text-center">
-              <button type="submit" class="btn btn-info">회원가입<i class="fa fa-check spaceLeft"></i></button>
-              <button type="submit" class="btn btn-warning">가입취소<i class="fa fa-times spaceLeft"></i></button>
+              <button type="submit" class="btn btn-info">회원정보 수정<i class="fa fa-check spaceLeft"></i></button>
+              <button type="submit" class="btn btn-warning">회원정보 수정 취소<i class="fa fa-times spaceLeft"></i></button>
             </div>
           </form>
         </div>
