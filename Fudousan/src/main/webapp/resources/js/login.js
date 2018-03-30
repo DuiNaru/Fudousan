@@ -21,15 +21,21 @@ function formCheck(){
 			url: 'login',
 			type: 'post',
 			data: {email: memberEmail.val(), password: password.val()},
-			dataType: 'json',
+			dataType: 'text',
 			success: function(result){
-				if (!result){
-					alert('Login failed');
+				if (result == '1'){
+					alert('Not found ID');
+				}
+				else if (result == '2'){
+					alert('Incorrect password');
 				}
 				else {
 					$('#loginModal').modal('hide');
 					
 					$('#loginAtag').html('<a href="/fudousan/logout">Logout</a>');
+					
+					var str = '<a>' + result + ', Welcome!</a>';
+					$('#loginNameTag').html(str);
 				}
 			},
 			error: function(err){
