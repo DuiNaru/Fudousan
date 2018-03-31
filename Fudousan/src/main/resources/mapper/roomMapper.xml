@@ -7,7 +7,7 @@
 <mapper namespace="com.real.fudousan.room.dao.RoomMapper">
 
 
-<select id="searchRoomInfo" resultMap="roomAllShow" parameterType="int">
+<select id="searchRoomInfo" resultMap="roomResultMap" parameterType="int">
 		select
 			ROOM_ID
 			,SNAPSHOT
