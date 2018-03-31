@@ -5,6 +5,20 @@
 
 
 <mapper namespace="com.real.fudousan.texture.dao.TextureMapper">
-
+	<resultMap type="texture" id="textureResultMap">
+		<id 	property="textureId" 	column="TEXTURE_ID"/>
+		<result property="memberId"  	column="MEMBER_ID"/>
+		<result property="name"   		column="TEXTURE_NAME"/>
+		<result property="text"   		column="TEXT"/>
+		<result property="file"   		column="TEXTURE_FILE"/>
+		<result property="creDate"   	column="CRE_DATE"/>
+		<result property="delDate"   	column="DEL_DATE"/>
+		<association property="textureType" column="TEXTURE_TYPE_ID" javaType="com.real.fudousan.texture.vo.TextureType" resultMap="textureTypeResultMap"/>
+	</resultMap>
 	
+	<resultMap type="texturetype" id="textureTypeResultMap">
+		<id		property="textureTypeId"	column="TEXTURE_TYPE_ID"/>
+		<result	property="name"				column="NAME"/>
+		<result	property="text"				column="TEXT"/>
+	</resultMap>
 </mapper>

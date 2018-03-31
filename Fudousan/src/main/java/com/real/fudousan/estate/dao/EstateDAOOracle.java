@@ -1,6 +1,7 @@
 package com.real.fudousan.estate.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -19,7 +20,7 @@ public class EstateDAOOracle implements EstateDAO {
 	private SqlSession session;
 
 	@Override
-	public List<Estate> select(int[] estateIds) {
+	public List<Estate> select(Set<Integer> estateIds) {
 		logger.info("select("+estateIds+") Start");
 		List<Estate> result = null;
 		try {

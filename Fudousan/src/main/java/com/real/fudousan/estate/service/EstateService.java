@@ -1,6 +1,7 @@
 package com.real.fudousan.estate.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +63,7 @@ public class EstateService {
 	 * @param estateIds
 	 * @return
 	 */
-	public List<Estate> getEsates(int[] estateIds) {
+	public List<Estate> getEsates(Set<Integer> estateIds) {
 		logger.info("getEstates("+estateIds+") Start");
 		List<Estate> result = dao.select(estateIds);
 		logger.info("getEstates("+estateIds+") End");
