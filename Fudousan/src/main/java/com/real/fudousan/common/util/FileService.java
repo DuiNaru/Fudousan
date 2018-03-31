@@ -2,10 +2,13 @@ package com.real.fudousan.common.util;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.real.fudousan.common.exception.DuplicateFileNameException;
@@ -15,6 +18,7 @@ import com.real.fudousan.common.exception.DuplicateFileNameException;
  * 업로드한 파일의 저장 & 서버에 저장된 파일 삭제 등의 기능 제공
  */
 public class FileService {
+	private static final Logger logger = LoggerFactory.getLogger(FileService.class);
 
 	/**
 	 * 업로드 된 파일을 지정된 경로에 저장하고, 저장된 파일명을 리턴
@@ -74,14 +78,24 @@ public class FileService {
 		}		
 		
 		//파일 저장
+		FileOutputStream fos = null;
 		try {
 			//mfile.transferTo(serverFile);
-			FileOutputStream fos = new FileOutputStream(serverFile);
+			 fos = new FileOutputStream(serverFile);
 			
 			fos.write(mfile.getBytes());
 		} catch (Exception e) {
 			savedFilename = null;
 			e.printStackTrace();
+		}
+		finally{
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		return savedFilename + ext;
@@ -103,6 +117,38 @@ public class FileService {
 		if (delFile.isFile()) {
 			delFile.delete();
 			result = true;
+		}
+		
+		return result;
+	}
+	/**
+	 * 서버에 저장된 디렉토리의 전체 경로를 전달받아, 해당 디렉토리를 삭제
+	 * @param fullpath 삭제할 디렉토리의 경로
+	 * @return 삭제 여부
+	 */
+	public static boolean deleteDirectory(String fullpath) {
+		//파일 삭제 여부를 리턴할 변수
+		boolean result = false;
+		
+		File file = new File(fullpath);
+		//폴더내 파일을 배열로 가져온다.
+		File[] tempFile = file.listFiles();
+
+		if(tempFile.length > 0){
+			
+			for (int i = 0; i < tempFile.length; i++) {
+				
+				if(tempFile[i].isFile()){
+					if (!tempFile[i].delete()) {
+						logger.info("file("+tempFile[i].exists()+") delete fail : " + tempFile[i]);
+					}
+				}else{
+					//재귀함수
+					deleteDirectory(tempFile[i].getPath());
+				}
+				tempFile[i].delete();
+			}
+			result = file.delete();
 		}
 		
 		return result;

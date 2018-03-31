@@ -19,7 +19,7 @@ public class ItemType implements Serializable {
 	private Integer itemTypeId;
 
 	/** NAME. */
-	private String itmeTypeName;
+	private String itemTypeName;
 
 	public Integer getItemTypeId() {
 		return itemTypeId;
@@ -29,12 +29,12 @@ public class ItemType implements Serializable {
 		this.itemTypeId = itemTypeId;
 	}
 
-	public String getItmeTypeName() {
-		return itmeTypeName;
+	public String getItemTypeName() {
+		return itemTypeName;
 	}
 
-	public void setItmeTypeName(String itmeTypeName) {
-		this.itmeTypeName = itmeTypeName;
+	public void setItemTypeName(String itemTypeName) {
+		this.itemTypeName = itemTypeName;
 	}
 
 	public static long getSerialversionuid() {
@@ -48,12 +48,12 @@ public class ItemType implements Serializable {
 	public ItemType(Integer itemTypeId, String itmeTypeName) {
 		super();
 		this.itemTypeId = itemTypeId;
-		this.itmeTypeName = itmeTypeName;
+		this.itemTypeName = itmeTypeName;
 	}
 
 	@Override
 	public String toString() {
-		return "ItemType [itemTypeId=" + itemTypeId + ", itmeTypeName=" + itmeTypeName + "]";
+		return "ItemType [itemTypeId=" + itemTypeId + ", itmeTypeName=" + itemTypeName + "]";
 	}
 
 	@Override

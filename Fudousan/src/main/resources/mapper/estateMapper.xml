@@ -5,6 +5,8 @@
 
 
 <mapper namespace="com.real.fudousan.estate.dao.EstateMapper">
-
+	<select id="selectByIds" parameterType="int[]">
+		
+	</select>
 	
 </mapper>

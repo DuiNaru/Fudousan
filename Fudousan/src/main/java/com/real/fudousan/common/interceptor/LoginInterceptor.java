@@ -8,8 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class AdminInterceptor extends HandlerInterceptorAdapter {
-	private static final Logger logger = LoggerFactory.getLogger(AdminInterceptor.class);
+public class LoginInterceptor extends HandlerInterceptorAdapter {
+	private static final Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -21,7 +21,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 		String id = (String) session.getAttribute("loginId");
 		
 		logger.debug("preHandler session(loginId) : " + id);
-		if (id != null && id.equals("admin")) {
+		if (id != null) {
 			result &= true;
 		} else {
 			result = false;
