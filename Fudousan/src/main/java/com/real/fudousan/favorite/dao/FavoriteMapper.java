@@ -7,5 +7,5 @@ import com.real.fudousan.favorite.vo.Favorite;
 public interface FavoriteMapper {
 	public List<Favorite> allFavorite(Integer memberId);
 	
-	public List<Favorite> searchFavorite(int memberId,int estateId);
+	public List<Favorite> searchFavorite(int memberId,String estateId);
 }

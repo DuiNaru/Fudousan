@@ -161,6 +161,7 @@ CREATE TABLE ESTATE
 	Renovation varchar2(10),
 	Remarks varchar2(100),
 	DEL_DATE date,
+	ESTATE_NAME  varchar(100)
 	PRIMARY KEY (ESTATE_ID)
 );
 

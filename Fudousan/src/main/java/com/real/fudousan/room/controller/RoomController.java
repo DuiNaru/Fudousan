@@ -30,7 +30,7 @@ public class RoomController {
 	private AdviceService Aservice;
 	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
-	public String searchMyRoom(Model model,int roomSearch,int memberId){
+	public String searchMyRoom(Model model,String roomSearch,int memberId){
 		logger.info("RoomController-searchMyRoom_Start");
 		logger.info("매물 이름 검색한 결과 :  " + roomSearch);
 		List<Room> srlist = Rservice.showMyRoom(roomSearch, memberId);

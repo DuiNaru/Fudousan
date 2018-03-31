@@ -26,7 +26,7 @@ public class RoomService {
 	 * @param memberId
 	 * @return 검색자의 매물정보중 검색대상
 	 */
-	public List<Room> showMyRoom(int roomSearch, int memberId) {
+	public List<Room> showMyRoom(String roomSearch, int memberId) {
 		List<Room> srlist = null;
 		srlist = dao.searchRoomInfo(roomSearch, memberId);
 		/*logger.info("srlist에 들어온값 "+srlist.get(0));*/

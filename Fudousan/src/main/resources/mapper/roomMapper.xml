@@ -7,7 +7,7 @@
 <mapper namespace="com.real.fudousan.room.dao.RoomMapper">
 
 
-<select id="searchRoomInfo" resultMap="roomResultMap" parameterType="int">
+<select id="searchRoomInfo" resultMap="roomResultMap">
 		select
 			ROOM_ID
 			,SNAPSHOT
@@ -100,7 +100,7 @@
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
 		where
-			room.estate_Id = #{0} and room.MEMBER_ID = #{1}
+			estate.ESTATE_NAME = #{0} and room.MEMBER_ID = #{1}
 	</select>
 	
 <!-- 일반고객이 자신이 작성 한 매물 검색하는것 -->

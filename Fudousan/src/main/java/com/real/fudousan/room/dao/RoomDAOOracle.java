@@ -21,7 +21,7 @@ public class RoomDAOOracle implements RoomDAO {
 	
 	//사용자가 자신이 작성한 매물리스트에서 검색해서 정보 가져오기
 	@Override
-	public List<Room> searchRoomInfo(int roomSearch, int memberId) {
+	public List<Room> searchRoomInfo(String roomSearch, int memberId) {
 		logger.info("RoomDAOOracle_searchRoomInfo_start");
 		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
 		List<Room> srlist = null;

@@ -6,7 +6,7 @@ import com.real.fudousan.room.vo.Room;
 
 public interface RoomMapper {
 
-	public List<Room> searchRoomInfo(int roomSearch,int memberId);
+	public List<Room> searchRoomInfo(String roomSearch,int memberId);
 	
 	public List<Room> allMyRoom(Integer memberId);
 }
