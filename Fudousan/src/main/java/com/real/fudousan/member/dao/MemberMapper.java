@@ -4,4 +4,5 @@ import com.real.fudousan.member.vo.Member;
 
 public interface MemberMapper {
 	public Member selectMember(Member member);
+	public int insertMember(Member member);
 }
