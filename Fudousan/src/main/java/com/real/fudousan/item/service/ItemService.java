@@ -45,21 +45,38 @@ public class ItemService {
 	/**
 	 * 아이템을 수정한다.
 	 * @param item
+	 * @param files 파일이 있으면 함께 수정한다.
 	 * @return
 	 */
-	public boolean modifyItem(Item item) {
-		
-		return false;
+	public boolean modifyItem(Item item, List<MultipartFile> files) {
+		logger.info("modifyItem(" + item + ", " + files +  ") Start");
+		boolean result = false;
+		if((result = itemDao.update(item)) && files != null) {
+			logger.info("DAO update -> " + result);
+			FileService.deleteDirectory(modelFileBaseDirectory + item.getItemId());
+			for(MultipartFile file : files) {
+				FileService.saveFile(file, modelFileBaseDirectory + item.getItemId(), true);
+			}
+		}
+		logger.info("modifyItem(" + item + ", " + files +  ") End");
+		return result;
 	}
 	
 	/**
 	 * 아이템을 삭제한다.
-	 * @param itme
+	 * @param itemId
 	 * @return
 	 */
-	public boolean deleteItem(Item itme) {
+	public boolean deleteItem(int itemId) {
+		logger.info("deleteItem("+itemId+") Start");
+		boolean result = false;
 		
-		return false;
+		if((result = itemDao.delete(itemId))) {
+			logger.info("DAO delete -> " + result);
+			FileService.deleteDirectory(modelFileBaseDirectory + itemId);
+		}
+		logger.info("deleteItem("+itemId+") end");
+		return result;
 	}
 	
 	/**
@@ -68,14 +85,36 @@ public class ItemService {
 	 * @return
 	 */
 	public Item viewItem(int itemId) {
+		logger.info("allList() Start");
+		Item result = null;
+		result = itemDao.select(itemId);
 		
-		return null;
+		logger.info("allList() end");
+		return result;
 	}
 	
+	/**
+	 * 모든 아이템 리스트
+	 * @return
+	 */
 	public List<Item> allList() {
 		logger.info("allList() Start");
 		List<Item> result = null;
 		result = itemDao.selectAll();
+		
+		logger.info("allList() end");
+		return result;
+	}
+	
+	/**
+	 * 아이템 이름 포함 검색
+	 * @param itemName
+	 * @return
+	 */
+	public List<Item> searchName(String itemName) {
+		logger.info("allList() Start");
+		List<Item> result = null;
+		result = itemDao.selectByName(itemName);
 		
 		logger.info("allList() end");
 		return result;
