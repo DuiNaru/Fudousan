@@ -7,15 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h2> 테스트 공간 </h2>
+<h1> 연결 공간 </h1>
 
-<a href="bc">수정</a> <br>
+<h2><a href="bm">매니저</a></h2><br>
+<h2><a href="bw">작성</a></h2> <br>
+<h2><a href="bc">수정</a></h2> <br>
 
 
-<a href="bm">매니저</a> <br>
 
 
-<a href="bw">작성</a> <br>
+
 
 </body>
 </html>

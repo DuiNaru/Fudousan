@@ -1,33 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>관리 페이지</title>
-<script>
-function estateId_delete(){
-	if(confirm("정말로 삭제할 건가요?") == true){
-		document.form.submit();
-	}else{
-		return ;
-	}
-}
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+    <title>공인중개사 매니저</title>
 
-function snapshot_delete(){
-	if(confirm("정말로 삭제할 건가요 ?") ==true){
-		document.form.submit();
-	}else{
-		return;
-	}
-}
-
-
-</script>
-
-
-</head>
+    <!-- 부트스트랩 -->
+    <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
+	
+	
+	 <!-- font awesome -->
+    
+    <link rel="stylesheet" href="../resources/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+    
+    <!-- Custom style -->
+    <link rel="stylesheet" href="../resources/css/style.css" media="screen" title="no title" charset="utf-8">
+	
+	
+	
+	<!-- style -->
+	<style type="text/css">
+	  /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 91%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+     
+       
+      }
+   
+	</style>
 <body>
 <!-- -- -->
 <!-- Header -->
@@ -101,25 +113,26 @@ function snapshot_delete(){
 
  <!-- 헤더 영역 -->
 
-<hr>
 <h3> 매물 관리 </h3>
 
 
 <img alt="" src="">
 <input type="radio" name="cr_page">공개 
 <input type="radio" name="cr_page">비공개
-<input type="button" value="삭제" onclick="estateId_delete"> 
+<input type="button" value="매물 작성" class="btn btn-info" onclick="location.href='/fudousan/bw'"/>
+
+<input type="button" value="삭제"  class="btn btn-info" onclick="estateId_delete"> 
 <!-- 매물 수정으로 이동 -->
-<input type="button" value="수정" onclick="location.href='/brokers/bc.jsp'">
+<input type="button" value="수정" class="btn btn-info" onclick="location.href='/fudousan/bc'"><br>
 <!-- 매물 작성으로 이동 -->
 
-<input type="button" value="매물 작성" onclick="location.href='/brokers/br.jsp'"/>
-<hr>
+
 
 <h3> 매물 3D 모델링 관리</h3>
 <!-- 모델링 스냅 샷 자리  -->
-<input type="button" value="작성">
-<input type="button" value="삭제" onclick="snapshot_delete"> <input type="button" value="수정">
+<input type="button" class="btn btn-info" value="매물 작성">
+<input type="button" value="삭제" class="btn btn-info" onclick="snapshot_delete">
+ <input type="button" class="btn btn-info" value="수정">
 
 
 <!-- footer 영역 -->
