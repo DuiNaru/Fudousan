@@ -57,7 +57,7 @@ function sayonara(){
 			<input type="hidden" id="memberId" name="memberId" value=1>
 			<c:forEach var="room" items="${rlist}">
 				<div class="col-sm-12 form-group">
-					<label><c:out value="${room.snapshot} ${room.map}"/></label>
+					<label><c:out value="${room.map}${room.estate.estateName} "/></label>
 			 		<input type="button" value="꾸미기" onclick="ggumigi(${room.estate.estateId})">
 				</div>
 			</c:forEach>

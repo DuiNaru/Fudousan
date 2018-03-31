@@ -81,6 +81,7 @@
 			,tf.TEXT f_TEXT
 			,cf.NAME c_NAME
 			,cf.TEXT c_TEXT
+			,ESTATE_NAME
 		from
 			room
 		left outer join
@@ -223,6 +224,7 @@
 			,tf.TEXT f_TEXT
 			,cf.NAME c_NAME
 			,cf.TEXT c_TEXT
+			,ESTATE_NAME
 		from
 			room
 		left outer join
@@ -319,6 +321,7 @@
 			,tf.TEXT f_TEXT
 			,cf.NAME c_NAME
 			,cf.TEXT c_TEXT
+			,ESTATE_NAME
 		from
 			room
 		left outer join
