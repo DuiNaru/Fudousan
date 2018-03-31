@@ -30,18 +30,20 @@ public class AdviceService {
 	 * @return
 	 */
 	public List<Advice> getRequestedList(int id) {
-		
-		return null;
+		List<Advice> reverseCall = null;
+		reverseCall = dao.reverseCall(id);
+		return reverseCall;
 	}
 	
 	/**
-	 * 조언 요청 취소하기
+	 * 내가 인테리어 업자의 조언 요청 취소하기
 	 * @param advice
 	 * @return
 	 */
 	public boolean cancelAdvice(Advice advice) {
-		
-		return false;
+			boolean cancelOk = false;
+			cancelOk = dao.cancleAdvice(advice);
+		return cancelOk;
 	}
 	
 	/**

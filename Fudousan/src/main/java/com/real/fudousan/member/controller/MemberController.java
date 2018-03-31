@@ -43,12 +43,15 @@ public class MemberController {
         List<Room> rlist = Rservice.showAllRoom(memberId);
         List<Favorite> flist = Fservice.showAllFavorite(memberId);
         List<Advice> alist = Aservice.getRequestList(memberId);
+        List<Advice> rclist = Aservice.getRequestedList(memberId);
         logger.info("사용자가 꾸미는 매물 리스트 출력 결과 : "+rlist);
         logger.info("사용자의 찜목록  출력 결과 : "+ flist);
         logger.info("사용자가 도움을 요청한 기록 출력 결과 : "+ alist);
+        logger.info("인테리어 업자의 도움요청 승인 목록 결과 : "+ rclist);
         model.addAttribute("rlist", rlist);
         model.addAttribute("flist", flist);
         model.addAttribute("alist", alist);
+        model.addAttribute("rclist", rclist);
         logger.info("MC 일반 사용자의 마이페이지 접속  End");
         return  "user/mypagecustomer";
 	}

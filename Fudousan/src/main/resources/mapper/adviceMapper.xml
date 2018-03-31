@@ -7,16 +7,39 @@
 <mapper namespace="com.real.fudousan.advice.dao.AdviceMapper">
 <select id="normalUserHelpCall" resultType="advice" parameterType="advice">
 	select 
-		REQUEST_MEMBER_ID
-		,REQUESTED_MEMEBER_ID
-		,ROOM_ID
-		,CRE_DATE
+		REQUEST_MEMBER_ID requestMemberId
+		,REQUESTED_MEMEBER_ID requestedMemeberId
+		,ROOM_ID roomId
+		,CRE_DATE creDate
 		,ID
-		,REQUEST_DATE
+		,REQUEST_DATE requestDate
+		,STATE state
 	from 
 		advice
-	where REQUEST_MEMBER_ID = #{requestMemberId}
+	where REQUEST_MEMBER_ID = #{requestMemberId} and STATE = 0
 </select>
 
+<select id="reverseCall" resultType="advice" parameterType="advice">
+	select 
+		REQUEST_MEMBER_ID requestMemberId
+		,REQUESTED_MEMEBER_ID requestedMemeberId
+		,ROOM_ID roomId
+		,CRE_DATE creDate
+		,ID
+		,REQUEST_DATE requestDate
+		,STATE 
+	from 
+		advice
+	where REQUEST_MEMBER_ID = #{requestMemberId} and STATE = 1
+</select>
+
+<update id="cancleAdvice" parameterType="advice">
+	update
+		advice
+	set 
+		state = 2
+	where
+		REQUEST_MEMBER_ID = #{requestMemberId} and REQUESTED_MEMEBER_ID = #{requestedMemeberId}
+</update>
 	
 </mapper>
