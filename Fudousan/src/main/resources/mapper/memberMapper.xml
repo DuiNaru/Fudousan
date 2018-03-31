@@ -31,26 +31,29 @@
 	
 	
 	<insert id="insertMember" parameterType="member">
-		insert into member 
-		{
-			email
+		INSERT INTO 
+		 member 
+		(	
+			member_name
 			,password
+			,email
 			,phone
 			,picture
-			,text
 			,designer
-			,membername
+			,text
+			
 		
-		}
-		values 
-			name = #{name}
-			,password = #{password}
-			,phone = #{phone}
-			,picture = #{picture}
-			,text = #{text}
-			, designer = #{designer}
-			,membername = #{membername} 
-	
+		)
+		VALUES
+		(
+			#{name}
+			,#{password}
+			,#{phone}
+			,#{picture}
+			,#{text}
+			,#{designer}
+			,#{memberName} 
+		)
 	
 	
 	</insert>

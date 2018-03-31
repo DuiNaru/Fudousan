@@ -1,5 +1,7 @@
 package com.real.fudousan.member.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.real.fudousan.member.service.MemberService;
 import com.real.fudousan.member.vo.Member;
@@ -32,21 +35,27 @@ public class JoinController {
 		logger.info("Agency join Form 이동 종료");
 		return "join/agencyjoin";
 	}
-	
-	@RequestMapping(value="insertMember", method=RequestMethod.POST)
-	public String insertMember(
-			@ModelAttribute("member") Member member
-			,Model model){
+	 								
+	@RequestMapping(value="insertMember",  method=RequestMethod.POST)
+	public String insertMember(Model model, Member member,  List<MultipartFile> files){
 			
-		logger.info("insertMember 시작");
+		logger.info("회원 등록 시작");
 		
+		boolean memberResult = service.registerMember(member, files);
 	
-		
-		logger.info("insertMember 종료");
-		
-		return "";
-		
-		
+		if (memberResult) {
+			// result가 true이면 
+			logger.info("회원 등록 성공");
+			model.addAttribute(memberResult);
+			return "join/joinresult";
+			
+		}
+		else{
+			// result가 false이면 
+			logger.info("회원 등록 실패");
+			model.addAttribute(memberResult);
+			return "join/join";
+		}	
 	}
 	
 

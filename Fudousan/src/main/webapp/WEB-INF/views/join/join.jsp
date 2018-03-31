@@ -44,6 +44,30 @@
 	</style>
   </head>
   <body>
+  
+  <!-- 로그인 모달 -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Login</h4>
+				</div>
+				
+				<div class="modal-body">
+					Email <input type="text" id="memberEmail" name="memberID">
+					Password <input type="password" id="password" name="password">
+					<button type="button" id="loginBtn">Login</button>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 로그인 모달 끝 -->
+  
+  
    <!-- Header -->
 		 <nav class="navbar navbar-default" style="margin: auto 0"> 
 		  <div class="container-fluid">
@@ -147,7 +171,7 @@
               <div data-toggle="buttons">
               <label class="btn btn-primary active">
                   <span class="fa fa-check"></span>
-                  <input id="agree" type="checkbox" autocomplete="off" >
+                  <input id="agree" type="checkbox" autocomplete="off" name="checkbox" value="checked">
               </label>
               <a href="#">이용약관</a>에 동의합니다.
               </div>

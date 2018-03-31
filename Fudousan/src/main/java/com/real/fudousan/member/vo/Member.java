@@ -152,6 +152,7 @@ public class Member implements Serializable {
 	public Member() {
 		super();
 	}
+	
 
 	public Member(Integer memberId, String email, String password, String phone, String picture, String text,
 			Date creDate, Date delDate, Permission permission, Integer designer, String memberName) {

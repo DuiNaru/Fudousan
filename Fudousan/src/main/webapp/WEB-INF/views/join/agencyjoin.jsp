@@ -51,42 +51,70 @@
 	</style>
   </head>
   <body>
-   <!-- Header -->
-		 <nav class="navbar navbar-default" style="margin: auto 0"> 
-		  <div class="container-fluid">
-		    <!-- Brand and toggle get grouped for better mobile display -->
-		    <div class="navbar-header">
-		      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-		        <span class="sr-only">Toggle navigation</span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		        <span class="icon-bar"></span>
-		      </button>
-		      <a class="navbar-brand" href="../" style="margin-bottom: 10px;">
-		      	<img alt="Fudousan" src="../resources/image/logo2.png">
-		      </a>
-		    </div>
-		
-		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		     
-		    
-		      <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
-		        <li><a href="#">Login</a></li>
-		    
-		         <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="join">Customer Join</a></li>
-			            <li class="divider"></li>
-			            <li><a href="#">Agency Join</a></li>
-			           
-			          </ul>
-		         </li>
-		      </ul>
-		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
-		 </nav> 
+ 	<!-- 로그인 모달 -->
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Login</h4>
+				</div>
+				
+				<div class="modal-body">
+					Email <input type="text" id="memberEmail" name="memberID">
+					Password <input type="password" id="password" name="password">
+					<button type="button" id="loginBtn">Login</button>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 로그인 모달 끝 -->
+	
+	<!-- Header -->
+	<nav class="navbar navbar-default" style="margin: auto 0"> 
+		<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				
+				<a class="navbar-brand" href="#" style="margin-bottom: 10px;">
+					<img alt="Fudousan" src="resources/image/logo2.png">
+				</a>
+			</div>
+			
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
+				<c:if test="${sessionScope.loginEmail == null}">
+					<li id="loginNameTag"></li>
+					<li id="loginAtag"><a data-toggle="modal" href="#loginModal">Login</a></li>
+				</c:if>
+				<c:if test="${sessionScope.loginEmail != null}">
+					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
+					<li><a href="/fudousan/logout">Logout</a></li>
+				</c:if>
+				
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="join">Customer Join</a></li>
+							<li class="divider"></li>
+							<li><a href="agencyjoin">Agency Join</a></li>
+						</ul>
+					</li>
+					
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>
    
  
  <!--  join form  -->

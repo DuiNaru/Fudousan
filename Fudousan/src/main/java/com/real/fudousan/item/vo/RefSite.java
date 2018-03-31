@@ -25,6 +25,16 @@ public class RefSite implements Serializable {
 
 	/** TEXT. */
 	private String text;
+	
+	private int itemId;
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
 
 	public Integer getId() {
 		return id;
@@ -66,17 +76,20 @@ public class RefSite implements Serializable {
 		super();
 	}
 
-	public RefSite(Integer id, String url, Date creDate, String text) {
+
+	@Override
+	public String toString() {
+		return "RefSite [id=" + id + ", url=" + url + ", creDate=" + creDate + ", text=" + text + ", itemId=" + itemId
+				+ "]";
+	}
+
+	public RefSite(Integer id, String url, Date creDate, String text, int itemId) {
 		super();
 		this.id = id;
 		this.url = url;
 		this.creDate = creDate;
 		this.text = text;
-	}
-
-	@Override
-	public String toString() {
-		return "RefSite [id=" + id + ", url=" + url + ", creDate=" + creDate + ", text=" + text + "]";
+		this.itemId = itemId;
 	}
 
 	@Override

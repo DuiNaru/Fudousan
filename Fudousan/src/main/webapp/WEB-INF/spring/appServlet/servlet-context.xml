@@ -28,13 +28,24 @@
 
 	<!-- 관리자 로그인 인터셉터 빈 -->
 	<beans:bean id="adminInterceptor" class="com.real.fudousan.common.interceptor.AdminInterceptor"/>
+	<!-- 로그인 인터셉터 빈 -->
+	<beans:bean id="loginInterceptor" class="com.real.fudousan.common.interceptor.LoginInterceptor"/>
 
 	<!-- 인터셉터 설정 -->
 	<!-- <mvc:interceptors>
 		관리자 로그인 인터셉터
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**"/>
+			<mvc:mapping path="/item/itemAddPage"/>
+			<mvc:mapping path="/item/additem"/>
+			<mvc:mapping path="/item/itemModifyPage"/>
+			<mvc:mapping path="/item/moditem"/>
+			<mvc:mapping path="/item/deleteItem"/>
 			<beans:ref bean="adminInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/interior/**"/>
+			<beans:ref bean="loginInterceptor"/>
 		</mvc:interceptor>
 		
 	</mvc:interceptors> -->
