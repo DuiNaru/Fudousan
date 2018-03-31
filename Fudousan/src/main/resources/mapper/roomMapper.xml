@@ -52,7 +52,7 @@
 
 
 
-<select id="allMyRoom" resultMap="roomAllShow" parameterType="int">
+<select id="allMyRoom" resultMap="roomResultMap" parameterType="int">
 		select
 			ROOM_ID
 			,SNAPSHOT
@@ -148,8 +148,7 @@
 			room.MEMBER_ID = #{MEMBER_ID}
 	</select>
 	
-	
-	<resultMap type="room" id="roomAllShow">
+	<resultMap type="room" id="roomResultMap">
 		<id 		 property="roomId"			column="ROOM_ID"/>
 		<result 	 property="snapshot" 		column="SNAPSHOT"/>
 		<result 	 property="map"  			column="MAP"/>
@@ -157,75 +156,8 @@
 		<result 	 property="delDate"     	column="DEL_DATE"/>
 		<result 	 property="heigth"      	column="HEIGTH"/>
 		<result 	 property="memberId"  		column="MEMBER_ID"/>
-		<association property="estate"   		column="estate_id" 			javaType="com.real.fudousan.estate.vo.Estate" resultMap="estateResultMap"/>
-		<association property="floorTexture"   	column="FLOOR_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" resultMap="textureResultMap" columnPrefix="f_"/>
-		<association property="ceilingTexture"  column="CEILING_TEXTURE_ID" javaType="com.real.fudousan.texture.vo.Texture" resultMap="textureResultMap" columnPrefix="c_"/>
+		<association property="estate"   		column="estate_id" 			javaType="com.real.fudousan.estate.vo.Estate" resultMap="com.real.fudousan.estate.dao.EstateMapper.estateResultMap"/>
+		<association property="floorTexture"   	column="FLOOR_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" columnPrefix="f_"/>
+		<association property="ceilingTexture"  column="CEILING_TEXTURE_ID" javaType="com.real.fudousan.texture.vo.Texture" resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" columnPrefix="c_"/>
 	</resultMap>
-	
-	<resultMap type="texture" id="textureResultMap">
-		<id 	property="textureId" 	column="TEXTURE_ID"/>
-		<result property="memberId"  	column="MEMBER_ID"/>
-		<result property="name"   		column="TEXTURE_NAME"/>
-		<result property="text"   		column="TEXT"/>
-		<result property="file"   		column="TEXTURE_FILE"/>
-		<result property="creDate"   	column="CRE_DATE"/>
-		<result property="delDate"   	column="DEL_DATE"/>
-		<association property="textureType" column="TEXTURE_TYPE_ID" javaType="com.real.fudousan.texture.vo.TextureType" resultMap="textureTypeResultMap"/>
-	</resultMap>
-	
-	<resultMap type="texturetype" id="textureTypeResultMap">
-		<id		property="textureTypeId"	column="TEXTURE_TYPE_ID"/>
-		<result	property="name"				column="NAME"/>
-		<result	property="text"				column="TEXT"/>
-	</resultMap>
-	
-	
-	<!-- 객체 별칭이 type  property가 vo 필드명   column이 DB이름-->
-	<resultMap type="estate" id="estateResultMap">
-		<id 	property="estateId" 				column="ESTATE_ID"/>
-		<result property="region" 					column="Region"/>
-		<result property="prefecture" 				column="Prefecture"/>
-		<result property="municipality" 			column="Municipality"/>
-		<result property="districtname" 			column="DistrictName"/>
-		<result property="neareststation" 			column="NearestStation"/>
-		<result property="timetoneareststation"		column="TimeToNearestStation"/>
-		<result property="tradeprice" 				column="TradePrice"/>
-		<result property="priceperunit" 			column="PricePerUnit"/>
-		<result property="floorplan" 				column="FloorPlan"/>
-		<result property="area" 					column="Area"/>
-		<result property="unitprice" 				column="UnitPrice"/>
-		<result property="landshape" 				column="LandShape"/>
-		<result property="frontage" 				column="Frontage"/>
-		<result property="totalfloorarea" 			column="TotalFloorArea"/>
-		<result property="buildingyear" 			column="BuildingYear"/>
-		<result property="structure" 				column="Structure"/>
-		<result property="use" 						column="Use"/>
-		<result property="purpose" 					column="Purpose"/>
-		<result property="direction" 				column="Direction"/>
-		<result property="classification" 			column="Classification"/>
-		<result property="breadth" 					column="Breadth"/>
-		<result property="cityplanning" 			column="CityPlanning"/>
-		<result property="coverageratio" 			column="CoverageRatio"/>
-		<result property="floorarearatio" 			column="FloorAreaRatio"/>
-		<result property="period" 					column="Period"/>
-		<result property="renovation" 				column="Renovation"/>
-		<result property="remarks" 					column="Remarks"/>
-		<result property="delDate" 					column="estate_DEL_DATE"/>
-		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
-		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
-	</resultMap>
-	
-		<!-- associationdml property는 속하는 객체의 vo변수명이다. -->
-	
-	<resultMap type="transtype" id="transTypeResultMap">
-		<id 	property="transTypeId" column="TRANS_TYPE_ID"/>
-		<result property="transName"   column="TRANS_NAME"/>
-	</resultMap>
-
-	<resultMap type="municipalitycode" id="MunicipalityCodeResultMap">
-		<id 	property="municipalitycodeId" column="MunicipalityCode_ID"/>
-		<result property="codeName" 		  column="CODE_NAME"/>
-	</resultMap>
-	
-
 </mapper>
