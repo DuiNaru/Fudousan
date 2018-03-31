@@ -13,6 +13,22 @@ import com.real.fudousan.room.vo.Room;
  * @version $Id$
  */
 public class Advice implements Serializable {
+	/**
+	 * 요청 중
+	 */
+	public static int REQUEST = 0;
+	/**
+	 * 요청 허가
+	 */
+	public static int CONFIRMED = 1;
+	/**
+	 * 요청 취소
+	 */
+	public static int CANCEL = 2;
+	/**
+	 * 요청 거부
+	 */
+	public static int DENIED = 3;
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -21,10 +37,10 @@ public class Advice implements Serializable {
 	private int requestMemberId;
 
 	/** 신청받은 회원. */
-	private int requestedMemeberId;
+	private int requestedMemberId;
 
 	/** 3D 방. */
-	private int roomId;
+	private Room room;
 
 	/** DATE. */
 	private Date creDate;
@@ -40,12 +56,12 @@ public class Advice implements Serializable {
 
 	public Advice() {	}
 
-	public Advice(int requestMemberId, int requestedMemeberId, int roomId, Date creDate, String id, Date requestDate,
+	public Advice(int requestMemberId, int requestedMemberId, Room room, Date creDate, String id, Date requestDate,
 			int state) {
 		super();
 		this.requestMemberId = requestMemberId;
-		this.requestedMemeberId = requestedMemeberId;
-		this.roomId = roomId;
+		this.requestedMemberId = requestedMemberId;
+		this.room = room;
 		this.creDate = creDate;
 		this.id = id;
 		this.requestDate = requestDate;
@@ -60,20 +76,20 @@ public class Advice implements Serializable {
 		this.requestMemberId = requestMemberId;
 	}
 
-	public int getRequestedMemeberId() {
-		return requestedMemeberId;
+	public int getRequestedMemberId() {
+		return requestedMemberId;
 	}
 
-	public void setRequestedMemeberId(int requestedMemeberId) {
-		this.requestedMemeberId = requestedMemeberId;
+	public void setRequestedMemberId(int requestedMemberId) {
+		this.requestedMemberId = requestedMemberId;
 	}
 
-	public int getRoomId() {
-		return roomId;
+	public Room getRoom() {
+		return room;
 	}
 
-	public void setRoomId(int roomId) {
-		this.roomId = roomId;
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	public Date getCreDate() {
@@ -114,8 +130,8 @@ public class Advice implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Advice [requestMemberId=" + requestMemberId + ", requestedMemeberId=" + requestedMemeberId + ", roomId="
-				+ roomId + ", creDate=" + creDate + ", id=" + id + ", requestDate=" + requestDate + ", state=" + state
+		return "Advice [requestMemberId=" + requestMemberId + ", requestedMemberId=" + requestedMemberId + ", room="
+				+ room + ", creDate=" + creDate + ", id=" + id + ", requestDate=" + requestDate + ", state=" + state
 				+ "]";
 	}
 	

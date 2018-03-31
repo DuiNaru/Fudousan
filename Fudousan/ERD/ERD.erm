@@ -5213,7 +5213,7 @@
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name>요청 받은 회원</logical_name>
-					<physical_name>REQUESTED_MEMEBER_ID</physical_name>
+					<physical_name>REQUESTED_MEMBER_ID</physical_name>
 					<type>decimal</type>
 					<constraint></constraint>
 					<default_value></default_value>

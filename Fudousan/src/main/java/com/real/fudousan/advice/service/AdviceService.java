@@ -51,7 +51,7 @@ public class AdviceService {
 	public boolean cancelAdvice(Advice advice) {
 		logger.info("cancelAdvice("+advice+") Start");
 			boolean cancelOk = false;
-			cancelOk = dao.cancleAdvice(advice);
+			cancelOk = dao.cancelAdvice(advice);
 			logger.info("cancelAdvice("+advice+") End");
 		return cancelOk;
 	}
@@ -75,8 +75,9 @@ public class AdviceService {
 	 */
 	public boolean unConfirm(Advice advice) {
 		logger.info("unConfirm("+advice+") Start");
+		advice.setState(Advice.DENIED);
+		dao.updateState(advice);
 		logger.info("unConfirm("+advice+") End");
-		
 		return false;
 	}
 	
