@@ -33,7 +33,7 @@ function sayonara(){
 	if(realsayo){
 		var client = document.getElementById("client").value;
 		var accepter = document.getElementById("accepter").value;
-		location.href = "cancelAdviceTrue?customer="+client+"&interior="+accepter;
+		location.href = "cancelAdvicedivue?customer="+client+"&interior="+accepter;
 	}
 	return false;
 }
@@ -44,76 +44,74 @@ function sayonara(){
 <title>고객 페이지</title>
 </head>
 <body>
-<c:if test="${tfresult eq true }">
+<c:if test="${tfresult eq divue }">
 	<script>
 		alert("인테리어 업자의 도움요청을 거절하였습니다.");
 	</script>
 </c:if>
 
-	<table>
 		<div class="header">
 		</div>
 		
 		<div id=customerMaemulCheck>
-			<tr>
-				<td><h3>3D 작성 매물 확인</h3>
-				<input type="hidden" id="memberId" name="memberId" value=1></td>
-			</tr>
-			<tr>
+			<div>
+				<div><h3>3D 작성 매물 확인</h3>
+				<input type="hidden" id="memberId" name="memberId" value=1></div>
+			</div>
+			<div>
 				<th>
 					<input type="text" id ="roomSearch" name="roomSearch"><input type="button" onclick="roomSearch()" value="검색">
 				</th>
-			</tr>
-			<tr>
+			</div>
+			<div>
 				<c:forEach var="room" items="${rlist}">
-			 		<td>${room.snapshot} ${room.map}
+			 		<div>${room.snapshot} ${room.map}
 			 		    <input type="button" value="꾸미기" onclick="ggumigi(${room.estate.estateId})">
-			 		</td>
+			 		</div>
 				</c:forEach>
-			</tr>
+			</div>
 		</div>
 		
 		<div id=showSelection>
-			<tr>
-				<td><h3>찜한 매물 확인</h3><br></td>
-			</tr>
-			<tr>
+			<div>
+				<div><h3>찜한 매물 확인</h3><br></div>
+			</div>
+			<div>
 				<th><input type="text" name="favoSearch" id="favoSearch"><input type="button" onclick="favoriteSearch()" value="검색"></th><br>
-			</tr>
-			<tr>
+			</div>
+			<div>
 				 <c:forEach var="favorite" items="${flist}">
-			 		<td>${favorite.memberId}${favorite.creDate}<input type="button" value="팝업정보" onclick="popupInfoMaemul(${favorite.estate})">
-			 		</td>
+			 		<div>${favorite.memberId}${favorite.creDate}<input type="button" value="팝업정보" onclick="popupInfoMaemul(${favorite.estate})">
+			 		</div>
 				</c:forEach>
-			</tr>
+			</div>
 		</div>
 	
 		<div id="showHelper">
-			<tr>
-				<td><h3>내가 인테리어 업자에게 보낸 요청</h3></td>
-			</tr>
-			<tr>
+			<div>
+				<div><h3>내가 인테리어 업자에게 보낸 요청</h3></div>
+			</div>
+			<div>
 				<c:forEach var="helper" items="${alist}">
-			 		<td>${helper.requestedMemeberId}님에게 도움을 요청하셨습니다.</td>
+			 		<div>${helper.requestedMemeberId}님에게 도움을 요청하셨습니다.</div>
 				</c:forEach>
-			</tr>
-			<tr>
-				<td><h3>인테리어 업자가 보낸 요청 목록</h3></td>
-			</tr>
-			<tr>
+			</div>
+			<div>
+				<div><h3>인테리어 업자가 보낸 요청 목록</h3></div>
+			</div>
+			<div>
 				<c:forEach var="helpRes" items="${rclist}">
-			 		<td>
+			 		<div>
 			 			${helpRes.requestedMemeberId}님이 ${helpRes.requestMemberId }님의 요청을 승락하셨습니다. 
 						<input type="button" value="거절" id="cancel" name="cancel" onclick="sayonara()">
 						<input type="hidden" value="${helpRes.requestMemberId }" id="client" name="client">
 						<input type="hidden" value="${helpRes.requestedMemeberId }" id="accepter" name="accepter">
-			 		</td>
+			 		</div>
 				</c:forEach>
-			</tr>
+			</div>
 		</div>
 		
 		<div class="footer">
 		</div>
-	</table>
 </body>
 </html>
