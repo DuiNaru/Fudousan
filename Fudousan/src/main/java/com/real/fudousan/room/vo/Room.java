@@ -23,8 +23,8 @@ public class Room implements Serializable {
 	/** ROOM_ID. */
 	private Integer roomId;
 
-	/** 매물 아이디. */
-	private int estateId;
+	/** 매물 . */
+	private Estate estate;
 
 	/** 스냅샷. */
 	private String snapshot;
@@ -51,11 +51,11 @@ public class Room implements Serializable {
 	private int memberId;
 	
 	public Room(){}
-	public Room(Integer roomId, int estateId, String snapshot, String map, Date creDate, Date delDate, Integer heigth,
+	public Room(Integer roomId, Estate estate, String snapshot, String map, Date creDate, Date delDate, Integer heigth,
 			Texture floorTexture, Texture ceilingTexture, int memberId) {
 		super();
 		this.roomId = roomId;
-		this.estateId = estateId;
+		this.estate = estate;
 		this.snapshot = snapshot;
 		this.map = map;
 		this.creDate = creDate;
@@ -74,12 +74,12 @@ public class Room implements Serializable {
 		this.roomId = roomId;
 	}
 
-	public int getEstateId() {
-		return estateId;
+	public Estate getEstate() {
+		return estate;
 	}
 
-	public void setEstateId(int estateId) {
-		this.estateId = estateId;
+	public void setEstate(Estate estate) {
+		this.estate = estate;
 	}
 
 	public String getSnapshot() {
@@ -152,7 +152,7 @@ public class Room implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Room [roomId=" + roomId + ", estateId=" + estateId + ", snapshot=" + snapshot + ", map=" + map
+		return "Room [roomId=" + roomId + ", estate=" + estate + ", snapshot=" + snapshot + ", map=" + map
 				+ ", creDate=" + creDate + ", delDate=" + delDate + ", heigth=" + heigth + ", floorTexture="
 				+ floorTexture + ", ceilingTexture=" + ceilingTexture + ", memberId=" + memberId + "]";
 	}
