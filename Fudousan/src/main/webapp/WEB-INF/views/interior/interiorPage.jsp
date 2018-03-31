@@ -18,7 +18,11 @@
 			<h1>사용자 요청 리스트</h1>
 			<c:forEach var="advice" items="${adviceList}">
 				<div class="col-sm-12">
-					
+					<label>${advice.room.estate.estateId }</label>
+					<div>
+						<button class="btn btn-default">인테리어 시작</button>
+						<a class="btn btn-danger" href="../unconfirm?requestMemeberId=${advice.requestMemberId}&roomId=${advice.room.roomId}">취소</a>
+					</div>
 				</div>
 			</c:forEach>
 		</div>

@@ -10,6 +10,8 @@ public interface AdviceDAO {
 
 	public List<Advice> reverseCall(int id);
 	
-	public boolean cancleAdvice(Advice advice);
+	public boolean cancelAdvice(Advice advice);
+	
+	public boolean updateState(Advice advice);
 
 }

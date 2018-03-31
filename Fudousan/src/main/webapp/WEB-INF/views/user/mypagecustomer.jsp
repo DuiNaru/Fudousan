@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="resources/js/jquery-3.3.1.js"></script>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+<script src="resources/js/jquery-3.3.1.js"></script>
 <script>
 function roomSearch(){
 	var roomSearch = document.getElementById("roomSearch").value; //방검색
@@ -54,6 +54,7 @@ function sayonara(){
 		<div class="col-sm-4">
 			<label class="col-sm-12">3D 작성 매물 확인</label>
 			<input type="text" id ="roomSearch" name="roomSearch"><input type="button" onclick="roomSearch()" value="검색">
+			<input type="hidden" id="memberId" name="memberId" value=1>
 			<c:forEach var="room" items="${rlist}">
 				<div class="col-sm-12 form-group">
 					<label><c:out value="${room.snapshot} ${room.map}"/></label>
@@ -68,27 +69,25 @@ function sayonara(){
 			<input type="text" name="favoSearch" id="favoSearch"><input type="button" onclick="favoriteSearch()" value="검색">
 			<c:forEach var="favorite" items="${flist}">
 				<div class="col-sm-12 form-group">
-					<label><c:out value="${favorite.memberId}${favorite.creDate}"/></label>
+					<label><c:out value="${favorite.memberId}${favorite.creDate}${favorite.estate.estateName }"/></label>
 					<input type="button" value="팝업정보" onclick="popupInfoMaemul(${favorite.estate})">
 				</div>
 			</c:forEach>
 		</div>
 		
-
-		
 		
 		<div class="col-sm-4">
 					<label class="col-sm-12">내가 인테리어 업자에게 도움요청</label>
 					<c:forEach var="helper" items="${alist}">
-						<label><c:out value="${helper.requestedMemeberId}님에게 도움을 요청하셨습니다."/></label>
+						<label><c:out value="${helper.requestedMemberId}님에게 도움을 요청하셨습니다."/></label>
 					</c:forEach>
 					<label class="col-sm-12">인테리어 업자가 보낸 요청 목록</label>
 					<c:forEach var="helpRes" items="${rclist}">
 					 		<div class="col-sm-12 form-group">
-					 			<label><c:out value="${helpRes.requestedMemeberId}님이 ${helpRes.requestMemberId }님의 요청을 승락하셨습니다. "/></label>
+					 			<label><c:out value="${helpRes.requestedMemberId}님이 ${helpRes.requestMemberId }님의 요청을 승락하셨습니다. "/></label>
 								<input type="button" value="거절" id="cancel" name="cancel" onclick="sayonara()">
 								<input type="hidden" value="${helpRes.requestMemberId }" id="client" name="client">
-								<input type="hidden" value="${helpRes.requestedMemeberId }" id="accepter" name="accepter">
+								<input type="hidden" value="${helpRes.requestedMemberId }" id="accepter" name="accepter">
 					 		</div>
 					</c:forEach>
 		</div>

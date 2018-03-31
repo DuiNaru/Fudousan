@@ -48,7 +48,7 @@ public class AdviceDAOOracle implements AdviceDAO {
 	}
 
 	@Override
-	public boolean cancleAdvice(Advice advice) {
+	public boolean cancelAdvice(Advice advice) {
 		logger.info("캔슬어드바이스  Oracle Start");
 		AdviceMapper mapper = sqlsession.getMapper(AdviceMapper.class);
 		boolean realcancle = false;
@@ -59,6 +59,20 @@ public class AdviceDAOOracle implements AdviceDAO {
 		}
 		logger.info("캔슬어드바이스  Oracle End");
 		return realcancle;
+	}
+
+	@Override
+	public boolean updateState(Advice advice) {
+		logger.info("updateState("+advice+") Start");
+		AdviceMapper mapper = sqlsession.getMapper(AdviceMapper.class);
+		boolean result = false;
+		try{
+			result = mapper.updateState(advice);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("updateState("+advice+") End");
+		return false;
 	}
 
 }

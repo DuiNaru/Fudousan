@@ -10,7 +10,7 @@ public interface FavoriteDAO {
 	public List<Favorite> allFavorite(Integer memberId);
 	
 	//사용자의 찜목록에서 
-	public List<Favorite> searchFavorite(int memberId,int favoSearch);
+	public List<Favorite> searchFavorite(int memberId,String favoSearch);
 	
 	
 	

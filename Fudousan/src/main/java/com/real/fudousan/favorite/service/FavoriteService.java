@@ -32,10 +32,10 @@ public class FavoriteService {
 		return flist;
 	}
 	
-	public List<Favorite> showSearchFavorite(int memberId, int favoSearch){
+	public List<Favorite> showSearchFavorite(int memberId, String favoSearch){
 		logger.info("FS 찜목록에서 사용자의 검색어와 일치하는 찜 불러오기 Start");
 		List<Favorite> fslist = null; //담을그릇
-		fslist = dao.searchFavorite(memberId, favoSearch);//그릇에 담기
+		fslist = dao.searchFavorite(memberId, favoSearch);
 		logger.info("FS 찜목록에서 사용자의 검색어와 일치하는 찜 불러오기 End");
 		return fslist;
 	}
