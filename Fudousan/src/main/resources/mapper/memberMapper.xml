@@ -34,25 +34,30 @@
 		INSERT INTO 
 		 member 
 		(	
-			member_name
+			member_id
+			,member_name 
 			,password
 			,email
 			,phone
 			,picture
+			,permission
 			,designer
 			,text
 			
 		
 		)
 		VALUES
-		(
-			#{name}
+		(	
+			SEQ_Member_ID.nextval
+			,#{memberName}
 			,#{password}
+			,#{email}
 			,#{phone}
 			,#{picture}
-			,#{text}
+			,#{permission}
 			,#{designer}
-			,#{memberName} 
+			,#{text}
+			
 		)
 	
 	

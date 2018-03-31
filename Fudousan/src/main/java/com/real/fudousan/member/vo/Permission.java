@@ -20,4 +20,19 @@ public class Permission implements Serializable {
 
 	/** NAME. */
 	private String name;
+
+	
+	
+	public Permission() {
+		super();
+	}
+
+	public Permission(Integer permissionId, String name) {
+		super();
+		this.permissionId = permissionId;
+		this.name = name;
+	}
+	
+	
+	
 }

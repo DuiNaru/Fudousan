@@ -11,11 +11,14 @@ import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.member.dao.MemberDAO;
 import com.real.fudousan.member.vo.Member;
+import com.real.fudousan.member.vo.Permission;
 
 @Service
 public class MemberService {
 	
 	private static final String memberFileBaseDirectory = "/member/";
+	
+	private Permission p;
 	
 	@Autowired
 	private MemberDAO dao;
@@ -38,19 +41,20 @@ public class MemberService {
 	 * @param member
 	 * @return
 	 */
-	public boolean registerMember(Member member, List<MultipartFile> files) {
-		
+	public boolean registerMember(Member member, MultipartFile file) {
 		
 		// get designer result
 		int designer=member.getDesigner();
 		
 		// if member isn't designer
 		if (designer == 0 ) {	
+		
+			p= new Permission(1, "member");
+			member.setPermission(p);
+			
 			int result = 0; 
-			if ((result = dao.insertMember(member))>= -1 && files != null) {
-				for(MultipartFile file : files){
-					FileService.saveFile(file, memberFileBaseDirectory + result, true);
-				}
+			if ((result = dao.insertMember(member))>= -1 && file != null) {
+				FileService.saveFile(file, memberFileBaseDirectory + result, true);
 			}
 			// insert member success
 			return true; 
@@ -65,14 +69,18 @@ public class MemberService {
 	 * @param member
 	 * @return
 	 */
-	public boolean registerInterior(Member member) {
+	public boolean registerInterior(Member member, MultipartFile file) {
 		
 		// get designer
 		int designer=member.getDesigner();
-		
+
 		// if member is designer		
 		if (designer == 1 ) {
-			// true
+		
+			// member permission id setting 
+			p= new Permission(2, "Interior");
+			member.setPermission(p);
+		
 			int result = dao.insertMember(member);
 			
 			if (result != 1) {

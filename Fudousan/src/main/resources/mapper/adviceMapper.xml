@@ -5,7 +5,7 @@
 
 
 <mapper namespace="com.real.fudousan.advice.dao.AdviceMapper">
-<select id="normalUserHelpCall" resultType="advice" parameterType="advice">
+<!-- <select id="normalUserHelpCall" resultType="advice" parameterType="advice">
 	select 
 		REQUEST_MEMBER_ID requestMemberId
 		,REQUESTED_MEMEBER_ID requestedMemeberId
@@ -41,5 +41,5 @@
 	where
 		REQUEST_MEMBER_ID = #{requestMemberId} and REQUESTED_MEMEBER_ID = #{requestedMemeberId}
 </update>
-	
+	 -->
 </mapper>

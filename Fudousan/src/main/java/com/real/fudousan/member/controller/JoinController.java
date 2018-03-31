@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +20,8 @@ import com.real.fudousan.member.vo.Member;
 public class JoinController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	@Autowired
 	private MemberService service;
 	
 	@RequestMapping(value="join", method=RequestMethod.GET)
@@ -37,11 +40,11 @@ public class JoinController {
 	}
 	 								
 	@RequestMapping(value="insertMember",  method=RequestMethod.POST)
-	public String insertMember(Model model, Member member,  List<MultipartFile> files){
+	public String insertMember(Model model, Member member,  MultipartFile file){
 			
 		logger.info("회원 등록 시작");
 		
-		boolean memberResult = service.registerMember(member, files);
+		boolean memberResult = service.registerMember(member, file);
 	
 		if (memberResult) {
 			// result가 true이면 
