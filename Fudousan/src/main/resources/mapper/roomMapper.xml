@@ -124,11 +124,11 @@
 			TEXTURE c
 		on
 			room.CEILING_TEXTURE_ID = c.TEXTURE_ID
-		join
+		left outer join
 			TEXTURE_TYPE tf
 		on
 			f.TEXTURE_TYPE_ID = tf.TEXTURE_TYPE_ID
-		join
+		left outer join
 			TEXTURE_TYPE cf
 		on
 			c.TEXTURE_TYPE_ID = cf.TEXTURE_TYPE_ID
@@ -145,7 +145,7 @@
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
 		where
-			MEMBER_ID = #{MEMBER_ID}
+			room.MEMBER_ID = #{MEMBER_ID}
 	</select>
 	
 	

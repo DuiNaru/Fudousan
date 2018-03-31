@@ -6,7 +6,11 @@
 
 <mapper namespace="com.real.fudousan.estate.dao.EstateMapper">
 	<select id="selectByIds" parameterType="int[]">
-		
+		SELECT 
+		FROM
+		WHERE
+			estate_id IN <foreach collection="_parameter" item="id" separator=" , " open="(" close=")">#{id}</foreach>
+			
 	</select>
 	
 </mapper>
