@@ -18,8 +18,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.real.fudousan.advice.service.AdviceService;
+import com.real.fudousan.advice.vo.Advice;
 import com.real.fudousan.agency.service.AgencyService;
 import com.real.fudousan.agency.vo.Agency;
+import com.real.fudousan.estate.service.EstateService;
+import com.real.fudousan.estate.vo.Estate;
 import com.real.fudousan.item.service.ItemService;
 import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.item.vo.ItemType;
@@ -35,12 +38,23 @@ public class InteriorAgentController {
 	@Autowired
 	private AdviceService adviceService;
 	
+	@Autowired
+	private EstateService estateService;
+	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String interiorPage(Model model) {
 		logger.info("interiorPage() Start");
 		// TODO 로그인 완료 되면 파라미터로 받아서 사용할 것
 		int id = 1;
-		model.addAttribute("adviceList", adviceService.getRequestedList(id));
+		List<Advice> advices = adviceService.getRequestedList(id);
+		Set<Integer> estateIds = new HashSet<>();
+		for(Advice advice : advices) {
+			
+		}
+		List<Estate> estates = estateService.getEsates(estateIds);
+		
+		model.addAttribute("adviceList", advices);
+		
 		logger.info("interiorPage() End");
 		return "interior/interiorPage";
 	}

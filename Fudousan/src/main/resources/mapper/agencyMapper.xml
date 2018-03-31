@@ -20,7 +20,7 @@
 		<result property="name" column="name"/>
 		<result property="text" column="text"/>
 		<association property="transType" column="trans_type_id" javaType="com.real.fudousan.estate.vo.TransType" resultMap="transtypeResultMap"/>
-		<association property="member" column="member_id" javaType="com.real.fudousan.member.vo.Member" resultMap="memberResultMap"/>
+		<association property="member" column="member_id" javaType="com.real.fudousan.member.vo.Member" resultMap="com.real.fudousan.member.dao.MemberMapper.memberResultMap"/>
 	</resultMap>
 	
 	<resultMap type="transtype" id="transtypeResultMap">
@@ -28,26 +28,6 @@
 		<result property="transName" column="trans_name"/>
 	</resultMap>
 	
-	<resultMap type="member" id="memberResultMap">
-		<id property="memberId" column="member_id"/>
-		<result property="creDate" column="member_cre_date"/>
-		<result property="delDate" column="member_del_date"/>
-		<result property="designer" column="designer"/>
-		<result property="email" column="email"/>
-		<result property="memberId" column="member_id"/>
-		<result property="password" column="password"/>
-		<result property="phone" column="phone"/>
-		<result property="picture" column="picture"/>
-		<result property="text" column="member_text"/>
-		<result property="memberName" column="member_name"/>
-		<!-- Permission -->
-		<association property="permission" column="permission_id" javaType="com.real.fudousan.member.vo.Permission" resultMap="permissionResultMap"/>
-	</resultMap>
-	
-	<resultMap type="permission" id="permissionResultMap">
-		<id property="permissionId" column="permission_id"/>
-		<result property="name" column="permission_name"/>
-	</resultMap>
 
 	<select id="selectByConfirmed" parameterType="int" resultMap="agencyResultMap">
 		SELECT 
