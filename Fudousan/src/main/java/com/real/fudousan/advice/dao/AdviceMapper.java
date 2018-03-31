@@ -11,4 +11,6 @@ public interface AdviceMapper {
 	public List<Advice> reverseCall(int id);
 	
 	public boolean cancleAdvice(Advice advice);
+	
+	public boolean updateState(Advice advice);
 }

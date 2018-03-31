@@ -80,15 +80,15 @@ function sayonara(){
 		<div class="col-sm-4">
 					<label class="col-sm-12">내가 인테리어 업자에게 도움요청</label>
 					<c:forEach var="helper" items="${alist}">
-						<label><c:out value="${helper.requestedMemeberId}님에게 도움을 요청하셨습니다."/></label>
+						<label><c:out value="${helper.requestedMemberId}님에게 도움을 요청하셨습니다."/></label>
 					</c:forEach>
 					<label class="col-sm-12">인테리어 업자가 보낸 요청 목록</label>
 					<c:forEach var="helpRes" items="${rclist}">
 					 		<div class="col-sm-12 form-group">
-					 			<label><c:out value="${helpRes.requestedMemeberId}님이 ${helpRes.requestMemberId }님의 요청을 승락하셨습니다. "/></label>
+					 			<label><c:out value="${helpRes.requestedMemberId}님이 ${helpRes.requestMemberId }님의 요청을 승락하셨습니다. "/></label>
 								<input type="button" value="거절" id="cancel" name="cancel" onclick="sayonara()">
 								<input type="hidden" value="${helpRes.requestMemberId }" id="client" name="client">
-								<input type="hidden" value="${helpRes.requestedMemeberId }" id="accepter" name="accepter">
+								<input type="hidden" value="${helpRes.requestedMemberId }" id="accepter" name="accepter">
 					 		</div>
 					</c:forEach>
 		</div>

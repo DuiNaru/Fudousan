@@ -2,6 +2,7 @@ package com.real.fudousan.room.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -45,6 +46,20 @@ public class RoomDAOOracle implements RoomDAO {
 			e.printStackTrace();
 		}
 		logger.info("RoomDAOOracle_allMyRoom_end");
+		return rlist;
+	}
+
+	@Override
+	public List<Room> select(Set<Integer> roomIds) {
+		logger.info("select("+roomIds+") Start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		List<Room> rlist = null;
+		try{
+			rlist = mapper.selectByIds(roomIds);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("select("+roomIds+") End");
 		return rlist;
 	}
 
