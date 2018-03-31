@@ -20,16 +20,16 @@ public class AdviceDAOOracle implements AdviceDAO {
 	SqlSession sqlsession;
 	
 	@Override
-	public List<Advice> normalUserHelpCall(int id) {
-		logger.info("Ad_DAOORACLE에서 normalUserHelpCall-Start");
+	public List<Advice> selectByIdAndStatus(int id, int status) {
+		logger.info("Ad_DAOORACLE에서 selectByIdAndStatus-Start");
 		AdviceMapper mapper = sqlsession.getMapper(AdviceMapper.class);
 		List<Advice> helpCall = null;
 		try{
-			helpCall = mapper.normalUserHelpCall(id);
+			helpCall = mapper.selectByIdAndStatus(id, status);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		logger.info("Ad_DAOORACLE에서 normalUserHelpCall-End");
+		logger.info("Ad_DAOORACLE에서 selectByIdAndStatus-End");
 		return helpCall;
 	}
 
@@ -72,7 +72,7 @@ public class AdviceDAOOracle implements AdviceDAO {
 			e.printStackTrace();
 		}
 		logger.info("updateState("+advice+") End");
-		return false;
+		return result;
 	}
 
 }

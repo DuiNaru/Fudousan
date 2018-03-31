@@ -15,20 +15,7 @@
 		<association property="room" column="room_id" javaType="com.real.fudousan.room.vo.Room" resultMap="com.real.fudousan.room.dao.RoomMapper.roomResultMap"/>
 	</resultMap>
 
-<!-- <select id="normalUserHelpCall" resultType="advice" parameterType="advice">
-	select 
-		REQUEST_MEMBER_ID requestMemberId
-		,REQUESTED_MEMBER_ID requestedMemberId
-		,ROOM_ID roomId
-		,CRE_DATE creDate
-		,ID
-		,REQUEST_DATE requestDate
-		,STATE state
-	from 
-		advice
-	where REQUEST_MEMBER_ID = #{requestMemberId} and STATE = 0
-</select> -->
-	<select id="normalUserHelpCall" resultMap="adviceResultMapper" parameterType="advice">
+	<select id="selectByIdAndStatus" resultMap="adviceResultMapper">
 		select
 			-- ADIVCE
 			advice.REQUEST_MEMBER_ID REQUEST_MEMBER_ID
@@ -98,6 +85,7 @@
 			,tf.TEXT f_TEXT
 			,cf.NAME c_NAME
 			,cf.TEXT c_TEXT
+			,ESTATE_NAME
 		from
 			advice
 		join
@@ -132,22 +120,10 @@
 			TRANS_TYPE
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
-		where REQUEST_MEMBER_ID = #{requestMemberId} and STATE = 0
+		where REQUEST_MEMBER_ID = #{0} and STATE = #{1}
 	</select>
 
-<!-- <select id="reverseCall" resultType="advice" parameterType="advice">
-	select 
-		REQUEST_MEMBER_ID requestMemberId
-		,REQUESTED_MEMBER_ID requestedMemberId
-		,ROOM_ID roomId
-		,CRE_DATE creDate
-		,ID
-		,REQUEST_DATE requestDate
-		,STATE 
-	from 
-		advice
-	where REQUEST_MEMBER_ID = #{requestMemberId} and STATE = 1
-</select> -->
+
 <select id="reverseCall" resultMap="adviceResultMapper" parameterType="advice">
 	select
 			-- ADIVCE
@@ -218,6 +194,7 @@
 			,tf.TEXT f_TEXT
 			,cf.NAME c_NAME
 			,cf.TEXT c_TEXT
+			,ESTATE_NAME
 		from
 			advice
 		join
@@ -252,7 +229,7 @@
 			TRANS_TYPE
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
-	where REQUEST_MEMBER_ID = #{requestMemberId} and STATE = 1
+	where REQUESTED_MEMBER_ID = #{requestedMemberId} and STATE = 0
 </select>
 
 <update id="cancleAdvice" parameterType="advice">

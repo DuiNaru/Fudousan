@@ -20,14 +20,15 @@ public class AdviceService {
 	/**
 	 * 신청한 모든 목록
 	 * @param id 신청한 사람
+	 * @param status Adivce의 상태
 	 * @return
 	 */
-	public List<Advice> getRequestList(int id) {
-		logger.info("getRequestList("+id+") Start");
-		List<Advice> HelpCall = null;
-		HelpCall = dao.normalUserHelpCall(id);
-		logger.info("getRequestList("+id+") End");
-		return HelpCall;
+	public List<Advice> getRequestList(int id, int status) {
+		logger.info("getRequestList("+id+", "+status+") Start");
+		List<Advice> helpCall = null;
+		helpCall = dao.selectByIdAndStatus(id, status);
+		logger.info("getRequestList("+id+", "+status+") End");
+		return helpCall;
 	}
 	
 	/**
@@ -76,9 +77,10 @@ public class AdviceService {
 	public boolean unConfirm(Advice advice) {
 		logger.info("unConfirm("+advice+") Start");
 		advice.setState(Advice.DENIED);
-		dao.updateState(advice);
+		boolean result = false;
+		result = dao.updateState(advice);
 		logger.info("unConfirm("+advice+") End");
-		return false;
+		return result;
 	}
 	
 	/**

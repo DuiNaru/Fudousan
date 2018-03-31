@@ -43,8 +43,8 @@ public class AdviceController {
 		model.addAttribute("tfresult",tfresult);
 		
         List<Favorite> flist = Fservice.showAllFavorite(customer);
-        List<Advice> alist = Aservice.getRequestList(customer);
-        List<Advice> rclist = Aservice.getRequestedList(customer);
+        List<Advice> alist = Aservice.getRequestList(customer, Advice.REQUEST);
+        List<Advice> rclist = Aservice.getRequestList(customer, Advice.CONFIRMED);
 		List<Room> allRooms = Rservice.showAllRoom(customer);
         
 		model.addAttribute("rlist",allRooms);

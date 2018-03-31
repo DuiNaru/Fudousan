@@ -37,8 +37,8 @@ public class RoomController {
 		model.addAttribute("rlist",srlist);
 
         List<Favorite> flist = Fservice.showAllFavorite(memberId);
-        List<Advice> alist = Aservice.getRequestList(memberId);
-        List<Advice> rclist = Aservice.getRequestedList(memberId);
+        List<Advice> alist = Aservice.getRequestList(memberId, Advice.REQUEST);
+        List<Advice> rclist = Aservice.getRequestList(memberId, Advice.CONFIRMED);
         
         model.addAttribute("flist", flist);
         model.addAttribute("alist", alist);
