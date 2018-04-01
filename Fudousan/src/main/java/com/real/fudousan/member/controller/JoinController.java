@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.member.service.MemberService;
 import com.real.fudousan.member.vo.Member;
 
@@ -60,6 +61,35 @@ public class JoinController {
 			return "join/join";
 		}	
 	}
+	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value="insertAgency",  method=RequestMethod.POST)
+	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency){
+			
+		logger.info("회원 등록 시작");
+		boolean memberResult = service.registerAgencyMember(member, file);
+		boolean AgencyResult = service.registerAgency(agency);
+	
+		if (memberResult && AgencyResult) {
+			// result가 true이면 
+			logger.info("회원 등록 성공");
+			model.addAttribute(memberResult);
+			return "join/joinresult";
+			
+		}
+		else{
+			// result가 false이면 
+			logger.info("회원 등록 실패");
+			model.addAttribute(memberResult);
+			return "join/join";
+		}	
+	}
+	
 	
 
 }

@@ -117,7 +117,7 @@
 
 	            <div class="form-group">
 	              <label for="InputName">name</label>
-	              <input type="text" class="form-control" id="InputName" placeholder="이름" name="member_name">
+	              <input type="text" class="form-control" id="InputName" placeholder="이름" name="memberName">
 	            </div>
 	            <div class="form-group">
 	              <label for="InputPassword1">password</label>

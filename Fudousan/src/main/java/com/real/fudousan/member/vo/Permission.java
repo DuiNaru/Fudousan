@@ -32,6 +32,33 @@ public class Permission implements Serializable {
 		this.permissionId = permissionId;
 		this.name = name;
 	}
+
+	public Integer getPermissionId() {
+		return permissionId;
+	}
+
+	public void setPermissionId(Integer permissionId) {
+		this.permissionId = permissionId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Permission [permissionId=" + permissionId + ", name=" + name + "]";
+	}
+	
+	
 	
 	
 	
