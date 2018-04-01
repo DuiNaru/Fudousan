@@ -36,13 +36,13 @@
 				success:function(data) {
 					if(data == -1) {
 						alert("공개여부 변경에 실패하였습니다.");
-					} else {
-						$("public"+roomId).filter("[value="+data+"]").check();
+						$("input[name=public"+roomId+"]").filter("[value="+(1-value)+"]").check();
 					}
 				},
 				error:function(e) {
 					console.log(e);
 					alert("공개여부 변경 중 오류가 발생하였습니다.");
+					$("input[name=public"+roomId+"]").filter("[value="+(1-value)+"]").check();
 				}
 			});
 		});

@@ -67,7 +67,7 @@ public class RoomController {
 		
 		int result = -1;
 		if(Rservice.changeRoomPublic(memberId, roomId, roomPublic)) {
-			result = roomPublic==Room.PUBLIC?Room.PRIVATE:Room.PUBLIC;
+			result = roomPublic;
 		}
 		logger.info("changeRoomPublic("+roomId+", "+roomPublic+") End");
 		return result;
