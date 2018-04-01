@@ -2,6 +2,7 @@ package com.real.fudousan.room.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ public class RoomDAOOracle implements RoomDAO {
 	
 	//사용자가 자신이 작성한 매물리스트에서 검색해서 정보 가져오기
 	@Override
-	public List<Room> searchRoomInfo(int roomSearch, int memberId) {
+	public List<Room> searchRoomInfo(String roomSearch, int memberId) {
 		logger.info("RoomDAOOracle_searchRoomInfo_start");
 		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
 		List<Room> srlist = null;
@@ -45,6 +46,20 @@ public class RoomDAOOracle implements RoomDAO {
 			e.printStackTrace();
 		}
 		logger.info("RoomDAOOracle_allMyRoom_end");
+		return rlist;
+	}
+
+	@Override
+	public List<Room> select(Set<Integer> roomIds) {
+		logger.info("select("+roomIds+") Start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		List<Room> rlist = null;
+		try{
+			rlist = mapper.selectByIds(roomIds);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("select("+roomIds+") End");
 		return rlist;
 	}
 

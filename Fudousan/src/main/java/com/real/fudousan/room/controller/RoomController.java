@@ -30,15 +30,15 @@ public class RoomController {
 	private AdviceService Aservice;
 	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
-	public String searchMyRoom(Model model,int roomSearch,int memberId){
+	public String searchMyRoom(Model model,String roomSearch,int memberId){
 		logger.info("RoomController-searchMyRoom_Start");
 		logger.info("매물 이름 검색한 결과 :  " + roomSearch);
 		List<Room> srlist = Rservice.showMyRoom(roomSearch, memberId);
 		model.addAttribute("rlist",srlist);
 
         List<Favorite> flist = Fservice.showAllFavorite(memberId);
-        List<Advice> alist = Aservice.getRequestList(memberId);
-        List<Advice> rclist = Aservice.getRequestedList(memberId);
+        List<Advice> alist = Aservice.getRequestList(memberId, Advice.REQUEST);
+        List<Advice> rclist = Aservice.getRequestList(memberId, Advice.CONFIRMED);
         
         model.addAttribute("flist", flist);
         model.addAttribute("alist", alist);

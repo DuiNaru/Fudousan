@@ -31,7 +31,7 @@ public class FavoriteController {
 	private AdviceService Aservice;
 	
 	@RequestMapping(value="searchFavorite",method=RequestMethod.GET)
-	public String saerchFavorite(Model model,int memberId, int favoSearch){
+	public String saerchFavorite(Model model,int memberId, String favoSearch){
 		List<Favorite> seacrhFavorite = null;
 		seacrhFavorite = service.showSearchFavorite(memberId, favoSearch);
 		logger.info("찜하기 매물의 검색값  : "+favoSearch);

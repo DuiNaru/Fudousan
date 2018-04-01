@@ -39,11 +39,31 @@
        
       }
    
-    
-      
 	</style>
   </head>
   <body>
+  
+  <!-- 로그인 모달 시작 -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Login</h4>
+				</div>
+				
+				<div class="modal-body">
+					Email <input type="text" id="memberEmail" name="memberID">
+					Password <input type="password" id="password" name="password">
+					<button type="button" id="loginBtn">Login</button>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 로그인 모달 끝 -->
    <!-- Header -->
 		 <nav class="navbar navbar-default" style="margin: auto 0"> 
 		  <div class="container-fluid">
@@ -65,17 +85,24 @@
 		     
 		    
 		      <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
-		        <li><a href="#">Login</a></li>
+		       <c:if test="${sessionScope.loginEmail == null}">
+					<li id="loginNameTag"></li>
+					<li id="loginAtag"><a data-toggle="modal" href="#loginModal">Login</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="join/join">Customer Join</a></li>
+							<li class="divider"></li>
+							<li><a href="join/agencyjoin">Agency Join</a></li>
+						</ul>
+					</li>
+				</c:if>
+				<c:if test="${sessionScope.loginEmail != null}">
+					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
+					<li><a href="/fudousan/bw">Logout</a></li>
+				</c:if>
 		    
-		         <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="#">Customer Join</a></li>
-			            <li class="divider"></li>
-			            <li><a href="#">Agency Join</a></li>
-			           
-			          </ul>
-		         </li>
+		        
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-fluid -->

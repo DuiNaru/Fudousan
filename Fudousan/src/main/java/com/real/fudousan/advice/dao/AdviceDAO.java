@@ -6,10 +6,12 @@ import com.real.fudousan.advice.vo.Advice;
 
 public interface AdviceDAO {
 
-	public List<Advice> normalUserHelpCall(int id);
+	public List<Advice> selectByIdAndStatus(int id, int status);
 
 	public List<Advice> reverseCall(int id);
 	
-	public boolean cancleAdvice(Advice advice);
+	public boolean cancelAdvice(Advice advice);
+	
+	public boolean updateState(Advice advice);
 
 }

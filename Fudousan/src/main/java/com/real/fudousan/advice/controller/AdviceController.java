@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
@@ -35,15 +36,15 @@ public class AdviceController {
 		logger.info("Advice_Controller 사용자의 도움요청 취소 Start");
 		Advice advice = new Advice();
 		advice.setRequestMemberId(customer);
-		advice.setRequestedMemeberId(interior);
+		advice.setRequestedMemberId(interior);
 		
 		boolean tfresult = false;
 		tfresult = Aservice.cancelAdvice(advice);
 		model.addAttribute("tfresult",tfresult);
 		
         List<Favorite> flist = Fservice.showAllFavorite(customer);
-        List<Advice> alist = Aservice.getRequestList(customer);
-        List<Advice> rclist = Aservice.getRequestedList(customer);
+        List<Advice> alist = Aservice.getRequestList(customer, Advice.REQUEST);
+        List<Advice> rclist = Aservice.getRequestList(customer, Advice.CONFIRMED);
 		List<Room> allRooms = Rservice.showAllRoom(customer);
         
 		model.addAttribute("rlist",allRooms);
@@ -52,5 +53,18 @@ public class AdviceController {
         model.addAttribute("rclist", rclist);
 		logger.info("Advice_Controller 사용자의 도움요청 취소 End");
 	       return  "user/mypagecustomer";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="unconfirm", method=RequestMethod.GET)
+	public boolean unConfirm(Advice advice, Room room) {
+		logger.info("unConfirm("+advice+") Start");
+		// TODO 세션에서 아이디 바꾸기
+		advice.setRequestedMemberId(1);
+		advice.setRoom(room);
+		boolean result = false;
+		result = Aservice.unConfirm(advice);
+		logger.info("unConfirm("+advice+") End");
+		return result;
 	}
 }

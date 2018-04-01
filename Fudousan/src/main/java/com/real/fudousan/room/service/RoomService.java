@@ -2,6 +2,7 @@ package com.real.fudousan.room.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class RoomService {
 	 * @param memberId
 	 * @return 검색자의 매물정보중 검색대상
 	 */
-	public List<Room> showMyRoom(int roomSearch, int memberId) {
+	public List<Room> showMyRoom(String roomSearch, int memberId) {
 		List<Room> srlist = null;
 		srlist = dao.searchRoomInfo(roomSearch, memberId);
 		/*logger.info("srlist에 들어온값 "+srlist.get(0));*/
@@ -75,5 +76,18 @@ public class RoomService {
 	public boolean changeFloorTexture(int roomId, int textureId) {
 		
 		return false;
+	}
+	
+	/**
+	 * 해당 방 아이디에 해당하는 모든 방을 가져온다.
+	 * @param roomIds
+	 * @return
+	 */
+	public List<Room> getRooms(Set<Integer> roomIds) {
+		logger.info("getRooms("+roomIds+") Start");
+		List<Room> result = null;
+		result = dao.select(roomIds);
+		logger.info("getRooms("+roomIds+") End");
+		return result;
 	}
 }

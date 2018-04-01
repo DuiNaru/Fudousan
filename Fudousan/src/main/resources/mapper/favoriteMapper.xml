@@ -42,6 +42,7 @@
 			,DEL_DATE
 			,TRANS_NAME
 			,CODE_NAME
+			,ESTATE_NAME
 		from
 			favorite
 		join
@@ -62,7 +63,7 @@
 	
 	
 	
- 	<select id="searchFavorite" resultMap="FavoriteAll" parameterType="int">
+ 	<select id="searchFavorite" resultMap="FavoriteAll" >
 		select
 			MEMBER_ID
 			,CRE_DATE
@@ -99,6 +100,7 @@
 			,DEL_DATE
 			,TRANS_NAME
 			,CODE_NAME
+			,ESTATE_NAME
 		from
 			favorite
 		join
@@ -114,13 +116,13 @@
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
 		where
-			favorite.MEMBER_ID = #{0} and favorite.ESTATE_ID = #{1}
+			favorite.MEMBER_ID = #{0} and estate.ESTATE_NAME = #{1}
 	</select>
 
 	
 	
 	<resultMap type="favorite" id="FavoriteAll">
-		<id 		 property="memberId" column="MEMBER_ID"/>
+		<result 		 property="memberId" column="MEMBER_ID"/>
 		<result 	 property="creDate"  column="CRE_DATE"/>
 		<association property="estate"   column="estate_id" javaType="com.real.fudousan.estate.vo.Estate" resultMap="estateResultMap"/>
 	</resultMap>
@@ -155,6 +157,7 @@
 		<result property="renovation" 				column="Renovation"/>
 		<result property="remarks" 					column="Remarks"/>
 		<result property="delDate" 					column="DEL_DATE"/>
+		<result property="estateName" 				column="ESTATE_NAME"/>
 		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
 		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
 	</resultMap>

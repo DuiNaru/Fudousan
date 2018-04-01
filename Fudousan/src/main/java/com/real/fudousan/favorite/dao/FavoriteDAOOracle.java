@@ -35,7 +35,7 @@ public class FavoriteDAOOracle implements FavoriteDAO {
 	}
 
 	@Override
-	public List<Favorite> searchFavorite(int memberId,int favoSearch) {
+	public List<Favorite> searchFavorite(int memberId,String favoSearch) {
 		logger.info("사용자 찜목록 검색- Start");
 		
 		FavoriteMapper mapper = sqlsession.getMapper(FavoriteMapper.class);

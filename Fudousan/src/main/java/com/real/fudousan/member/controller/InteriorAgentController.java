@@ -28,6 +28,8 @@ import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.item.vo.ItemType;
 import com.real.fudousan.item.vo.RefSite;
 import com.real.fudousan.member.service.MemberService;
+import com.real.fudousan.room.service.RoomService;
+import com.real.fudousan.room.vo.Room;
 
 @SessionAttributes("loginId")
 @RequestMapping("interior")
@@ -39,7 +41,7 @@ public class InteriorAgentController {
 	private AdviceService adviceService;
 	
 	@Autowired
-	private EstateService estateService;
+	private RoomService roomService;
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String interiorPage(Model model) {
@@ -47,11 +49,6 @@ public class InteriorAgentController {
 		// TODO 로그인 완료 되면 파라미터로 받아서 사용할 것
 		int id = 1;
 		List<Advice> advices = adviceService.getRequestedList(id);
-		Set<Integer> estateIds = new HashSet<>();
-		for(Advice advice : advices) {
-			
-		}
-		List<Estate> estates = estateService.getEsates(estateIds);
 		
 		model.addAttribute("adviceList", advices);
 		

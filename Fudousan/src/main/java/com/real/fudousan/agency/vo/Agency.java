@@ -16,6 +16,8 @@ import com.real.fudousan.member.vo.Member;
  * @version $Id$
  */
 public class Agency implements Serializable {
+	public static int NOT_CONFIRM = 0;
+	public static int CONFIRMED = 1;
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;

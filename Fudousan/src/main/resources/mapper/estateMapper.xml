@@ -47,6 +47,7 @@
 			,estate.DEL_DATE estate_DEL_DATE
 			,estate.MunicipalityCode_ID MunicipalityCode_ID
 			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
+			,ESTATE_NAME
 		from
 			ESTATE
 		join
@@ -92,6 +93,7 @@
 		<result property="renovation" 				column="Renovation"/>
 		<result property="remarks" 					column="Remarks"/>
 		<result property="delDate" 					column="estate_DEL_DATE"/>
+		<result property="estateName" 				column="ESTATE_NAME"/>
 		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
 		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
 	</resultMap>
