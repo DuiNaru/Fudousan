@@ -18,13 +18,13 @@
 				success:function(data) {
 					if(data == -1) {
 						alert("공개여부 변경에 실패하였습니다.");
-						$("input[name=public"+roomId+"]").filter("[value="+(1-value)+"]").check();
+						$("input[name=public"+roomId+"]").filter("[value="+(1-value)+"]").prop("checked", true);
 					}
 				},
 				error:function(e) {
 					console.log(e);
 					alert("공개여부 변경 중 오류가 발생하였습니다.");
-					$("input[name=public"+roomId+"]").filter("[value="+(1-value)+"]").check();
+					$("input[name=public"+roomId+"]").filter("[value="+(1-value)+"]").prop("checked", true);
 				}
 			});
 		});
@@ -101,18 +101,18 @@
 					<label>${virtual.roomId} : ${virtual.snapshot}</label>
 					<div>
 						<div>
-					<input class="btn btn-default" type="button" value="꾸미기">
-					<input class="btn btn-default" type="button" value="수정">
-					<input class="btn btn-default" type="button" value="삭제" onclick="deleteRoom(${virtual.roomId})">
+							<input class="btn btn-default" type="button" value="꾸미기">
+							<input class="btn btn-default" type="button" value="수정">
+							<input class="btn btn-default" type="button" value="삭제" onclick="deleteRoom(${virtual.roomId})">
 						</div>
 						<div>
 							<label class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="1" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 1}"> checked="checked"</c:if>>공개</label>
 							<label class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="0" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 0}"> checked="checked"</c:if>>비공개</label>
 						</div>
 					</div>
-					<a class="btn btn-default" href="">모델링 작성</a>
 				</div>
 			</c:forEach>
+			<a class="btn btn-default" href="">모델링 작성</a>
 		</div>
 	</div>
 	<footer class="col-sm-12">푸터</footer>
