@@ -33,7 +33,7 @@ public class Estate implements Serializable {
 	/** 도시. */
 	private MunicipalityCode municipalitycode;
 
-	/** 都道府県名. */
+	/** 都道府県名(도시 이름명). */
 	private String prefecture;
 
 	/** 市区町村名. */
