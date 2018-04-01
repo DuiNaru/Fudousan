@@ -46,11 +46,22 @@ public class InteriorAgentController {
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String interiorPage(Model model) {
 		logger.info("interiorPage() Start");
-		// TODO 로그인 완료 되면 파라미터로 받아서 사용할 것
-		int id = 1;
-		List<Advice> advices = adviceService.getRequestedList(id);
 		
-		model.addAttribute("adviceList", advices);
+		// TODO 로그인 완료 되면 파라미터로 받아서 사용할 것
+		int memberId = 1;
+		
+		// 요청 받은 목록
+		List<Advice> adviceList = adviceService.getRequestedList(memberId);
+		
+		// 실제 매물이 존재하는 모델링 목록
+		List<Room> realRoomList = roomService.showAllRoom(memberId, true);
+		
+		// 실제 매물이 존재하지 않는 모델링 목록
+		List<Room> notRealRoomList = roomService.showAllRoom(memberId, false);
+		
+		model.addAttribute("adviceList", adviceList);
+		model.addAttribute("realRoomList", realRoomList);
+		model.addAttribute("notRealRoomList", notRealRoomList);
 		
 		logger.info("interiorPage() End");
 		return "interior/interiorPage";

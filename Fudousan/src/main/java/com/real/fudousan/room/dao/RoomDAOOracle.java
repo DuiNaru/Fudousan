@@ -1,7 +1,9 @@
 package com.real.fudousan.room.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.ibatis.session.SqlSession;
@@ -35,6 +37,7 @@ public class RoomDAOOracle implements RoomDAO {
 		return srlist;
 	}
 
+	//사용자가 마이페이지에 접속하면 자신의 매물리스트에 있는 정보 전부 가져온다
 	@Override
 	public List<Room> allMyRoom(Integer memberId) {
 		logger.info("RoomDAOOracle_allMyRoom_start");
@@ -63,6 +66,20 @@ public class RoomDAOOracle implements RoomDAO {
 		return rlist;
 	}
 
-	//사용자가 마이페이지에 접속하면 자신의 매물리스트에 있는 정보 전부 가져온다
-	
+	@Override
+	public List<Room> selectByIdOnReal(int memberId, boolean isRealRoom) {
+		logger.info("selectByIdOnEsate("+memberId+", "+isRealRoom+") Start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		List<Room> rlist = null;
+		Map<String, Object> param = new HashMap<>();
+		param.put("memberId", memberId);
+		param.put("isRealRoom", isRealRoom);
+		try{
+			rlist = mapper.selectByIdOnEsate(param);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("selectByIdOnEsate("+memberId+", "+isRealRoom+") End");
+		return rlist;
+	}
 }

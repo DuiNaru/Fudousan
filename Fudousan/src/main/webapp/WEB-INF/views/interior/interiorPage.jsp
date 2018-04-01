@@ -44,8 +44,24 @@
 			</c:forEach>
 		</div>
 		<div class="col-sm-12">
+			<h1>3D 작성 매물 확인</h1>
+			<c:forEach var="room" varStatus="status" items="${realRoomList}">
+				<div id="room${status.index}" class="col-sm-12">
+					<label>${room.estate.estateId } : ${room.estate.estateName }</label>
+					<div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 		<div class="col-sm-12">
+			<h1>내가 만든 리스트</h1>
+			<c:forEach var="virtual" varStatus="status" items="${notRealRoomList}">
+				<div id="virtual${status.index}" class="col-sm-12">
+					<label>${virtual.roomId} : ${virtual.snapshot}</label>
+					<div>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 	<footer class="col-sm-12">푸터</footer>

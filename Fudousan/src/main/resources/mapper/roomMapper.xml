@@ -13,13 +13,13 @@
 		<result 	 property="delDate"     	column="DEL_DATE"/>
 		<result 	 property="heigth"      	column="HEIGTH"/>
 		<result 	 property="memberId"  		column="MEMBER_ID"/>
+		<result		 property="roomPublic"		column="ROOM_PUBLIC"/>
 		<association property="estate"   		column="estate_id" 			javaType="com.real.fudousan.estate.vo.Estate" resultMap="com.real.fudousan.estate.dao.EstateMapper.estateResultMap"/>
 		<association property="floorTexture"   	column="FLOOR_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" columnPrefix="f_"/>
 		<association property="ceilingTexture"  column="CEILING_TEXTURE_ID" javaType="com.real.fudousan.texture.vo.Texture" resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" columnPrefix="c_"/>
 	</resultMap>
 
-
-<select id="searchRoomInfo" resultMap="roomResultMap">
+	<select id="searchRoomInfo" resultMap="roomResultMap">
 		select
 			ROOM_ID
 			,SNAPSHOT
@@ -58,6 +58,7 @@
 			,Period
 			,Renovation
 			,Remarks
+			,ROOM_PUBLIC
 			,estate.DEL_DATE estate_DEL_DATE
 			,estate.MunicipalityCode_ID MunicipalityCode_ID
 			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
@@ -100,67 +101,21 @@
 			TEXTURE_TYPE cf
 		on
 			c.TEXTURE_TYPE_ID = cf.TEXTURE_TYPE_ID
-		join
+		left outer join
 			ESTATE
 		on
 			room.ESTATE_ID = estate.ESTATE_ID
-		join
+		left outer join
 			MunicipalityCode
 		on
 			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
-		join
+		left outer join
 			TRANS_TYPE
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
 		where
 			estate.ESTATE_NAME = #{0} and room.MEMBER_ID = #{1}
 	</select>
-	
-<!-- 일반고객이 자신이 작성 한 매물 검색하는것 -->
-<!-- 
-<select id="searchRoomInfo" resultType="room">
-	select
-		room_id
-		,estate_id
-		,snapshot
-		,map
-		,cre_date
-		,del_date
-		,heigth
-		,floor_Texture_id
-		,ceiling_Texture_id
-		,member_id AS memberId
-	from
-		room
-	where
-		estate_Id = #{0} and member_id = #{1}
-</select>
--->
-<!-- 일반 고객이 자신의 마이페이지에 접속하면 자신이 작성한 매물 전체 출력 -->
-<!-- 
-<select id="allMyRoom" resultType="room" parameterType="int">
-	select
-		ROOM_ID
-		,ESTATE_ID
-		,SNAPSHOT
-		,MAP
-		,CRE_DATE
-		,DEL_DATE
-		,HEIGTH
-		,FLOOR_TEXTURE_ID
-		,CEILING_TEXTURE_ID
-		,member_id AS memberId
-	from
-		room
-	where
-		member_id = #{member_id}
-</select>
- -->
-		<!-- member_id = #{0} 파라메터가 1개니까 뭘 써도 상관없다-->
-
-
-
-
 
 	<select id="allMyRoom" resultMap="roomResultMap" parameterType="int">
 		select
@@ -201,6 +156,7 @@
 			,Period
 			,Renovation
 			,Remarks
+			,ROOM_PUBLIC
 			,estate.DEL_DATE estate_DEL_DATE
 			,estate.MunicipalityCode_ID MunicipalityCode_ID
 			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
@@ -243,15 +199,15 @@
 			TEXTURE_TYPE cf
 		on
 			c.TEXTURE_TYPE_ID = cf.TEXTURE_TYPE_ID
-		join
+		left outer join
 			ESTATE
 		on
 			room.ESTATE_ID = estate.ESTATE_ID
-		join
+		left outer join
 			MunicipalityCode
 		on
 			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
-		join
+		left outer join
 			TRANS_TYPE
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
@@ -298,6 +254,7 @@
 			,Period
 			,Renovation
 			,Remarks
+			,ROOM_PUBLIC
 			,estate.DEL_DATE estate_DEL_DATE
 			,estate.MunicipalityCode_ID MunicipalityCode_ID
 			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
@@ -340,15 +297,15 @@
 			TEXTURE_TYPE cf
 		on
 			c.TEXTURE_TYPE_ID = cf.TEXTURE_TYPE_ID
-		join
+		left outer join
 			ESTATE
 		on
 			room.ESTATE_ID = estate.ESTATE_ID
-		join
+		left outer join
 			MunicipalityCode
 		on
 			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
-		join
+		left outer join
 			TRANS_TYPE
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
@@ -356,5 +313,110 @@
 			room.room_id IN <foreach collection="_parameter" item="roomId" open="(" separator=", " close=")">#{roomId}</foreach>
 	</select>
 	
-	
+	<select id="selectByIdOnEsate" resultMap="roomResultMap" parameterType="map">
+		select
+			ROOM_ID
+			,SNAPSHOT
+			,MAP
+			,ROOM.CRE_DATE CRE_DATE
+			,ROOM.DEL_DATE DEL_DATE
+			,HEIGTH
+			,FLOOR_TEXTURE_ID
+			,CEILING_TEXTURE_ID
+			,MEMBER_ID
+			,ROOM.ESTATE_ID ESTATE_ID 
+			,Region
+			,Prefecture
+			,Municipality
+			,DistrictName
+			,NearestStation
+			,TimeToNearestStation
+			,TradePrice
+			,PricePerUnit
+			,FloorPlan
+			,Area
+			,UnitPrice
+			,LandShape
+			,Frontage
+			,TotalFloorArea
+			,BuildingYear
+			,Structure
+			,Use
+			,Purpose
+			,Direction
+			,Classification
+			,Breadth
+			,CityPlanning
+			,CoverageRatio
+			,FloorAreaRatio
+			,Period
+			,Renovation
+			,Remarks
+			,ROOM_PUBLIC
+			,estate.DEL_DATE estate_DEL_DATE
+			,estate.MunicipalityCode_ID MunicipalityCode_ID
+			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
+			,f.TEXTURE_ID f_TEXTURE_ID
+			,f.TEXTURE_TYPE_ID f_TEXTURE_TYPE_ID
+			,f.MEMBER_ID f_MEMBER_ID
+			,f.TEXTURE_NAME f_TEXTURE_NAME
+			,f.TEXT f_TEXT
+			,f.TEXTURE_FILE f_TEXTURE_FILE
+			,f.CRE_DATE f_CRE_DATE
+			,f.DEL_DATE f_DEL_DATE
+			,c.TEXTURE_ID c_TEXTURE_ID
+			,c.TEXTURE_TYPE_ID c_TEXTURE_TYPE_ID
+			,c.MEMBER_ID c_MEMBER_ID
+			,c.TEXTURE_NAME c_TEXTURE_NAME
+			,c.TEXT c_TEXT
+			,c.TEXTURE_FILE c_TEXTURE_FILE
+			,c.CRE_DATE c_CRE_DATE
+			,c.DEL_DATE c_DEL_DATE
+			,tf.NAME f_NAME
+			,tf.TEXT f_TEXT
+			,cf.NAME c_NAME
+			,cf.TEXT c_TEXT
+			,ESTATE_NAME
+		from
+			room
+		left outer join
+			TEXTURE f
+		on
+			room.FLOOR_TEXTURE_ID = f.TEXTURE_ID
+		left outer join
+			TEXTURE c
+		on
+			room.CEILING_TEXTURE_ID = c.TEXTURE_ID
+		left outer join
+			TEXTURE_TYPE tf
+		on
+			f.TEXTURE_TYPE_ID = tf.TEXTURE_TYPE_ID
+		left outer join
+			TEXTURE_TYPE cf
+		on
+			c.TEXTURE_TYPE_ID = cf.TEXTURE_TYPE_ID
+		left outer join
+			ESTATE
+		on
+			room.ESTATE_ID = estate.ESTATE_ID
+		left outer join
+			MunicipalityCode
+		on
+			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
+		left outer join
+			TRANS_TYPE
+		on
+			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
+		where
+			room.MEMBER_ID = #{memberId}
+		AND
+			<choose>
+				<when test="isRealRoom == true">
+					room.ESTATE_ID IS NOT NULL
+				</when>
+				<otherwise>
+					room.ESTATE_ID IS NULL
+				</otherwise>
+			</choose>
+	</select>
 </mapper>

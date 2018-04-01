@@ -1,6 +1,7 @@
 package com.real.fudousan.room.dao;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.real.fudousan.room.vo.Room;
@@ -12,4 +13,14 @@ public interface RoomMapper {
 	public List<Room> allMyRoom(Integer memberId);
 	
 	public List<Room> selectByIds(Set<Integer> roomIds);
+	
+	/**
+	 * 파라미터에 따라 실제 매물이 존재하는 방 or 존재하지 않는 방 으로 구분하여 select 한다.<br>
+	 * 파라미터 맵<br>
+	 * memberId : 해당 방을 등록한 멤버 ID<br>
+	 * isRealRoom : 해당 방에 대한 매물이 존재하는지 여부(true, false)
+	 * @param param 파라미터 맵
+	 * @return
+	 */
+	public List<Room> selectByIdOnEsate(Map<String, Object> param);
 }
