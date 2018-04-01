@@ -38,8 +38,8 @@ public class FavoriteController {
 		model.addAttribute("flist",seacrhFavorite);
 		
 		List<Room> allRooms = Rservice.showAllRoom(memberId);
-        List<Advice> alist = Aservice.getRequestList(memberId);
-        List<Advice> rclist = Aservice.getRequestedList(memberId);
+        List<Advice> alist = Aservice.getRequestList(memberId, Advice.REQUEST);
+        List<Advice> rclist = Aservice.getRequestList(memberId, Advice.CONFIRMED);
         model.addAttribute("rlist",allRooms);
         model.addAttribute("alist", alist);
         model.addAttribute("rclist", rclist);
