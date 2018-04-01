@@ -1,5 +1,6 @@
 package com.real.fudousan.member.service;
 
+import java.util.HashMap;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,15 +9,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import com.real.fudousan.agency.vo.Agency;
+import com.real.fudousan.estate.vo.TransType;
 import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.member.dao.MemberDAO;
 import com.real.fudousan.member.vo.Member;
+import com.real.fudousan.member.vo.Permission;
 
 @Service
 public class MemberService {
 	
 	private static final String memberFileBaseDirectory = "/member/";
 	
+
 	@Autowired
 	private MemberDAO dao;
 	
@@ -38,19 +42,19 @@ public class MemberService {
 	 * @param member
 	 * @return
 	 */
-	public boolean registerMember(Member member, List<MultipartFile> files) {
-		
-		
+	public boolean registerMember(Member member, MultipartFile file) {
 		// get designer result
 		int designer=member.getDesigner();
 		
 		// if member isn't designer
 		if (designer == 0 ) {	
+		
+			Permission p= new Permission(1, "member");
+			member.setPermission(p);
+			
 			int result = 0; 
-			if ((result = dao.insertMember(member))>= -1 && files != null) {
-				for(MultipartFile file : files){
-					FileService.saveFile(file, memberFileBaseDirectory + result, true);
-				}
+			if ((result = dao.insertMember(member))>= -1 && file != null) {
+				FileService.saveFile(file, memberFileBaseDirectory + result, true);
 			}
 			// insert member success
 			return true; 
@@ -65,23 +69,22 @@ public class MemberService {
 	 * @param member
 	 * @return
 	 */
-	public boolean registerInterior(Member member) {
+	public boolean registerInterior(Member member, MultipartFile file) {
 		
 		// get designer
 		int designer=member.getDesigner();
-		
+
 		// if member is designer		
 		if (designer == 1 ) {
-			// true
-			int result = dao.insertMember(member);
-			
-			if (result != 1) {
-				// insert member fail
-				return false; 
-				
+		
+			// member permission id setting 
+			Permission p= new Permission(2, "Interior");
+			int result = 0; 
+			if ((result = dao.insertMember(member))>= -1 && file != null) {
+				FileService.saveFile(file, memberFileBaseDirectory + result, true);
 			}
-				// insert member success 
-				return true;
+			// insert member success
+			return true; 
 		}
 		return false;
 	}
@@ -91,9 +94,27 @@ public class MemberService {
 	 * @param member
 	 * @return
 	 */
-	public boolean registerAgency(Member member) {
+	public boolean registerAgencyMember(Member member, MultipartFile file ) {
 		
-		return registerAgency(member, null);
+		/*return registerAgency(member, null);*/
+		// get designer result
+		int designer=member.getDesigner();
+		
+		// if member isn't designer
+		if (designer == 0 ) {	
+		
+			Permission p= new Permission(3, "agency");
+			member.setPermission(p);
+			
+			int result = 0; 
+			if ((result = dao.insertAgencyMember(member))>= -1 && file != null) {
+				FileService.saveFile(file, memberFileBaseDirectory + result, true);
+			}
+			// insert member success
+			return true; 
+		}
+		
+		return false; 
 	}
 	
 	/**
@@ -102,9 +123,17 @@ public class MemberService {
 	 * @param agency
 	 * @return
 	 */
-	public boolean registerAgency(Member member, Agency agency) {
+	public boolean registerAgency(Agency agency) {
 		
-		return false;
+			
+			TransType t = new TransType(0, "test");
+			agency.setTransType(t);
+			
+			agency.setConfirm(0);
+			
+			return false; 
+					
+				
 	}
 	
 	/**

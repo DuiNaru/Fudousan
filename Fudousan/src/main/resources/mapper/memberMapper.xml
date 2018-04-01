@@ -11,7 +11,6 @@
 		<result property="delDate" column="member_del_date"/>
 		<result property="designer" column="designer"/>
 		<result property="email" column="email"/>
-		<result property="memberId" column="member_id"/>
 		<result property="password" column="password"/>
 		<result property="phone" column="phone"/>
 		<result property="picture" column="picture"/>
@@ -26,21 +25,27 @@
 		<result property="name" column="permission_name"/>
 	</resultMap>
 	
-	<select id="selectMember" parameterType="member" resultType="member">
+	<select id="selectMember" parameterType="member" resultMap="memberResultMap">
 		SELECT
-			member_id as "memberId",
+			member_id,
 			email,
 			password,
 			phone,
 			picture,
-			text,
-			cre_date as "creDate",
-			del_date as "delDate",
+			text member_text,
+			cre_date as "member_cre_date",
+			del_date as "member_del_date",
 			permission_id as "permission",
 			designer,
-			member_name as "memberName"
+			member_name as "member_name",
+			permission.permission_id permission_id,
+			permission.permission_name permission_name
 		FROM
 			member
+		JOIN 
+			permission
+		ON
+			member.permission_id = permission.permission_id
 		WHERE
 			<if test="email != null">
 				email=#{email}
@@ -55,27 +60,83 @@
 		INSERT INTO 
 		 member 
 		(	
-			member_name
+			
+			member_name 
 			,password
 			,email
 			,phone
 			,picture
+			,permission_id
 			,designer
 			,text
-			
-		
 		)
 		VALUES
-		(
-			#{name}
+		(	
+			#{memberName}
 			,#{password}
+			,#{email}
 			,#{phone}
 			,#{picture}
-			,#{text}
+			,#{permission.permissionId}
 			,#{designer}
-			,#{memberName} 
+			,#{text}
 		)
-	
-	
 	</insert>
+	
+	
+	<insert id="insertAgencyMember" parameterType="member" >
+		INSERT INTO 
+		 member 
+		(	
+			member_name 
+			,password
+			,email
+			,phone
+			,picture
+			,permission_id
+			,designer
+			,text
+		)
+		VALUES
+		(	
+			#{memberName}
+			,#{password}
+			,#{email}
+			,#{phone}
+			,#{picture}
+			,#{permission.permissionId}
+			,#{designer}
+			,#{text}
+		)
+		
+	</insert>
+	
+	<insert id="insertAgency"  parameterType="agency">
+	
+	INSERT INTO 
+		 agency
+		(	
+			agency_id
+			,name 
+			,biznum
+			,address_main
+			,address_middle
+			,address_smail
+			,address_sub
+			,address_main
+		)
+		VALUES
+		(	
+			SEQ_AGENCY_ID.nextval
+			,#{memberName}
+			,#{password}
+			,#{email}
+			,#{phone}
+			,#{picture}
+			,#{permission.permissionId}
+			,#{designer}
+			,#{text}
+		)
+	</insert> 
+	
 </mapper>

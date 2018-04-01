@@ -1,19 +1,24 @@
 package com.real.fudousan.member.dao;
 
-import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import java.util.HashMap;
 
-import com.real.fudousan.member.controller.JoinController;
+import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.member.vo.Member;
 
 @Repository
 public interface MemberDAO {
 
 	public Member select(Member member);
+	
+	// 회원가입 
 	public int insertMember(Member member);
+	
+	public int insertAgencyMember(Member member);
+	public int insertAgency(Agency agency);
+
 
 
 }

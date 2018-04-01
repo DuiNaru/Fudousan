@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.item.dao.ItemDAOOracle;
 import com.real.fudousan.member.vo.Member;
 
@@ -41,6 +42,40 @@ public class MemberDAOOracle implements MemberDAO {
 		try {
 			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
 			result = memberMapper.insertMember(member);
+		} catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
+		return result; 
+	}
+	
+	
+	// 중개 업자 가입 (member table)
+	@Override
+	public int insertAgencyMember(Member member){
+	int result = 0;
+		
+		try {
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.insertAgencyMember(member);
+		} catch(Exception e){
+			
+			e.printStackTrace();
+			
+		}
+		
+		return result; 
+	}
+	
+	// 중개업자 가입(agency table)
+	@Override
+	public int insertAgency(Agency agency){
+	int result = 0;
+		
+		try {
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.insertAgency(agency);
 		} catch(Exception e){
 			e.printStackTrace();
 			
