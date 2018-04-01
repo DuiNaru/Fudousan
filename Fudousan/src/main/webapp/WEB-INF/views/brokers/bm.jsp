@@ -117,8 +117,21 @@
 <div style="float: left; width: 45%;">
 <h3> 매물 관리 </h3>
 <img alt="" src="">
-<input type="radio" name="cr_page1">공개 
-<input type="radio" name="cr_page1">비공개
+<!-- <input type="radio" name="cr_page1">공개 
+<input type="radio" name="cr_page1">비공개 -->
+
+<div class="btn-group" data-toggle="buttons">
+<label class="btn btn-secondary active">
+<input type="radio" name="publicprivate" id="option1" autocomplete="off" value="1" >공개
+</label>
+
+<label class="btn btn-secondary">
+<input type="radio" name="publicprivate" id="option2" autocomplete="off" value="0">비공개
+</label>
+</div>
+
+
+
 <input type="button" value="매물 작성" class="btn btn-info" onclick="location.href='/fudousan/bw'"/>
 
 <input type="button" value="삭제"  class="btn btn-info" onclick="estateId_delete"> 

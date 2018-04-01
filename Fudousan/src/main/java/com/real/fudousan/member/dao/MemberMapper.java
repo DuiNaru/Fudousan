@@ -12,4 +12,5 @@ public interface MemberMapper {
 	
 	public int insertAgencyMember(Member member);
 	public int insertAgency(Agency agency);
+	
 }
