@@ -110,6 +110,7 @@
 							<label class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="0" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 0}"> checked="checked"</c:if>>비공개</label>
 						</div>
 					</div>
+					<a class="btn btn-default" href="./createVirtualRoomPage">모델링 작성</a>
 				</div>
 			</c:forEach>
 		</div>
