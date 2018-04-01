@@ -316,7 +316,7 @@
             
             <div class="form-group text-center">
               <button type="submit" class="btn btn-info">登録完了<i class="fa fa-check spaceLeft"></i></button>
-              <button type="reset" class="btn btn-warning">初期化<i class="fa fa-times spaceLeft"></i></button>
+              <button type="reset" class="btn btn-warning" onclick="delUrl">初期化<i class="fa fa-times spaceLeft"></i></button>
             </div>
           </form>
         </div>

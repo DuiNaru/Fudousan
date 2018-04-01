@@ -114,22 +114,22 @@
  <!-- 헤더 영역 -->
 
 <h3> 매물 관리 </h3>
-
-
 <img alt="" src="">
-<input type="radio" name="cr_page">공개 
-<input type="radio" name="cr_page">비공개
+<input type="radio" name="cr_page1">공개 
+<input type="radio" name="cr_page1">비공개
 <input type="button" value="매물 작성" class="btn btn-info" onclick="location.href='/fudousan/bw'"/>
 
 <input type="button" value="삭제"  class="btn btn-info" onclick="estateId_delete"> 
 <!-- 매물 수정으로 이동 -->
 <input type="button" value="수정" class="btn btn-info" onclick="location.href='/fudousan/bc'"><br>
 <!-- 매물 작성으로 이동 -->
-
+<hr>
 
 
 <h3> 매물 3D 모델링 관리</h3>
 <!-- 모델링 스냅 샷 자리  -->
+<input type="radio" name="cr_page2">공개 
+<input type="radio" name="cr_page2">비공개
 <input type="button" class="btn btn-info" value="매물 작성">
 <input type="button" value="삭제" class="btn btn-info" onclick="snapshot_delete">
  <input type="button" class="btn btn-info" value="수정">
