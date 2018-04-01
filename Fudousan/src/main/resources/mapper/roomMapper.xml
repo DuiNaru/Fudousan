@@ -430,4 +430,13 @@
 		AND
 			ROOM_ID = #{1}
 	</update>
+	
+	<delete id="deleteRoom">
+		DELETE FROM
+			room
+		WHERE
+			MEMBER_ID = #{0}
+		AND
+			ROOM_ID = #{1}
+	</delete>
 </mapper>

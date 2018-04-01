@@ -105,11 +105,26 @@ public class RoomService {
 		return result;
 	}
 	
+	/**
+	 * 특정 회원이 작성한 특정 방의 공개 여부를 변경한다.
+	 * @param memberId
+	 * @param roomId
+	 * @param roomPublic
+	 * @return
+	 */
 	public boolean changeRoomPublic(int memberId, int roomId, int roomPublic) {
 		logger.info("changeRoomPublic("+memberId+", "+roomId+", "+roomPublic+") Start");
 		boolean result = false;
 		result = dao.updateRoomPublic(memberId, roomId, roomPublic);
 		logger.info("changeRoomPublic("+memberId+", "+roomId+", "+roomPublic+") End");
+		return result;
+	}
+	
+	public boolean deleteRoom(int memberId, int roomId) {
+		logger.info("changeRoomPublic("+memberId+", "+roomId+") Start");
+		boolean result = false;
+		result = dao.deleteRoom(memberId, roomId);
+		logger.info("changeRoomPublic("+memberId+", "+roomId+") End");
 		return result;
 	}
 }

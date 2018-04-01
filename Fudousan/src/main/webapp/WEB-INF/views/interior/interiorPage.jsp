@@ -8,24 +8,6 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 <script type="text/javascript">
-	function unConfirm(index, requestMemberId, roomId) {
-		$.ajax({
-			url:"../unconfirm?requestMemberId="+requestMemberId+"&roomId="+roomId,
-			type:"GET",
-			success:function(data) {
-				if(data) {
-					$("#req"+index).remove();
-				} else {
-					alert("삭제에 실패하였습니다.");
-				}
-			},
-			error:function(e) {
-				console.log(e);
-				alert("삭제 중 오류가 발생하였습니다.");
-			}
-		});
-	}
-	
 	$(function () {
 		$("input[name^=public]:radio").change(function (){
 			var roomId = $(this).attr("roomId");
@@ -46,8 +28,44 @@
 				}
 			});
 		});
-		
 	});
+	
+	function unConfirm(index, requestMemberId, roomId) {
+		$.ajax({
+			url:"../unconfirm?requestMemberId="+requestMemberId+"&roomId="+roomId,
+			type:"GET",
+			success:function(data) {
+				if(data) {
+					$("#req"+index).remove();
+				} else {
+					alert("삭제에 실패하였습니다.");
+				}
+			},
+			error:function(e) {
+				console.log(e);
+				alert("삭제 중 오류가 발생하였습니다.");
+			}
+		});
+	}
+	
+	function deleteRoom(roomId) {
+		$.ajax({
+			url:"../deleteRoom?roomId="+roomId,
+			type:"GET",
+			success:function(data) {
+				if(data) {
+					$("#room"+roomId).remove();
+					$("#virtual"+roomId).remove();
+				} else {
+					alert("삭제에 실패하였습니다.");
+				}
+			},
+			error:function(e) {
+				console.log(e);
+				alert("삭제 중 오류가 발생하였습니다.");
+			}
+		});
+	}
 </script>
 </head>
 <body class="container">
@@ -68,7 +86,7 @@
 		<div class="col-sm-12">
 			<h1>3D 작성 매물 확인</h1>
 			<c:forEach var="room" varStatus="status" items="${realRoomList}">
-				<div id="room${status.index}" class="col-sm-12">
+				<div id="room${room.roomId}" class="col-sm-12">
 					<label>${room.estate.estateId } : ${room.estate.estateName }</label>
 					<input class="btn btn-default" type="button" value="꾸미기">
 					<label class="radio-inline"><input name="public${room.roomId}" type="radio" value="1" roomId="${room.roomId}"<c:if test="${room.roomPublic == 1}"> checked="checked"</c:if>>공개</label>
@@ -79,13 +97,13 @@
 		<div class="col-sm-12">
 			<h1>내가 만든 리스트</h1>
 			<c:forEach var="virtual" varStatus="status" items="${notRealRoomList}">
-				<div id="virtual${status.index}" class="col-sm-12">
+				<div id="virtual${virtual.roomId}" class="col-sm-12">
 					<label>${virtual.roomId} : ${virtual.snapshot}</label>
 					<div>
 						<div>
 					<input class="btn btn-default" type="button" value="꾸미기">
 					<input class="btn btn-default" type="button" value="수정">
-					<input class="btn btn-default" type="button" value="삭제">
+					<input class="btn btn-default" type="button" value="삭제" onclick="deleteRoom(${virtual.roomId})">
 						</div>
 						<div>
 							<label class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="1" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 1}"> checked="checked"</c:if>>공개</label>

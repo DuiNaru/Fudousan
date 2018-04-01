@@ -72,4 +72,16 @@ public class RoomController {
 		logger.info("changeRoomPublic("+roomId+", "+roomPublic+") End");
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteRoom" , method=RequestMethod.GET)
+	public boolean deleteRoom(int roomId){
+		logger.info("deleteRoom("+roomId+") Start");
+		// TODO 로그인 아이디로 변경
+		int memberId = 1;
+		
+		boolean result = Rservice.deleteRoom(memberId, roomId);
+		logger.info("deleteRoom("+roomId+") End");
+		return result;
+	}
 }

@@ -34,4 +34,12 @@ public interface RoomDAO {
 	 * @return
 	 */
 	public boolean updateRoomPublic(int memberId, int roomId, int roomPublic);
+	
+	/**
+	 * memberId와 roomId로 검색하여 해당 값을 delete한다.
+	 * @param memberId
+	 * @param roomId
+	 * @return
+	 */
+	public boolean deleteRoom(int memberId, int roomId);
 }

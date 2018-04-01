@@ -32,4 +32,12 @@ public interface RoomMapper {
 	 * @return
 	 */
 	public boolean updateRoomPublic(int memberId, int roomId, int roomPublic);
+	
+	/**
+	 * MEMBER_ID(memberId) 와 ROOM_ID(roomId)가 일치하는 해당 컬럼을 DELETE 한다.
+	 * @param memberId
+	 * @param roomId
+	 * @return
+	 */
+	public boolean deleteRoom(int memberId, int roomId);
 }
