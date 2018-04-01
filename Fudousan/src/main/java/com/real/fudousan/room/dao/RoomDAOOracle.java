@@ -68,7 +68,7 @@ public class RoomDAOOracle implements RoomDAO {
 
 	@Override
 	public List<Room> selectByIdOnReal(int memberId, boolean isRealRoom) {
-		logger.info("selectByIdOnEsate("+memberId+", "+isRealRoom+") Start");
+		logger.info("selectByIdOnReal("+memberId+", "+isRealRoom+") Start");
 		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
 		List<Room> result = null;
 		
@@ -82,7 +82,7 @@ public class RoomDAOOracle implements RoomDAO {
 			e.printStackTrace();
 		}
 		
-		logger.info("selectByIdOnEsate("+memberId+", "+isRealRoom+") End");
+		logger.info("selectByIdOnReal("+memberId+", "+isRealRoom+") End");
 		return result;
 	}
 
