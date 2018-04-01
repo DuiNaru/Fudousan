@@ -13,6 +13,7 @@
 		<result 	 property="delDate"     	column="DEL_DATE"/>
 		<result 	 property="heigth"      	column="HEIGTH"/>
 		<result 	 property="memberId"  		column="MEMBER_ID"/>
+		<result		 property="roomPublic"		column="ROOM_PUBLIC"/>
 		<association property="estate"   		column="estate_id" 			javaType="com.real.fudousan.estate.vo.Estate" resultMap="com.real.fudousan.estate.dao.EstateMapper.estateResultMap"/>
 		<association property="floorTexture"   	column="FLOOR_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" columnPrefix="f_"/>
 		<association property="ceilingTexture"  column="CEILING_TEXTURE_ID" javaType="com.real.fudousan.texture.vo.Texture" resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" columnPrefix="c_"/>
@@ -57,6 +58,7 @@
 			,Period
 			,Renovation
 			,Remarks
+			,ROOM_PUBLIC
 			,estate.DEL_DATE estate_DEL_DATE
 			,estate.MunicipalityCode_ID MunicipalityCode_ID
 			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
@@ -154,6 +156,7 @@
 			,Period
 			,Renovation
 			,Remarks
+			,ROOM_PUBLIC
 			,estate.DEL_DATE estate_DEL_DATE
 			,estate.MunicipalityCode_ID MunicipalityCode_ID
 			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
@@ -251,6 +254,7 @@
 			,Period
 			,Renovation
 			,Remarks
+			,ROOM_PUBLIC
 			,estate.DEL_DATE estate_DEL_DATE
 			,estate.MunicipalityCode_ID MunicipalityCode_ID
 			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
@@ -348,6 +352,7 @@
 			,Period
 			,Renovation
 			,Remarks
+			,ROOM_PUBLIC
 			,estate.DEL_DATE estate_DEL_DATE
 			,estate.MunicipalityCode_ID MunicipalityCode_ID
 			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
