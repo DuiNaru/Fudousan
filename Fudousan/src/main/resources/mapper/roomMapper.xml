@@ -419,4 +419,15 @@
 				</otherwise>
 			</choose>
 	</select>
+	
+	<update id="updateRoomPublic">
+		UPDATE
+			room
+		SET
+			ROOM_PUBLIC = #{2}
+		WHERE
+			MEMBER_ID = #{0}
+		AND
+			ROOM_ID = #{1}
+	</update>
 </mapper>

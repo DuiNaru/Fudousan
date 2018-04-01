@@ -23,4 +23,13 @@ public interface RoomMapper {
 	 * @return
 	 */
 	public List<Room> selectByIdOnEsate(Map<String, Object> param);
+
+	/**
+	 * ROOM테이블에서 MEMBER_ID(memberId)와 ROOM_ID(roomId)를 WHERE 조건으로 하여 ROOM_PUBLIC(roomPublic)을 update한다.
+	 * @param memberId MEMBER_ID
+	 * @param roomId ROOM_ID
+	 * @param roomPublic ROOM_PUBLIC
+	 * @return
+	 */
+	public boolean updateRoomPublic(int memberId, int roomId, int roomPublic);
 }

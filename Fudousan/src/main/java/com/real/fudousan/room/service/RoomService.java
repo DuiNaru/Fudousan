@@ -16,7 +16,7 @@ import com.real.fudousan.room.vo.Room;
 @Service
 public class RoomService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
+	private static final Logger logger = LoggerFactory.getLogger(RoomService.class);
 	
 	@Autowired
 	private RoomDAO dao;
@@ -102,6 +102,14 @@ public class RoomService {
 		List<Room> result = null;
 		result = dao.select(roomIds);
 		logger.info("getRooms("+roomIds+") End");
+		return result;
+	}
+	
+	public boolean changeRoomPublic(int memberId, int roomId, int roomPublic) {
+		logger.info("changeRoomPublic("+memberId+", "+roomId+", "+roomPublic+") Start");
+		boolean result = false;
+		result = dao.updateRoomPublic(memberId, roomId, roomPublic);
+		logger.info("changeRoomPublic("+memberId+", "+roomId+", "+roomPublic+") End");
 		return result;
 	}
 }

@@ -25,4 +25,13 @@ public interface RoomDAO {
 	 * @return 방 목록
 	 */
 	public List<Room> selectByIdOnReal(int memberId, boolean isRealRoom);
+	
+	/**
+	 * 특정 회원과 특정 방에 해당하는 방의 공개 여부 값을 update한다.
+	 * @param memberId 특정 회원
+	 * @param roomId 특정 방
+	 * @param roomPublic 공개 여부 값
+	 * @return
+	 */
+	public boolean updateRoomPublic(int memberId, int roomId, int roomPublic);
 }

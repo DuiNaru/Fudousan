@@ -70,16 +70,35 @@ public class RoomDAOOracle implements RoomDAO {
 	public List<Room> selectByIdOnReal(int memberId, boolean isRealRoom) {
 		logger.info("selectByIdOnEsate("+memberId+", "+isRealRoom+") Start");
 		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
-		List<Room> rlist = null;
+		List<Room> result = null;
+		
 		Map<String, Object> param = new HashMap<>();
 		param.put("memberId", memberId);
 		param.put("isRealRoom", isRealRoom);
+		
 		try{
-			rlist = mapper.selectByIdOnEsate(param);
+			result = mapper.selectByIdOnEsate(param);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 		logger.info("selectByIdOnEsate("+memberId+", "+isRealRoom+") End");
-		return rlist;
+		return result;
+	}
+
+	@Override
+	public boolean updateRoomPublic(int memberId, int roomId, int roomPublic) {
+		logger.info("updateRoomPublic("+memberId+", "+roomId+", "+roomPublic+") Start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		boolean result = false;
+
+		try{
+			result = mapper.updateRoomPublic(memberId, roomId, roomPublic);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("updateRoomPublic("+memberId+", "+roomId+", "+roomPublic+") End");
+		return result;
 	}
 }

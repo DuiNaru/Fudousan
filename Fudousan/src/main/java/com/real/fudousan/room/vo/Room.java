@@ -16,6 +16,8 @@ import com.real.fudousan.texture.vo.Texture;
  * @version $Id$
  */
 public class Room implements Serializable {
+	public static final int PUBLIC = 1;
+	public static final int PRIVATE = 0;
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
