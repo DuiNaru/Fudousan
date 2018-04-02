@@ -89,7 +89,7 @@
           <h1>회원정보수정 <small>basic update form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="insertMember" method="post">
+          <form role="form" action="modifyMember" method="post">
             <div class="form-group">
               <label for="InputName">name</label>
               <input type="text" class="form-control" id="InputName" placeholder="이름" name="member_name">

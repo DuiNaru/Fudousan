@@ -76,10 +76,10 @@ public class JoinController {
 	
 	
 	@RequestMapping(value="insertAgency",  method=RequestMethod.POST)
-	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency, String qqqq){
+	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency, String main){
 			
 		logger.info("회원 등록 시작");
-		agency.setAddressMain(qqqq);
+		agency.setAddressMain(main);
 		logger.info("member 등록 시작");
 		boolean memberResult = service.registerAgencyMember(member, file);
 		logger.info("member 등록 종료");
