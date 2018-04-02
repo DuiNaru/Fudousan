@@ -38,12 +38,7 @@ public class MemberService {
 	 * @return
 	 */
 	public boolean registerMember(Member member, MultipartFile file) {
-		// get designer result
-		int designer=member.getDesigner();
-		
-		// if member isn't designer
-		if (designer == 0 ) {	
-		
+
 			Permission p= new Permission(1, "member");
 			member.setPermission(p);
 			
@@ -53,9 +48,7 @@ public class MemberService {
 			}
 			// insert member success
 			return true; 
-		}
-		
-		return false; 
+
 
 	}
 	
@@ -66,22 +59,17 @@ public class MemberService {
 	 */
 	public boolean registerInterior(Member member, MultipartFile file) {
 		
-		// get designer
-		int designer=member.getDesigner();
 
-		// if member is designer		
-		if (designer == 1 ) {
+		Permission p= new Permission(2, "Interior");
+		member.setPermission(p);
 		
-			// member permission id setting 
-			Permission p= new Permission(2, "Interior");
-			int result = 0; 
-			if ((result = dao.insertMember(member))>= -1 && file != null) {
-				FileService.saveFile(file, memberFileBaseDirectory + result, true);
-			}
-			// insert member success
-			return true; 
+		int result = 0; 
+		if ((result = dao.insertMember(member))>= -1 && file != null) {
+			FileService.saveFile(file, memberFileBaseDirectory + result, true);
 		}
-		return false;
+		// insert member success
+		return true; 
+	
 	}
 	
 	/**
@@ -89,27 +77,19 @@ public class MemberService {
 	 * @param member
 	 * @return
 	 */
-	public boolean registerAgencyMember(Member member, MultipartFile file ) {
+	public boolean registerAgencyMember(Member member, MultipartFile file) {
 		
-		/*return registerAgency(member, null);*/
-		// get designer result
-		int designer=member.getDesigner();
+	
+		Permission p= new Permission(3, "Agency");
+		member.setPermission(p);
 		
-		// if member isn't designer
-		if (designer == 0 ) {	
-		
-			Permission p= new Permission(3, "agency");
-			member.setPermission(p);
-			
-			int result = 0; 
-			if ((result = dao.insertAgencyMember(member))>= -1 && file != null) {
-				FileService.saveFile(file, memberFileBaseDirectory + result, true);
-			}
-			// insert member success
-			return true; 
+		int result = 0; 
+		if ((result = dao.insertAgencyMember(member))>= -1 && file != null) {
+			FileService.saveFile(file, memberFileBaseDirectory + result, true);
 		}
-		
-		return false; 
+		// insert member success
+		return true; 
+	
 	}
 	
 	/**
@@ -124,12 +104,12 @@ public class MemberService {
 	
 		// trans type set 
 		
-		TransType t = new TransType(0, "test");
+		TransType t = new TransType(1, "apart");
 		agency.setTransType(t);
 		
 		// confirm set
 		agency.setConfirm(0);
-		System.out.println(agency);
+		System.out.println("service:"+agency);
 		result = dao.insertAgency(agency);
 		
 		if (result == 1) {
