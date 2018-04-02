@@ -88,7 +88,7 @@
 						</ul>
 					</li>
 					
-					<li><a href="okhtest">[okh test]</a></li>
+					<li><a href="bm">[okh test]</a></li>
 					<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
