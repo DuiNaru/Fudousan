@@ -120,13 +120,27 @@ public class MemberService {
 	 */
 	public boolean registerAgency(Agency agency) {
 		
+		int result = 0;	
+	
+		// trans type set 
+		
+		TransType t = new TransType(0, "test");
+		agency.setTransType(t);
+		
+		// confirm set
+		agency.setConfirm(0);
+		System.out.println(agency);
+		result = dao.insertAgency(agency);
+		
+		if (result == 1) {
+			// insert success
+			return true; 
+		}
+		else{			
 			
-			TransType t = new TransType(0, "test");
-			agency.setTransType(t);
-			
-			agency.setConfirm(0);
-			
+			// insert fail 
 			return false; 
+		}
 					
 				
 	}

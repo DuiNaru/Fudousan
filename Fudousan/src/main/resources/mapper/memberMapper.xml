@@ -55,87 +55,97 @@
 			</if>
 	</select>
 	
-	
 	<insert id="insertMember" parameterType="member">
-		INSERT INTO 
-		 member 
-		(	
-			
-			member_name 
+		INSERT INTO member
+		(
+			email
 			,password
-			,email
 			,phone
 			,picture
+			,text
 			,permission_id
 			,designer
-			,text
+			,member_name	
+		
 		)
 		VALUES
-		(	
-			#{memberName}
+		(
+			#{email}
 			,#{password}
-			,#{email}
 			,#{phone}
 			,#{picture}
+			,#{text}
 			,#{permission.permissionId}
 			,#{designer}
-			,#{text}
+			,#{memberName}
+		
 		)
+	
 	</insert>
 	
-	
 	<insert id="insertAgencyMember" parameterType="member" >
-		INSERT INTO 
-		 member 
-		(	
-			member_name 
+		<selectKey>
+			SELECT 
+				
+			FROM
+		
+		
+		</selectKey>
+		INSERT INTO member
+		(
+			email
 			,password
-			,email
 			,phone
 			,picture
+			,text
 			,permission_id
 			,designer
-			,text
+			,member_name	
+		
 		)
 		VALUES
-		(	
-			#{memberName}
+		(
+			#{email}
 			,#{password}
-			,#{email}
 			,#{phone}
 			,#{picture}
+			,#{text}
 			,#{permission.permissionId}
 			,#{designer}
-			,#{text}
-		)
+			,#{memberName}
 		
+		)
 	</insert>
 	
 	<insert id="insertAgency"  parameterType="agency">
-	
 	INSERT INTO 
 		 agency
 		(	
 			agency_id
+			,member_id
 			,name 
 			,biznum
 			,address_main
 			,address_middle
-			,address_smail
+			,address_small
 			,address_sub
-			,address_main
+			,text
+			,trans_type_id
+			,confirm
 		)
 		VALUES
 		(	
 			SEQ_AGENCY_ID.nextval
-			,#{memberName}
-			,#{password}
-			,#{email}
-			,#{phone}
-			,#{picture}
-			,#{permission.permissionId}
-			,#{designer}
+			,#{member.memberId}
+			,#{name}
+			,#{biznum}
+			,#{addressMain}
+			,#{addressMiddle}
+			,#{addressSmall}
+			,#{addressSub}
 			,#{text}
+			,#{transType.transTypeId}
+			,#{confirm}
 		)
 	</insert> 
 	
