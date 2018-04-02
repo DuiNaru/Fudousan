@@ -116,20 +116,25 @@
           <h1> 物件登録<small>매물등록</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form">
+          <form role="form" action="estatewrite" method="post" enctype="multipart/form-data">
+          
+          
             <div class="form-group">
+            
               <label for="inputType">取引タイプ(거래종류)</label>
               <!-- <input type="text" class="form-control" id="InputName" placeholder="이름"> -->
-            <select name='거래종류' class="form-control">
-  			<option value='' selected>-- 選択 --</option>
+              <!-- Transactiontype = 거래종류 -->
+            <select name='Transactiontype' class="form-control" name="inputType" >
+  			<option value='0' selected>-- 選択 --</option>
   			<option value='1'>アパート</option>
   			<option value='2'>マンション</option>
 			</select>
             </div>
             <div class="form-group">
               <label for="inputRegion">地域名(지역이름)</label>
-             <select name='지역이름' class="form-control">
-  <option value='' selected>-- 選択 --</option>
+            	<!-- Localname = 지역이름 -->
+             <select name='Localname' class="form-control">
+  <option value='00' selected>-- 選択 --</option>
   <!-- 홋카이도 -->
   <option value='01'>北海道</option>
   <!-- 아오모리현 -->
@@ -316,7 +321,7 @@
             
             <div class="form-group text-center">
               <button type="submit" class="btn btn-info">登録完了<i class="fa fa-check spaceLeft"></i></button>
-              <button type="reset" class="btn btn-warning" onclick="delUrl">初期化<i class="fa fa-times spaceLeft"></i></button>
+              <button type="reset" class="btn btn-warning" >初期化<i class="fa fa-times spaceLeft"></i></button>
             </div>
           </form>
         </div>

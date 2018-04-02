@@ -38,6 +38,12 @@
      
        
       }
+      
+      
+      /* -- */
+      
+      
+      
    
 	</style>
 <body>
@@ -120,9 +126,12 @@
 <!-- <input type="radio" name="cr_page1">공개 
 <input type="radio" name="cr_page1">비공개 -->
 
+
+
+
 <div class="btn-group" data-toggle="buttons">
 <label class="btn btn-secondary active">
-<input type="radio" name="publicprivate" id="option1" autocomplete="off" value="1" >공개
+<input type="radio" name="publicprivate" id="option1" autocomplete="off" value="1" checked>공개
 </label>
 
 <label class="btn btn-secondary">
