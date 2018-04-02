@@ -84,15 +84,9 @@
 	</insert>
 	
 	<insert id="insertAgencyMember" parameterType="member" >
-		<selectKey>
-			SELECT 
-				
-			FROM
-		
-		
-		</selectKey>
 		INSERT INTO member
 		(
+			
 			email
 			,password
 			,phone
@@ -115,6 +109,11 @@
 			,#{memberName}
 		
 		)
+ 	    <selectKey keyProperty="memberId" resultType="int" order="AFTER">
+	        SELECT SEQ_Member_ID.currval AS memberId FROM dual
+	    </selectKey>
+
+
 	</insert>
 	
 	<insert id="insertAgency"  parameterType="agency">
