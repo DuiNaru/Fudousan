@@ -16,6 +16,8 @@ import com.real.fudousan.texture.vo.Texture;
  * @version $Id$
  */
 public class Room implements Serializable {
+	public static final int PUBLIC = 1;
+	public static final int PRIVATE = 0;
 
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
@@ -50,9 +52,12 @@ public class Room implements Serializable {
 	/** 회원 아이디. */
 	private int memberId;
 	
+	/** 방 공개 여부. */
+	private int roomPublic;
+	
 	public Room(){}
 	public Room(Integer roomId, Estate estate, String snapshot, String map, Date creDate, Date delDate, Integer heigth,
-			Texture floorTexture, Texture ceilingTexture, int memberId) {
+			Texture floorTexture, Texture ceilingTexture, int memberId, int roomPublic) {
 		super();
 		this.roomId = roomId;
 		this.estate = estate;
@@ -64,6 +69,7 @@ public class Room implements Serializable {
 		this.floorTexture = floorTexture;
 		this.ceilingTexture = ceilingTexture;
 		this.memberId = memberId;
+		this.roomPublic = roomPublic;
 	}
 
 	public Integer getRoomId() {
@@ -149,13 +155,24 @@ public class Room implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
+	
+	public int getRoomPublic() {
+		return roomPublic;
+	}
+	
+	public void setRoomPublic(int roomPublic) {
+		this.roomPublic = roomPublic;
+	}
+	
 	@Override
 	public String toString() {
 		return "Room [roomId=" + roomId + ", estate=" + estate + ", snapshot=" + snapshot + ", map=" + map
 				+ ", creDate=" + creDate + ", delDate=" + delDate + ", heigth=" + heigth + ", floorTexture="
-				+ floorTexture + ", ceilingTexture=" + ceilingTexture + ", memberId=" + memberId + "]";
+				+ floorTexture + ", ceilingTexture=" + ceilingTexture + ", memberId=" + memberId + ", roomPublic="
+				+ roomPublic + "]";
 	}
+	
+	
 	
 	
 	

@@ -127,7 +127,7 @@
 			</select>
             </div>
             <div class="form-group">
-              <label for="inputRegion">지역이름(地域名)</label>
+              <label for="inputRegion">地域名(지역이름)</label>
              <select name='지역이름' class="form-control">
   <option value='' selected>-- 選択 --</option>
   <!-- 홋카이도 -->

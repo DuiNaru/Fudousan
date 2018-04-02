@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
@@ -57,5 +58,30 @@ public class RoomController {
 		return "user/mypagecustomer";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="changeRoomPublic" , method=RequestMethod.GET)
+	public int changeRoomPublic(int roomId, int roomPublic){
+		logger.info("changeRoomPublic("+roomId+", "+roomPublic+") Start");
+		// TODO 로그인 아이디로 변경
+		int memberId = 1;
+		
+		int result = -1;
+		if(Rservice.changeRoomPublic(memberId, roomId, roomPublic)) {
+			result = roomPublic;
+		}
+		logger.info("changeRoomPublic("+roomId+", "+roomPublic+") End");
+		return result;
+	}
 	
+	@ResponseBody
+	@RequestMapping(value="deleteRoom" , method=RequestMethod.GET)
+	public boolean deleteRoom(int roomId){
+		logger.info("deleteRoom("+roomId+") Start");
+		// TODO 로그인 아이디로 변경
+		int memberId = 1;
+		
+		boolean result = Rservice.deleteRoom(memberId, roomId);
+		logger.info("deleteRoom("+roomId+") End");
+		return result;
+	}
 }

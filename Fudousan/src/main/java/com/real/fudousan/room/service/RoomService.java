@@ -16,13 +16,13 @@ import com.real.fudousan.room.vo.Room;
 @Service
 public class RoomService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
+	private static final Logger logger = LoggerFactory.getLogger(RoomService.class);
 	
 	@Autowired
 	private RoomDAO dao;
 	
 	/**
-	 * 사용자 페이지에서 자기 매물 정보 검색
+	 * 자기 매물 정보 검색
 	 * @param estateId
 	 * @param memberId
 	 * @return 검색자의 매물정보중 검색대상
@@ -35,14 +35,28 @@ public class RoomService {
 	}
 	
 	/**
-	 * 사용자 페이지에서 자기가 작성한 매물 리스트 보기
-	 * @param 
+	 * 자기가 작성한 매물 리스트 보기
+	 * @param memberId
 	 * @return 사용자가 작성한  매물들의 리스트
 	 */
 	public List<Room> showAllRoom(Integer memberId) {
 		List<Room> rlist = null;
 		rlist = dao.allMyRoom(memberId);
 		return rlist;
+	}
+	
+	/**
+	 * 사용자 페이지에서 자기가 작성한 매물 리스트 보기
+	 * @param memberId
+	 * @param isRealRoom 실제로 존재하는 방인가 아닌가
+	 * @return 사용자가 작성한  매물들의 리스트
+	 */
+	public List<Room> showAllRoom(Integer memberId, boolean isRealRoom) {
+		logger.info("showAllRoom("+memberId+", "+isRealRoom+") Start");
+		List<Room> result = null;
+		result = dao.selectByIdOnReal(memberId, isRealRoom);
+		logger.info("showAllRoom("+memberId+", "+isRealRoom+") End");
+		return result;
 	}
 	
 
@@ -88,6 +102,29 @@ public class RoomService {
 		List<Room> result = null;
 		result = dao.select(roomIds);
 		logger.info("getRooms("+roomIds+") End");
+		return result;
+	}
+	
+	/**
+	 * 특정 회원이 작성한 특정 방의 공개 여부를 변경한다.
+	 * @param memberId
+	 * @param roomId
+	 * @param roomPublic
+	 * @return
+	 */
+	public boolean changeRoomPublic(int memberId, int roomId, int roomPublic) {
+		logger.info("changeRoomPublic("+memberId+", "+roomId+", "+roomPublic+") Start");
+		boolean result = false;
+		result = dao.updateRoomPublic(memberId, roomId, roomPublic);
+		logger.info("changeRoomPublic("+memberId+", "+roomId+", "+roomPublic+") End");
+		return result;
+	}
+	
+	public boolean deleteRoom(int memberId, int roomId) {
+		logger.info("changeRoomPublic("+memberId+", "+roomId+") Start");
+		boolean result = false;
+		result = dao.deleteRoom(memberId, roomId);
+		logger.info("changeRoomPublic("+memberId+", "+roomId+") End");
 		return result;
 	}
 }

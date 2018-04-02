@@ -1,6 +1,7 @@
 package com.real.fudousan.room.dao;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.real.fudousan.room.vo.Room;
@@ -12,4 +13,31 @@ public interface RoomMapper {
 	public List<Room> allMyRoom(Integer memberId);
 	
 	public List<Room> selectByIds(Set<Integer> roomIds);
+	
+	/**
+	 * 파라미터에 따라 실제 매물이 존재하는 방 or 존재하지 않는 방 으로 구분하여 select 한다.<br>
+	 * 파라미터 맵<br>
+	 * memberId : 해당 방을 등록한 멤버 ID<br>
+	 * isRealRoom : 해당 방에 대한 매물이 존재하는지 여부(true, false)
+	 * @param param 파라미터 맵
+	 * @return
+	 */
+	public List<Room> selectByIdOnEsate(Map<String, Object> param);
+
+	/**
+	 * ROOM테이블에서 MEMBER_ID(memberId)와 ROOM_ID(roomId)를 WHERE 조건으로 하여 ROOM_PUBLIC(roomPublic)을 update한다.
+	 * @param memberId MEMBER_ID
+	 * @param roomId ROOM_ID
+	 * @param roomPublic ROOM_PUBLIC
+	 * @return
+	 */
+	public boolean updateRoomPublic(int memberId, int roomId, int roomPublic);
+	
+	/**
+	 * MEMBER_ID(memberId) 와 ROOM_ID(roomId)가 일치하는 해당 컬럼을 DELETE 한다.
+	 * @param memberId
+	 * @param roomId
+	 * @return
+	 */
+	public boolean deleteRoom(int memberId, int roomId);
 }
