@@ -35,8 +35,6 @@
         height: 100%;
         margin: 0;
         padding: 0;
-     
-       
       }
    
     
@@ -89,7 +87,7 @@
           <h1>회원정보수정 <small>basic update form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="modifyMember" method="post">
+          <form role="form" action="modifyMember" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <label for="InputName">name</label>
               <input type="text" class="form-control" id="InputName" placeholder="이름" name="member_name">
@@ -105,13 +103,12 @@
             </div>
             <div class="form-group">
               <label for="InputEmail">email</label>
-              <input type="email" class="form-control" id="InputEmail" placeholder="이메일 주소" name="email">
+              <input type="email" class="form-control" id="InputEmail" placeholder="email" name="email">
             </div>
             <div class="form-group">
               <label for="InputText">phone</label>
               <input type="text" class="form-control" id="userphone" placeholder="전화번호를 입력해 주세요" name="phone">
             </div>
-            
 			<div class="input-group">
 			     <label for="InputText">Member Introduce</label>
 			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="text"></textarea>     

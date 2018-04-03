@@ -23,10 +23,10 @@ function formCheck(){
 			data: {email: memberEmail.val(), password: password.val()},
 			dataType: 'text',
 			success: function(result){
-				if (result == '1'){
+				if (result.result == false && result.errCode == '1'){
 					alert('Not found ID');
 				}
-				else if (result == '2'){
+				else if (result.result == false && result.errCode == '2'){
 					alert('Incorrect password');
 				}
 				else {
@@ -34,7 +34,7 @@ function formCheck(){
 					
 					$('#loginAtag').html('<a href="/fudousan/logout">Logout</a>');
 					
-					var str = '<a>' + result + ', Welcome!</a>';
+					var str = '<a>' + result.memberName + ', Welcome!</a>';
 					$('#loginNameTag').html(str);
 				}
 			},

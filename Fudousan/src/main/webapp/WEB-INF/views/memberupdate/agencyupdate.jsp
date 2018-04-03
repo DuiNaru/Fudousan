@@ -96,7 +96,7 @@
           <h1>공인중개업자 회원정보 수정 <small>Agency basic update form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="modifyMember" method="post">
+          <form role="form" action="modifyMember" method="post"  enctype="multipart/form-data">
              <div class="form-group">
 	              <label for="InputName">name</label>
 	              <input type="text" class="form-control" id="InputName" placeholder="이름" name="memberName">
@@ -130,7 +130,7 @@
 						<span class="input-group-btn">
 			        		<button class="btn btn-default btn-choose" type="button">선택</button>
 			    		</span>
-			    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요'  name="picture"/>
+			    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요'  name="picture" />
 			    		<span class="input-group-btn">
 			       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
 			    		</span>

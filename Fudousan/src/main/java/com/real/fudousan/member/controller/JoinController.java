@@ -59,14 +59,14 @@ public class JoinController {
 			// result가 true이면 
 			logger.info("회원 등록 성공");
 			model.addAttribute(memberResult);
-			return "join/joinresult";
+			return "redirect:join/joinresult";
 			
 		}
 		else{
 			// result가 false이면 
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberResult);
-			return "join/join";
+			return "redirect:join/join";
 		}	
 	}
 
@@ -96,7 +96,7 @@ public class JoinController {
 			// result가 false이면 
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberResult);
-			return "join/agencyjoin";
+			return "redirect:join/agencyjoin";
 		}	
 	}
 	
