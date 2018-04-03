@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.real.fudousan.member.vo.Member;
+
 @Controller
 @RequestMapping(value="memberupdate")
 public class UpdateMemberController {
@@ -21,5 +23,13 @@ public class UpdateMemberController {
 		
 		return "memberupdate/agencyupdate";
 	}
+	
+	@RequestMapping(value="modifyMember", method=RequestMethod.POST)
+	public String modifyMember(Member member){
+		
+		
+		return "";
+	}
+	
 	
 }

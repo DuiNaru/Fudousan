@@ -59,6 +59,7 @@ public class MemberDAOOracle implements MemberDAO {
 		try {
 			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
 			result = memberMapper.insertAgencyMember(member);
+			logger.info("dao:"+member);
 		} catch(Exception e){
 			
 			e.printStackTrace();
@@ -76,6 +77,7 @@ public class MemberDAOOracle implements MemberDAO {
 		try {
 			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
 			result = memberMapper.insertAgency(agency);
+		
 		} catch(Exception e){
 			e.printStackTrace();
 			

@@ -42,11 +42,19 @@ public class JoinController {
 	 								
 	@RequestMapping(value="insertMember",  method=RequestMethod.POST)
 	public String insertMember(Model model, Member member,  MultipartFile file){
-			
-		logger.info("회원 등록 시작");
+		boolean memberResult= false;	
 		
-		boolean memberResult = service.registerMember(member, file);
-	
+		logger.info("회원 등록 시작");
+		int designer = member.getDesigner();
+		
+		if (designer == 0) {
+			
+			memberResult = service.registerMember(member, file);
+			
+		} else if(designer == 1) {
+			
+			memberResult = service.registerInterior(member, file);
+		}
 		if (memberResult) {
 			// result가 true이면 
 			logger.info("회원 등록 성공");
@@ -61,38 +69,34 @@ public class JoinController {
 			return "join/join";
 		}	
 	}
-	
-	
-	
-	
-	
-	
+
 	@RequestMapping(value="insertAgency",  method=RequestMethod.POST)
-	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency, String qqqq){
+	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency, String main){
 			
 		logger.info("회원 등록 시작");
-		agency.setAddressMain(qqqq);
+		agency.setAddressMain(main);
+		logger.info("member 등록 시작");
 		boolean memberResult = service.registerAgencyMember(member, file);
-		
-		Member memberResult2 = service.login(member);
-		System.out.println(memberResult2);
-		
-		agency.setMember(memberResult2);
+		logger.info("member 등록 종료");
+		logger.info("agency 등록 시작");
+		agency.setMember(member);
+		System.out.println(member);
 		boolean AgencyResult = service.registerAgency(agency);
+		logger.info("agency 등록 종료");
 		System.out.println(agency);
 
 		if (memberResult && AgencyResult) {
 			// result가 true이면 
 			logger.info("회원 등록 성공");
 			model.addAttribute(memberResult);
-			return "join/joinresult";
+			return "join/agencyjoinresult";
 			
 		}
 		else{
 			// result가 false이면 
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberResult);
-			return "join/join";
+			return "join/agencyjoin";
 		}	
 	}
 	
