@@ -77,6 +77,7 @@
 				<c:if test="${sessionScope.loginEmail != null}">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout">Logout</a></li>
+					<li><a href="memberupdate/memberupdate">update member</a>
 				</c:if>
 				
 					<li class="dropdown">

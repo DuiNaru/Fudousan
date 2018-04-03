@@ -1,5 +1,6 @@
 package com.real.fudousan.member.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -59,7 +60,7 @@ public class MemberController {
     
     @ResponseBody
     @RequestMapping(value="login", method=RequestMethod.POST)
-    public String login(HttpSession session, String email, String password){
+    public HashMap<String, Object> login(HttpSession session, String email, String password){
     	logger.info("로그인 시작");
     	
     	Member member = new Member();
@@ -71,19 +72,32 @@ public class MemberController {
     	if (loginMember == null){
     		logger.info("로그인 실패 - 아이디 없음");
     		
-    		return "1";
+    		HashMap<String, Object> result = new HashMap<>();
+    		result.put("result", false);
+    		result.put("errCode", "1");
+    		
+    		return result;
     	}
     	else if (!loginMember.getPassword().equals(password)){
     		logger.info("로그인 실패 - 비밀번호 틀림");
     		
-    		return "2";
+    		HashMap<String, Object> result = new HashMap<>();
+    		result.put("result", false);
+    		result.put("errCode", "2");
+    		
+    		return result;
     	}
     	else {
     		session.setAttribute("loginEmail", email);
     		session.setAttribute("loginMemberName", loginMember.getMemberName());
     		
     		logger.info("로그인 성공");
-    		return loginMember.getMemberName();
+    		
+    		HashMap<String, Object> result = new HashMap<>();
+    		result.put("result", true);
+    		result.put("memeberName", loginMember.getMemberName());
+    		
+    		return result;
     	}
     }
     

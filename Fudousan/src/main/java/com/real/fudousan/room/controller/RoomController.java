@@ -30,6 +30,7 @@ public class RoomController {
 	@Autowired
 	private AdviceService Aservice;
 	
+	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
 	public String searchMyRoom(Model model,String roomSearch,int memberId){
 		logger.info("RoomController-searchMyRoom_Start");

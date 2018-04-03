@@ -27,21 +27,20 @@
 	
 	<select id="selectMember" parameterType="member" resultMap="memberResultMap">
 		SELECT
-			member_id,
-			email,
-			password,
-			phone,
-			picture,
-			text member_text,
-			cre_date as "member_cre_date",
-			del_date as "member_del_date",
-			permission_id as "permission",
-			designer,
+			member_id as member_id,
+			email as email,
+			password as password,
+			phone as phone,
+			picture as picture,
+			text as member_text,
+			cre_date as member_cre_date,
+			del_date as member_del_date,
+			designer as designer,
 			member_name as "member_name",
-			permission.permission_id permission_id,
-			permission.permission_name permission_name
+			permission.permission_id as permission_id,
+			permission.name as permission_name
 		FROM
-			member
+			member 
 		JOIN 
 			permission
 		ON
@@ -147,5 +146,26 @@
 			,#{confirm}
 		)
 	</insert> 
+	
+	<update id="updateMember"  parameterType="member">
+		UPDATE 
+			member
+		SET
+		(	
+			email=#{email}
+			,password=#{password}
+			,phone=#{phone}
+			,picture#{picture}
+			,text=#{text}
+			,permission_id=#{permission.permissionId}
+			,designer=#{designer}
+			,member_name=#{memberName}	
+		
+		)
+		WHERE
+			member_id=#{memberId}
+			
+	</update>
+	
 	
 </mapper>
