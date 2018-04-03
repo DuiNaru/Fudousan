@@ -19,6 +19,7 @@ public class EstateDAOOracle implements EstateDAO {
 	@Autowired
 	private SqlSession session;
 
+	
 	@Override
 	public List<Estate> select(Set<Integer> estateIds) {
 		logger.info("select("+estateIds+") Start");
@@ -32,5 +33,27 @@ public class EstateDAOOracle implements EstateDAO {
 		logger.info("select("+estateIds+") End");
 		return result;
 	}
+
+	
+	
+	
+/*매물등록*/
+	@Override
+	public int insertByIds(Estate estate) {
+		int result = 0;
+		
+		try{
+			EstateMapper mapper = session.getMapper(EstateMapper.class);
+			result = mapper.insertByIds(estate);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
+	
 
 }

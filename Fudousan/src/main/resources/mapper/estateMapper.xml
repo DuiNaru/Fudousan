@@ -5,6 +5,154 @@
 
 
 <mapper namespace="com.real.fudousan.estate.dao.EstateMapper">
+
+<insert id="insertByIds" parameterType="estate">
+insert into estate
+(	
+ESTATE_ID
+,TRANS_TYPE_ID
+<if test='region != null'>
+,REGION
+</if>
+,MunicipalityCode_ID
+<if test = 'prefecture != null'>
+,PREFECTURE
+</if>
+<if test = 'municipality != null'>
+,MUNICIPALITY
+</if>
+
+<if test = 'districtname != null'>
+,DISTRICTNAME
+</if>
+
+<if test = 'address != null'>
+,ADDRESS
+</if>
+<if test = 'neareststation != null'>
+,NEARESTSTATION
+</if>
+<if test = 'timetoneareststation != null'>
+,TIMETONEARESTSTATION
+</if>
+<if test ='tradeprice != null'>
+,TRADEPRICE
+</if>
+<if test ='priceperunit != null'>
+,PRICEPERUNIT
+</if>
+<if test = 'floorplan != null'>
+,FLOORPLAN
+</if>
+<if test = 'area != null'>
+,AREA
+</if>
+<if test = 'unitprice != null'>
+,UNITPRICE
+</if>
+<if test = 'totalfloorarea != null'>
+,TOTALFLOORAREA
+</if>
+<if test ='landshape != null'>
+,LANDSHAPE
+</if>
+
+<if test = 'buildingyear != null'>
+,BUILDINGYEAR
+</if>
+<if test = 'structure != null'>
+,STRUCTURE
+</if>
+<if test = 'use != null'>
+,USE
+</if>
+<if test ='coverageratio != null'>
+,COVERAGERATIO</if>
+
+
+<if test = 'floorarearatio != null'>
+,FLOORAREARATIO
+</if>
+
+<if test = 'delDate != null'>
+,DEL_DATE
+</if>
+
+
+
+)
+VALUES
+(
+SEQ_ESTATE_ID.nextval
+,#{transType.transTypeId}
+<if test ='region != null'>
+,#{region}
+</if>
+,#{municipalitycode.municipalitycodeId}
+<if test ='prefecture != null'>
+,#{prefecture}
+</if>
+<if test ='municipality != null'>
+,#{municipality}
+</if>
+<if test='districtname != null'>
+,#{districtname}
+</if>
+<if test= 'address != null'>
+,#{address}
+</if>
+<if test='neareststation != null'>
+,#{neareststation}
+</if>
+<if test='timetoneareststation != null'>
+,#{timetoneareststation}
+</if>
+<if test='tradeprice != null'>
+,#{tradeprice}
+</if>
+<if test='priceperunit != null'>
+,#{priceperunit}
+</if>
+<if test ='floorplan != null'>
+,#{floorplan}</if>
+<if test='area != null'>
+,#{area}
+</if>
+<if test='unitprice != null'>
+,#{unitprice}
+</if>
+<if test='landshape != null'>
+,#{landshape}
+</if>
+<if test='totalfloorarea != null'>
+,#{totalfloorarea}
+</if>
+<if test='buildingyear != null'>
+,#{buildingyear}
+</if>
+<if test ='structure != null'>
+,#{structure}
+</if>
+<if test ='use != null'>
+,#{use}
+</if>
+<if test='coverageratio != null'>
+,#{coverageratio}
+</if>
+<if test='floorarearatio != null'>
+,#{floorarearatio}
+</if>
+
+<if test ='delDate != null'>
+,#{delDate}
+</if>
+)
+
+
+</insert>
+
+
+
 	<select id="selectByIds" parameterType="java.util.Set" resultMap="estateResultMap">
 		select
 			ROOM_ID

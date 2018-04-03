@@ -120,23 +120,23 @@
           
           
             <div class="form-group">
-            
               <label for="inputType">取引タイプ(거래종류)</label>
-              <!-- <input type="text" class="form-control" id="InputName" placeholder="이름"> -->
-              <!-- Transactiontype = 거래종류 -->
-            <select name='Transactiontype' class="form-control" name="inputType" >
+              
+            <select name='transTypeId' class="form-control" data-live-search="true" >
   			<option value='0' selected>-- 選択 --</option>
   			<option value='1'>アパート</option>
   			<option value='2'>マンション</option>
 			</select>
             </div>
+            
+            
             <div class="form-group">
               <label for="inputRegion">地域名(지역이름)</label>
             	<!-- Localname = 지역이름 -->
-             <select name='Localname' class="form-control">
+             <select name='municipalitycodeId' data-live-search="true"  class="form-control">
   <option value='00' selected>-- 選択 --</option>
   <!-- 홋카이도 -->
-  <option value='01'>北海道</option>
+  <option value='10000'>北海道</option>
   <!-- 아오모리현 -->
   <option value='02'>青森県</option>
   <!-- 이와테현 -->
@@ -234,86 +234,92 @@
             </div>
             <div class="form-group">
               <label for="inputPrefecture">都道府県</label>
-              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 도시 이름 (도도부현)">
+              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 도시 이름 (도도부현)" name="prefecture">
            
             </div>
             <div class="form-group">
               <label for="inputMunicipality">市区町村</label>
-              <input type="text" class="form-control" id="inputMunicipality" placeholder="도시 이름 (시구정촌)">
+              <input type="text" class="form-control" id="inputMunicipality" placeholder="도시 이름 (시구정촌)" name="municipality">
             </div>
             <div class="form-group">
               <label for="inputDistrictName">地球人</label>
-              <input type="text" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)">
+              <input type="text" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)" name="districtname">
             </div>
+            
+           <div class="form-group">
+              <label for="inputNearestStation"> 나머지 주소 </label>
+              <input type="text" class="form-control" id="inputNearestStation" placeholder="나머지 주소" name="address">
+            </div>
+            
             
             <div class="form-group">
               <label for="inputNearestStation"> 最寄駅</label>
-              <input type="text" class="form-control" id="inputNearestStation" placeholder="전제일 가까운 역 : 명칭 ">
+              <input type="text" class="form-control" id="inputNearestStation" placeholder="전제일 가까운 역 : 명칭 " name="neareststation">
             </div>
          
 		<div class="form-group">
               <label for="inputTimeToNearestStation"> 最寄駅の距離（分）</label>
-              <input type="text" class="form-control" id="inputTimeToNearestStation" placeholder="제일 가까운역 거리(분)">
+              <input type="text" class="form-control" id="inputTimeToNearestStation" placeholder="제일 가까운역 거리(분)" name="timetoneareststation">
             </div>
             
             <div class="form-group">
               <label for="inputTradePrice"> 取引価格（総額）</label>
-              <input type="text" class="form-control" id="inputTradePrice" placeholder="거래 가격(총액)">
+              <input type="text" class="form-control" id="inputTradePrice" placeholder="거래 가격(총액)" name="tradeprice">
             </div>
             
             <div class="form-group">
               <label for="inputPricePerUnit"> 坪単価</label>
-              <input type="text" class="form-control" id="inputPricePerUnit" placeholder="평단가">
+              <input type="text" class="form-control" id="inputPricePerUnit" placeholder="평단가" name="priceperunit">
             </div>
               <!-- -- -->
             <div class="form-group">
               <label for="inputFloorPlan"> 構造</label>
-              <input type="text" class="form-control" id="inputFloorPlan" placeholder="구조 ">
+              <input type="text" class="form-control" id="inputFloorPlan" placeholder="구조 " name="floorplan">
             </div>
             
             <div class="form-group">
               <label for="inputArea"> 面積（平方メートル</label>
-              <input type="text" class="form-control" id="inputArea" placeholder="면적(평방 미터)">
+              <input type="text" class="form-control" id="inputArea" placeholder="면적(평방 미터)" name="area">
             </div>
             
             <div class="form-group">
               <label for="inputUnitPrice"> 取引価格（平方メートル単価）</label>
-              <input type="text" class="form-control" id="inputUnitPrice" placeholder="거래 가격(평방 미터 단가 )">
+              <input type="text" class="form-control" id="inputUnitPrice" placeholder="거래 가격(평방 미터 단가 )" name="unitprice">
             </div>
             
             <div class="form-group">
               <label for="inputLandShape">土地の形状 </label>
-              <input type="text" class="form-control" id="inputLandShape" placeholder="토지의 형상">
+              <input type="text" class="form-control" id="inputLandShape" placeholder="토지의 형상" name="landshape">
             </div>
             
            <div class="form-group">
               <label for="inputTotalFloorArea">延べ面積（㎡） </label>
-              <input type="text" class="form-control" id="inputTotalFloorArea" placeholder="연면적 (㎡) ">
+              <input type="text" class="form-control" id="inputTotalFloorArea" placeholder="연면적 (㎡)" name="totalfloorarea">
             </div>
             
             <div class="form-group">
               <label for="inputBuildingYear">設した年 </label>
-              <input type="text" class="form-control" id="inputBuildingYear" placeholder="건축 년도 ">
+              <input type="text" class="form-control" id="inputBuildingYear" placeholder="건축 년도 " name="buildingyear">
             </div>
             
             <div class="form-group">
               <label for="inputStructure">建物の構造 </label>
-              <input type="text" class="form-control" id="inputStructure" placeholder="건물의 구조 ">
+              <input type="text" class="form-control" id="inputStructure" placeholder="건물의 구조 " name="structure">
             </div>
             
             <div class="form-group">
               <label for="inputUse">用途</label>
-              <input type="text" class="form-control" id="inputUse" placeholder="용도">
+              <input type="text" class="form-control" id="inputUse" placeholder="용도" name="use">
             </div>
         
         <div class="form-group">
               <label for="inputCoverageRatio">建ぺい率（％）</label>
-              <input type="text" class="form-control" id="inputCoverageRatio" placeholder="건폐율 (%)">
+              <input type="text" class="form-control" id="inputCoverageRatio" placeholder="건폐율 (%)" name="coverageratio">
             </div>
             
             <div class="form-group">
               <label for="inputFloorAreaRatio">容積率（％）</label>
-              <input type="text" class="form-control" id="inputFloorAreaRatio" placeholder="용적률 (%)">
+              <input type="text" class="form-control" id="inputFloorAreaRatio" placeholder="용적률 (%)" name="floorarearatio">
             </div>
         
 
