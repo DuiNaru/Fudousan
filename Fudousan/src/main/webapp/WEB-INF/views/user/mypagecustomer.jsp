@@ -57,7 +57,7 @@ function sayonara(){
 			<input type="hidden" id="memberId" name="memberId" value=1>
 			<c:forEach var="room" items="${rlist}">
 				<div class="col-sm-12 form-group">
-					<label><c:out value="${room.map}${room.estate.estateName} "/></label>
+					<label><a href="/">${room.estate.estateName}</a><c:out value="${room.map} "/></label>
 			 		<input type="button" value="꾸미기" onclick="ggumigi(${room.estate.estateId})">
 				</div>
 			</c:forEach>
@@ -69,7 +69,7 @@ function sayonara(){
 			<input type="text" name="favoSearch" id="favoSearch"><input type="button" onclick="favoriteSearch()" value="검색">
 			<c:forEach var="favorite" items="${flist}">
 				<div class="col-sm-12 form-group">
-					<label><c:out value="${favorite.memberId}${favorite.creDate}${favorite.estate.estateName }"/></label>
+					<label><a href="/">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}${favorite.creDate}}"/></label>
 					<input type="button" value="팝업정보" onclick="popupInfoMaemul(${favorite.estate})">
 				</div>
 			</c:forEach>
