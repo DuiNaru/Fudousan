@@ -30,15 +30,6 @@ public class RoomController {
 	@Autowired
 	private AdviceService Aservice;
 	
-	@RequestMapping(value="threeRoomShow", method=RequestMethod.GET)
-	public String threeRoomShow(Model model,String estateName,int memberId){
-		logger.info("사용자가 자신이 작성3D 매물의 정보를 보기 시작합니다 - Start");
-		List<Room> threeList = Rservice.showMyRoom(estateName, memberId);
-		model.addAttribute("threeList",threeList);
-		logger.info("사용자가 자신이 작성3D 매물의 정보를 보기 시작합니다 - End");
-		return "user/threeRoom";
-	}
-	
 	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
 	public String searchMyRoom(Model model,String roomSearch,int memberId){
