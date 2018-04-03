@@ -69,11 +69,7 @@ public class JoinController {
 			return "redirect:join/join";
 		}	
 	}
-<<<<<<< HEAD
-	
-	
-=======
->>>>>>> d0dda8b83f13005edff4f2996091239237249745
+
 
 	@RequestMapping(value="insertAgency",  method=RequestMethod.POST)
 	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency, String main){
