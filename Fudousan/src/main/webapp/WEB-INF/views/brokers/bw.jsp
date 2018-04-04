@@ -142,9 +142,9 @@
   <!-- 홋카이도 -->
   <option value='10000'>北海道</option>
   <!-- 아오모리현 -->
-  <option value='02'>青森県</option>
+  <option value='20000'>青森県</option>
   <!-- 이와테현 -->
-  <option value='03'>岩手県</option>
+  <option value='30000'>岩手県</option>
   <!-- 미야기현 -->
   <option value='04'>宮城県</option>
   <!-- 아키타현 -->
