@@ -34,8 +34,9 @@ public class EstateService {
 	 * @return
 	 */
 	public int addEstate(Estate estate) {
+		int result = dao.insertByIds(estate);
 		
-		return -1;
+		return result;
 	}
 	
 	/**

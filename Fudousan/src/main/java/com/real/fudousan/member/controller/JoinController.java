@@ -70,6 +70,7 @@ public class JoinController {
 		}	
 	}
 
+
 	@RequestMapping(value="insertAgency",  method=RequestMethod.POST)
 	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency, String main){
 			
