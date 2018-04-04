@@ -12,5 +12,7 @@ public interface MemberMapper {
 	
 	// update
 	public int updateMember(Member member);
-	
+	public int updateAgencyMember(Member member);
+	public int updateAgency(Agency agency);
+
 }

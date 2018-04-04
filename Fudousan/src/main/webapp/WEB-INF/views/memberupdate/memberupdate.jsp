@@ -88,23 +88,28 @@
         </div>
         <div class="col-md-6 col-md-offset-3">
           <form role="form" action="modifyMember" method="post" enctype="multipart/form-data">
+          
             <div class="form-group">
               <label for="InputName">name</label>
-              <input type="text" class="form-control" id="InputName" placeholder="이름" name="member_name">
+              <input type="text" class="form-control" id="InputName" placeholder="이름" name="memberName">
             </div>
+            
             <div class="form-group">
               <label for="InputPassword1">password</label>
               <input type="password" class="form-control" id="InputPassword1" placeholder="비밀번호" name="password">
             </div>
+            
             <div class="form-group">
               <label for="InputPassword2">confirm password</label>
               <input type="password" class="form-control" id="InputPassword2" placeholder="비밀번호 확인">
               <p class="help-block">비밀번호 확인을 위해 다시한번 입력 해 주세요</p>
             </div>
+            
             <div class="form-group">
               <label for="InputEmail">email</label>
               <input type="email" class="form-control" id="InputEmail" placeholder="email" name="email">
             </div>
+            
             <div class="form-group">
               <label for="InputText">phone</label>
               <input type="text" class="form-control" id="userphone" placeholder="전화번호를 입력해 주세요" name="phone">

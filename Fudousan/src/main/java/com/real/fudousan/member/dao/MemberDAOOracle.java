@@ -118,4 +118,38 @@ public class MemberDAOOracle implements MemberDAO {
 		
 		return result; 
 	}
+	
+	@Override
+	public int updateAgencyMember(Member member){
+		int result = 0;
+		try {
+			
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.updateAgencyMember(member);
+		  
+		} catch(Exception e){
+		  
+		  e.printStackTrace();
+			
+		}
+		
+		return result; 
+	}
+	
+	@Override
+	public int updateAgency(Agency agency){
+		int result = 0;
+		try {
+			
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.updateAgency(agency);
+		  
+		} catch(Exception e){
+		  
+		  e.printStackTrace();
+			
+		}
+		
+		return result; 
+	}
 }

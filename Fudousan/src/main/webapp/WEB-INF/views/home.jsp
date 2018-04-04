@@ -74,11 +74,17 @@
 					<li id="loginNameTag"></li>
 					<li id="loginAtag"><a data-toggle="modal" href="#loginModal">Login</a></li>
 				</c:if>
-				<c:if test="${sessionScope.loginEmail != null}">
+				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2}">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout">Logout</a></li>
 					<li><a href="memberupdate/memberupdate">update member</a>
 				</c:if>
+				<c:if test="${sessionScope.permissionId == 3 }">
+					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
+					<li><a href="/fudousan/logout">Logout</a></li>
+					<li><a href="memberupdate/agencyupdate">update member</a>
+				</c:if>
+				
 				
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>

@@ -78,6 +78,7 @@ public class JoinController {
 		logger.info("member 등록 시작");
 		boolean memberResult = service.registerAgencyMember(member, file);
 		logger.info("member 등록 종료");
+		
 		logger.info("agency 등록 시작");
 		agency.setMember(member);
 		System.out.println(member);
