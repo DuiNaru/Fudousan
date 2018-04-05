@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>インタリアページ</title>
+<title>インテリアページ</title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 <script type="text/javascript">

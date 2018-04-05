@@ -79,6 +79,7 @@ public class MemberController {
     		return "2";
     	}
     	else {
+    		session.setAttribute("loginId", loginMember.getMemberId());
     		session.setAttribute("loginEmail", email);
     		session.setAttribute("loginMemberName", loginMember.getMemberName());
     		

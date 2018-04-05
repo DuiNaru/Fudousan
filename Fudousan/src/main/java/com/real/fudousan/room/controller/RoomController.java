@@ -8,9 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
@@ -19,6 +21,7 @@ import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
 
+@SessionAttributes("loginId")
 @Controller
 public class RoomController {
 
@@ -60,10 +63,8 @@ public class RoomController {
 	
 	@ResponseBody
 	@RequestMapping(value="changeRoomPublic" , method=RequestMethod.GET)
-	public int changeRoomPublic(int roomId, int roomPublic){
+	public int changeRoomPublic(@ModelAttribute("loginId") int memberId, int roomId, int roomPublic){
 		logger.info("changeRoomPublic("+roomId+", "+roomPublic+") Start");
-		// TODO 로그인 아이디로 변경
-		int memberId = 1;
 		
 		int result = -1;
 		if(Rservice.changeRoomPublic(memberId, roomId, roomPublic)) {
@@ -75,13 +76,18 @@ public class RoomController {
 	
 	@ResponseBody
 	@RequestMapping(value="deleteRoom" , method=RequestMethod.GET)
-	public boolean deleteRoom(int roomId){
+	public boolean deleteRoom(@ModelAttribute("loginId") int memberId, int roomId){
 		logger.info("deleteRoom("+roomId+") Start");
-		// TODO 로그인 아이디로 변경
-		int memberId = 1;
 		
 		boolean result = Rservice.deleteRoom(memberId, roomId);
 		logger.info("deleteRoom("+roomId+") End");
 		return result;
+	}
+	
+	@RequestMapping(value="roomPage", method=RequestMethod.GET)
+	public String roomPage() {
+		logger.info("roomPage() Start");
+		logger.info("roomPage() End");
+		return "room/roomPage";
 	}
 }

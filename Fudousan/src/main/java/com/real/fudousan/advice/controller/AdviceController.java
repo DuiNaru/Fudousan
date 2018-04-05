@@ -7,9 +7,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
@@ -19,6 +21,7 @@ import com.real.fudousan.member.controller.MemberController;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
 
+@SessionAttributes("loginId")
 @Controller
 public class AdviceController {
 	
@@ -57,10 +60,9 @@ public class AdviceController {
 	
 	@ResponseBody
 	@RequestMapping(value="unconfirm", method=RequestMethod.GET)
-	public boolean unConfirm(Advice advice, Room room) {
+	public boolean unConfirm(@ModelAttribute("loginId") int memberId, Advice advice, Room room) {
 		logger.info("unConfirm("+advice+") Start");
-		// TODO 세션에서 아이디 바꾸기
-		advice.setRequestedMemberId(1);
+		advice.setRequestedMemberId(memberId);
 		advice.setRoom(room);
 		boolean result = false;
 		result = Aservice.unConfirm(advice);
