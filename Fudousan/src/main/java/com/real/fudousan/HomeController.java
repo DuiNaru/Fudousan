@@ -25,5 +25,12 @@ public class HomeController {
     	logger.info("prototype End");
     	return "prototype/prototype";
     }
+    
+    @RequestMapping(value="/crossdomain", method=RequestMethod.GET)
+    public String crossdomain() {
+    	logger.info("crossdomain Start");
+    	logger.info("crossdomain End");
+    	return "crossdomain";
+    }
 	
 }
