@@ -33,4 +33,8 @@ public class HomeController {
     	return "crossdomain";
     }
 	
+    @RequestMapping(value="/anhaemin",method=RequestMethod.GET)
+    public String stackTest(){
+    	return "anhaeminTest";
+    }
 }

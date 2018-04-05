@@ -7,7 +7,6 @@
 </head>
 <body>
 	<button type="button" id="btn">send</button>
-
 	<script src="resources/js/socket.io.js"></script>
 	<script type="text/javascript">
 		const serverURL = 'http://sunnyserver.dlinkddns.com:3000';
