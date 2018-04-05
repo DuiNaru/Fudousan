@@ -43,4 +43,14 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+ 		<filter>
+	    <filter-name>cors</filter-name>
+	    <filter-class>/cors.SimpleCORSFilter/</filter-class>  
+		</filter> 
+
+	<filter-mapping>
+	    <filter-name>cors</filter-name>
+	    <url-pattern>/*</url-pattern> <!-- 전체도메인 해당 (크로스 도메인을 적용하고 싶은 url pattern) -->
+	</filter-mapping>
 </web-app>
