@@ -15,9 +15,14 @@ public interface MemberDAO {
 	
 	// 회원가입 
 	public int insertMember(Member member);
-	
 	public int insertAgencyMember(Member member);
 	public int insertAgency(Agency agency);
+	
+	//회원 정보 수정 
+	public int updateMember(Member member);
+	public int updateInterior(Member member);
+	public int updateAgencyMember(Member member);
+	public int updateAgency(Agency agency);
 
 
 

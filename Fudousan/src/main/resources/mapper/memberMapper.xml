@@ -32,27 +32,27 @@
 			password,
 			phone,
 			picture,
-			text member_text,
+			text as "member_text",
 			cre_date as "member_cre_date",
 			del_date as "member_del_date",
-			permission_id as "permission",
 			designer,
-			member_name as "member_name",
-			permission.permission_id permission_id,
-			permission.permission_name permission_name
+			member_name,
+			permission.permission_id as "permission_id",
+			permission.name as "permission_name"
 		FROM
-			member
+			member 
 		JOIN 
 			permission
 		ON
 			member.permission_id = permission.permission_id
-		WHERE
+		<where>
 			<if test="email != null">
-				email=#{email}
+				email=#{email} 
 			</if>
 			<if test="phone != null">
 				phone=#{phone}
 			</if>
+		</where>
 	</select>
 	
 	<insert id="insertMember" parameterType="member">
@@ -147,6 +147,55 @@
 			,#{confirm}
 		)
 	</insert> 
+	
+	<update id="updateMember"  parameterType="member">
+		UPDATE 
+			member
+		SET
+			password = #{password}
+			,phone = #{phone}
+			,picture = #{picture}
+			,text = #{text}
+			,permission_id = #{permission.permissionId}
+			,designer = #{designer}
+			,member_name = #{memberName}	 
+		WHERE
+			email=#{email}
+			
+	</update>
+	
+	<update id="updateAgencyMember"  parameterType="member">
+		UPDATE 
+			member
+		SET
+			password = #{password}
+			,phone = #{phone}
+			,picture = #{picture}
+			,text = #{text}
+			,permission_id = #{permission.permissionId}
+			,designer = #{designer}
+			,member_name = #{memberName}	 
+		WHERE
+			email=#{email}			
+	</update>
+	
+	<update id="updateAgency"  parameterType="agency">
+		UPDATE 
+			agency
+		SET
+			name = #{name}
+			,biznum =#{biznum}
+			,address_main = #{addressMain}
+			,address_middle = #{addressMiddle}
+			,address_small = #{addressSmall}
+			,address_sub = #{addressSub}
+			,text = #{text}
+			,trans_type_id = #{transType.transTypeId}
+			,confirm = #{confirm}
+		WHERE
+			member_id=#{member.memberId}		
+				
+	</update>
 	
 	
 </mapper>

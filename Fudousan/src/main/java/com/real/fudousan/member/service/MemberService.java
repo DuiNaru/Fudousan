@@ -1,11 +1,14 @@
 package com.real.fudousan.member.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.estate.vo.TransType;
 import com.real.fudousan.common.util.FileService;
+import com.real.fudousan.member.controller.UpdateMemberController;
 import com.real.fudousan.member.dao.MemberDAO;
 import com.real.fudousan.member.vo.Member;
 import com.real.fudousan.member.vo.Permission;
@@ -15,6 +18,7 @@ public class MemberService {
 	
 	private static final String memberFileBaseDirectory = "/member/";
 	
+	private static final Logger logger = LoggerFactory.getLogger(MemberService.class);
 
 	@Autowired
 	private MemberDAO dao;
@@ -28,7 +32,6 @@ public class MemberService {
 	 */
 	public Member login(Member member) {
 		Member result = dao.select(member);
-		
 		return result;
 	}
 	
@@ -46,8 +49,16 @@ public class MemberService {
 			if ((result = dao.insertMember(member))>= -1 && file != null) {
 				FileService.saveFile(file, memberFileBaseDirectory + result, true);
 			}
-			// insert member success
-			return true; 
+			
+			if (result == 1) {
+				// insert success
+				return true; 
+			}
+			else{			
+				
+				// insert fail 
+				return false; 
+			}
 
 
 	}
@@ -67,8 +78,16 @@ public class MemberService {
 		if ((result = dao.insertMember(member))>= -1 && file != null) {
 			FileService.saveFile(file, memberFileBaseDirectory + result, true);
 		}
-		// insert member success
-		return true; 
+		
+		if (result == 1) {
+			// insert success
+			return true; 
+		}
+		else{			
+			
+			// insert fail 
+			return false; 
+		}
 	
 	}
 	
@@ -87,9 +106,16 @@ public class MemberService {
 		if ((result = dao.insertAgencyMember(member))>= -1 && file != null) {
 			FileService.saveFile(file, memberFileBaseDirectory + result, true);
 		}
-		// insert member success
-		return true; 
-	
+		
+		if (result == 1) {
+			// insert success
+			return true; 
+		}
+		else{			
+			
+			// insert fail 
+			return false; 
+		}
 	}
 	
 	/**
@@ -130,8 +156,89 @@ public class MemberService {
 	 * @param member id에 해당하는 회원을 해당 정보로 변경한다.
 	 * @return
 	 */
-	public boolean modifyMember(Member member) {
+	public boolean modifyMember(Member member, MultipartFile file) {
+		logger.info("회원 수정 시작 SERVICE");
+		int result = 0;
+		// get designer
+		int designer = member.getDesigner();
 		
-		return false;
+		if (designer == 0) {
+			
+			Permission p= new Permission(1, "Member");
+			member.setPermission(p);
+			System.out.println(member);
+			if ((result = dao.updateMember(member))>= -1 && file != null) {
+				
+				FileService.saveFile(file, memberFileBaseDirectory + result, true);
+				
+			}
+			
+		} else if(designer == 1){
+			
+			Permission p= new Permission(2, "Interior");
+			member.setPermission(p);
+			System.out.println(member);
+			if ((result = dao.updateInterior(member))>= -1 && file != null) {
+				
+				FileService.saveFile(file, memberFileBaseDirectory + result, true);
+				
+			}
+		}
+	
+		if (result == 1) {
+			// insert success
+			return true; 
+		}
+		else{			
+			// insert fail 
+			return false; 
+		}
+	}
+	
+	
+	public boolean modifyAgencyMember(Member member, MultipartFile file){
+		logger.info("회원 수정 시작 SERVICE");
+		int result = 0;
+		Permission p= new Permission(3, "Agency");
+		member.setPermission(p);
+		System.out.println(member);
+		if ((result = dao.updateAgencyMember(member))>= -1 && file != null) {
+			
+			FileService.saveFile(file, memberFileBaseDirectory + result, true);
+			
+		}
+		if (result == 1) {
+			// insert success
+			return true; 
+		}
+		else{			
+			// insert fail 
+			return false; 
+		}
+	}
+	
+	public boolean modifyAgency(Agency agency){
+		logger.info("회원 수정 시작 SERVICE");
+		int result = 0;	
+		
+		// trans type set 
+		
+		TransType t = new TransType(1, "apart");
+		agency.setTransType(t);
+		
+		// confirm set
+		agency.setConfirm(0);
+		System.out.println("service:"+agency);
+		result = dao.updateAgency(agency);
+		
+		if (result == 1) {
+			// insert success
+			return true; 
+		}
+		else{			
+			
+			// insert fail 
+			return false; 
+		}
 	}
 }

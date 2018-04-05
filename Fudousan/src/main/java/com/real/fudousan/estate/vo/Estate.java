@@ -66,10 +66,10 @@ public class Estate implements Serializable {
 	/** 土地の形状. */
 	private String landshape;
 
-	/** 間口. */
+	/** 間口.--- */
 	private Integer frontage;
 
-	/** 延床面積(平方メートル). */
+	/** 延床面積(平方メートル).-- */
 	private Integer totalfloorarea;
 
 	/** 建築年. */
@@ -118,14 +118,21 @@ public class Estate implements Serializable {
 	private String estateName;
 	
 
-	public Estate() {}
+	private String address;
+
+
+	public Estate() {
+		super();
+	}
+
+
 	public Estate(Integer estateId, TransType transType, String region, MunicipalityCode municipalitycode,
 			String prefecture, String municipality, String districtname, String neareststation,
 			Integer timetoneareststation, Integer tradeprice, Integer priceperunit, String floorplan, Integer area,
 			Integer unitprice, String landshape, Integer frontage, Integer totalfloorarea, String buildingyear,
 			String structure, String use, String purpose, String direction, String classification, Integer breadth,
 			String cityplanning, Integer coverageratio, Integer floorarearatio, String period, String renovation,
-			String remarks, Date delDate, String estateName) {
+			String remarks, Date delDate, String estateName, String address) {
 		super();
 		this.estateId = estateId;
 		this.transType = transType;
@@ -159,6 +166,7 @@ public class Estate implements Serializable {
 		this.remarks = remarks;
 		this.delDate = delDate;
 		this.estateName = estateName;
+		this.address = address;
 	}
 
 
@@ -482,9 +490,20 @@ public class Estate implements Serializable {
 	}
 
 
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 
 	@Override
 	public String toString() {
@@ -498,8 +517,7 @@ public class Estate implements Serializable {
 				+ purpose + ", direction=" + direction + ", classification=" + classification + ", breadth=" + breadth
 				+ ", cityplanning=" + cityplanning + ", coverageratio=" + coverageratio + ", floorarearatio="
 				+ floorarearatio + ", period=" + period + ", renovation=" + renovation + ", remarks=" + remarks
-				+ ", delDate=" + delDate + ", estateName=" + estateName + "]";
+				+ ", delDate=" + delDate + ", estateName=" + estateName + ", address=" + address + "]";
 	}
-	
 	
 }

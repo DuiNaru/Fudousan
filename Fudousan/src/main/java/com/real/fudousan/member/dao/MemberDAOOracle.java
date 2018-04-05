@@ -72,7 +72,7 @@ public class MemberDAOOracle implements MemberDAO {
 	// 중개업자 가입(agency table)
 	@Override
 	public int insertAgency(Agency agency){
-	int result = 0;
+		int result = 0;
 		
 		try {
 			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
@@ -85,5 +85,71 @@ public class MemberDAOOracle implements MemberDAO {
 		
 		return result; 
 	}
-
+	
+	@Override
+	public int updateMember(Member member){
+		int result = 0;
+		
+		try {
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.updateMember(member);
+		
+		} catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		
+		return result; 
+	}
+	
+	@Override
+	public int updateInterior(Member member){
+		int result = 0;
+		try {
+			
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.updateMember(member);
+		  
+		} catch(Exception e){
+		  
+		  e.printStackTrace();
+			
+		}
+		
+		return result; 
+	}
+	
+	@Override
+	public int updateAgencyMember(Member member){
+		int result = 0;
+		try {
+			
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.updateAgencyMember(member);
+		  
+		} catch(Exception e){
+		  
+		  e.printStackTrace();
+			
+		}
+		
+		return result; 
+	}
+	
+	@Override
+	public int updateAgency(Agency agency){
+		int result = 0;
+		try {
+			
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.updateAgency(agency);
+		  
+		} catch(Exception e){
+		  
+		  e.printStackTrace();
+			
+		}
+		
+		return result; 
+	}
 }

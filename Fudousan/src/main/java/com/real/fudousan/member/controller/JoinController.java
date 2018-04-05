@@ -59,16 +59,17 @@ public class JoinController {
 			// result가 true이면 
 			logger.info("회원 등록 성공");
 			model.addAttribute(memberResult);
-			return "join/joinresult";
+			return "redirect:join/joinresult";
 			
 		}
 		else{
 			// result가 false이면 
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberResult);
-			return "join/join";
+			return "redirect:join/join";
 		}	
 	}
+
 
 	@RequestMapping(value="insertAgency",  method=RequestMethod.POST)
 	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency, String main){
@@ -78,6 +79,7 @@ public class JoinController {
 		logger.info("member 등록 시작");
 		boolean memberResult = service.registerAgencyMember(member, file);
 		logger.info("member 등록 종료");
+		
 		logger.info("agency 등록 시작");
 		agency.setMember(member);
 		System.out.println(member);
@@ -96,7 +98,7 @@ public class JoinController {
 			// result가 false이면 
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberResult);
-			return "join/agencyjoin";
+			return "redirect:join/agencyjoin";
 		}	
 	}
 	

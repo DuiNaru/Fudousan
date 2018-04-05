@@ -23,7 +23,7 @@ public class RoomService {
 	
 	/**
 	 * 자기 매물 정보 검색
-	 * @param estateId
+	 * @param roomSearch
 	 * @param memberId
 	 * @return 검색자의 매물정보중 검색대상
 	 */
