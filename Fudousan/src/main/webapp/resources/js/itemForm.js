@@ -25,7 +25,7 @@ function formreset() {
 
 function backupSiteList() {
 	originalSiteList = $("#sitelist").html();
-	$("#sitelist").html(originalSiteList);
+	//$("#sitelist").html(originalSiteList);
 }
 
 function delSite(id) {
