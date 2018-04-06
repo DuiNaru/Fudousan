@@ -20,6 +20,7 @@ import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.member.service.MemberService;
 import com.real.fudousan.member.vo.Member;
+import com.real.fudousan.member.vo.Permission;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
 
@@ -38,9 +39,9 @@ public class MemberController {
 	private AdviceService Aservice;
     
 	@RequestMapping(value="mypageNormalUser", method=RequestMethod.GET)
-	public String mypageNormalUser(Model model, Integer memberId){	
+	public String mypageNormalUser(Model model, Integer memberId, HttpSession session){	
 		logger.info("MC 일반 사용자의 마이페이지 접속  Start");
-		memberId = 1;
+		memberId = (Integer) session.getAttribute("loginId");
         List<Room> rlist = Rservice.showAllRoom(memberId);
         List<Favorite> flist = Fservice.showAllFavorite(memberId);
         List<Advice> alist = Aservice.getRequestList(memberId, Advice.REQUEST);
@@ -88,6 +89,14 @@ public class MemberController {
     		return result;
     	}
     	else {
+    		//안해민이라는 사람이 회원의 정체를 파악하고자 소우치한 시쿠미 시작
+        	int Designer = loginMember.getDesigner();
+        	Permission Agent = loginMember.getPermission();
+        	if(Designer == 0 && Agent == null){
+        		session.setAttribute("isNormal", "normal");
+        	}
+        	//안해민이라는 사람이 회원의 정체를 파악하고자 소우치한 시쿠미 끝
+    		
     		session.setAttribute("loginId", loginMember.getMemberId());
     		session.setAttribute("loginEmail", email);
     		session.setAttribute("loginMemberName", loginMember.getMemberName());

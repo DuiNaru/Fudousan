@@ -10,9 +10,9 @@
 	<button id="Btn_object" type="button">객체 소환</button>
 	<button id="Btn_blist" type="button">array1 보기</button>
 	<button id="Btn_blist2" type="button">array2 보기</button>
-	<button id="Btn_backArray1" type="button">array1 마지막에 들어온거 빼내기</button>
+	<button id="Btn_backArray1" type="button">뒤로가기</button>
 	<button id="Btn_clear" type="button">array 1초기화</button>
-	<button id="Btn_blistRecovery" type="button">array 1을 원 상태로 복귀시킨다.</button>
+	<button id="Btn_blistRecovery" type="button">앞으로가기</button>
     <ul id="msg"></ul>
 
 	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>

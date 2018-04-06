@@ -96,7 +96,12 @@
 					</li>
 					
 					<li><a href="bm">[okh test]</a></li>
-					<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>
+					
+					<c:if test="${sessionScope.loginId != null && sessionScope.isNormal == normal}">
+						<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>
+					</c:if>
+					
+					
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
