@@ -131,19 +131,7 @@ public class ItemService {
 	
 	
 	
-	/**
-	 * 아이템이름으로 검색해서 객체 하나 잡아오기 3D화면상에서
-	 * @param itemName
-	 * @return
-	 */
-	public List<Item> realselect(String itemName) {
-		logger.info("service realselect() Start");
-		List<Item> result = null;
-		result = itemDao.selectByName(itemName);
-		
-		logger.info("service realselect() end");
-		return result;
-	}
+
 	
 	
 }

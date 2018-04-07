@@ -14,5 +14,4 @@ public interface ItemMapper {
 	public boolean delete(int itemId);
 	public List<Item> selectByName(String itemName);
 	
-	public List<Item> realSelectById(int itemId); //안해민
 }

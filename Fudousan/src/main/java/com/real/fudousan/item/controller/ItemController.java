@@ -109,4 +109,16 @@ public class ItemController {
 		logger.info("searchItem("+itemName+") End");
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="getGagu", method=RequestMethod.GET)
+	public Item getGagu(Model model, int itemId) {
+		logger.info("getGagu("+itemId+") Start");
+		Item result = itemService.viewItem(itemId);
+		model.addAttribute("gagu", result);
+		logger.info("getGagu("+itemId+") End");
+		return result;
+	}
+	
+	
 }

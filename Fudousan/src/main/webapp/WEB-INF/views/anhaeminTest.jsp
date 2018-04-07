@@ -6,38 +6,30 @@
 	<title>Anhaemin Server Test</title>
 </head>
 <body>
-	<input id="sendMsg"/><button id="chatBtn">챗고!</button>
+
+<input id="sendMsg"/><button id="chatBtn">챗고!</button>
 	<button id="Btn_object" type="button">객체 소환</button>
 	<button id="Btn_blist" type="button">array1 보기</button>
 	<button id="Btn_blist2" type="button">array2 보기</button>
 	<button id="Btn_backArray1" type="button">뒤로가기</button>
 	<button id="Btn_clear" type="button">array 1초기화</button>
 	<button id="Btn_blistRecovery" type="button">앞으로가기</button><br>
+	<button id="Btn_realSelect" type="button">리얼셀렉트버튼</button>
     <ul id="msg"></ul>
-
+    <input type="hidden" value="88" id="itemId" name="itemId">
 	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="resources/js/socket.io.js"></script>
 	  <script>
 	  
 		function realSelectById() {
 			$.ajax({
-				url:"../item/searchItem?itemName="+$("#itemName").val(),
+				url:"./item/getGagu?itemId="+$("#itemId").val(),
 				type:"GET",
 				dataType:"JSON",
 				success:function(obj) {
-					$("#itemList").empty();
-					$(obj).each(function(index, data) {
-						var html = "";
-						html += '<div id="item${item.itemId}" class="col-sm-offset-1 col-sm-10">';
-						html += '<div class="col-sm-12">';
-						html += '	<label class="col-sm-6">'+data.itemName+'</label>';
-						html += '	<div class="col-sm-6">';
-						html += '		<a class="btn btn-default" href="../item/itemModifyPage?itemId='+data.itemId+'">修正</a>';
-						html += '		<input class="btn btn-default" type="button" onclick="deleteItem('+data.itemId+')" value="削除">';
-						html += '	</div>';
-						html += '</div>';
-						$("#itemList").append(html);
-					});
+					console.dir(obj);
+					console.log("안녕하세요 리얼셀렉")
+					socket.emit('realSelect', obj);
 				},
 				error:function(e) {
 					console.log(e);
@@ -57,6 +49,8 @@
 		var Btn_blistRecovery = document.querySelector('#Btn_blistRecovery');
 		var Btn_backarray1 = document.querySelector('#Btn_backArray1');
 		var Btn_clear = document.querySelector('#Btn_clear');
+		var Btn_realSelect = document.querySelector('#Btn_realSelect');
+		
 
 		chatBtn.addEventListener("click", function(event) {
 			socket.emit('chat message', $('#sendMsg').val());
@@ -85,12 +79,14 @@
 			socket.emit('Array1_Recovery', null);
 		});
 		
+		Btn_realSelect.addEventListener('click', function(event){
+			realSelectById();
+		});
+		
 		socket.on('chat message', function(msg){
 			$('#msg').append($('<li>').text(msg));
 		});
 	</script>
-	
-	
 	
 	
 </body>
