@@ -16,7 +16,7 @@
 			url:"../item/deleteItem?itemId="+itemId,
 			type:"GET",
 			success:function(data) {
-				if(data == "true") {
+				if(data || data == "true") {
 					$("#item"+itemId).remove();
 				} else {
 					alert("삭제에 실패하였습니다.");

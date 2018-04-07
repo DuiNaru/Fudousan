@@ -119,11 +119,15 @@ public class Estate implements Serializable {
 	
 
 	private String address;
+	
+	private double estateX;
+	private double estateY;
 
 
 	public Estate() {
 		super();
 	}
+
 
 
 	public Estate(Integer estateId, TransType transType, String region, MunicipalityCode municipalitycode,
@@ -132,7 +136,7 @@ public class Estate implements Serializable {
 			Integer unitprice, String landshape, Integer frontage, Integer totalfloorarea, String buildingyear,
 			String structure, String use, String purpose, String direction, String classification, Integer breadth,
 			String cityplanning, Integer coverageratio, Integer floorarearatio, String period, String renovation,
-			String remarks, Date delDate, String estateName, String address) {
+			String remarks, Date delDate, String estateName, String address, double estateX, double estateY) {
 		super();
 		this.estateId = estateId;
 		this.transType = transType;
@@ -167,7 +171,10 @@ public class Estate implements Serializable {
 		this.delDate = delDate;
 		this.estateName = estateName;
 		this.address = address;
+		this.estateX = estateX;
+		this.estateY = estateY;
 	}
+
 
 
 	public Integer getEstateId() {
@@ -503,6 +510,32 @@ public class Estate implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	
+
+
+	public double getEstateX() {
+		return estateX;
+	}
+
+
+
+	public void setEstateX(double estateX) {
+		this.estateX = estateX;
+	}
+
+
+
+	public double getEstateY() {
+		return estateY;
+	}
+
+
+
+	public void setEstateY(double estateY) {
+		this.estateY = estateY;
+	}
+
 
 
 	@Override
@@ -517,7 +550,8 @@ public class Estate implements Serializable {
 				+ purpose + ", direction=" + direction + ", classification=" + classification + ", breadth=" + breadth
 				+ ", cityplanning=" + cityplanning + ", coverageratio=" + coverageratio + ", floorarearatio="
 				+ floorarearatio + ", period=" + period + ", renovation=" + renovation + ", remarks=" + remarks
-				+ ", delDate=" + delDate + ", estateName=" + estateName + ", address=" + address + "]";
+				+ ", delDate=" + delDate + ", estateName=" + estateName + ", address=" + address + ", estateX="
+				+ estateX + ", estateY=" + estateY + "]";
 	}
 	
 }

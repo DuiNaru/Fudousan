@@ -21,10 +21,22 @@
 					<label>3Dモデルファイル名</label>
 					<input id="model" name="modelFileName" class="form-control" type="text" required="required"<c:if test="${!empty item}"> value="${item.modelFileName}"</c:if>>
 				</div>
-				<div class="form-group">
-					<label>ファイルディレクトリ</label>
-					<input id="files" name="files" class="form-control" webkitdirectory directory type="file" <c:if test="${empty item}"> required="required"</c:if>>
-				</div>
+				<c:if test="${empty item}">
+					<div class="form-group">
+						<label>ファイルディレクトリ</label>
+						<input id="files" name="files" class="form-control" webkitdirectory directory type="file" <c:if test="${empty item}"> required="required"</c:if>>
+					</div>
+				</c:if>
+				<c:if test="${!empty files}">
+					<div class="form-group">
+						<label>ファイルリスト</label>
+							<ul>
+							<c:forEach var="file" items="${files }">
+								<li>${file.name}</li>
+							</c:forEach>
+							</ul>
+					</div>
+				</c:if>
 				<div class="form-group">
 					<label>関連サイト</label>
 					<div id="sitelist">

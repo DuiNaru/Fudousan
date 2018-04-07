@@ -44,11 +44,8 @@ public class InteriorAgentController {
 	private RoomService roomService;
 	
 	@RequestMapping(value="/", method=RequestMethod.GET)
-	public String interiorPage(Model model) {
+	public String interiorPage(@ModelAttribute("loginId") int memberId, Model model) {
 		logger.info("interiorPage() Start");
-		
-		// TODO 로그인 완료 되면 파라미터로 받아서 사용할 것
-		int memberId = 1;
 		
 		// 요청 받은 목록
 		List<Advice> adviceList = adviceService.getRequestedList(memberId);

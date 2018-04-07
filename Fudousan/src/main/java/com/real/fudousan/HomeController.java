@@ -85,6 +85,7 @@ public class HomeController {
     	return "prototype/prototype";
     }
     
+
     
     // 주소 -> 좌표 변환 메소드 
     public static Float[] geoCoding(String location) {
@@ -143,5 +144,17 @@ public class HomeController {
 
 
 
+
+    @RequestMapping(value="/crossdomain", method=RequestMethod.GET)
+    public String crossdomain() {
+    	logger.info("crossdomain Start");
+    	logger.info("crossdomain End");
+    	return "crossdomain";
+    }
+
 	
+    @RequestMapping(value="/anhaemin",method=RequestMethod.GET)
+    public String stackTest(){
+    	return "anhaeminTest";
+    }
 }

@@ -61,7 +61,9 @@ public class ItemController {
 	@RequestMapping(value="itemModifyPage", method=RequestMethod.GET)
 	public String itemModifyPage(Model model, int itemId) {
 		logger.info("itemModifyPage("+itemId+") Start");
-		model.addAttribute("item", itemService.viewItem(itemId));
+		Item item = itemService.viewItem(itemId);
+		model.addAttribute("item", item);
+		model.addAttribute("files", itemService.viewFilesInItem(itemId));
 		logger.info("itemModifyPage("+itemId+") End");
 		return "/item/itemModifyPage";
 	}
@@ -95,7 +97,7 @@ public class ItemController {
 	public boolean deleteItem(int itemId) {
 		logger.info("deleteItem("+itemId+") Start");
 		boolean result = itemService.deleteItem(itemId);
-		logger.info("deleteItem("+itemId+") End");
+		logger.info("deleteItem("+itemId+") End " + result);
 		return result;
 	}
 	

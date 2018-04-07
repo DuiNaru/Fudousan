@@ -87,6 +87,8 @@
 			,cf.NAME c_NAME
 			,cf.TEXT c_TEXT
 			,ESTATE_NAME
+			,ESTATE_X
+			,ESTATE_Y
 		from
 			advice
 		join
