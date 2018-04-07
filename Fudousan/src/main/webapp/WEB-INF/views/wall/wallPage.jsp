@@ -30,7 +30,7 @@ canvas {
 <div class="left-menu">
 <script type="text/javascript" src="<c:url value="/resources/js/wallPage.js"/>"></script>
 	<menu>
-		<li><input type="button" class="btn btn-default" value="저장"></li>
+		<li><input type="button" class="btn btn-default" value="저장" onclick="save()"></li>
 		<li><input id="btn_back" type="button" class="btn btn-default" value="뒤로가기"></li>
 		<li><input id="btn_forward" type="button" class="btn btn-default" value="앞으로가기"></li>
 		<li><input type="button" class="btn btn-default" value="벽 그리기" onclick="changeTool(0)"></li>

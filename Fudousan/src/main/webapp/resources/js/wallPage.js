@@ -39,16 +39,16 @@ var dots = [[]];
 var sceneLines = [];
 // 현재 그려진 점
 var sceneDots = [];
-// 단위 길이
-var vectorPerLength = 100;
-// 점 스냅 가중치
-var pointSnapAdv = 100;
 // 보조 선
 var supportLines = [];
 // 배경 보조선
 var backgroundLines = [];
+// 단위 길이
+var vectorPerLength = 100;
+// 점 스냅 가중치
+var pointSnapAdv = 1;
 // 인터섹트 검사시 기존 점과의 가까운 한계 길이 값 (해당 값 이하는 값은 점으로 간주)
-var closeTolerance = 1;
+var closeTolerance = 100;
 
 document.addEventListener("DOMContentLoaded", function(){
 	//초기화
@@ -264,17 +264,29 @@ function onDocumentMouseUp(event) {
 						if(sp != -1) {
 							if(walls[curIndex][i].startPoint > sp) {
 								walls[curIndex][i].startPoint -= 1;
+								if(ep != -1 && walls[curIndex][i].startPoint > ep-1) {
+									walls[curIndex][i].startPoint -= 1;
+								}
 							}
 							if(walls[curIndex][i].endPoint > sp) {
 								walls[curIndex][i].endPoint -= 1;
+								if(ep != -1 && walls[curIndex][i].endPoint > ep-1) {
+									walls[curIndex][i].endPoint -= 1;
+								}
 							}
 						}
 						if(ep != -1) {
 							if(walls[curIndex][i].startPoint > ep) {
 								walls[curIndex][i].startPoint -= 1;
+								if(sp != -1 && sp <= ep) {
+									walls[curIndex][i].startPoint -= 1;
+								}
 							}
 							if(walls[curIndex][i].endPoint > ep) {
 								walls[curIndex][i].endPoint -= 1;
+								if(sp != -1 && sp <= ep) {
+									walls[curIndex][i].endPoint -= 1;
+								}
 							}
 						}
 					}
@@ -284,6 +296,7 @@ function onDocumentMouseUp(event) {
 		}
 	} else {
 		if (isDrawing && toolType == 0) {
+			console.log("벽 생성 시작");
 			// 벽 생성 시작
 			addNewStatus();
 			
@@ -313,8 +326,11 @@ function onDocumentMouseUp(event) {
 			var beforeDots = dots[curIndex].length;
 			// 새로 추가된 벽 갯수
 			var newWalls = 0;
+			// 새로 추가하는 선을 쪼개기 위한 정렬
+			var array = [start, end];
 			// 기존에 겹치는 지점이 있는지 검사
 			for(var i = 0; i < walls[curIndex].length-newWalls; i++) {
+				console.log("for i : " + i);
 				var direction = endPoint.position.clone();
 				var directionVector = direction.sub(startPoint.position);
 				var ray = new THREE.Raycaster(startPoint.position, directionVector.normalize(), 0, startPoint.position.clone().sub(endPoint.position).length());
@@ -329,42 +345,79 @@ function onDocumentMouseUp(event) {
 				var rayIntersects = ray.intersectObjects([new THREE.Line(geometry, material)], true);
 				if(rayIntersects.length > 0) {
 					// 시작 포인트나 끝 포인트와 완전 동일 검사 (제외 시킴)
-					if(!rayIntersects[0].point.equals(startPoint.position) && !rayIntersects[0].point.equals(endPoint.position)) {
+					/*if(!rayIntersects[0].point.equals(startPoint.position) && !rayIntersects[0].point.equals(endPoint.position)) {
 						// 시작 포인트나 끝 포인트와 매우 가까운지 검사
-						var isCloseEnough = rayIntersects[0].point.manhattanDistanceTo(startPoint.position) < closeTolerance;
-						isCloseEnough |= rayIntersects[0].point.manhattanDistanceTo(endPoint.position) < closeTolerance;
-						if(!isCloseEnough) {
-							intersectPoint = rayIntersects[0].point;
+						if(rayIntersects[0].point.manhattanDistanceTo(startPoint.position) < closeTolerance) {
+							startPoint.position.copy(rayIntersects[0].point);
 						}
-					}
-					
+						if(rayIntersects[0].point.manhattanDistanceTo(endPoint.position) < closeTolerance) {
+							endPoint.position.copy(rayIntersects[0].point);
+						}
+						intersectPoint = rayIntersects[0].point;
+						console.log(intersectPoint);
+					}*/
+					intersectPoint = rayIntersects[0].point;
 				}
-				
+				console.log(intersectPoint);
 				if(intersectPoint != null) {
-					dots[curIndex].push(intersectPoint);
-					// 겹치는 벽이 존재할 경우 쪼개기
-					walls[curIndex].push({
-						startPoint:walls[curIndex][i].startPoint,
-						endPoint:dots[curIndex].length-1
-						});
-					walls[curIndex].push({
-						startPoint:walls[curIndex][i].endPoint,
-						endPoint:dots[curIndex].length-1
-						});
+					// 교차 포인트가 기존의 시작 점이나 끝 점일 경우, 무시하고, 그리는 선에서만 추가함
+					var check = checkEQ(intersectPoint, dots[curIndex][walls[curIndex][i].startPoint]);
+					if(check) {
+						array.push(walls[curIndex][i].startPoint);
+						console.log("startPoint" + walls[curIndex][i].startPoint);
+						continue;
+					}
+					check |= checkEQ(intersectPoint, dots[curIndex][walls[curIndex][i].endPoint]);
+					if(check) {
+						array.push(walls[curIndex][i].endPoint);
+						console.log("endPoint" + walls[curIndex][i].endPoint);
+						continue;
+					}
+					if(!check) {
+						// 교차점이 시작 점이나 끝 점일 경우 해당 점으로 교체, 아니면 새로 추가
+						var curPointIndex = dots[curIndex].length;
+						if(checkEQ(intersectPoint, startPoint.position)) {
+							curPointIndex = start;
+							console.log("start p" + curPointIndex);
+						} else if(checkEQ(intersectPoint, endPoint.position)) {
+							curPointIndex = end; 
+							console.log("end p" + curPointIndex);
+						} else {
+							console.log("add dot");
+							dots[curIndex].push(intersectPoint);
+						}
+						// 겹치는 벽이 존재할 경우 쪼개기
+						if(walls[curIndex][i].startPoint != curPointIndex) {
+							walls[curIndex].push({
+								startPoint:walls[curIndex][i].startPoint,
+								endPoint:curPointIndex
+								});
+						}
+						if(walls[curIndex][i].endPoint != curPointIndex) {
+							walls[curIndex].push({
+								startPoint:walls[curIndex][i].endPoint,
+								endPoint:curPointIndex
+								});
+						}
 
-					walls[curIndex].splice(i, 1);
-					
-					i--;
-					newWalls += 2;
+						walls[curIndex].splice(i, 1);
+						
+						i--;
+						newWalls += 2;
+					}
 				}
 			}
-			// 새로 추가하는 선을 쪼개기 위한 정렬
-			var array = [start, end];
 			for(var i = beforeDots; i < dots[curIndex].length; i++) {
 				array.push(i);
 			}
+			console.dir(array);
 			for(var i = 0; i < array.length; i++) {
 				for(var j = i+1; j < array.length; j++) {
+					if(array[i] == array[j]) {
+						array.splice(j, 1);
+						j -= 1;
+						continue;
+					}
 					if(dots[curIndex][array[i]].x < dots[curIndex][array[j]].x) {
 						var t = array[i];
 						array[i] = array[j];
@@ -372,12 +425,15 @@ function onDocumentMouseUp(event) {
 					}
 				}
 			}
+			console.dir(array);
 			// 정렬된 순서대로 시작부터 끝까지 벽 추가
 			for(var i = 0; i < array.length-1; i++) {
 				walls[curIndex].push({startPoint:array[i], endPoint:array[i+1]});
 			}
 			
 			// 벽 생성 종료
+
+			console.log("벽 생성 종료");
 		}
 	}
 	isDrawing = false;
@@ -395,10 +451,13 @@ function onDocumentMouseUp(event) {
 }
 
 function redraw() {
+	console.log("redraw() start");
 	console.log(curIndex);
 	console.log(walls[curIndex]);
 	console.log(dots[curIndex]);
-
+	if(startPoint != null) scene.remove(startPoint);
+	if(endPoint != null) scene.remove(endPoint);
+	if(drawingLine != null) scene.remove(drawingLine);
 	// 예전 벽 삭제
 	for(var i = 0; i < sceneLines.length; i++) {
 		scene.remove(sceneLines[i]);
@@ -444,6 +503,7 @@ function redraw() {
 	for(var i = 0; i < sceneDots.length; i++) {
 		scene.add(sceneDots[i]);
 	}
+	console.log("redraw() end");
 }
 
 function moveMouse(event) {
@@ -610,7 +670,8 @@ function checkEQ(vector, vector1) {
 	/*var value = 10;
 	var v = new THREE.Vector3().copy(vector).multiplyScalar(value).floor().divideScalar(value);
 	var v1 = new THREE.Vector3().copy(vector1).multiplyScalar(value).floor().divideScalar(value);*/
-	return vector.equals(vector1);
+	//return vector.equals(vector1);
+	return vector.manhattanDistanceTo(vector1) < closeTolerance;
 }
 
 function getIntersectPoint(AP1, AP2, BP1, BP2) {
@@ -684,3 +745,35 @@ function forward(event) {
 	redraw();
 }
 
+function save() {
+	console.log("save()");
+	// jQuery
+	var dotsData = [];
+	for(var i = 0; i < dots[curIndex].length; i++) {
+		dotsData.push({connectorId:i, x:dots[curIndex][i].x, y:dots[curIndex][i].y});
+	}
+	var wallsData = [];
+	for(var i = 0; i < walls[curIndex].length; i++) {
+		wallsData.push({startPoint:walls[curIndex][i].startPoint, endPoint:walls[curIndex][i].endPoint});
+	}
+
+	$.ajax({
+		url:"./save",
+		type:"POST",
+		data:{
+			dots : JSON.stringify(dotsData),
+			walls : JSON.stringify(wallsData)
+		},
+		success:function(data) {
+			if(data || data == "true") {
+				alert("저장 성공");
+			} else {
+				alert("저장에 실패하였습니다.");
+			}
+		},
+		error:function(e) {
+			console.log(e);
+			alert("저장 중 오류가 발생하였습니다.");
+		}
+	});
+}
