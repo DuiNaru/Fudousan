@@ -11,4 +11,5 @@ public interface ItemDAO {
 	public boolean update(Item item);
 	public boolean delete(int itemId);
 	public List<Item> selectByName(String itemName);
+	
 }
