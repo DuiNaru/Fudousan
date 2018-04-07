@@ -49,7 +49,7 @@ function init() {
 	// 렌더러 크기
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	// 해당 렌더러를 화면에 추가하여서 사용
-	document.body.appendChild( renderer.domElement );
+	document.getElementById("threejsShow").appendChild( renderer.domElement );
 
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
@@ -109,9 +109,9 @@ function init() {
 	scene.add(plane);
 
 
-	document.addEventListener('mousedown', this.onDocumentMouseDown, false);
-	document.addEventListener('mousemove', this.onDocumentMouseMove, false);
-	document.addEventListener('mouseup', this.onDocumentMouseUp, false);
+	document.getElementById("threejsShow").addEventListener('mousedown', this.onDocumentMouseDown, false);
+	document.getElementById("threejsShow").addEventListener('mousemove', this.onDocumentMouseMove, false);
+	document.getElementById("threejsShow").addEventListener('mouseup', this.onDocumentMouseUp, false);
 
 }
 
