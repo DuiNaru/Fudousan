@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.parser.JSONParser;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +56,7 @@ public class HomeController {
 			coordsResult = geoCoding(address);
 		/*	System.out.println(address + ": " + coordsResult[0] + ", " + coordsResult[1]);*/
 			
-			for (Float float1 : coordsResult) {
+			for (int i=0; i<coordsResult.length; i++) {
 				lat = "lat: "+Float.toString(coordsResult[0]);
 				lng = "lng: "+Float.toString(coordsResult[1]);
 				location = "{"+lat +", "+lng+"}";
@@ -69,8 +69,8 @@ public class HomeController {
     	//매물 정보 API활용해서 가져오기 
     	String estateInfo = "";
 		RestTemplate restTemplate = new RestTemplate();
-		String estateInfoResult = restTemplate.getForObject("http://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20151&to=20152&area=37", String.class, estateInfo);
-		System.out.println("estateInfo:::"+estateInfoResult);
+	/*	String estateInfoResult = restTemplate.getForObject("http://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20151&to=20152&area=37", String.class, estateInfo);
+		System.out.println("estateInfo:::"+estateInfoResult);*/
 		
 		
     	 	
