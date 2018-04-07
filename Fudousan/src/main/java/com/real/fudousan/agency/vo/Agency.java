@@ -62,10 +62,10 @@ public class Agency implements Serializable {
 	private Date delDate;
 
 	/** GPS_X. */
-	private Integer gpsX;
+	private Double gpsX;
 
 	/** GPS_Y. */
-	private Integer gpsY;
+	private Double gpsY;
 
 	public Integer getAgencyId() {
 		return agencyId;
@@ -171,19 +171,19 @@ public class Agency implements Serializable {
 		this.delDate = delDate;
 	}
 
-	public Integer getGpsX() {
+	public Double getGpsX() {
 		return gpsX;
 	}
 
-	public void setGpsX(Integer gpsX) {
+	public void setGpsX(Double gpsX) {
 		this.gpsX = gpsX;
 	}
 
-	public Integer getGpsY() {
+	public Double getGpsY() {
 		return gpsY;
 	}
 
-	public void setGpsY(Integer gpsY) {
+	public void setGpsY(Double gpsY) {
 		this.gpsY = gpsY;
 	}
 
@@ -197,7 +197,7 @@ public class Agency implements Serializable {
 
 	public Agency(Integer agencyId, Member member, String name, String biznum, String addressMain, String addressMiddle,
 			String addressSmall, String addressSub, String text, TransType transType, Integer confirm, Date creDate,
-			Date delDate, Integer gpsX, Integer gpsY) {
+			Date delDate, Double gpsX, Double gpsY) {
 		super();
 		this.agencyId = agencyId;
 		this.member = member;

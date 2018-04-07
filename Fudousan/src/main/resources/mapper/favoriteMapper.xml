@@ -43,6 +43,8 @@
 			,TRANS_NAME
 			,CODE_NAME
 			,ESTATE_NAME
+			,ESTATE_X
+			,ESTATE_Y
 		from
 			favorite
 		join

@@ -46,14 +46,16 @@ var pointSnapAdv = 100;
 // 보조 선
 var supportLines = [];
 // 배경 보조선
-var backgroundLines;
+var backgroundLines = [];
 // 인터섹트 검사시 기존 점과의 가까운 한계 길이 값 (해당 값 이하는 값은 점으로 간주)
 var closeTolerance = 1;
 
-//초기화
-init();
-//화면 그리기
-animate();
+document.addEventListener("DOMContentLoaded", function(){
+	//초기화
+	init();
+	//화면 그리기
+	animate();
+	});
 
 function init() {
 	// 카메라 생성 및 초기화
@@ -93,15 +95,33 @@ function init() {
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
 	renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, false);
 	document.addEventListener('mouseup', this.onDocumentMouseUp, false);
+	
+	window.addEventListener('resize', this.onResize, false);
+	
+	document.getElementById("btn_back").addEventListener("click", back);
+	document.getElementById("btn_forward").addEventListener("click", forward);
+}
+
+function onResize() {
+	// 화면 가로 길이
+	width = window.innerWidth;
+	// 화면 세로 길이
+	height = window.innerHeight;
+	
+	drawBackgroundLines();
 }
 
 function drawBackgroundLines() {
+	for(var i = 0; i < backgroundLines.length; i++) {
+		scene.remove(backgroundLines[i]);
+	}
 	var cameraToPlane = new THREE.Vector3().copy(camera.position);
 	var z = 0;
 	var y = 0;
 	var x = 0;
 	for(var i = 0; i < Math.tan((90-camera.fov/2) / Math.PI * 180)*cameraToPlane.length() && i < planeSize; i += vectorPerLength) {
 		var material = new THREE.LineBasicMaterial({color:0xdddddd});
+		if(i % 5 == 0) material = new THREE.LineBasicMaterial({color:0xdddddd, linewidth:1.5});
 		
 		var geometry = new THREE.Geometry();
 		geometry.vertices.push(new THREE.Vector3(x-planeSize,y+i,z));
@@ -109,6 +129,7 @@ function drawBackgroundLines() {
 		var line = new THREE.Line(geometry, material);
 
 		scene.add(line);
+		backgroundLines.push(line);
 
 		geometry = new THREE.Geometry();
 		geometry.vertices.push(new THREE.Vector3(x-planeSize,y-i,z));
@@ -116,6 +137,7 @@ function drawBackgroundLines() {
 		line = new THREE.Line(geometry, material);
 		
 		scene.add(line);
+		backgroundLines.push(line);
 		
 		geometry = new THREE.Geometry();
 		geometry.vertices.push(new THREE.Vector3(x+i,y-planeSize,z));
@@ -123,6 +145,7 @@ function drawBackgroundLines() {
 		line = new THREE.Line(geometry, material);
 		
 		scene.add(line);
+		backgroundLines.push(line);
 		
 		geometry = new THREE.Geometry();
 		geometry.vertices.push(new THREE.Vector3(x-i,y-planeSize,z));
@@ -130,6 +153,7 @@ function drawBackgroundLines() {
 		line = new THREE.Line(geometry, material);
 		
 		scene.add(line);
+		backgroundLines.push(line);
 	}
 }
 
@@ -444,7 +468,7 @@ function snapVector3(vector3, shiftKey, ctrlKey, altKey) {
 		return vector3;
 	}
 	
-	/*var v3 = new THREE.Vector3().copy(vector3);
+	var v3 = new THREE.Vector3().copy(vector3);
 	v3.x = Math.round(vector3.x / vectorPerLength) * vectorPerLength;
 	v3.y = Math.round(vector3.y / vectorPerLength) * vectorPerLength;
 	
@@ -452,7 +476,7 @@ function snapVector3(vector3, shiftKey, ctrlKey, altKey) {
 		// 컨트롤 키가 눌리지 않았으면, 처음 위치값 만큼 보정해준다.
 		v3.x += startPoint.position.x%vectorPerLength;
 		v3.y += startPoint.position.y%vectorPerLength;
-	}*/
+	}
 	
 	return v3;
 }
@@ -637,7 +661,7 @@ function changeTool(type) {
 	toolType = type;
 }
 
-function reset() {
+function reset(event) {
 	if(confirm("정말 초기화 하시겠습니까?(취소 불가능)")) {
 		dots = [[]];
 		walls = [[]];
@@ -646,12 +670,16 @@ function reset() {
 	}
 }
 
-function back() {
+function back(event) {
+	event.preventDefault();
+	event.stopPropagation();
 	if(curIndex > 0) curIndex -= 1;
 	redraw();
 }
 
-function forward() {
+function forward(event) {
+	event.preventDefault();
+	event.stopPropagation();
 	if(curIndex < walls.length-1) curIndex += 1;
 	redraw();
 }
