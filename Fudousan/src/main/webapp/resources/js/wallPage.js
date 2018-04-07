@@ -17,6 +17,10 @@ var planeSize = 999999;
 var raycaster = new THREE.Raycaster();
 // 마우스
 var mouse = new THREE.Vector2();
+// 현재 선택된 도구
+// 0 : 벽 그리기
+// 1 : 벽 지우기
+var toolType = 0;
 // 벽 시작 지점
 var startPoint;
 // 벽 끝 지점
@@ -25,10 +29,12 @@ var endPoint;
 var isDrawing = false;
 // 그리기 선
 var drawingLine;
+// 현재 화면 index
+var curIndex = 0;
 // 완성된 벽 들
-var walls = [];
+var walls = [[]];
 // 완성된 점 들
-var dots = [];
+var dots = [[]];
 // 현재 그려진 벽
 var sceneLines = [];
 // 현재 그려진 점
@@ -36,11 +42,13 @@ var sceneDots = [];
 // 단위 길이
 var vectorPerLength = 100;
 // 점 스냅 가중치
-var pointSnapAdv = 1;
+var pointSnapAdv = 100;
 // 보조 선
 var supportLines = [];
 // 배경 보조선
 var backgroundLines;
+// 인터섹트 검사시 기존 점과의 가까운 한계 길이 값 (해당 값 이하는 값은 점으로 간주)
+var closeTolerance = 1;
 
 //초기화
 init();
@@ -82,8 +90,8 @@ function init() {
 	
 	drawBackgroundLines();
 
-	document.addEventListener('mousedown', this.onDocumentMouseDown, false);
-	document.addEventListener('mousemove', this.onDocumentMouseMove, false);
+	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
+	renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, false);
 	document.addEventListener('mouseup', this.onDocumentMouseUp, false);
 }
 
@@ -138,7 +146,7 @@ function onDocumentMouseDown(event) {
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects([plane]);
 
-	if (intersects.length > 0) {
+	if (intersects.length > 0 && toolType == 0) {
 		isDrawing = true;
 		
 		// 마우스 끝 지점 생성
@@ -156,7 +164,7 @@ function onDocumentMouseMove(event) {
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects([plane]);
 
-	if (intersects.length > 0) {
+	if (intersects.length) {
 		if (isDrawing) {
 			// 선 그리기 및 끝점
 			endPoint.position.copy(snapVector3(intersects[0].point, event.shiftKey, event.ctrlKey));
@@ -181,95 +189,179 @@ function onDocumentMouseMove(event) {
 function onDocumentMouseUp(event) {
 	moveMouse(event);
 
-	if (event.altKey) {
+	if (event.altKey || toolType == 1) {
 		raycaster.setFromCamera(mouse, camera);
 		var intersects = raycaster.intersectObjects([plane]);
 		if (intersects.length > 0) {
 			var nearWall = findNearWall(intersects[0].point, 1);
-			console.log(nearWall);
-			walls.splice(nearWall, 1);
-			redraw();
-		}
-	}
-	console.log(isDrawing);
-	console.log(walls);
-	
-	if (isDrawing) {
-		// 현재 위치에 대한 점이 존재하는가?
-		// START
-		var start = -1;
-		var end = -1;
-		for(var d = 0; d < dots.length; d++) {
-			if (new THREE.Vector3().copy(dots[d]).sub(startPoint).length() < vectorPerLength*pointSnapAdv) {
-				start = d;
-			}
-			if (new THREE.Vector3().copy(dots[d]).sub(endPoint).length() < vectorPerLength*pointSnapAdv) {
-				end = d;
-			}
-		}
-		if(start == -1) {
-			dots.push(startPoint.position);
-			start = dots.length-1;
-		}
-		if(end == -1) {
-			dots.push(endPoint.position);
-			end = dots.length-1;
-		}
-		// END
-		
-		// 검사 전 점들의 갯수
-		var beforeDots = dots.length;
-		// 새로 추가된 벽 갯수
-		var newWalls = 0;
-		// 기존에 겹치는 지점이 있는지 검사
-		for(var i = 0; i < walls.length-newWalls; i++) {
-			var intersectPoint = getIntersectPoint(dots[walls[i].startPoint], dots[walls[i].endPoint], dots[start], dots[end]);
-			if(intersectPoint != null) {
-				dots.push(intersectPoint);
-				// 겹치는 벽이 존재할 경우 쪼개기
-				walls.push({
-					startPoint:walls[i].startPoint,
-					endPoint:dots.length-1
-					});
-				walls.push({
-					startPoint:walls[i].endPoint,
-					endPoint:dots.length-1
-					});
-
-				walls.splice(i, 1);
+			if(nearWall != null) {
+				// 삭제 시작
+				addNewStatus();
 				
-				i--;
-				newWalls += 2;
+				var deleteWall = [];
+				if(nearWall instanceof THREE.Vector3) {
+					console.log("점 삭제 클릭!!!");
+				} else {
+					deleteWall.push(nearWall);
+				}
+
+				for(var d = 0; d < deleteWall.length; d++) {
+					var index = deleteWall[d];
+					// 해당 벽에서 사용하는 점 저장
+					var sp = walls[curIndex][index].startPoint;
+					var ep = walls[curIndex][index].endPoint;
+					// 벽 제거
+					walls[curIndex].splice(index, 1);
+					
+					// 해당 벽에서만 사용하는 점이 있으면 삭제
+					for(var i = 0; i < walls[curIndex].length; i++ ) {
+						if(sp == walls[curIndex][i].startPoint || sp == walls[curIndex][i].endPoint) {
+							sp = -1;
+						}
+						if(ep == walls[curIndex][i].startPoint || ep == walls[curIndex][i].endPoint) {
+							ep = -1;
+						}
+					}
+					if(sp != -1) {
+						console.log("sp 삭제 : " + sp);
+						dots[curIndex].splice(sp, 1);
+					}
+					if(ep != -1) {
+						if(sp != -1 && sp <= ep) {
+							console.log("ep-1 삭제 : " + (ep-1));
+							dots[curIndex].splice(ep-1, 1);
+						} else {
+							console.log("ep 삭제 : " + ep);
+							dots[curIndex].splice(ep, 1);
+						}
+					}
+					// 해당 인덱스 이후의 점 인덱스 변경
+					for(var i = 0; i < walls[curIndex].length; i++ ) {
+						if(sp != -1) {
+							if(walls[curIndex][i].startPoint > sp) {
+								walls[curIndex][i].startPoint -= 1;
+							}
+							if(walls[curIndex][i].endPoint > sp) {
+								walls[curIndex][i].endPoint -= 1;
+							}
+						}
+						if(ep != -1) {
+							if(walls[curIndex][i].startPoint > ep) {
+								walls[curIndex][i].startPoint -= 1;
+							}
+							if(walls[curIndex][i].endPoint > ep) {
+								walls[curIndex][i].endPoint -= 1;
+							}
+						}
+					}
+				}
+				// 삭제 종료
 			}
 		}
-		// 새로 추가하는 선을 쪼개기 위한 정렬
-		var array = [start, end];
-		for(var i = beforeDots; i < dots.length; i++) {
-			array.push(i);
-		}
-		for(var i = 0; i < array.length; i++) {
-			for(var j = i+1; j < array.length; j++) {
-				if(dots[array[i]].x < dots[array[j]].x) {
-					var t = array[i];
-					array[i] = array[j];
-					array[j] = t;
+	} else {
+		if (isDrawing && toolType == 0) {
+			// 벽 생성 시작
+			addNewStatus();
+			
+			// 현재 위치에 대한 점이 존재하는가?
+			// START
+			var start = -1;
+			var end = -1;
+			for(var d = 0; d < dots[curIndex].length; d++) {
+				if (checkEQ(dots[curIndex][d], startPoint.position)) {
+					start = d;
+				}
+				if (checkEQ(dots[curIndex][d], endPoint.position)) {
+					end = d;
 				}
 			}
-		}
+			if(start == -1) {
+				dots[curIndex].push(startPoint.position);
+				start = dots[curIndex].length-1;
+			}
+			if(end == -1) {
+				dots[curIndex].push(endPoint.position);
+				end = dots[curIndex].length-1;
+			}
+			// END
 
-		// 정렬된 순서대로 시작부터 끝까지 벽 추가
-		for(var i = 0; i < array.length-1; i++) {
-			walls.push({startPoint:array[i], endPoint:array[i+1]});
+			// 검사 전 점들의 갯수
+			var beforeDots = dots[curIndex].length;
+			// 새로 추가된 벽 갯수
+			var newWalls = 0;
+			// 기존에 겹치는 지점이 있는지 검사
+			for(var i = 0; i < walls[curIndex].length-newWalls; i++) {
+				var direction = endPoint.position.clone();
+				var directionVector = direction.sub(startPoint.position);
+				var ray = new THREE.Raycaster(startPoint.position, directionVector.normalize(), 0, startPoint.position.clone().sub(endPoint.position).length());
+				ray.linePrecision = 1;
+				
+				var material = new THREE.LineBasicMaterial();
+				var geometry = new THREE.Geometry();
+				geometry.vertices.push(dots[curIndex][walls[curIndex][i].startPoint]);
+				geometry.vertices.push(dots[curIndex][walls[curIndex][i].endPoint]);
+	
+				var intersectPoint = null;
+				var rayIntersects = ray.intersectObjects([new THREE.Line(geometry, material)], true);
+				if(rayIntersects.length > 0) {
+					// 시작 포인트나 끝 포인트와 완전 동일 검사 (제외 시킴)
+					if(!rayIntersects[0].point.equals(startPoint.position) && !rayIntersects[0].point.equals(endPoint.position)) {
+						// 시작 포인트나 끝 포인트와 매우 가까운지 검사
+						var isCloseEnough = rayIntersects[0].point.manhattanDistanceTo(startPoint.position) < closeTolerance;
+						isCloseEnough |= rayIntersects[0].point.manhattanDistanceTo(endPoint.position) < closeTolerance;
+						if(!isCloseEnough) {
+							intersectPoint = rayIntersects[0].point;
+						}
+					}
+					
+				}
+				
+				if(intersectPoint != null) {
+					dots[curIndex].push(intersectPoint);
+					// 겹치는 벽이 존재할 경우 쪼개기
+					walls[curIndex].push({
+						startPoint:walls[curIndex][i].startPoint,
+						endPoint:dots[curIndex].length-1
+						});
+					walls[curIndex].push({
+						startPoint:walls[curIndex][i].endPoint,
+						endPoint:dots[curIndex].length-1
+						});
+
+					walls[curIndex].splice(i, 1);
+					
+					i--;
+					newWalls += 2;
+				}
+			}
+			// 새로 추가하는 선을 쪼개기 위한 정렬
+			var array = [start, end];
+			for(var i = beforeDots; i < dots[curIndex].length; i++) {
+				array.push(i);
+			}
+			for(var i = 0; i < array.length; i++) {
+				for(var j = i+1; j < array.length; j++) {
+					if(dots[curIndex][array[i]].x < dots[curIndex][array[j]].x) {
+						var t = array[i];
+						array[i] = array[j];
+						array[j] = t;
+					}
+				}
+			}
+			// 정렬된 순서대로 시작부터 끝까지 벽 추가
+			for(var i = 0; i < array.length-1; i++) {
+				walls[curIndex].push({startPoint:array[i], endPoint:array[i+1]});
+			}
+			
+			// 벽 생성 종료
 		}
-		
-		
-		isDrawing = false;
-		scene.remove(startPoint);
-		scene.remove(endPoint);
-		scene.remove(drawingLine);
-		
-		redraw();
 	}
+	isDrawing = false;
+	scene.remove(startPoint);
+	scene.remove(endPoint);
+	scene.remove(drawingLine);
+	redraw();
+	
 	
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects([plane]);
@@ -279,6 +371,9 @@ function onDocumentMouseUp(event) {
 }
 
 function redraw() {
+	console.log(curIndex);
+	console.log(walls[curIndex]);
+	console.log(dots[curIndex]);
 
 	// 예전 벽 삭제
 	for(var i = 0; i < sceneLines.length; i++) {
@@ -291,17 +386,17 @@ function redraw() {
 	}
 	sceneDots = [];
 	// 화면에 벽 그리기
-	for(var i = 0; i < walls.length; i++) {
+	for(var i = 0; i < walls[curIndex].length; i++) {
 		var wallLineGeometry = new THREE.Geometry();
 		
 		var start = new THREE.Vector3();
-		start.x = dots[walls[i].startPoint].x;
-		start.y = dots[walls[i].startPoint].y;
+		start.x = dots[curIndex][walls[curIndex][i].startPoint].x;
+		start.y = dots[curIndex][walls[curIndex][i].startPoint].y;
 		start.z = plane.position.z;
 		
 		var end = new THREE.Vector3();
-		end.x = dots[walls[i].endPoint].x;
-		end.y = dots[walls[i].endPoint].y;
+		end.x = dots[curIndex][walls[curIndex][i].endPoint].x;
+		end.y = dots[curIndex][walls[curIndex][i].endPoint].y;
 		end.z = plane.position.z;
 		
 		wallLineGeometry.vertices.push(start);
@@ -314,11 +409,11 @@ function redraw() {
 	}
 	
 	// 화면에 점 그리기
-	for(var i = 0; i < dots.length; i++) {
+	for(var i = 0; i < dots[curIndex].length; i++) {
 		var geometry = new THREE.CircleGeometry( 50, 32 );
 		var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
 		var circle = new THREE.Mesh( geometry, material );
-		circle.position.copy(dots[i]);
+		circle.position.copy(dots[curIndex][i]);
 		sceneDots.push(circle);
 	}
 	// 갱신된 점 추가
@@ -337,8 +432,9 @@ function moveMouse(event) {
 }
 
 function snapVector3(vector3, shiftKey, ctrlKey, altKey) {
+	vector3.z = plane.position.z;
 	
-	if(walls.length > 0) {
+	if(walls[curIndex].length > 0) {
 		var v3 = findNearWall(vector3, 0);
 		if(v3 != null) vector3 = v3;
 	}
@@ -348,7 +444,7 @@ function snapVector3(vector3, shiftKey, ctrlKey, altKey) {
 		return vector3;
 	}
 	
-	var v3 = new THREE.Vector3().copy(vector3);
+	/*var v3 = new THREE.Vector3().copy(vector3);
 	v3.x = Math.round(vector3.x / vectorPerLength) * vectorPerLength;
 	v3.y = Math.round(vector3.y / vectorPerLength) * vectorPerLength;
 	
@@ -356,7 +452,7 @@ function snapVector3(vector3, shiftKey, ctrlKey, altKey) {
 		// 컨트롤 키가 눌리지 않았으면, 처음 위치값 만큼 보정해준다.
 		v3.x += startPoint.position.x%vectorPerLength;
 		v3.y += startPoint.position.y%vectorPerLength;
-	}
+	}*/
 	
 	return v3;
 }
@@ -370,34 +466,36 @@ function findNearWall(vector3, returnType) {
 
 	// AB의 선과 C의 점과의 가장 가까운 위치 및 거리
 	// http://gpgstudy.com/forum/viewtopic.php?t=22736
-	for(var i = 0; i < walls.length; i++) {
+	for(var i = 0; i < walls[curIndex].length; i++) {
 		// 점 스냅 우선순위
 		// 현재 점 근처인가?
-		if (new THREE.Vector3().copy(vector3).sub(dots[walls[i].startPoint]).length() < vectorPerLength*pointSnapAdv) {
-			return dots[walls[i].startPoint];
+		if (returnType == 0 && vector3.clone().manhattanDistanceTo(dots[curIndex][walls[curIndex][i].startPoint]) < closeTolerance*pointSnapAdv) {
+							// && new THREE.Vector3().copy(vector3).sub(dots[curIndex][walls[curIndex][i].startPoint]).length() < vectorPerLength*pointSnapAdv) {
+			return dots[curIndex][walls[curIndex][i].startPoint];
 		}
-		if (new THREE.Vector3().copy(vector3).sub(dots[walls[i].endPoint]).length() < vectorPerLength*pointSnapAdv) {
-			return dots[walls[i].endPoint];
+		if (returnType == 0 && vector3.clone().manhattanDistanceTo(dots[curIndex][walls[curIndex][i].endPoint]) < closeTolerance*pointSnapAdv) {
+							//&& new THREE.Vector3().copy(vector3).sub(dots[curIndex][walls[curIndex][i].endPoint]).length() < vectorPerLength*pointSnapAdv) {
+			return dots[curIndex][walls[curIndex][i].endPoint];
 		}
 		
 		// 각 벽 부터 거리 계산하여 최소 거리의 벽 계산
 		// 우선 A->B
-		var ab = new THREE.Vector3().subVectors(dots[walls[i].endPoint], dots[walls[i].startPoint]);
+		var ab = new THREE.Vector3().subVectors(dots[curIndex][walls[curIndex][i].endPoint], dots[curIndex][walls[curIndex][i].startPoint]);
 		// A->B 길이 저장
 		var abLength = ab.length();
 		// 단위 벡터 로 변환
 		ab.normalize();
 		// A->C
-		var ac = new THREE.Vector3().subVectors(vector3, dots[walls[i].startPoint]);
+		var ac = new THREE.Vector3().subVectors(vector3, dots[curIndex][walls[curIndex][i].startPoint]);
 		// dot product(투영된 벡터의 길이)
 		var dp = ab.dot(ac);
 		// 가장 가까운 점
-		var d = new THREE.Vector3().copy(dots[walls[i].startPoint]).add(ab.multiplyScalar(dp));
+		var d = new THREE.Vector3().copy(dots[curIndex][walls[curIndex][i].startPoint]).add(ab.multiplyScalar(dp));
 		// 길이
 		var l = new THREE.Vector3().copy(d).sub(vector3).length();
 		// 선분안에 들어가는가?
-		var da = new THREE.Vector3().copy(d).sub(dots[walls[i].startPoint]);
-		var db = new THREE.Vector3().copy(d).sub(dots[walls[i].endPoint]);
+		var da = new THREE.Vector3().copy(d).sub(dots[curIndex][walls[curIndex][i].startPoint]);
+		var db = new THREE.Vector3().copy(d).sub(dots[curIndex][walls[curIndex][i].endPoint]);
 		var dadbLength = da.length() + db.length();
 		if(dadbLength > abLength - 0.00001 && dadbLength < abLength + 0.00001){
 			// 제일 짧은가?
@@ -405,7 +503,7 @@ function findNearWall(vector3, returnType) {
 				minLength = l;
 				minIndex = i;
 				minPoint = d;
-				minWall = walls[i];
+				minWall = walls[curIndex][i];
 			}
 		}
 	}
@@ -429,19 +527,19 @@ function findNearWall(vector3, returnType) {
 	
 	var nearDots = [];
 	
-	for(var i = 0; i < walls.length; i++) {
+	for(var i = 0; i < walls[curIndex].length; i++) {
 		// 우선 A->B
-		var ab = new THREE.Vector3().subVectors(dots[walls[i].endPoint], dots[walls[i].startPoint]);
+		var ab = new THREE.Vector3().subVectors(dots[curIndex][walls[curIndex][i].endPoint], dots[curIndex][walls[curIndex][i].startPoint]);
 		// A->B 길이 저장
 		var abLength = ab.length();
 		// 단위 벡터 로 변환
 		ab.normalize();
 		// A->C
-		var ac = new THREE.Vector3().subVectors(vector3, dots[walls[i].startPoint]);
+		var ac = new THREE.Vector3().subVectors(vector3, dots[curIndex][walls[curIndex][i].startPoint]);
 		// dot product(투영된 벡터의 길이)
 		var dp = ab.dot(ac);
 		// 가장 가까운 점
-		var d = new THREE.Vector3().copy(dots[walls[i].startPoint]).add(ab.multiplyScalar(dp));
+		var d = new THREE.Vector3().copy(dots[curIndex][walls[curIndex][i].startPoint]).add(ab.multiplyScalar(dp));
 		// 길이
 		var l = new THREE.Vector3().copy(d).sub(vector3).length();
 		
@@ -454,9 +552,9 @@ function findNearWall(vector3, returnType) {
 			//var bc = new THREE.Vector3().subVectors(d, dots[walls[i].endPoint]);
 			
 			//if(ac.length() < bc.length()) {
-				lineGeometry.vertices.push(dots[walls[i].startPoint]);
+				lineGeometry.vertices.push(dots[curIndex][walls[curIndex][i].startPoint]);
 			//} else {
-				lineGeometry.vertices.push(dots[walls[i].endPoint]);
+				lineGeometry.vertices.push(dots[curIndex][walls[curIndex][i].endPoint]);
 			//}
 			lineGeometry.vertices.push(d);
 			var lineMaterial = new THREE.LineDashedMaterial({
@@ -484,7 +582,21 @@ function findNearWall(vector3, returnType) {
 	return null;
 }
 
+function checkEQ(vector, vector1) {
+	/*var value = 10;
+	var v = new THREE.Vector3().copy(vector).multiplyScalar(value).floor().divideScalar(value);
+	var v1 = new THREE.Vector3().copy(vector1).multiplyScalar(value).floor().divideScalar(value);*/
+	return vector.equals(vector1);
+}
+
 function getIntersectPoint(AP1, AP2, BP1, BP2) {
+	// 일정 이하의 소숫점 버리기
+	/*var value = 10;
+	var AP1 = new THREE.Vector3().copy(AP1).multiplyScalar(value).floor().divideScalar(value);
+	var AP2 = new THREE.Vector3().copy(AP2).multiplyScalar(value).floor().divideScalar(value);
+	var BP1 = new THREE.Vector3().copy(BP1).multiplyScalar(value).floor().divideScalar(value);
+	var BP2 = new THREE.Vector3().copy(BP2).multiplyScalar(value).floor().divideScalar(value);*/
+	
 	if(AP1 == BP1 || AP1 == BP2 || AP2 == BP1 || AP2 == BP2) return null;
 	// http://www.gisdeveloper.co.kr/?p=89
 	var t;
@@ -498,13 +610,49 @@ function getIntersectPoint(AP1, AP2, BP1, BP2) {
 	t = _t/under;
 	s = _s/under; 
 	
-	if(t<=0.01 || t>=0.99 || s<=0.01 || s>=0.99) return null;
+	if(t<0 || t>1 || s<0 || s>1) return null;
 	if(_t==0 && _s==0) return null; 
 	
 	var IP = new THREE.Vector3();
 	IP.x = AP1.x + t * (AP2.x-AP1.x);
 	IP.y = AP1.y + t * (AP2.y-AP1.y);
-	IP.z = AP1.z;
+	IP.z = plane.position.z;
 	
 	return IP;
 }
+
+function addNewStatus() {
+	walls.splice(curIndex+1);
+	dots.splice(curIndex+1);
+	
+	walls.push([]);
+	for(var i = 0; i < walls[curIndex].length; i++) {
+		walls[walls.length-1].push({startPoint:walls[curIndex][i].startPoint, endPoint:walls[curIndex][i].endPoint});
+	}
+	dots.push(dots[curIndex].slice());
+	curIndex++;
+}
+
+function changeTool(type) {
+	toolType = type;
+}
+
+function reset() {
+	if(confirm("정말 초기화 하시겠습니까?(취소 불가능)")) {
+		dots = [[]];
+		walls = [[]];
+		curIndex = 0;
+		redraw();
+	}
+}
+
+function back() {
+	if(curIndex > 0) curIndex -= 1;
+	redraw();
+}
+
+function forward() {
+	if(curIndex < walls.length-1) curIndex += 1;
+	redraw();
+}
+

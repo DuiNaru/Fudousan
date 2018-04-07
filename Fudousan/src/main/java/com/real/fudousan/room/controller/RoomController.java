@@ -85,10 +85,4 @@ public class RoomController {
 		return result;
 	}
 	
-	@RequestMapping(value="roomPage", method=RequestMethod.GET)
-	public String roomPage() {
-		logger.info("roomPage() Start");
-		logger.info("roomPage() End");
-		return "room/roomPage";
-	}
 }
