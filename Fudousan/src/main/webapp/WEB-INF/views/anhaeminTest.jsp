@@ -12,14 +12,44 @@
 	<button id="Btn_blist2" type="button">array2 보기</button>
 	<button id="Btn_backArray1" type="button">뒤로가기</button>
 	<button id="Btn_clear" type="button">array 1초기화</button>
-	<button id="Btn_blistRecovery" type="button">앞으로가기</button>
+	<button id="Btn_blistRecovery" type="button">앞으로가기</button><br>
     <ul id="msg"></ul>
 
 	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="resources/js/socket.io.js"></script>
 	  <script>
+	  
+		function realSelectById() {
+			$.ajax({
+				url:"../item/searchItem?itemName="+$("#itemName").val(),
+				type:"GET",
+				dataType:"JSON",
+				success:function(obj) {
+					$("#itemList").empty();
+					$(obj).each(function(index, data) {
+						var html = "";
+						html += '<div id="item${item.itemId}" class="col-sm-offset-1 col-sm-10">';
+						html += '<div class="col-sm-12">';
+						html += '	<label class="col-sm-6">'+data.itemName+'</label>';
+						html += '	<div class="col-sm-6">';
+						html += '		<a class="btn btn-default" href="../item/itemModifyPage?itemId='+data.itemId+'">修正</a>';
+						html += '		<input class="btn btn-default" type="button" onclick="deleteItem('+data.itemId+')" value="削除">';
+						html += '	</div>';
+						html += '</div>';
+						$("#itemList").append(html);
+					});
+				},
+				error:function(e) {
+					console.log(e);
+				}
+			});
+			
+			return false;
+		}
+	  
+	  
+	  
 		var socket = io('http://localhost:8000');
-
 		var chatBtn = document.querySelector('#chatBtn');
 		var Btn_object = document.querySelector('#Btn_object');
 		var Btn_blist = document.querySelector('#Btn_blist');
@@ -59,5 +89,9 @@
 			$('#msg').append($('<li>').text(msg));
 		});
 	</script>
+	
+	
+	
+	
 </body>
 </html>
