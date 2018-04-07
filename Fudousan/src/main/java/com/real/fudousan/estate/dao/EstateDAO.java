@@ -6,9 +6,8 @@ import java.util.Set;
 import com.real.fudousan.estate.vo.Estate;
 
 public interface EstateDAO {
-
 	
 	public List<Estate> select(Set<Integer> estateIds);
-	
 	public int insertByIds(Estate estate);
+	
 }

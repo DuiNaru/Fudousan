@@ -18,4 +18,11 @@ public interface AgencyDAO {
 	 * @return
 	 */
 	public boolean updateConfirm(int agencyId, int confirm);
+	
+	/**
+	 * 중개소 주소(main, middle, small, sub)를 반환한다. 
+	 * @param 
+	 * @return Agency List
+	 */
+	public List<Agency> agencyLocationPrint();
 }

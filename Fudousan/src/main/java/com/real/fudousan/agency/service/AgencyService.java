@@ -75,4 +75,22 @@ public class AgencyService {
 		logger.info("confirm(" + agencyId + ") End");
 		return result;
 	}
+	
+	
+	/**
+	 * 중개소 주소(main, middle, small, sub)를 반환한다. 
+	 * @param 
+	 * @return Agency List
+	 */
+	public List<Agency> agencyLocationPrint(){
+		logger.info("agencyLocationPrint Start");
+		
+		List<Agency> result = null;
+		result = dao.agencyLocationPrint();
+		
+		logger.info("agencyLocationPrint End");
+		return result; 
+	}
+	
+	
 }
