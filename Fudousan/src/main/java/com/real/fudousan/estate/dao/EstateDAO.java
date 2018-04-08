@@ -7,6 +7,7 @@ import com.real.fudousan.estate.vo.Estate;
 
 public interface EstateDAO {
 
+
 	//리스트 뿌려주는거
 	/*public List<Estate> select(Set<Integer> estateIds);*/
 	
@@ -22,8 +23,9 @@ public interface EstateDAO {
 	public int updateByIds(Estate estate);
 	
 	/* 목록 기능 테스트*/
+
+	public List<Estate> select(Set<Integer> estateIds);
 	
-		
 	
-		
+
 }

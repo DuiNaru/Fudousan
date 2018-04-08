@@ -19,8 +19,52 @@ public class RoomWallConnector implements Serializable {
 	private Integer connectorId;
 
 	/** X. */
-	private Integer x;
+	private Double x;
 
 	/** Y. */
-	private Integer y;
+	private Double y;
+
+	public RoomWallConnector() {
+		super();
+	}
+
+	public RoomWallConnector(Integer connectorId, Double x, Double y) {
+		super();
+		this.connectorId = connectorId;
+		this.x = x;
+		this.y = y;
+	}
+
+	public Integer getConnectorId() {
+		return connectorId;
+	}
+
+	public void setConnectorId(Integer connectorId) {
+		this.connectorId = connectorId;
+	}
+
+	public Double getX() {
+		return x;
+	}
+
+	public void setX(Double x) {
+		this.x = x;
+	}
+
+	public Double getY() {
+		return y;
+	}
+
+	public void setY(Double y) {
+		this.y = y;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "RoomWallConnector [connectorId=" + connectorId + ", x=" + x + ", y=" + y + "]";
+	}
 }

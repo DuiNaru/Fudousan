@@ -157,29 +157,80 @@ public class MemberService {
 	 * @return
 	 */
 	public boolean modifyMember(Member member, MultipartFile file) {
-		
 		logger.info("회원 수정 시작 SERVICE");
-		
-		int result = 0; 
+		int result = 0;
+		// get designer
 		int designer = member.getDesigner();
+		
 		if (designer == 0) {
 			
 			Permission p= new Permission(1, "Member");
 			member.setPermission(p);
 			System.out.println(member);
 			if ((result = dao.updateMember(member))>= -1 && file != null) {
+				
 				FileService.saveFile(file, memberFileBaseDirectory + result, true);
+				
 			}
+			
 		} else if(designer == 1){
 			
 			Permission p= new Permission(2, "Interior");
 			member.setPermission(p);
-			
+			System.out.println(member);
 			if ((result = dao.updateInterior(member))>= -1 && file != null) {
+				
 				FileService.saveFile(file, memberFileBaseDirectory + result, true);
+				
 			}
 		}
 	
+		if (result == 1) {
+			// insert success
+			return true; 
+		}
+		else{			
+			// insert fail 
+			return false; 
+		}
+	}
+	
+	
+	public boolean modifyAgencyMember(Member member, MultipartFile file){
+		logger.info("회원 수정 시작 SERVICE");
+		int result = 0;
+		Permission p= new Permission(3, "Agency");
+		member.setPermission(p);
+		System.out.println(member);
+		if ((result = dao.updateAgencyMember(member))>= -1 && file != null) {
+			
+			FileService.saveFile(file, memberFileBaseDirectory + result, true);
+			
+		}
+		if (result == 1) {
+			// insert success
+			return true; 
+		}
+		else{			
+			// insert fail 
+			return false; 
+		}
+	}
+	
+	public boolean modifyAgency(Agency agency){
+		logger.info("회원 수정 시작 SERVICE");
+		int result = 0;	
+		
+		// trans type set 
+		
+		TransType t = new TransType(1, "apart");
+		agency.setTransType(t);
+		
+		// confirm set
+		agency.setConfirm(0);
+		System.out.println("service:"+agency);
+		result = dao.updateAgency(agency);
+		
 		if (result == 1) {
 			// insert success
 			return true; 
@@ -189,6 +240,5 @@ public class MemberService {
 			// insert fail 
 			return false; 
 		}
-		
 	}
 }

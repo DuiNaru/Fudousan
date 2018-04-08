@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,13 +53,15 @@ public class FileService {
 		//원본 파일의 확장자
 		String ext;
 		int lastIndex = originalFilename.lastIndexOf('.');
+		logger.info("fileName : " + originalFilename + ", lastIndex : " + lastIndex);
 		//확장자가 없는 경우
 		if (lastIndex == -1) {
 			ext = "";
 		}
 		//확장자가 있는 경우
 		else {
-			ext = "." + originalFilename.substring(lastIndex + 1);
+			ext = "";
+			//ext = "." + originalFilename.substring(lastIndex + 1);
 		}
 
 		//저장할 전체 경로를 포함한 File 객체
@@ -152,5 +155,15 @@ public class FileService {
 		}
 		
 		return result;
+	}
+	
+	public static File[] getFilesInDirectory(String fullpath) {
+		File file = new File(fullpath);
+		
+		//폴더내 파일을 배열로 가져온다.
+		File[] tempFile = file.listFiles();
+		
+		return tempFile;
+		
 	}
 }

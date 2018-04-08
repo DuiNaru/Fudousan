@@ -21,6 +21,8 @@ public interface MemberDAO {
 	//회원 정보 수정 
 	public int updateMember(Member member);
 	public int updateInterior(Member member);
+	public int updateAgencyMember(Member member);
+	public int updateAgency(Agency agency);
 
 
 

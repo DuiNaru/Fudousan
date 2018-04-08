@@ -125,7 +125,6 @@
         </div>
         <div class="col-md-6 col-md-offset-3">
           <form role="form" action="insertAgency" method="post" enctype="multipart/form-data">
-
 	            <div class="form-group">
 	              <label for="InputName">name</label>
 	              <input type="text" class="form-control" id="InputName" placeholder="이름" name="memberName">

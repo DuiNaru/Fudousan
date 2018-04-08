@@ -1,5 +1,6 @@
 package com.real.fudousan.item.service;
 
+import java.io.File;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -119,4 +120,18 @@ public class ItemService {
 		logger.info("allList() end");
 		return result;
 	}
+	
+	public File[] viewFilesInItem(int itemId) {
+		logger.info("viewFilesInItem("+itemId+") Start");
+		File[] result = FileService.getFilesInDirectory(modelFileBaseDirectory + itemId);
+		
+		logger.info("viewFilesInItem("+itemId+") end");
+		return result;
+	}
+	
+	
+	
+
+	
+	
 }

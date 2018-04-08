@@ -84,6 +84,13 @@ public int updateByIds(Estate estate) {
 	
 	return 0;
 }
+
+
+@Override
+public List<Estate> select(Set<Integer> estateIds) {
+	// TODO Auto-generated method stub
+	return null;
+}
    
    
    
