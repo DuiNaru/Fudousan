@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,9 +35,12 @@ public class RoomWallController {
 	private RoomWallService service;
 
 	@RequestMapping(value="wallPage", method=RequestMethod.GET)
-	public String roomPage() {
-		logger.info("wallPage() Start");
-		logger.info("wallPage() End");
+	public String roomPage(@RequestParam(value="roomId", defaultValue="-1") int roomId, Model model) {
+		logger.info("wallPage("+roomId+") Start");
+		if (roomId >= 0) {
+			model.addAttribute("wallsAndConnectors", service.getWallAndConnector(roomId));
+		}
+		logger.info("wallPage("+roomId+") End");
 		return "wall/wallPage";
 	}
 	

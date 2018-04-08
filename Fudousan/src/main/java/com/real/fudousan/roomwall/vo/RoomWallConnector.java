@@ -67,4 +67,29 @@ public class RoomWallConnector implements Serializable {
 	public String toString() {
 		return "RoomWallConnector [connectorId=" + connectorId + ", x=" + x + ", y=" + y + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((connectorId == null) ? 0 : connectorId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RoomWallConnector other = (RoomWallConnector) obj;
+		if (connectorId == null) {
+			if (other.connectorId != null)
+				return false;
+		} else if (!connectorId.equals(other.connectorId))
+			return false;
+		return true;
+	}
 }

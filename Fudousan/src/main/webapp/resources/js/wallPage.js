@@ -32,9 +32,9 @@ var drawingLine;
 // 현재 화면 index
 var curIndex = 0;
 // 완성된 벽 들
-var walls = [[]];
+var walls = [originalWalls];
 // 완성된 점 들
-var dots = [[]];
+var dots = [originalConnectors];
 // 현재 그려진 벽
 var sceneLines = [];
 // 현재 그려진 점
@@ -55,6 +55,8 @@ document.addEventListener("DOMContentLoaded", function(){
 	init();
 	//화면 그리기
 	animate();
+	
+	redraw();
 	});
 
 function init() {
@@ -418,6 +420,7 @@ function onDocumentMouseUp(event) {
 						j -= 1;
 						continue;
 					}
+					// 정렬하여 순차적으로 이어지게 하기
 					if(dots[curIndex][array[i]].x < dots[curIndex][array[j]].x) {
 						var t = array[i];
 						array[i] = array[j];

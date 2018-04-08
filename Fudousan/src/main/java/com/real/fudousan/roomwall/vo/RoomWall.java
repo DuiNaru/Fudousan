@@ -107,6 +107,40 @@ public class RoomWall implements Serializable {
 				+ roomWallConnector2 + ", type=" + type + ", frontTexture=" + frontTexture + ", backTexture="
 				+ backTexture + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + roomId;
+		result = prime * result + ((roomWallConnector1 == null) ? 0 : roomWallConnector1.hashCode());
+		result = prime * result + ((roomWallConnector2 == null) ? 0 : roomWallConnector2.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RoomWall other = (RoomWall) obj;
+		if (roomId != other.roomId)
+			return false;
+		if (roomWallConnector1 == null) {
+			if (other.roomWallConnector1 != null)
+				return false;
+		} else if (!roomWallConnector1.equals(other.roomWallConnector1))
+			return false;
+		if (roomWallConnector2 == null) {
+			if (other.roomWallConnector2 != null)
+				return false;
+		} else if (!roomWallConnector2.equals(other.roomWallConnector2))
+			return false;
+		return true;
+	}
 	
 	
 }

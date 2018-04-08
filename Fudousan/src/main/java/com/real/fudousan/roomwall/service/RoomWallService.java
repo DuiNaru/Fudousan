@@ -1,7 +1,11 @@
 package com.real.fudousan.roomwall.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,9 +28,58 @@ public class RoomWallService {
 		logger.debug("roomWallList : " + roomWallList.toString());
 		logger.debug("roomWallConnectorMap : " + roomWallConnectorMap.toString());
 		
-		
+		boolean result = dao.insertWallAndConnector(roomWallList, roomWallConnectorMap);
 		
 		logger.info("save() End");
-		return false;
+		return result;
+	}
+	
+
+	/**
+	 * 해당 Room 안의 모든 벽과 연결점을 가져온다.
+	 * @param roomId
+	 * @return "walls":List of RoomWall , "connectors":List of RoomWallConnector
+	 */
+	public Map<String, List<?>> getWallAndConnector(int roomId) {
+		logger.info("getWallAndConnector("+roomId+") Start");
+		
+		Map<String, List<?>> result = new HashMap<>();
+		
+		List<RoomWall> wallFromDAO = dao.selectAllWallAndConnector(roomId);
+		
+		List<RoomWallConnector> connectorFromWall = new ArrayList<>();
+		
+		// 변환 맵
+		Map<Integer, Integer> convertMap = new HashMap<>();
+		
+		// 벽에 들어있는 점을 꺼내서 차례대로 저장한다.
+		for(RoomWall wall : wallFromDAO) {
+			// 우선 연결점을 꺼내기
+			RoomWallConnector con1 = wall.getRoomWallConnector1();
+			RoomWallConnector con2 = wall.getRoomWallConnector2();
+			
+			// 점 1이 기존의 변환 맵에 있으면 인덱스만 변환
+			Integer convertValue = convertMap.get(con1.getConnectorId());
+			if(convertValue == null) {
+				// 없으면 넣고 해당 Index로 설정
+				connectorFromWall.add(con1);
+				convertValue = connectorFromWall.size() - 1;
+			}
+			con1.setConnectorId(convertValue);
+			
+			// 점 2가 기존의 변환 맵에 있으면 인덱스만 변환
+			convertValue = convertMap.get(con2.getConnectorId());
+			if(convertValue == null) {
+				connectorFromWall.add(con2);
+				convertValue = connectorFromWall.size() - 1;
+			}
+			con2.setConnectorId(convertValue);
+		}
+		
+		result.put("walls", wallFromDAO);
+		result.put("connectors", connectorFromWall);
+		
+		logger.info("getWallAndConnector("+roomId+") End");
+		return result;
 	}
 }

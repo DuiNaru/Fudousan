@@ -54,7 +54,7 @@
 		<mapper resource="mapper/replyMapper.xml" />
 		<mapper resource="mapper/roomitemMapper.xml" />
 		<mapper resource="mapper/roomMapper.xml" />
-		<mapper resource="mapper/roomwallMapper.xml" />
+		<mapper resource="mapper/roomWallMapper.xml" />
 		<mapper resource="mapper/textureMapper.xml" />
 	</mappers>
 </configuration>

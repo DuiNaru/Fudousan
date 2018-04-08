@@ -1,7 +1,11 @@
 package com.real.fudousan.roomwall.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.management.RuntimeErrorException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -24,8 +28,45 @@ public class RoomWallDAOOracle implements RoomWallDAO {
 	@Override
 	public boolean insertWallAndConnector(List<RoomWall> roomWall, Map<Integer, RoomWallConnector> roomConnector) {
 		logger.info("insertWallAndConnector() Start");
-		boolean result = false;
+		boolean result = true;
 		
+			RoomWallMapper roomWallMapper = session.getMapper(RoomWallMapper.class);
+			if(result &= (roomWallMapper.deleteWallsByRoomId(roomWall.get(0).getRoomId()) > 0)) {
+				// 치환 맵
+				Map<Integer, Integer> convertMap = new HashMap<>();
+				// 커넥트를 넣으면서 DB PK로 치환한다.
+				for(Entry<Integer, RoomWallConnector> entry : roomConnector.entrySet()) {
+					// 커넥터 우선 insert
+					RoomWallConnector connector = entry.getValue();
+					// 기존 ID를 저장해둔다. 여기선 기존의 연결점이 중복되지 않는 상황이기에 중복을 확인하지 않는다.
+					int connectorId = connector.getConnectorId();
+					// INSERT
+					result &= roomWallMapper.insertConnector(connector) == 1;
+					// 치환 맵에 추가
+					convertMap.put(connectorId, connector.getConnectorId());
+				}
+				// DB의 커넥터 PK로 수정하여서 insert
+				for(RoomWall wall : roomWall) {
+					// 치환 맵에서 치환된 PK로 변경
+					Integer c1 = convertMap.get(wall.getRoomWallConnector1().getConnectorId());
+					Integer c2 = convertMap.get(wall.getRoomWallConnector2().getConnectorId());
+					// 둘다 있으면 치환
+					if(c1 != null && c2 != null) {
+						wall.getRoomWallConnector1().setConnectorId(c1);
+						wall.getRoomWallConnector2().setConnectorId(c2);
+					} else {
+						// 만일 없으면 에러
+						throw new RuntimeException("기존 연결점에 해당하는 연결점 ID가 존재하지 않습니다.");
+					}
+					// 만일 두 커넥트가 동일한 벽이 있으면 insert 패스
+					if(wall.getRoomWallConnector1().equals(wall.getRoomWallConnector2())) {
+						continue;
+					}
+					if(!(result &= (roomWallMapper.insertWall(wall) == 1))) {
+						throw new RuntimeException("벽 insert 에러");
+					}
+				}
+			}
 		
 		
 		
@@ -34,4 +75,21 @@ public class RoomWallDAOOracle implements RoomWallDAO {
 		return result;
 	}
 
+
+	@Override
+	public List<RoomWall> selectAllWallAndConnector(int roomId) {
+		logger.info("selectAllWallAndConnector("+roomId+") Start");
+		List<RoomWall> result = null;
+
+		try {
+			RoomWallMapper roomWallMapper = session.getMapper(RoomWallMapper.class);
+			
+			result = roomWallMapper.selectAllRoomWallByRoomId(roomId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("selectAllWallAndConnector("+roomId+") End");
+		return result;
+	}
 }

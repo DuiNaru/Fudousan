@@ -28,6 +28,18 @@ canvas {
 </head>
 <body>
 <div class="left-menu">
+	<script type="text/javascript">
+		var originalWalls = [];
+		var originalConnectors = [];
+		<c:if test="${!empty wallsAndConnectors}">
+			<c:forEach var="wall" items="${wallsAndConnectors.walls}" >
+				originalWalls.push({startPoint:${wall.roomWallConnector1.connectorId}, endPoint:${wall.roomWallConnector2.connectorId}});
+			</c:forEach>
+			<c:forEach var="connector" items="${wallsAndConnectors.connectors}" >
+				originalConnectors.push(new THREE.Vector3(${connector.x}, ${connector.y}, 0));
+			</c:forEach>
+		</c:if>
+	</script>
 <script type="text/javascript" src="<c:url value="/resources/js/wallPage.js"/>"></script>
 	<menu>
 		<li><input type="button" class="btn btn-default" value="저장" onclick="save()"></li>
