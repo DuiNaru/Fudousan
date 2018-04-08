@@ -18,4 +18,6 @@ public interface AgencyDAO {
 	 * @return
 	 */
 	public boolean updateConfirm(int agencyId, int confirm);
+	
+	public int selectAgencyId(String email);
 }

@@ -17,16 +17,62 @@ public class Entry implements Serializable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	/** 부동산중개사무소. */
-	private Agency agency;
-
-	/** 매물. */
-	private Estate estate;
-
-	/** DATE. */
-	private Date creDate;
-
-	/** PRICE. */
-	private Integer price;
+	private int agency_id;
+	private int estate_id;
+	private String cre_date;
+	private int price;
 	
+	public Entry() {
+		super();
+	}
+	
+	public Entry(int agency_id, int estate_id, String cre_date, int price) {
+		super();
+		this.agency_id = agency_id;
+		this.estate_id = estate_id;
+		this.cre_date = cre_date;
+		this.price = price;
+	}
+	
+	public int getAgency_id() {
+		return agency_id;
+	}
+	
+	public void setAgency_id(int agency_id) {
+		this.agency_id = agency_id;
+	}
+	
+	public int getEstate_id() {
+		return estate_id;
+	}
+	
+	public void setEstate_id(int estate_id) {
+		this.estate_id = estate_id;
+	}
+	
+	public String getCre_date() {
+		return cre_date;
+	}
+	
+	public void setCre_date(String cre_date) {
+		this.cre_date = cre_date;
+	}
+	
+	public int getPrice() {
+		return price;
+	}
+	
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	@Override
+	public String toString() {
+		return "Entry [agency_id=" + agency_id + ", estate_id=" + estate_id + ", cre_date=" + cre_date + ", price="
+				+ price + "]";
+	}
 }

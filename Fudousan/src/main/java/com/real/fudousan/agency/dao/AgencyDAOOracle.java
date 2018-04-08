@@ -50,6 +50,18 @@ public class AgencyDAOOracle implements AgencyDAO {
 		return result;
 	}
 	
-
+	@Override
+	public int selectAgencyId(String email){
+		int agencyId = 0;
+		
+		try {
+			AgencyMapper mapper = session.getMapper(AgencyMapper.class);
+			agencyId = mapper.selectAgencyId(email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return agencyId;
+	}
 
 }

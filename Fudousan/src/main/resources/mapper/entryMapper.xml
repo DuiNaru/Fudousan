@@ -7,5 +7,20 @@
 <mapper namespace="com.real.fudousan.entry.dao.EntryMapper">
 
 
+
+<!-- <insert id="insertEntry"  parameterType="Entry">
+insert into entry
+(
+AGENCY_ID
+,ESTATE_ID
+,CRE_DATE
+,PRICE
+)VALUE(
+#{agency}
+,#{estate}
+,#{creDate}
+,#{price}
+)
+</insert> -->
 	
 </mapper>

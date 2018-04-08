@@ -24,7 +24,7 @@ public class EstateService {
 	 * @return
 	 */
 	public Estate viewEstate(int estateId) {
-		
+/*public List<Estate> select(Set<Integer> estateId); */
 		return null;
 	}
 	
@@ -32,6 +32,7 @@ public class EstateService {
 	 * 매물 추가
 	 * @param estate
 	 * @return
+	 * (완료)
 	 */
 	public int addEstate(Estate estate) {
 		int result = dao.insertByIds(estate);
@@ -45,6 +46,9 @@ public class EstateService {
 	 * @return
 	 */
 	public boolean modifyEstate(Estate estate) {
+		
+		
+		
 		
 		return false;
 	}
@@ -64,10 +68,12 @@ public class EstateService {
 	 * @param estateIds
 	 * @return
 	 */
-	public List<Estate> getEsates(Set<Integer> estateIds) {
-		logger.info("getEstates("+estateIds+") Start");
-		List<Estate> result = dao.select(estateIds);
-		logger.info("getEstates("+estateIds+") End");
+	public List<Estate> getEsates(String email) {
+		logger.info("getEstates("+email+") Start");
+		
+		List<Estate> result = dao.select(email);
+		
+		logger.info("getEstates("+email+") End");
 		return result;
 	}
 }
