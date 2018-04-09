@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.real.fudousan.agency.dao.AgencyDAO;
-import com.real.fudousan.agency.dao.AgencyMapper;
+
 import com.real.fudousan.agency.vo.Agency;
 
 @Service
