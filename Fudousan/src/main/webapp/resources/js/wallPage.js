@@ -49,6 +49,8 @@ var vectorPerLength = 100;
 var pointSnapAdv = 1;
 // 인터섹트 검사시 기존 점과의 가까운 한계 길이 값 (해당 값 이하는 값은 점으로 간주)
 var closeTolerance = 100;
+// 카메라 이동 단위
+var cameraMoveValue = 100;
 
 document.addEventListener("DOMContentLoaded", function(){
 	//초기화
@@ -83,7 +85,7 @@ function init() {
 	renderer = new THREE.WebGLRenderer();
 	renderer.setPixelRatio( window.devicePixelRatio );
 	// 렌더러 크기
-	renderer.setSize( window.innerWidth, window.innerHeight );
+	renderer.setSize(width, height);
 	// 해당 렌더러를 화면에 추가하여서 사용
 	document.body.appendChild( renderer.domElement );
 
@@ -99,6 +101,7 @@ function init() {
 	document.addEventListener('mouseup', this.onDocumentMouseUp, false);
 	
 	window.addEventListener('resize', this.onResize, false);
+	window.addEventListener('keydown', this.onKeydown, false);
 	
 	document.getElementById("btn_back").addEventListener("click", back);
 	document.getElementById("btn_forward").addEventListener("click", forward);
@@ -109,8 +112,37 @@ function onResize() {
 	width = window.innerWidth;
 	// 화면 세로 길이
 	height = window.innerHeight;
+
+	camera.aspect = width / height;
+	camera.updateProjectionMatrix();
+	
+	renderer.setSize(width, height);
 	
 	drawBackgroundLines();
+}
+
+function onKeydown(event) {
+	switch(event.key) {
+	case 'w':
+		camera.position.y += cameraMoveValue;
+		break;
+	case 'a':
+		camera.position.x -= cameraMoveValue;
+		break;
+	case 's':
+		camera.position.y -= cameraMoveValue;
+		break;
+	case 'd':
+		camera.position.x += cameraMoveValue;
+		break;
+	case 'q':
+		camera.position.z += cameraMoveValue;
+		break;
+	case 'e':
+		camera.position.z -= cameraMoveValue;
+		break;
+	}
+	//drawBackgroundLines();
 }
 
 function drawBackgroundLines() {
@@ -121,37 +153,42 @@ function drawBackgroundLines() {
 	var z = 0;
 	var y = 0;
 	var x = 0;
-	for(var i = 0; i < Math.tan((90-camera.fov/2) / Math.PI * 180)*cameraToPlane.length() && i < planeSize; i += vectorPerLength) {
+	var xLength = Math.tan((90-camera.fov/2) / Math.PI * 180)*cameraToPlane.length()*3;
+	var yLength = Math.tan((90-camera.fov/2) / Math.PI * 180)*cameraToPlane.length()/camera.aspect*3;
+	for(var i = 0; i < xLength && i < planeSize; i += vectorPerLength) {
 		var material = new THREE.LineBasicMaterial({color:0xdddddd});
-		if(i % 5 == 0) material = new THREE.LineBasicMaterial({color:0xdddddd, linewidth:1.5});
+		if(i % (vectorPerLength * 5) == 0) material = new THREE.LineBasicMaterial({color:0xaaaaaa, linewidth:1.5});
+		if(i == 0 ) material = new THREE.LineBasicMaterial({color:0x000000, linewidth:2});
+
+		if(i <= yLength) {
+			var geometry = new THREE.Geometry();
+			geometry.vertices.push(new THREE.Vector3(x-xLength,y+i,z));
+			geometry.vertices.push(new THREE.Vector3(x+xLength,y+i,z));
+			var line = new THREE.Line(geometry, material);
+	
+			scene.add(line);
+			backgroundLines.push(line);
+	
+			geometry = new THREE.Geometry();
+			geometry.vertices.push(new THREE.Vector3(x-xLength,y-i,z));
+			geometry.vertices.push(new THREE.Vector3(x+xLength,y-i,z));
+			line = new THREE.Line(geometry, material);
+			
+			scene.add(line);
+			backgroundLines.push(line);
+		}
 		
-		var geometry = new THREE.Geometry();
-		geometry.vertices.push(new THREE.Vector3(x-planeSize,y+i,z));
-		geometry.vertices.push(new THREE.Vector3(x+planeSize,y+i,z));
-		var line = new THREE.Line(geometry, material);
-
-		scene.add(line);
-		backgroundLines.push(line);
-
 		geometry = new THREE.Geometry();
-		geometry.vertices.push(new THREE.Vector3(x-planeSize,y-i,z));
-		geometry.vertices.push(new THREE.Vector3(x+planeSize,y-i,z));
+		geometry.vertices.push(new THREE.Vector3(x+i,y-yLength,z));
+		geometry.vertices.push(new THREE.Vector3(x+i,y+yLength,z));
 		line = new THREE.Line(geometry, material);
 		
 		scene.add(line);
 		backgroundLines.push(line);
 		
 		geometry = new THREE.Geometry();
-		geometry.vertices.push(new THREE.Vector3(x+i,y-planeSize,z));
-		geometry.vertices.push(new THREE.Vector3(x+i,y+planeSize,z));
-		line = new THREE.Line(geometry, material);
-		
-		scene.add(line);
-		backgroundLines.push(line);
-		
-		geometry = new THREE.Geometry();
-		geometry.vertices.push(new THREE.Vector3(x-i,y-planeSize,z));
-		geometry.vertices.push(new THREE.Vector3(x-i,y+planeSize,z));
+		geometry.vertices.push(new THREE.Vector3(x-i,y-yLength,z));
+		geometry.vertices.push(new THREE.Vector3(x-i,y+yLength,z));
 		line = new THREE.Line(geometry, material);
 		
 		scene.add(line);
@@ -764,6 +801,7 @@ function save() {
 		url:"./save",
 		type:"POST",
 		data:{
+			roomId : roomId,
 			dots : JSON.stringify(dotsData),
 			walls : JSON.stringify(wallsData)
 		},

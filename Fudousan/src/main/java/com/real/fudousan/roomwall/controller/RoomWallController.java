@@ -38,7 +38,9 @@ public class RoomWallController {
 	public String roomPage(@RequestParam(value="roomId", defaultValue="-1") int roomId, Model model) {
 		logger.info("wallPage("+roomId+") Start");
 		if (roomId >= 0) {
-			model.addAttribute("wallsAndConnectors", service.getWallAndConnector(roomId));
+			Map<String, List<?>> map = service.getWallAndConnector(roomId);
+			model.addAttribute("wallsAndConnectors", map);
+			logger.debug("가져온 벽과 연결점 : " + map);
 		}
 		logger.info("wallPage("+roomId+") End");
 		return "wall/wallPage";
@@ -47,6 +49,7 @@ public class RoomWallController {
 	@ResponseBody
 	@RequestMapping(value="save", method=RequestMethod.POST)
 	public boolean save(
+			int roomId,
 			String walls,
 			String dots) {
 		logger.info("save() Start");
@@ -74,8 +77,14 @@ public class RoomWallController {
 			while(wallsElements.hasNext()) {
 				JsonNode element = wallsElements.next();
 				RoomWall rw = new RoomWall();
+				
+				
 				rw.setRoomWallConnector1(roomWallConnectorMap.get(element.get("startPoint").asInt()));
 				rw.setRoomWallConnector2(roomWallConnectorMap.get(element.get("endPoint").asInt()));
+				
+				rw.setRoomId(roomId);
+				rw.setType("Normal");
+				
 				roomWallList.add(rw);
 			}
 		} catch (IOException e) {
@@ -83,7 +92,7 @@ public class RoomWallController {
 		}
 		logger.debug("roomWallConnectorMap : " + roomWallConnectorMap.toString());
 		logger.debug("roomWallList : " + roomWallList.toString());
-		result = service.save(roomWallList, roomWallConnectorMap);
+		result = service.save(roomId, roomWallList, roomWallConnectorMap);
 		logger.info("save() End");
 		return result;
 	}

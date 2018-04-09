@@ -23,12 +23,12 @@ public class RoomWallService {
 	@Autowired
 	private RoomWallDAO dao;
 
-	public boolean save(List<RoomWall> roomWallList, Map<Integer, RoomWallConnector> roomWallConnectorMap) {
+	public boolean save(int roomId, List<RoomWall> roomWallList, Map<Integer, RoomWallConnector> roomWallConnectorMap) {
 		logger.info("save() Start");
 		logger.debug("roomWallList : " + roomWallList.toString());
 		logger.debug("roomWallConnectorMap : " + roomWallConnectorMap.toString());
 		
-		boolean result = dao.insertWallAndConnector(roomWallList, roomWallConnectorMap);
+		boolean result = dao.insertWallAndConnector(roomId, roomWallList, roomWallConnectorMap);
 		
 		logger.info("save() End");
 		return result;
@@ -57,13 +57,14 @@ public class RoomWallService {
 			// 우선 연결점을 꺼내기
 			RoomWallConnector con1 = wall.getRoomWallConnector1();
 			RoomWallConnector con2 = wall.getRoomWallConnector2();
-			
+			logger.debug("con1 : con2 -> " + con1 + ":" + con2);
 			// 점 1이 기존의 변환 맵에 있으면 인덱스만 변환
 			Integer convertValue = convertMap.get(con1.getConnectorId());
 			if(convertValue == null) {
 				// 없으면 넣고 해당 Index로 설정
 				connectorFromWall.add(con1);
 				convertValue = connectorFromWall.size() - 1;
+				convertMap.put(con1.getConnectorId(), convertValue);
 			}
 			con1.setConnectorId(convertValue);
 			
@@ -72,6 +73,7 @@ public class RoomWallService {
 			if(convertValue == null) {
 				connectorFromWall.add(con2);
 				convertValue = connectorFromWall.size() - 1;
+				convertMap.put(con2.getConnectorId(), convertValue);
 			}
 			con2.setConnectorId(convertValue);
 		}

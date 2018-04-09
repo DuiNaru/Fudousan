@@ -68,26 +68,26 @@
 		});
 		
 		Btn_blist.addEventListener("click", function(event) {
-			socket.emit('call list', null);
+			socket.emit('call list');
 		});
 		
 		Btn_blist2.addEventListener("click", function(event) {
-			socket.emit('call list2', null);
+			socket.emit('call list2');
 		});
 		
 		Btn_backArray1.addEventListener('click', function(event){
-			socket.emit('back_array' , null);
+			socket.emit('back_array');
 		});
 		Btn_clear.addEventListener('click', function(event){
-			socket.emit('clear_array1', null);
+			socket.emit('clear_array1');
 		})
 		
 		Btn_blistRecovery.addEventListener('click', function(event){
-			socket.emit('Array1_Recovery', null);
+			socket.emit('Array1_Recovery');
 		});
 		
 		Btn_realSelect.addEventListener('click', function(event){
-			socket.emit('realSelect', null);
+			socket.emit('realSelect');
 		});
 		
 		socket.on('chat message', function(msg){
@@ -96,14 +96,40 @@
 		
 		socket.on('addGeo', function(){
 			console.log('addGeo - Start');
-			var mesh;
-			mesh = new THREE.Mesh(
-					new THREE.BoxGeometry(1,2,1),  //도형의 가로세로높이 비율
-					new THREE.MeshBasicMaterial({color:0xff4444, wireframe:false}) // 재질의 색상
-				);
-				mesh.position.y +=1;
-				scene.add(mesh);
-			console.log('addGeo - End');
+			
+			// 렌더러
+			renderer = new THREE.WebGLRenderer();
+			renderer.setPixelRatio( window.devicePixelRatio );
+			// 렌더러 크기
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			// 해당 렌더러를 화면에 추가하여서 사용
+			document.getElementById("threejsShow").appendChild( renderer.domElement );
+
+			// 외부 모델 로더 생성
+			const loader = new THREE.TDSLoader();
+			// 해당 모델의 텍스쳐 경로 설정
+			loader.setPath("/fudousan/resources/model/testchair/");
+			// 모델 데이터 경로 설정 및 로딩 완료시 리스너 지정
+			loader.load("/fudousan/resources/model/testchair/Armchair.3ds", (object) => {
+				// x축 기준으로 -90도 회전
+				object.rotation.x = Math.PI * -90 / 180;
+
+				// 해당 모델을 가장 가깝게 에워싸는 육면체인 BoundingBox 생성
+				var boundingBox = new THREE.Box3();
+				boundingBox.setFromObject(object);
+
+				// 바운딩 박스의 z 값을 이용하여 이동
+				object.position.z = boundingBox.max.z;
+				// 화면에 추가
+				scene.add(object);
+				// 완료 Alert 띄움
+				alert("add");
+				var objects = [];
+				objects.push(object);	// 해당 object는 Groups 객체로써 DragControls와 호환 X
+				chair = object;
+			});
+
+			animate();
 		});
 		
 		
