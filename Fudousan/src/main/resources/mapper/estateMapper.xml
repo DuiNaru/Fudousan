@@ -7,79 +7,85 @@
 <mapper namespace="com.real.fudousan.estate.dao.EstateMapper">
 
 <insert id="insertByIds" parameterType="estate">
+<selectKey resultType="int" keyProperty="estateId" order="AFTER">
+SELECT
+SEQ_ESTATE_ID.CURRVAL
+FROM DUAL
+</selectKey>
+
 insert into estate
 (	
-ESTATE_ID
-,TRANS_TYPE_ID
+	ESTATE_ID
+	,TRANS_TYPE_ID
 <if test='region != null'>
-,REGION
+	,REGION
 </if>
-,MunicipalityCode_ID
+	,MunicipalityCode_ID
 <if test = 'prefecture != null'>
-,PREFECTURE
+	,PREFECTURE
 </if>
 <if test = 'municipality != null'>
-,MUNICIPALITY
+	,MUNICIPALITY
 </if>
 
 <if test = 'districtname != null'>
-,DISTRICTNAME
+	,DISTRICTNAME
 </if>
 
 <if test = 'address != null'>
-,ADDRESS
+	,ADDRESS
 </if>
 <if test = 'neareststation != null'>
-,NEARESTSTATION
+	,NEARESTSTATION
 </if>
 <if test = 'timetoneareststation != null'>
-,TIMETONEARESTSTATION
+	,TIMETONEARESTSTATION
 </if>
 <if test ='tradeprice != null'>
-,TRADEPRICE
+	,TRADEPRICE
 </if>
 <if test ='priceperunit != null'>
-,PRICEPERUNIT
+	,PRICEPERUNIT
 </if>
 <if test = 'floorplan != null'>
-,FLOORPLAN
+	,FLOORPLAN
 </if>
 <if test = 'area != null'>
-,AREA
+	,AREA
 </if>
 <if test = 'unitprice != null'>
-,UNITPRICE
+	,UNITPRICE
 </if>
 <if test = 'totalfloorarea != null'>
-,TOTALFLOORAREA
+	,TOTALFLOORAREA
 </if>
 <if test ='landshape != null'>
-,LANDSHAPE
+	,LANDSHAPE
 </if>
 
 <if test = 'buildingyear != null'>
-,BUILDINGYEAR
+	,BUILDINGYEAR
 </if>
 <if test = 'structure != null'>
-,STRUCTURE
+	,STRUCTURE
 </if>
 <if test = 'use != null'>
-,USE
+	,USE
 </if>
 <if test ='coverageratio != null'>
-,COVERAGERATIO</if>
+	,COVERAGERATIO</if>
 
 
 <if test = 'floorarearatio != null'>
-,FLOORAREARATIO
+	,FLOORAREARATIO
 </if>
 
 <if test = 'delDate != null'>
-,DEL_DATE
+	,DEL_DATE
 </if>
-
-
-
+<if test='estateName != null'>
+	,ESTATE_NAME
+</if>
 )
 VALUES
 (
@@ -142,16 +148,130 @@ SEQ_ESTATE_ID.nextval
 <if test='floorarearatio != null'>
 ,#{floorarearatio}
 </if>
-
 <if test ='delDate != null'>
 ,#{delDate}
 </if>
+<if test='estateName != null'>
+	,#{estateName}
+	</if>
 )
+
 
 
 </insert>
 
 
+
+
+
+<select id="select" parameterType="string" resultMap="estateResultMap">
+	SELECT
+	    *
+	FROM
+	    estate
+	WHERE
+	    estate_id IN (
+	        SELECT estate_id FROM entry WHERE agency_id = (
+	            SELECT agency_id FROM agency WHERE member_id = (
+	                SELECT member_id FROM member WHERE email = #{email}
+	                )
+	            )
+	        )
+	ORDER BY
+		estate_id ASC
+</select>
+
+
+
+
+
+<update id="updateByIds" parameterType="estate" >
+UPDATE ESTATE
+SET	
+	
+	TRANS_TYPE_ID
+	<if test='region != null'>
+	,REGION
+	</if>
+	,MunicipalityCode_ID
+	<if test = 'prefecture != null'>
+	,PREFECTURE
+	</if>
+	<if test = 'municipality != null'>
+	,MUNICIPALITY
+	</if>
+
+	<if test = 'districtname != null'>
+	,DISTRICTNAME
+	</if>
+
+	<if test = 'address != null'>
+	,ADDRESS
+	</if>
+	<if test = 'neareststation != null'>
+	,NEARESTSTATION
+	</if>
+	<if test = 'timetoneareststation != null'>
+	,TIMETONEARESTSTATION
+	</if>
+	<if test ='tradeprice != null'>
+	,TRADEPRICE
+	</if>
+	<if test ='priceperunit != null'>
+	,PRICEPERUNIT
+	</if>
+	<if test = 'floorplan != null'>
+	,FLOORPLAN
+	</if>
+	<if test = 'area != null'>
+	,AREA
+	</if>
+	<if test = 'unitprice != null'>
+	,UNITPRICE
+	</if>
+	<if test = 'totalfloorarea != null'>
+	,TOTALFLOORAREA
+	</if>
+	<if test ='landshape != null'>
+	,LANDSHAPE
+	</if>
+	<if test='estateName != null'>
+	,ESTATE_NAME
+	</if>
+
+<if test = 'buildingyear != null'>
+,BUILDINGYEAR
+</if>
+<if test = 'structure != null'>
+,STRUCTURE
+</if>
+<if test = 'use != null'>
+,USE
+</if>
+<if test ='coverageratio != null'>
+,COVERAGERATIO</if>
+
+
+<if test = 'floorarearatio != null'>
+,FLOORAREARATIO
+</if>
+
+<if test = 'delDate != null'>
+,DEL_DATE
+</if>
+
+WHERE
+ ESTATE_ID = #{ ESTATE_ID}
+
+
+
+</update>
+
+<delete id="deleteByIds" parameterType="int">
+delete 
+from ESTATE
+where estate_id = #{estateId}
+</delete>
 
 	<select id="selectByIds" parameterType="java.util.Set" resultMap="estateResultMap">
 		select

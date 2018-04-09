@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.real.fudousan.agency.dao.AgencyDAO;
+import com.real.fudousan.agency.dao.AgencyMapper;
 import com.real.fudousan.agency.vo.Agency;
 
 @Service
@@ -76,6 +77,11 @@ public class AgencyService {
 		return result;
 	}
 	
+
+	public int selectAgencyId(String email){
+		return dao.selectAgencyId(email);
+	}
+
 	
 	/**
 	 * 중개소 주소(main, middle, small, sub)를 반환한다. 
@@ -93,4 +99,5 @@ public class AgencyService {
 	}
 	
 	
+
 }

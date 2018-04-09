@@ -76,6 +76,15 @@
 			confirm = #{confirm}
 	</select>
 	
+	<select id="selectAgencyId" parameterType="string" resultType="int">
+		SELECT
+			agency_id
+		FROM
+			agency
+		WHERE
+			member_id = (SELECT member_id FROM member WHERE email = #{email})
+	</select>
+	
 	<update id="updateConfirm">
 		UPDATE
 			agency

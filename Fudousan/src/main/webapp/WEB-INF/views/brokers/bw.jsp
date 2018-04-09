@@ -122,6 +122,12 @@
         <div class="col-md-6 col-md-offset-3">
           <form role="form" action="estatewrite" method="post" enctype="multipart/form-data">
           
+          <div class="form-group">
+              <label for="inputMunicipality">매물이름</label>
+              <input type="text" class="form-control" id="inputestateName" placeholder="매물이름" name="estateName">
+            </div>
+          
+          
           
             <div class="form-group">
               <label for="inputType">取引タイプ(거래종류)</label>
@@ -132,6 +138,13 @@
   			<option value='2'>マンション</option>
 			</select>
             </div>
+            
+            
+            
+             <div class="form-group">
+              <label for="inputPrefecture">가격</label>
+              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 가격" name="price">
+           </div>
             
             
             <div class="form-group">

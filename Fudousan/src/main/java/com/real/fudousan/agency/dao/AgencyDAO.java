@@ -19,10 +19,14 @@ public interface AgencyDAO {
 	 */
 	public boolean updateConfirm(int agencyId, int confirm);
 	
+
+	public int selectAgencyId(String email);
+
 	/**
 	 * 중개소 주소(main, middle, small, sub)를 반환한다. 
 	 * @param 
 	 * @return Agency List
 	 */
 	public List<Agency> agencyLocationPrint();
+
 }

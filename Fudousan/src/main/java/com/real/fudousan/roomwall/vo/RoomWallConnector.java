@@ -19,8 +19,77 @@ public class RoomWallConnector implements Serializable {
 	private Integer connectorId;
 
 	/** X. */
-	private Integer x;
+	private Double x;
 
 	/** Y. */
-	private Integer y;
+	private Double y;
+
+	public RoomWallConnector() {
+		super();
+	}
+
+	public RoomWallConnector(Integer connectorId, Double x, Double y) {
+		super();
+		this.connectorId = connectorId;
+		this.x = x;
+		this.y = y;
+	}
+
+	public Integer getConnectorId() {
+		return connectorId;
+	}
+
+	public void setConnectorId(Integer connectorId) {
+		this.connectorId = connectorId;
+	}
+
+	public Double getX() {
+		return x;
+	}
+
+	public void setX(Double x) {
+		this.x = x;
+	}
+
+	public Double getY() {
+		return y;
+	}
+
+	public void setY(Double y) {
+		this.y = y;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "RoomWallConnector [connectorId=" + connectorId + ", x=" + x + ", y=" + y + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((connectorId == null) ? 0 : connectorId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RoomWallConnector other = (RoomWallConnector) obj;
+		if (connectorId == null) {
+			if (other.connectorId != null)
+				return false;
+		} else if (!connectorId.equals(other.connectorId))
+			return false;
+		return true;
+	}
 }

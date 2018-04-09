@@ -51,6 +51,21 @@ public class AgencyDAOOracle implements AgencyDAO {
 	}
 	
 	@Override
+
+	public int selectAgencyId(String email){
+		int agencyId = 0;
+		
+		try {
+			AgencyMapper mapper = session.getMapper(AgencyMapper.class);
+			agencyId = mapper.selectAgencyId(email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return agencyId;
+	}
+
+
 	public List<Agency> agencyLocationPrint(){
 		logger.info("agency Location Print 시작");
 		List<Agency> result = null;
@@ -65,4 +80,5 @@ public class AgencyDAOOracle implements AgencyDAO {
 		logger.info("agency Location Print 종료");
 		return result;
 	}
+
 }

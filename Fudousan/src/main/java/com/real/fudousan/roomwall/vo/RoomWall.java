@@ -33,4 +33,114 @@ public class RoomWall implements Serializable {
 
 	/** 텍스쳐. */
 	private Texture backTexture;
+
+	public RoomWall() {
+		super();
+	}
+
+	public RoomWall(int roomId, RoomWallConnector roomWallConnector1, RoomWallConnector roomWallConnector2, String type,
+			Texture frontTexture, Texture backTexture) {
+		super();
+		this.roomId = roomId;
+		this.roomWallConnector1 = roomWallConnector1;
+		this.roomWallConnector2 = roomWallConnector2;
+		this.type = type;
+		this.frontTexture = frontTexture;
+		this.backTexture = backTexture;
+	}
+
+	public int getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+
+	public RoomWallConnector getRoomWallConnector1() {
+		return roomWallConnector1;
+	}
+
+	public void setRoomWallConnector1(RoomWallConnector roomWallConnector1) {
+		this.roomWallConnector1 = roomWallConnector1;
+	}
+
+	public RoomWallConnector getRoomWallConnector2() {
+		return roomWallConnector2;
+	}
+
+	public void setRoomWallConnector2(RoomWallConnector roomWallConnector2) {
+		this.roomWallConnector2 = roomWallConnector2;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	public Texture getFrontTexture() {
+		return frontTexture;
+	}
+
+	public void setFrontTexture(Texture frontTexture) {
+		this.frontTexture = frontTexture;
+	}
+
+	public Texture getBackTexture() {
+		return backTexture;
+	}
+
+	public void setBackTexture(Texture backTexture) {
+		this.backTexture = backTexture;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "RoomWall [roomId=" + roomId + ", roomWallConnector1=" + roomWallConnector1 + ", roomWallConnector2="
+				+ roomWallConnector2 + ", type=" + type + ", frontTexture=" + frontTexture + ", backTexture="
+				+ backTexture + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + roomId;
+		result = prime * result + ((roomWallConnector1 == null) ? 0 : roomWallConnector1.hashCode());
+		result = prime * result + ((roomWallConnector2 == null) ? 0 : roomWallConnector2.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RoomWall other = (RoomWall) obj;
+		if (roomId != other.roomId)
+			return false;
+		if (roomWallConnector1 == null) {
+			if (other.roomWallConnector1 != null)
+				return false;
+		} else if (!roomWallConnector1.equals(other.roomWallConnector1))
+			return false;
+		if (roomWallConnector2 == null) {
+			if (other.roomWallConnector2 != null)
+				return false;
+		} else if (!roomWallConnector2.equals(other.roomWallConnector2))
+			return false;
+		return true;
+	}
+	
+	
 }
