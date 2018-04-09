@@ -8,19 +8,17 @@
 
 
 
-<!-- <insert id="insertEntry"  parameterType="Entry">
+<insert id="insertEntry"  parameterType="Entry">
 insert into entry
 (
 AGENCY_ID
 ,ESTATE_ID
-,CRE_DATE
 ,PRICE
 )VALUE(
 #{agency}
 ,#{estate}
-,#{creDate}
 ,#{price}
 )
-</insert> -->
+</insert>
 	
 </mapper>
