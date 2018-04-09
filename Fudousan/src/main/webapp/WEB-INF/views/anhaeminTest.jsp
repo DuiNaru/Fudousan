@@ -50,14 +50,13 @@
 				success:function(obj) {
 					console.dir(obj);
 					console.log("안녕하세요 리얼셀렉")
-					var mesh;
+/* 					var mesh;
 					mesh = new THREE.Mesh(
 							new THREE.BoxGeometry(1,2,1),  //도형의 가로세로높이 비율
 							new THREE.MeshBasicMaterial({color:0xff4444, wireframe:false}) // 재질의 색상
 						);
-						mesh.position.y +=1;
 						scene.add(mesh);	
-				},
+ */				},
 				error:function(e) {
 					console.log(e);
 				}
