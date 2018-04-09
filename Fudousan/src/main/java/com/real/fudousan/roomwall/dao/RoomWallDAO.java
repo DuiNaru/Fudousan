@@ -11,7 +11,7 @@ import com.real.fudousan.roomwall.vo.RoomWallConnector;
 public interface RoomWallDAO {
 
 	@Transactional
-	public boolean insertWallAndConnector(List<RoomWall> roomWall, Map<Integer, RoomWallConnector> roomConnector);
+	public boolean insertWallAndConnector(int roomId, List<RoomWall> roomWall, Map<Integer, RoomWallConnector> roomConnector);
 	
 	public List<RoomWall> selectAllWallAndConnector(int roomId);
 }
