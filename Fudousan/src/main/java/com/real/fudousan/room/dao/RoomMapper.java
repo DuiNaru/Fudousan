@@ -40,4 +40,11 @@ public interface RoomMapper {
 	 * @return
 	 */
 	public boolean deleteRoom(int memberId, int roomId);
+	
+	/**
+	 * MEMBER_ID(memberId), ROOM_PUBLIC(roomPublic)로 새로운 컬럼을 추가한다.
+	 * 
+	 * @return ROOM_ID
+	 */
+	public int insert(Room room);
 }

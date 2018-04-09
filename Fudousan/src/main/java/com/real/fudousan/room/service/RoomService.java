@@ -66,7 +66,12 @@ public class RoomService {
 	 * @return 해당 모델링 ID
 	 */
 	public int createRoom(Room room) {
+		logger.info("createRoom(" + room + ") Start");
 		
+		
+		
+		
+		logger.info("createRoom(" + room + ") End");
 		return -1;
 	}
 	
