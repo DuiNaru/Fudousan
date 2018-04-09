@@ -168,6 +168,7 @@ function onDocumentMouseMove(event) {
 		}
 	}
 }
+
 function onDocumentMouseUp(event) {
 	isSelected = false;
 	controls.enabled = true;
