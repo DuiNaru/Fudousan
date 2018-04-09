@@ -17,62 +17,103 @@ public class Entry implements Serializable {
 	/** serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
-	private int agency_id;
-	private int estate_id;
-	private String cre_date;
-	private int price;
+	/** 부동산중개사무소. */
+	private Agency agency;
+
+	/** 매물. */
+	private Estate estate;
+
+	/** DATE. */
+	private Date creDate;
+
+	/** PRICE. */
+	private Integer price;
+
+	
 	
 	public Entry() {
 		super();
 	}
-	
-	public Entry(int agency_id, int estate_id, String cre_date, int price) {
+
+	public Entry(Agency agency, Estate estate, Date creDate, Integer price) {
 		super();
-		this.agency_id = agency_id;
-		this.estate_id = estate_id;
-		this.cre_date = cre_date;
+		this.agency = agency;
+		this.estate = estate;
+		this.creDate = creDate;
 		this.price = price;
 	}
-	
-	public int getAgency_id() {
-		return agency_id;
+
+	public Agency getAgency() {
+		return agency;
 	}
-	
-	public void setAgency_id(int agency_id) {
-		this.agency_id = agency_id;
+
+	public void setAgency(Agency agency) {
+		this.agency = agency;
 	}
-	
-	public int getEstate_id() {
-		return estate_id;
+
+	public Estate getEstate() {
+		return estate;
 	}
-	
-	public void setEstate_id(int estate_id) {
-		this.estate_id = estate_id;
+
+	public void setEstate(Estate estate) {
+		this.estate = estate;
 	}
-	
-	public String getCre_date() {
-		return cre_date;
+
+	public Date getCreDate() {
+		return creDate;
 	}
-	
-	public void setCre_date(String cre_date) {
-		this.cre_date = cre_date;
+
+	public void setCreDate(Date creDate) {
+		this.creDate = creDate;
 	}
-	
-	public int getPrice() {
+
+	public Integer getPrice() {
 		return price;
 	}
-	
-	public void setPrice(int price) {
+
+	public void setPrice(Integer price) {
 		this.price = price;
 	}
-	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Entry [agency_id=" + agency_id + ", estate_id=" + estate_id + ", cre_date=" + cre_date + ", price="
-				+ price + "]";
+		return "Entry [agency=" + agency + ", estate=" + estate + ", creDate=" + creDate + ", price=" + price + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((agency == null) ? 0 : agency.hashCode());
+		result = prime * result + ((estate == null) ? 0 : estate.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Entry other = (Entry) obj;
+		if (agency == null) {
+			if (other.agency != null)
+				return false;
+		} else if (!agency.equals(other.agency))
+			return false;
+		if (estate == null) {
+			if (other.estate != null)
+				return false;
+		} else if (!estate.equals(other.estate))
+			return false;
+		return true;
+	}
+	
+	
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.real.fudousan.agency.service.AgencyService;
+import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.entry.service.EntryService;
 import com.real.fudousan.entry.vo.Entry;
 import com.real.fudousan.estate.service.EstateService;
@@ -127,8 +128,13 @@ public class EstateController {
 		String email = (String) session.getAttribute("loginEmail");
 		int agency_id = agencyService.selectAgencyId(email);
 		
-		entry.setEstate_id(estate_id);
-		entry.setAgency_id(agency_id);
+		logger.info("estate_id : " + estate_id);
+		entry.setEstate(estate);
+		Agency agency = new Agency();
+		agency.setAgencyId(agency_id);
+		entry.setAgency(agency);
+		//entry.setEstate_id(estate_id);
+		//entry.setAgency_id(agency_id);
 		entryService.addEntry(entry);
 
 		logger.info("매물 등록 종료");

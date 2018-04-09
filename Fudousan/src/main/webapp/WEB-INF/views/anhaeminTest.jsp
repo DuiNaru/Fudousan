@@ -42,32 +42,6 @@
 	<script src="resources/js/socket.io.js"></script>
 	  <script>
 	  
-		function realSelectById() {
-			$.ajax({
-				url:"./item/getGagu?itemId="+$("#itemId").val(),
-				type:"GET",
-				dataType:"JSON",
-				success:function(obj) {
-					console.dir(obj);
-					console.log("안녕하세요 리얼셀렉")
-					var mesh;
-					mesh = new THREE.Mesh(
-							new THREE.BoxGeometry(1,2,1),  //도형의 가로세로높이 비율
-							new THREE.MeshBasicMaterial({color:0xff4444, wireframe:false}) // 재질의 색상
-						);
-						mesh.position.y +=1;
-						scene.add(mesh);	
-				},
-				error:function(e) {
-					console.log(e);
-				}
-			});
-			
-			return false;
-		}
-	  
-	  
-	  
 		var socket = io('http://localhost:8000');
 		var chatBtn = document.querySelector('#chatBtn');
 		var Btn_object = document.querySelector('#Btn_object');
@@ -79,15 +53,10 @@
 		var Btn_realSelect = document.querySelector('#Btn_realSelect');
 		var Btn_addGeometry = document.querySelector('#Btn_addGeometry');
 		
-	//지오매트리 영역
+	//add 영역
 		Btn_addGeometry.addEventListener('click', function(event){
-			var mesh;
-			mesh = new THREE.Mesh(
-					new THREE.BoxGeometry(1,2,1),  //도형의 가로세로높이 비율
-					new THREE.MeshBasicMaterial({color:0xff4444, wireframe:false}) // 재질의 색상
-				);
-				mesh.position.y +=1;
-				scene.add(mesh);				
+			socket.emit('addGeometry' , null);
+				
 		});
 	//지오매트리 영역	
 		chatBtn.addEventListener("click", function(event) {
@@ -118,12 +87,26 @@
 		});
 		
 		Btn_realSelect.addEventListener('click', function(event){
-			realSelectById();
+			socket.emit('realSelect', null);
 		});
 		
 		socket.on('chat message', function(msg){
 			$('#msg').append($('<li>').text(msg));
 		});
+		
+		socket.on('addGeo', function(){
+			console.log('addGeo - Start');
+			var mesh;
+			mesh = new THREE.Mesh(
+					new THREE.BoxGeometry(1,2,1),  //도형의 가로세로높이 비율
+					new THREE.MeshBasicMaterial({color:0xff4444, wireframe:false}) // 재질의 색상
+				);
+				mesh.position.y +=1;
+				scene.add(mesh);
+			console.log('addGeo - End');
+		});
+		
+		
 	</script>
 	
 	
