@@ -15,8 +15,8 @@ AGENCY_ID
 ,ESTATE_ID
 ,PRICE
 )VALUE(
-#{agency}
-,#{estate}
+#{agency.agencyId}
+,#{estate.estateId}
 ,#{price}
 )
 </insert>

@@ -97,7 +97,7 @@ public class EstateController {
 		Entry entry = new Entry();
 		
 		System.out.println("estate = " +   estate);
-		entry.setPrice(price);
+		//entry.setPrice(price);
 		estate.setEstateName(estateName);
 		estate.setTransType(transType);
 		estate.setMunicipalitycode(municipalitycode);
@@ -127,9 +127,10 @@ public class EstateController {
 		String email = (String) session.getAttribute("loginEmail");
 		int agency_id = agencyService.selectAgencyId(email);
 		
-		entry.setEstate_id(estate_id);
-		entry.setAgency_id(agency_id);
-		entryService.addEntry(entry);
+		logger.info("estate_id : " + estate_id);
+		//entry.setEstate_id(estate_id);
+		//entry.setAgency_id(agency_id);
+		//entryService.addEntry(entry);
 
 		logger.info("매물 등록 종료");
 		return "/brokers/bm";
