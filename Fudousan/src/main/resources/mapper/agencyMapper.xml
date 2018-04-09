@@ -97,10 +97,8 @@
 	<!-- 중개업소 출력 쿼리문 -->
 	<select id="agencyLocationPrint" resultMap="agencyResultMap">
 		SELECT
-			address_main 
-			, address_middle 
-			, address_small 
-			, address_sub 
+			gps_x,
+			gps_y
 		FROM 
 			agency
 	</select>

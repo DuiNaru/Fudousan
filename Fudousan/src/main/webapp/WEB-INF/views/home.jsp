@@ -28,10 +28,7 @@
 </style>
 </head>
 <body>
-<%-- 	<c:forEach items="${locationList}" var="location" varStatus="status">
-		"${location}"<c:if test="${status.last eq false}">,</c:if>
-	</c:forEach>
- --%>
+
 
 	<!-- 로그인 모달 -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
@@ -79,7 +76,7 @@
 					<li id="loginNameTag"></li>
 					<li id="loginAtag"><a data-toggle="modal" href="#loginModal">Login</a></li>
 				</c:if>
-				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2}">
+				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout">Logout</a></li>
 					<li><a href="memberupdate/memberupdate">update member</a>
@@ -88,6 +85,10 @@
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout">Logout</a></li>
 					<li><a href="memberupdate/agencyupdate">update member</a>
+				</c:if>
+				<c:if test="${sessionScope.permissionId == 99 }">
+					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
+					<li><a href="/fudousan/logout">Logout</a></li>
 				</c:if>
 				
 				
