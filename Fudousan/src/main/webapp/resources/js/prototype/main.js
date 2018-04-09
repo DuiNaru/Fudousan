@@ -75,7 +75,6 @@ function init() {
 		chair = object;
 	});
 
-
 	// 큐브 형태(가로 500, 세로 500, 높이 500)
 	var cubeGeometry = new THREE.CubeGeometry(500, 500, 500);
 	// 큐브 재질
