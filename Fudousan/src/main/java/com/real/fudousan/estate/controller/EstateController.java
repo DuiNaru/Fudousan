@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.real.fudousan.agency.service.AgencyService;
+import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.entry.service.EntryService;
 import com.real.fudousan.entry.vo.Entry;
 import com.real.fudousan.estate.service.EstateService;
@@ -97,7 +98,7 @@ public class EstateController {
 		Entry entry = new Entry();
 		
 		System.out.println("estate = " +   estate);
-		//entry.setPrice(price);
+		entry.setPrice(price);
 		estate.setEstateName(estateName);
 		estate.setTransType(transType);
 		estate.setMunicipalitycode(municipalitycode);
@@ -128,9 +129,13 @@ public class EstateController {
 		int agency_id = agencyService.selectAgencyId(email);
 		
 		logger.info("estate_id : " + estate_id);
+		entry.setEstate(estate);
+		Agency agency = new Agency();
+		agency.setAgencyId(agency_id);
+		entry.setAgency(agency);
 		//entry.setEstate_id(estate_id);
 		//entry.setAgency_id(agency_id);
-		//entryService.addEntry(entry);
+		entryService.addEntry(entry);
 
 		logger.info("매물 등록 종료");
 		return "/brokers/bm";

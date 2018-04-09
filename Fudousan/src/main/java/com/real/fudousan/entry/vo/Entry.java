@@ -28,5 +28,92 @@ public class Entry implements Serializable {
 
 	/** PRICE. */
 	private Integer price;
+
+	
+	
+	public Entry() {
+		super();
+	}
+
+	public Entry(Agency agency, Estate estate, Date creDate, Integer price) {
+		super();
+		this.agency = agency;
+		this.estate = estate;
+		this.creDate = creDate;
+		this.price = price;
+	}
+
+	public Agency getAgency() {
+		return agency;
+	}
+
+	public void setAgency(Agency agency) {
+		this.agency = agency;
+	}
+
+	public Estate getEstate() {
+		return estate;
+	}
+
+	public void setEstate(Estate estate) {
+		this.estate = estate;
+	}
+
+	public Date getCreDate() {
+		return creDate;
+	}
+
+	public void setCreDate(Date creDate) {
+		this.creDate = creDate;
+	}
+
+	public Integer getPrice() {
+		return price;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Entry [agency=" + agency + ", estate=" + estate + ", creDate=" + creDate + ", price=" + price + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((agency == null) ? 0 : agency.hashCode());
+		result = prime * result + ((estate == null) ? 0 : estate.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Entry other = (Entry) obj;
+		if (agency == null) {
+			if (other.agency != null)
+				return false;
+		} else if (!agency.equals(other.agency))
+			return false;
+		if (estate == null) {
+			if (other.estate != null)
+				return false;
+		} else if (!estate.equals(other.estate))
+			return false;
+		return true;
+	}
+	
 	
 }

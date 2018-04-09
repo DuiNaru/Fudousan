@@ -14,7 +14,7 @@ insert into entry
 AGENCY_ID
 ,ESTATE_ID
 ,PRICE
-)VALUE(
+)VALUES(
 #{agency.agencyId}
 ,#{estate.estateId}
 ,#{price}
