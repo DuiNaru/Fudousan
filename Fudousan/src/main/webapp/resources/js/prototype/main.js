@@ -86,8 +86,9 @@ function init() {
 	cube.rotation.y = Math.PI * 45 / 180;
 	// 장면에 큐브 추가
 	//scene.add(cube);
-
-
+	
+	
+	
 	// 큐브를 배열에 저장
 	objects.push(cube);
 	// DragControls 생성(objects의 메시들을 camera를 기준으로 드래그)
@@ -124,8 +125,8 @@ function animate() {
 	requestAnimationFrame( animate );
 }
 
-function onDocumentMouseDown(event) {
 
+function onDocumentMouseDown(event) {
 	if (chair != null) {
 		// Get mouse position
 		var mouseX = (event.clientX / window.innerWidth) * 2 - 1;
@@ -160,7 +161,7 @@ function onDocumentMouseMove(event) {
 			raycaster.setFromCamera(mouse, camera);
 			
 			var intersects = raycaster.intersectObjects([plane]);
-			console.log(intersects);
+			console.log('intersects  :' + intersects);
 			for ( var i = 0; i < intersects.length; i++ ) {
 				chair.position.copy(intersects[i].point);
 			}
@@ -170,6 +171,6 @@ function onDocumentMouseMove(event) {
 function onDocumentMouseUp(event) {
 	isSelected = false;
 	controls.enabled = true;
-	console.log(chair);
+	console.log('chair : '+chair);
 	
 }
