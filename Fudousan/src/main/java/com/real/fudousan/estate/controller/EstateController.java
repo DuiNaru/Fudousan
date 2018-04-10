@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Select;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,19 +139,47 @@ public class EstateController {
 		entryService.addEntry(entry);
 
 		logger.info("매물 등록 종료");
-		return "/brokers/bm";
+		return "redirect:/bm";
 	}
 	
 	
+	//삭제
+	@RequestMapping(value="deleteEntry" ,method=RequestMethod.GET)
+	public String deleteEntry(Model model, HttpSession session, Estate estate, int agencyId , int estateId, Agency Select){
+		
+		
+		Entry entry = new Entry();
+		
+		Agency agency = new Agency();
+		agency.setAgencyId(agencyId);
+		entry.setAgency(agency);
+		
+		Estate deleteEstate = new Estate();
+		deleteEstate.setEstateId(estateId);
+		entry.setEstate(deleteEstate);
+		
+		
+		System.out.println("entry : " + entry);
+		
+		entryService.deleteEntry(entry);
+		
 	
-	
-	
-	
-	
-	
-	
-	
-	
+		
+		
+		/*session.getAttributeNames();
+		agency.getAgencyId();
+		agency.setAgencyId(agencyId);
+		
+		
+		System.out.println(agency);
+		System.out.println(session);*/
+		
+		
+		
+		
+		
+		return "redirect:bm";
+	}
 	
 	
 	
@@ -193,17 +222,25 @@ public class EstateController {
 	 
 	 
 	 @RequestMapping(value="bm", method=RequestMethod.GET)
-	 public String bm(Model model, HttpSession session) {
-		logger.info("메니저 페이저 진입 / 매물 목록 출력 완료  ");
+	 public String bm(Model model, HttpSession session,Agency agency) {
+		logger.info("매니저 페이저 진입 / 매물 목록 출력 완료  ");
 		 
 		String email = (String) session.getAttribute("loginEmail");
 		System.out.println("Login Email: " + email);
-		 
 		ArrayList<Estate> select = new ArrayList<Estate>();
 		select = (ArrayList<Estate>) estateService.getEsates(email);
 		
+		//여기에 estateid 들어가있음 
 		model.addAttribute("select", select);
-		 	
+	
+		//에이전시 아이디 
+		int agencyId = agencyService.selectAgencyId(email);
+		
+		model.addAttribute("agencyId", agencyId);
+		
+		System.out.println();
+		System.out.println(email);
+
 		System.out.println(select);
 		// System.out.println(estate);
 		logger.info("매물 목록 출력 완료  ");

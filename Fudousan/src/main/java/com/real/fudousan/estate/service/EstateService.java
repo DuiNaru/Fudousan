@@ -55,13 +55,14 @@ public class EstateService {
 	
 	/**
 	 * 매물 삭제
-	 * @param estateId
+	 * @param estate
 	 * @return
 	 */
-	public boolean delEstate(int estateId) {
+/*	public boolean delEstate(Estate estate) {
+		int result = dao.delteByIds(estate)
 		
 		return false;
-	}
+	}*/
 	
 	/**
 	 * estateId 들을 모두 검색하여 가져온다.
@@ -76,4 +77,8 @@ public class EstateService {
 		logger.info("getEstates("+email+") End");
 		return result;
 	}
+
+	
+		
+	
 }

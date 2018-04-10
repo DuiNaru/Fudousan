@@ -20,4 +20,8 @@ public interface EstateMapper {
 	//업데이트
 	
 	public int updateByIds(Estate estate);
+	
+	//매물 삭제 
+	
+	
 }

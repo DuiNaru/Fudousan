@@ -20,5 +20,22 @@ AGENCY_ID
 ,#{price}
 )
 </insert>
+
+<!-- 
+<delete id="deleteEntry" parameterType="int">
+delete
+from Entry
+where ESTATE_ID and AGENCY_ID IN(SELECT AGENCY_ID FROM AGENCY where )
+
+</delete> -->
+
+<delete id="deleteEntry" parameterType="entry">
+delete
+from Entry
+where ESTATE_ID =#{estate.estateId} and AGENCY_ID =#{agency.agencyId}
+
+</delete>
+
+
 	
 </mapper>

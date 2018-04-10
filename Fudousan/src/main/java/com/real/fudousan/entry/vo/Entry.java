@@ -50,6 +50,8 @@ public class Entry implements Serializable {
 	public void setAgency(Agency agency) {
 		this.agency = agency;
 	}
+	
+
 
 	public Estate getEstate() {
 		return estate;

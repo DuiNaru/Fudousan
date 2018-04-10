@@ -261,7 +261,7 @@ SET
 </if>
 
 WHERE
- ESTATE_ID = #{ ESTATE_ID}
+ ESTATE_ID = #{ESTATE_ID}
 
 
 
