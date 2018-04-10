@@ -332,6 +332,61 @@ where estate_id = #{estateId}
 			room.MEMBER_ID IN <foreach collection="_parameter" item="id" open="(" separator=", " close=")">#{id}</foreach>
 	</select>
 	
+<insert id="insertTrans" parameterType="transtype">
+
+<selectKey resultType="int" keyProperty="estateId" order="AFTER">
+SELECT
+trans_type_id
+FROM DUAL
+</selectKey>
+
+INSERT INTO trans_type
+(
+	trans_type_id,
+	trans_name
+)
+VALUES
+(
+	#{transTypeId},
+	#{transName}
+)
+</insert>	
+	
+<insert id="insertMunicipalitycode" parameterType="municipalitycode">
+
+<selectKey resultType="int" keyProperty="estateId" order="AFTER">
+SELECT
+municipalitycode_id
+FROM DUAL
+</selectKey>
+
+
+INSERT INTO municipalitycode
+(
+	municipalitycode_id,
+	code_name
+)
+VALUES
+(
+	#{municipalitycodeId},
+	#{codeName}
+)
+
+
+</insert>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<!-- 객체 별칭이 type  property가 vo 필드명   column이 DB이름-->
 	<resultMap type="estate" id="estateResultMap">
 		<id 	property="estateId" 				column="ESTATE_ID"/>

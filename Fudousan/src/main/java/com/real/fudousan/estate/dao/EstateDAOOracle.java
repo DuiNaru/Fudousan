@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 import com.real.fudousan.entry.dao.EntryMapper;
 import com.real.fudousan.estate.service.EstateService;
 import com.real.fudousan.estate.vo.Estate;
+import com.real.fudousan.estate.vo.MunicipalityCode;
+import com.real.fudousan.estate.vo.TransType;
 
 @Repository
 public class EstateDAOOracle implements EstateDAO {
@@ -92,7 +94,37 @@ public List<Estate> select(Set<Integer> estateIds) {
 	return null;
 }
    
-   
+// INSERT TRANS 
+public int insertTrans(TransType trans){
+	 int result = 0;
+     
+     try{
+        EstateMapper mapper = session.getMapper(EstateMapper.class);
+     
+        result = mapper.insertTrans(trans);
+     }
+     catch(Exception e){
+        e.printStackTrace();
+     }
+     
+     return result;
+}
+
+// INSERT MUNICIPALITY CODE
+public int insertMunicipalitycode(MunicipalityCode mun){
+	 int result = 0;
+     
+     try{
+        EstateMapper mapper = session.getMapper(EstateMapper.class);
+     
+        result = mapper.insertMunicipalitycode(mun);
+     }
+     catch(Exception e){
+        e.printStackTrace();
+     }
+     
+     return result;
+}
    
 
 }

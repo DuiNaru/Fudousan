@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,10 @@ import com.google.code.geocoder.model.GeocoderStatus;
 import com.google.code.geocoder.model.LatLng;
 import com.real.fudousan.agency.service.AgencyService;
 import com.real.fudousan.agency.vo.Agency;
+import com.real.fudousan.estate.service.EstateService;
+import com.real.fudousan.estate.vo.Estate;
+import com.real.fudousan.estate.vo.MunicipalityCode;
+import com.real.fudousan.estate.vo.TransType;
 
 
 @Controller
@@ -31,6 +37,7 @@ public class HomeController {
     
     @Autowired
     private AgencyService service; 
+    private EstateService eService; 
     
     
     @RequestMapping(value="/", method=RequestMethod.GET)
@@ -55,12 +62,139 @@ public class HomeController {
 			model.addAttribute("locationList", locationList);
 		}
     	
+    	logger.info("estateInfo Start");
     	
     	//매물 정보 API활용해서 가져오기 
     	String estateInfo = "";
 		RestTemplate restTemplate = new RestTemplate();
-	/*	String estateInfoResult = restTemplate.getForObject("http://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20151&to=20152&area=37", String.class, estateInfo);
-		System.out.println("estateInfo:::"+estateInfoResult);*/
+		String estateInfoResult = restTemplate.getForObject("http://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20101&to=20134&station=02590", String.class, estateInfo);
+		
+		// object setting 
+		Estate estate = new Estate();
+		TransType trans = new TransType();
+		MunicipalityCode mun = new MunicipalityCode();
+		
+		try {
+			
+			JSONParser jsonParser = new JSONParser();
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(estateInfoResult);
+			JSONArray  estateInfoArray = (JSONArray) jsonObject.get("data");
+			
+			
+			for (int i = 0; i < estateInfoArray.size(); i++) {
+				JSONObject  data= (JSONObject)estateInfoArray.get(i);
+				
+				// get estate Type 
+				String Type = data.get("Type").toString();
+				
+				
+				// trans name setting 
+				trans.setTransName(Type);	
+				
+				
+				// trans id setting 
+				if (Type.contains("中古マンション等")) {
+					
+					// trans type id setting to trans 
+					trans.setTransTypeId(1);
+						
+						// start insert trans
+						eService.insertTrans(trans);
+				
+				
+					// municipality Code setting to mun object 
+					mun.setMunicipalitycodeId(Integer.parseInt(data.get("MunicipalityCode").toString()));
+				
+					
+					//municipality name setting to mun object 
+					mun.setCodeName(data.get("Municipality").toString());
+						
+						// start insert Municipality code 
+						eService.insertMunicipalitycode(mun);
+				
+					// estate setting 
+					estate.setTransType(trans);
+					estate.setMunicipalitycode(mun);
+						
+						// start insert estate 
+						eService.addEstate(estate);
+					
+					
+				
+				}else if(Type.contains("宅地(土地と建物)")){
+					// trans type id setting to trans 
+					trans.setTransTypeId(2);
+					
+						// start insert trans
+						eService.insertTrans(trans);
+					
+					
+					// municipality Code setting to mun object 
+					mun.setMunicipalitycodeId(Integer.parseInt(data.get("MunicipalityCode").toString()));
+				
+					
+					//municipality name setting to mun object 
+					mun.setCodeName(data.get("Municipality").toString());
+						
+						// start insert Municipality code 
+						eService.insertMunicipalitycode(mun);
+						
+					// estate setting 
+					estate.setTransType(trans);
+					estate.setMunicipalitycode(mun);
+						
+						// start insert estate 
+						eService.addEstate(estate);
+				
+					
+				}else if(Type.contains("宅地(土地)")){
+					
+					// trans type id setting to trans 
+					trans.setTransTypeId(3);
+					
+						// start insert trans
+						eService.insertTrans(trans);
+				
+				
+					// municipality Code setting to mun object 
+					mun.setMunicipalitycodeId(Integer.parseInt(data.get("MunicipalityCode").toString()));
+			
+				
+					//municipality name setting to mun object 
+					mun.setCodeName(data.get("Municipality").toString());
+				
+						// start insert Municipality code 
+						eService.insertMunicipalitycode(mun);
+						
+					// estate setting 
+					estate.setTransType(trans);
+					estate.setMunicipalitycode(mun);
+						
+						// start insert estate 
+						eService.addEstate(estate);
+				}
+				
+				
+				
+			
+				
+				
+				
+				/*JSONObject geometryLocation=(JSONObject)data.get("geometry");
+				JSONObject location2 = (JSONObject)geometryLocation.get("location");
+				System.out.println("geometryLocation: "+ geometryLocation);
+			
+				String lat2 = location2.get("lat").toString();
+				String lng2 = location2.get("lng").toString();
+				agency.setGpsX(Double.parseDouble(lat2));
+				agency.setGpsY(Double.parseDouble(lng2));*/
+
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 		
     	 	

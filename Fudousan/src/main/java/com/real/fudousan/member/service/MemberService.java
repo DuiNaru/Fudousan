@@ -276,9 +276,6 @@ public class MemberService {
 		
 
 		// 중개 업소 주소 -> 좌표 변경 세팅  DB에 저장 
-		Double lat=0.0; 
-		Double lng=0.0;
-		String location = "";		
 		String address = ""; 
 		String Main = agency.getAddressMain(); 
 		String Middle = agency.getAddressMiddle();
