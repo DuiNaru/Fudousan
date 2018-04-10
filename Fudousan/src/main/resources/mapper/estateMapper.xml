@@ -280,7 +280,7 @@ where estate_id = #{estateId}
 			,MAP
 			,ROOM.CRE_DATE CRE_DATE
 			,ROOM.DEL_DATE DEL_DATE
-			,HEIGTH
+			,HEIGHT
 			,FLOOR_TEXTURE_ID
 			,CEILING_TEXTURE_ID
 			,MEMBER_ID

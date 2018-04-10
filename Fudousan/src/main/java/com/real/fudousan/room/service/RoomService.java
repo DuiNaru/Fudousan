@@ -68,11 +68,11 @@ public class RoomService {
 	public int createRoom(Room room) {
 		logger.info("createRoom(" + room + ") Start");
 		
-		
+		int result = dao.insert(room);
 		
 		
 		logger.info("createRoom(" + room + ") End");
-		return -1;
+		return result;
 	}
 	
 	/**

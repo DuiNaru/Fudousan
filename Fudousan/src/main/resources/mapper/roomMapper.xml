@@ -11,7 +11,7 @@
 		<result 	 property="map"  			column="MAP"/>
 		<result 	 property="creDate"			column="CRE_DATE"/>
 		<result 	 property="delDate"     	column="DEL_DATE"/>
-		<result 	 property="heigth"      	column="HEIGTH"/>
+		<result 	 property="height"      	column="HEIGHT"/>
 		<result 	 property="memberId"  		column="MEMBER_ID"/>
 		<result		 property="roomPublic"		column="ROOM_PUBLIC"/>
 		<association property="estate"   		column="estate_id" 			javaType="com.real.fudousan.estate.vo.Estate" resultMap="com.real.fudousan.estate.dao.EstateMapper.estateResultMap"/>
@@ -26,7 +26,7 @@
 			,MAP
 			,ROOM.CRE_DATE CRE_DATE
 			,ROOM.DEL_DATE DEL_DATE
-			,HEIGTH
+			,HEIGHT
 			,FLOOR_TEXTURE_ID
 			,CEILING_TEXTURE_ID
 			,MEMBER_ID
@@ -126,7 +126,7 @@
 			,MAP
 			,ROOM.CRE_DATE CRE_DATE
 			,ROOM.DEL_DATE DEL_DATE
-			,HEIGTH
+			,HEIGHT
 			,FLOOR_TEXTURE_ID
 			,CEILING_TEXTURE_ID
 			,MEMBER_ID
@@ -226,7 +226,7 @@
 			,MAP
 			,ROOM.CRE_DATE CRE_DATE
 			,ROOM.DEL_DATE DEL_DATE
-			,HEIGTH
+			,HEIGHT
 			,FLOOR_TEXTURE_ID
 			,CEILING_TEXTURE_ID
 			,MEMBER_ID
@@ -326,7 +326,7 @@
 			,MAP
 			,ROOM.CRE_DATE CRE_DATE
 			,ROOM.DEL_DATE DEL_DATE
-			,HEIGTH
+			,HEIGHT
 			,FLOOR_TEXTURE_ID
 			,CEILING_TEXTURE_ID
 			,MEMBER_ID
@@ -458,11 +458,11 @@
 			)
 		VALUES
 			(
-				#{ESTATE_ID}
-				,#{MEMBER_ID}
-				,#{ROOM_PUBLIC}
+				#{estateId}
+				,#{memberId}
+				,#{roomPublic}
 			)
-		<selectKey keyProperty="room_id" order="AFTER">
+		<selectKey keyProperty="roomId" order="AFTER" resultType="int">
 			SELECT SEQ_ROOM_ID.currval FROM dual
 		</selectKey>
 	</insert>
