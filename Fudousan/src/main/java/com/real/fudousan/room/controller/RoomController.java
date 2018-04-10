@@ -2,6 +2,7 @@ package com.real.fudousan.room.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,8 @@ import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
+import com.real.fudousan.roomwall.service.RoomWallService;
+import com.real.fudousan.roomwall.vo.RoomWall;
 
 @SessionAttributes("loginId")
 @Controller
@@ -32,7 +35,8 @@ public class RoomController {
 	private FavoriteService Fservice;
 	@Autowired
 	private AdviceService Aservice;
-	
+	@Autowired
+	private RoomWallService roomWallService;
 	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
 	public String searchMyRoom(Model model,String roomSearch,int memberId){
@@ -85,4 +89,20 @@ public class RoomController {
 		return result;
 	}
 	
+	@RequestMapping(value="newRoom", method=RequestMethod.GET)
+	public String newRoom(@ModelAttribute("loginId") int loginId, Room room, Model model) {
+		logger.info("newRoom("+loginId+", "+room+") Start");
+		
+		room.setMemberId(loginId);
+		int roomId = Rservice.createRoom(room);
+		model.addAttribute("room", room);
+		
+		if(room.getEstate() != null) {
+			Map<String, List<?>> map = roomWallService.getWallAndConnector(roomId);
+			model.addAttribute("walls", map.get("walls"));
+		}
+		
+		logger.info("newRoom("+loginId+", "+room+") End");
+		return "room/room";
+	}
 }

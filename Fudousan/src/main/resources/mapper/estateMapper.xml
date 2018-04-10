@@ -280,7 +280,7 @@ where estate_id = #{estateId}
 			,MAP
 			,ROOM.CRE_DATE CRE_DATE
 			,ROOM.DEL_DATE DEL_DATE
-			,HEIGTH
+			,HEIGHT
 			,FLOOR_TEXTURE_ID
 			,CEILING_TEXTURE_ID
 			,MEMBER_ID
@@ -318,6 +318,7 @@ where estate_id = #{estateId}
 			,ESTATE_NAME
 			,ESTATE_X
 			,ESTATE_Y
+			,BASE_ROOM_ID
 		from
 			ESTATE
 		join
@@ -331,6 +332,61 @@ where estate_id = #{estateId}
 		where
 			room.MEMBER_ID IN <foreach collection="_parameter" item="id" open="(" separator=", " close=")">#{id}</foreach>
 	</select>
+	
+<insert id="insertTrans" parameterType="transtype">
+
+<selectKey resultType="int" keyProperty="estateId" order="AFTER">
+SELECT
+trans_type_id
+FROM DUAL
+</selectKey>
+
+INSERT INTO trans_type
+(
+	trans_type_id,
+	trans_name
+)
+VALUES
+(
+	#{transTypeId},
+	#{transName}
+)
+</insert>	
+	
+<insert id="insertMunicipalitycode" parameterType="municipalitycode">
+
+<selectKey resultType="int" keyProperty="estateId" order="AFTER">
+SELECT
+municipalitycode_id
+FROM DUAL
+</selectKey>
+
+
+INSERT INTO municipalitycode
+(
+	municipalitycode_id,
+	code_name
+)
+VALUES
+(
+	#{municipalitycodeId},
+	#{codeName}
+)
+
+
+</insert>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	<!-- 객체 별칭이 type  property가 vo 필드명   column이 DB이름-->
 	<resultMap type="estate" id="estateResultMap">
@@ -366,6 +422,7 @@ where estate_id = #{estateId}
 		<result property="estateName" 				column="ESTATE_NAME"/>
 		<result property="estateX" 					column="ESTATE_X"/>
 		<result property="estateY" 					column="ESTATE_Y"/>
+		<result property="baseRoomId" 				column="BASE_ROOM_ID"/>
 		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
 		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
 	</resultMap>

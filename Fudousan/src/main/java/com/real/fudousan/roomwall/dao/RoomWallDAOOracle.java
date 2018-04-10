@@ -26,12 +26,14 @@ public class RoomWallDAOOracle implements RoomWallDAO {
 
 	@Transactional
 	@Override
-	public boolean insertWallAndConnector(List<RoomWall> roomWall, Map<Integer, RoomWallConnector> roomConnector) {
+	public boolean insertWallAndConnector(int roomId, List<RoomWall> roomWall, Map<Integer, RoomWallConnector> roomConnector) {
 		logger.info("insertWallAndConnector() Start");
 		boolean result = true;
 		
 			RoomWallMapper roomWallMapper = session.getMapper(RoomWallMapper.class);
-			if(result &= (roomWallMapper.deleteWallsByRoomId(roomWall.get(0).getRoomId()) > 0)) {
+			if(roomWall.size() == 0) {
+				result &= roomWallMapper.deleteWallsByRoomId(roomId) >= 0;
+			} else if(result &= (roomWallMapper.deleteWallsByRoomId(roomId) >= 0)) {
 				// 치환 맵
 				Map<Integer, Integer> convertMap = new HashMap<>();
 				// 커넥트를 넣으면서 DB PK로 치환한다.
@@ -47,6 +49,8 @@ public class RoomWallDAOOracle implements RoomWallDAO {
 				}
 				// DB의 커넥터 PK로 수정하여서 insert
 				for(RoomWall wall : roomWall) {
+					wall.setRoomId(roomId);
+					logger.debug(wall.toString());
 					// 치환 맵에서 치환된 PK로 변경
 					Integer c1 = convertMap.get(wall.getRoomWallConnector1().getConnectorId());
 					Integer c2 = convertMap.get(wall.getRoomWallConnector2().getConnectorId());
@@ -55,6 +59,9 @@ public class RoomWallDAOOracle implements RoomWallDAO {
 						wall.getRoomWallConnector1().setConnectorId(c1);
 						wall.getRoomWallConnector2().setConnectorId(c2);
 					} else {
+						logger.debug("c1 : " + c1);
+						logger.debug("c2 : " + c2);
+						logger.debug("convertMap : " + convertMap);
 						// 만일 없으면 에러
 						throw new RuntimeException("기존 연결점에 해당하는 연결점 ID가 존재하지 않습니다.");
 					}
@@ -88,7 +95,7 @@ public class RoomWallDAOOracle implements RoomWallDAO {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+		logger.debug("result : " + result);
 		logger.info("selectAllWallAndConnector("+roomId+") End");
 		return result;
 	}

@@ -6,12 +6,14 @@
 
 <mapper namespace="com.real.fudousan.roomwall.dao.RoomWallMapper">
 	<resultMap type="roomwall" id="RoomWallResultMap">
-		<result 		property="roomId" 				column="ROOM_ID"/>
+		<id 			property="roomId" 				column="ROOM_ID"/>
+		<id 											column="C1_CONNECTOR_ID"/>
+		<id 							 				column="C2_CONNECTOR_ID"/>
 		<result 		property="type" 				column="TYPE"/>
-		<association 	property="backTexture" 			column="BACK_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" 			resultMap="com.real.fudousan.texture.dao.TextureMapper.TextureResultMap" 	columnPrefix="BACK_"/>
-		<association 	property="frontTexture" 		column="FRONT_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" 			resultMap="com.real.fudousan.texture.dao.TextureMapper.TextureResultMap" 	columnPrefix="FRONT_"/>
-		<association 	property="roomWallConnector1" 	column="CONNECTOR_ID1" 		javaType="com.real.fudousan.roomwall.vo.RoomWallConnector" 	resultMap="RoomWallConnectorResultMap" 										columnPrefix="C1_"/>
-		<association 	property="roomWallConnector2" 	column="CONNECTOR_ID2" 		javaType="com.real.fudousan.roomwall.vo.RoomWallConnector" 	resultMap="RoomWallConnectorResultMap" 										columnPrefix="C2_"/>
+		<association 	property="backTexture" 			column="BACK_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" 			resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" 	columnPrefix="BACK_"/>
+		<association 	property="frontTexture" 		column="FRONT_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" 			resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" 	columnPrefix="FRONT_"/>
+		<association 	property="roomWallConnector1" 	column="C1_CONNECTOR_ID" 		javaType="com.real.fudousan.roomwall.vo.RoomWallConnector" 	resultMap="RoomWallConnectorResultMap" 										columnPrefix="C1_"/>
+		<association 	property="roomWallConnector2" 	column="C2_CONNECTOR_ID" 		javaType="com.real.fudousan.roomwall.vo.RoomWallConnector" 	resultMap="RoomWallConnectorResultMap" 										columnPrefix="C2_"/>
 	</resultMap>
 	
 	<resultMap type="roomwallconnector" id="RoomWallConnectorResultMap">
@@ -97,17 +99,20 @@
 		JOIN
 			ROOM_WALL_CONNECTOR 				ROOM_WALL_CONNECTOR_2
 		ON
-			ROOM_WALL.CONNECTOR_ID1 = ROOM_WALL_CONNECTOR_2.CONNECTOR_ID
+			ROOM_WALL.CONNECTOR_ID2 = ROOM_WALL_CONNECTOR_2.CONNECTOR_ID
 	</sql>
 
-<select id="selectAllRoomWallByRoomId" resultMap="RoomWallResultMap">
-	<include refid="SELECT_ROOM_WALL"/>
+<select id="selectAllRoomWallByRoomId" parameterType="int" resultMap="RoomWallResultMap">
+	<include refid="SELECT_ROOM_WALL"></include>
+	WHERE
+		room_id = #{0}
 </select>
 
 <insert id="insertWall" parameterType="roomWall">
 	INSERT INTO room_wall
 		(
-			CONNECTOR_ID1
+			ROOM_ID
+			,CONNECTOR_ID1
 			,CONNECTOR_ID2
 			,TYPE
 			<if test="frontTexture != null">
@@ -119,7 +124,8 @@
 		)
 	VALUES
 		(
-			#{roomWallConnector1.connectorId}
+			#{roomId}
+			,#{roomWallConnector1.connectorId}
 			,#{roomWallConnector2.connectorId}
 			,#{type}
 			<if test="frontTexture != null">
@@ -142,15 +148,14 @@
 			#{x}
 			,#{y}
 		)
-	<selectKey keyProperty="connectorId" resultType="int">
-		SELECT EQ_WALL_CONNECTOR_ID.currval
+	<selectKey keyProperty="connectorId" resultType="int" order="AFTER">
+		SELECT SEQ_WALL_CONNECTOR_ID.currval
 		FROM dual
 	</selectKey>
 </insert>
-	
-<!-- 안되면 UNION 으로 대체 -->
+
 <delete id="deleteWallsByRoomId" parameterType="int">
 	DELETE FROM room_wall_connector
-	WHERE connector_id IN (SELECT DISTINCT connector_id1, connector_id2 FROM room_wall WHERE room_id = #{0})
+	WHERE connector_id IN (SELECT DISTINCT connector_id1 FROM room_wall WHERE room_id = #{0} UNION SELECT DISTINCT connector_id2 FROM room_wall WHERE room_id = #{0})
 </delete>
 </mapper>

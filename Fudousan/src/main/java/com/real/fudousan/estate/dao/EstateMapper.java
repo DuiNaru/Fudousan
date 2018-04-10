@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.real.fudousan.estate.vo.Estate;
+import com.real.fudousan.estate.vo.MunicipalityCode;
+import com.real.fudousan.estate.vo.TransType;
 
 public interface EstateMapper {
 	
@@ -21,7 +23,16 @@ public interface EstateMapper {
 	
 	public int updateByIds(Estate estate);
 	
+
 	//매물 삭제 
+
 	
+	// INSERT TRANS 
+	public int insertTrans(TransType trans);
+	
+	// INSERT MUNICIPALITY CODE
+	public int insertMunicipalitycode(MunicipalityCode mun);
+
+
 	
 }

@@ -12,6 +12,13 @@ public interface RoomDAO {
 	public List<Room> allMyRoom(Integer memberId);
 	
 	/**
+	 * roomId 가 일치하는 데이터를 Room에서 찾아온다.
+	 * @param roomId
+	 * @return
+	 */
+	public Room select(int roomId);
+	
+	/**
 	 * 파라미터 방 번호에 대한 모든 방 리스트를 select 한다.
 	 * @param roomIds 가져오고자 하는 방 번호 들
 	 * @return
@@ -42,4 +49,12 @@ public interface RoomDAO {
 	 * @return
 	 */
 	public boolean deleteRoom(int memberId, int roomId);
+	
+	/**
+	 * 파라미터 형식으로 Room 데이터를 추가한다.
+	 * @param memberId member_id
+	 * @param roomPublic room_public
+	 * @return room_id
+	 */
+	public int insert(Room room);
 }

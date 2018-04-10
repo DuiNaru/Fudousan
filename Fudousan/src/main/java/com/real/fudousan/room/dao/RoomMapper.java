@@ -14,6 +14,8 @@ public interface RoomMapper {
 	
 	public List<Room> selectByIds(Set<Integer> roomIds);
 	
+	public Room selectById(int roomId);
+	
 	/**
 	 * 파라미터에 따라 실제 매물이 존재하는 방 or 존재하지 않는 방 으로 구분하여 select 한다.<br>
 	 * 파라미터 맵<br>
@@ -40,4 +42,11 @@ public interface RoomMapper {
 	 * @return
 	 */
 	public boolean deleteRoom(int memberId, int roomId);
+	
+	/**
+	 * MEMBER_ID(memberId), ROOM_PUBLIC(roomPublic)로 새로운 컬럼을 추가한다.
+	 * 
+	 * @return ROOM_ID
+	 */
+	public int insert(Room room);
 }

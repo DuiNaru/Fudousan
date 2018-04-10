@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 
 import com.real.fudousan.estate.vo.Estate;
+import com.real.fudousan.estate.vo.MunicipalityCode;
+import com.real.fudousan.estate.vo.TransType;
 
 public interface EstateDAO {
 
@@ -26,8 +28,17 @@ public interface EstateDAO {
 
 	public List<Estate> select(Set<Integer> estateIds);
 
+
 	//삭제
 
+
 	
+
+	// INSERT TRANS 
+	public int insertTrans(TransType trans);
+
+	
+	// INSERT MUNICIPALITY CODE
+	public int insertMunicipalitycode(MunicipalityCode mun);
 
 }

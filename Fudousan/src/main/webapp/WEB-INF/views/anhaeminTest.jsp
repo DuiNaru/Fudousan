@@ -9,6 +9,8 @@
 	<script src="/fudousan/resources/js/TDSLoader.js"></script>
 	<script src="/fudousan/resources/js/TrackballControls.js"></script>
 	<script src="/fudousan/resources/js/DragControls.js"></script>
+	<script src="/fudousan/resources/js/dat.gui.js"></script>
+	<script src="/fudousan/resources/js/stats.js"></script>
     <style type="text/css">
     	#threejsShow {
     		position:absolute;
@@ -30,7 +32,7 @@
 	<button id="Btn_clear" type="button">array 1초기화</button>
 	<button id="Btn_blistRecovery" type="button">앞으로가기</button><br>
 	<button id="Btn_realSelect" type="button">리얼셀렉트버튼</button>
-	<button id="Btn_addGeometry" type="button">지오메트리 추가</button>
+	<button id="Btn_addGeometry" type="button">바닥색 변경</button>
     <ul id="msg"></ul>
 </div>
 <div id="threejsShow">
@@ -42,7 +44,8 @@
 	<script src="resources/js/socket.io.js"></script>
 	  <script>
 	  
-		var socket = io('http://localhost:8000');
+	  
+		var socket = io('http://localhost:7000');
 		var chatBtn = document.querySelector('#chatBtn');
 		var Btn_object = document.querySelector('#Btn_object');
 		var Btn_blist = document.querySelector('#Btn_blist');
@@ -52,12 +55,8 @@
 		var Btn_clear = document.querySelector('#Btn_clear');
 		var Btn_realSelect = document.querySelector('#Btn_realSelect');
 		var Btn_addGeometry = document.querySelector('#Btn_addGeometry');
-		
-	//add 영역
-		Btn_addGeometry.addEventListener('click', function(event){
-			socket.emit('addGeometry' , null);
-				
-		});
+		var cocoa_count = 0;
+
 	//지오매트리 영역	
 		chatBtn.addEventListener("click", function(event) {
 			socket.emit('chat message', $('#sendMsg').val());
@@ -68,44 +67,64 @@
 		});
 		
 		Btn_blist.addEventListener("click", function(event) {
-			socket.emit('call list', null);
+			socket.emit('call list');
 		});
 		
 		Btn_blist2.addEventListener("click", function(event) {
-			socket.emit('call list2', null);
+			socket.emit('call list2');
 		});
 		
 		Btn_backArray1.addEventListener('click', function(event){
-			socket.emit('back_array' , null);
+			socket.emit('back_array');
 		});
 		Btn_clear.addEventListener('click', function(event){
-			socket.emit('clear_array1', null);
+			socket.emit('clear_array1');
 		})
 		
 		Btn_blistRecovery.addEventListener('click', function(event){
-			socket.emit('Array1_Recovery', null);
+			socket.emit('Array1_Recovery');
 		});
 		
 		Btn_realSelect.addEventListener('click', function(event){
-			socket.emit('realSelect', null);
+			socket.emit('realSelect');
 		});
 		
 		socket.on('chat message', function(msg){
 			$('#msg').append($('<li>').text(msg));
 		});
 		
-		socket.on('addGeo', function(){
-			console.log('addGeo - Start');
-			var mesh;
-			mesh = new THREE.Mesh(
-					new THREE.BoxGeometry(1,2,1),  //도형의 가로세로높이 비율
-					new THREE.MeshBasicMaterial({color:0xff4444, wireframe:false}) // 재질의 색상
-				);
-				mesh.position.y +=1;
-				scene.add(mesh);
-			console.log('addGeo - End');
+		//바닥 색 바꾸기
+		Btn_addGeometry.addEventListener('click', function(event){
+			socket.emit('planeChange');
 		});
 		
+		socket.on('cocoa', function(){
+			console.log('cocoa - Start');
+			console.time('cocoa_time');
+			scene.remove(plane);
+			var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
+			var planeMaterial = new THREE.MeshBasicMaterial({color:0xb5f441, sid:THREE.DoubleSice});
+			plane = new THREE.Mesh(planeGeometry, planeMaterial);
+			scene.add(plane);
+			
+			cocoa_count += 1;
+			var arrayOkSign = ['퍼스트','세컨드'];
+			if(cocoa_count == 1){
+				var sendSign = arrayOkSign[0];
+			}else{
+				var sendSign = arrayOkSign[1];
+			}
+			socket.emit('planeChangeOk', sendSign);
+			console.timeEnd('cocoa_time');
+			
+			
+			console.log('cocoa - End');
+		});
+		
+		socket.on('planeChangeOkMassage', function(data){
+			/* alert(data); */
+			cocoa_count = 0;
+		});
 		
 	</script>
 	

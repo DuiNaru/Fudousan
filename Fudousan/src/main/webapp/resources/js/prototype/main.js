@@ -75,7 +75,6 @@ function init() {
 		chair = object;
 	});
 
-
 	// 큐브 형태(가로 500, 세로 500, 높이 500)
 	var cubeGeometry = new THREE.CubeGeometry(500, 500, 500);
 	// 큐브 재질
@@ -86,8 +85,9 @@ function init() {
 	cube.rotation.y = Math.PI * 45 / 180;
 	// 장면에 큐브 추가
 	//scene.add(cube);
-
-
+	
+	
+	
 	// 큐브를 배열에 저장
 	objects.push(cube);
 	// DragControls 생성(objects의 메시들을 camera를 기준으로 드래그)
@@ -103,6 +103,37 @@ function init() {
 		controls.enabled = true;
 	} );
 
+	//GUI 상의 기능들 구현하기
+	  var options = {
+			  velx: 0,
+			  vely: 0,
+			  camera: {
+				speed: 0.0001
+			  },
+			  stop: function() {
+				console.log('stop');
+			  },
+			  reset: function() {
+				console.log('reset');
+			  },
+			  blueColor : function(){
+				console.log('blue');  
+			  },
+			  greenColor : function(){
+				console.log('green');  
+			  }
+			  };
+	//GUI 추가하기 
+	  	  var gui = new dat.GUI({ resizable : false }); 
+			gui.add(options, 'stop');
+			gui.add(options, 'reset');
+			var changeCeiling  = gui.addFolder('Ceiling');
+			changeCeiling.add(options, 'blueColor');
+			changeCeiling.add(options, 'greenColor');
+			changeCeiling.open();
+			
+			
+	
 	var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
 	var planeMaterial = new THREE.MeshBasicMaterial({color:0xffff00, sid:THREE.DoubleSice});
 	plane = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -115,6 +146,9 @@ function init() {
 
 }
 
+
+
+
 function animate() {
 	// 화면 회전 정보 갱신
 	controls.update();
@@ -124,8 +158,8 @@ function animate() {
 	requestAnimationFrame( animate );
 }
 
-function onDocumentMouseDown(event) {
 
+function onDocumentMouseDown(event) {
 	if (chair != null) {
 		// Get mouse position
 		var mouseX = (event.clientX / window.innerWidth) * 2 - 1;
@@ -160,16 +194,18 @@ function onDocumentMouseMove(event) {
 			raycaster.setFromCamera(mouse, camera);
 			
 			var intersects = raycaster.intersectObjects([plane]);
-			console.log(intersects);
+			console.log('intersects  :' + intersects);
 			for ( var i = 0; i < intersects.length; i++ ) {
 				chair.position.copy(intersects[i].point);
 			}
 		}
 	}
 }
+
 function onDocumentMouseUp(event) {
 	isSelected = false;
 	controls.enabled = true;
-	console.log(chair);
+	console.log('chair : '+chair);
 	
 }
+

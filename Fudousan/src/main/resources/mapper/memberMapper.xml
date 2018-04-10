@@ -131,6 +131,8 @@
 			,text
 			,trans_type_id
 			,confirm
+			,gps_x
+			,gps_y
 		)
 		VALUES
 		(	
@@ -145,6 +147,8 @@
 			,#{text}
 			,#{transType.transTypeId}
 			,#{confirm}
+			,#{gpsX}
+			,#{gpsY}
 		)
 	</insert> 
 	
@@ -192,6 +196,8 @@
 			,text = #{text}
 			,trans_type_id = #{transType.transTypeId}
 			,confirm = #{confirm}
+			,gps_x = #{gpsX}
+			,gps_y = #{gpsY}
 		WHERE
 			member_id=#{member.memberId}		
 				
