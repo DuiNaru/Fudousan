@@ -122,11 +122,16 @@ public class Estate implements Serializable {
 	
 	private double estateX;
 	private double estateY;
+	
+	private int baseRoomId;
 
 
 	public Estate() {
 		super();
 	}
+
+
+
 
 
 
@@ -136,7 +141,8 @@ public class Estate implements Serializable {
 			Integer unitprice, String landshape, Integer frontage, Integer totalfloorarea, String buildingyear,
 			String structure, String use, String purpose, String direction, String classification, Integer breadth,
 			String cityplanning, Integer coverageratio, Integer floorarearatio, String period, String renovation,
-			String remarks, Date delDate, String estateName, String address, double estateX, double estateY) {
+			String remarks, Date delDate, String estateName, String address, double estateX, double estateY,
+			int baseRoomId) {
 		super();
 		this.estateId = estateId;
 		this.transType = transType;
@@ -173,7 +179,11 @@ public class Estate implements Serializable {
 		this.address = address;
 		this.estateX = estateX;
 		this.estateY = estateY;
+		this.baseRoomId = baseRoomId;
 	}
+
+
+
 
 
 
@@ -538,6 +548,24 @@ public class Estate implements Serializable {
 
 
 
+	public int getBaseRoomId() {
+		return baseRoomId;
+	}
+
+
+
+
+
+
+	public void setBaseRoomId(int baseRoomId) {
+		this.baseRoomId = baseRoomId;
+	}
+
+
+
+
+
+
 	@Override
 	public String toString() {
 		return "Estate [estateId=" + estateId + ", transType=" + transType + ", region=" + region
@@ -551,7 +579,12 @@ public class Estate implements Serializable {
 				+ ", cityplanning=" + cityplanning + ", coverageratio=" + coverageratio + ", floorarearatio="
 				+ floorarearatio + ", period=" + period + ", renovation=" + renovation + ", remarks=" + remarks
 				+ ", delDate=" + delDate + ", estateName=" + estateName + ", address=" + address + ", estateX="
-				+ estateX + ", estateY=" + estateY + "]";
+				+ estateX + ", estateY=" + estateY + ", baseRoomId=" + baseRoomId + "]";
 	}
+
+
+
+
+
 	
 }
