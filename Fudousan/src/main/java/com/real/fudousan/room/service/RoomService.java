@@ -1,17 +1,24 @@
 package com.real.fudousan.room.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.real.fudousan.room.controller.RoomController;
 import com.real.fudousan.room.dao.RoomDAO;
 import com.real.fudousan.room.vo.Room;
+import com.real.fudousan.roomwall.dao.RoomWallDAO;
+import com.real.fudousan.roomwall.service.RoomWallService;
+import com.real.fudousan.roomwall.vo.RoomWall;
+import com.real.fudousan.roomwall.vo.RoomWallConnector;
 
 @Service
 public class RoomService {
@@ -20,6 +27,9 @@ public class RoomService {
 	
 	@Autowired
 	private RoomDAO dao;
+	
+	@Autowired
+	private RoomWallService wallService;
 	
 	/**
 	 * 자기 매물 정보 검색
@@ -65,14 +75,31 @@ public class RoomService {
 	 * @param room
 	 * @return 해당 모델링 ID
 	 */
+	@Transactional
 	public int createRoom(Room room) {
 		logger.info("createRoom(" + room + ") Start");
 		
-		int result = dao.insert(room);
+		int roomId = dao.insert(room);
+		logger.debug("roomId : " + roomId);
+		Room r = dao.select(roomId);
+		room.setHeight(r.getHeight());
 		
+		// 실제 방이 있는 룸일 경우, 대표 방의 벽을 복사한다.
+		if(r.getEstate() != null) {
+			int baseRoomId = r.getEstate().getBaseRoomId();
+			Map<String, List<?>> map = wallService.getWallAndConnector(baseRoomId);
+			logger.debug("BaseRoomId : " + baseRoomId);
+			
+			List<RoomWall> roomWallList = (List<RoomWall>) map.get("walls");
+			Map<Integer, RoomWallConnector> roomWallConnectorMap = new HashMap<>();
+			for(RoomWallConnector connector : (List<RoomWallConnector>)map.get("connectors")) {
+				roomWallConnectorMap.put(connector.getConnectorId(), connector.clone());
+			}
+			wallService.save(roomId, roomWallList, roomWallConnectorMap);
+		}
 		
 		logger.info("createRoom(" + room + ") End");
-		return result;
+		return roomId;
 	}
 	
 	/**

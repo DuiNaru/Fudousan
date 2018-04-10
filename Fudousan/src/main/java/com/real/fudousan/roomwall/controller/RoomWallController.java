@@ -79,8 +79,9 @@ public class RoomWallController {
 				RoomWall rw = new RoomWall();
 				
 				
-				rw.setRoomWallConnector1(roomWallConnectorMap.get(element.get("startPoint").asInt()));
-				rw.setRoomWallConnector2(roomWallConnectorMap.get(element.get("endPoint").asInt()));
+				rw.setRoomWallConnector1(roomWallConnectorMap.get(element.get("startPoint").asInt()).clone());
+				rw.setRoomWallConnector2(roomWallConnectorMap.get(element.get("endPoint").asInt()).clone());
+				
 				
 				rw.setRoomId(roomId);
 				rw.setType("Normal");

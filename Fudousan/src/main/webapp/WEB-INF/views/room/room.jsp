@@ -14,12 +14,18 @@
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
 <script type="text/javascript">
 	var room = {
-		roomId:${room.roomId},
-		roomPublic:${room.roomPublic},
-		height:${room.height},
-		ceilingTexture:${room.ceilingTexture},
-		floorTexture:${room.floorTexture},
-		snapshot:${room.snapshot}
+		roomId:${room.roomId}
+		,roomPublic:${room.roomPublic}
+		,height:${room.height}
+		<c:if test="${!empty room.ceilingTexture}">
+		,ceilingTexture:${room.ceilingTexture},
+		</c:if>
+		<c:if test="${!empty room.floorTexture}">
+		,floorTexture:${room.floorTexture},
+		</c:if>
+		<c:if test="${!empty room.snapshot}">
+		,snapshot:${room.snapshot}
+		</c:if>
 	};
 	var originalWalls = [
 		<c:forEach var="wall" varStatus="s" items="${walls}" >

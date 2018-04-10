@@ -3,8 +3,8 @@
  */
 // 카메라 이동 단위
 var cameraMoveValue = 100;
-// 카메라, 씬, 렌더러
-var camera, scene, renderer;
+// 카메라, 씬, 렌더러, 카메라 컨트롤
+var camera, scene, renderer, control;
 // 화면 가로 길이
 var width = window.innerWidth;
 // 화면 세로 길이
@@ -28,15 +28,20 @@ document.addEventListener("DOMContentLoaded", function(){
 	init();
 	//화면 그리기
 	animate();
+	
+	drawWall();
 	});
 
 
 function init() {
 	// 카메라 생성 및 초기화
-	camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100000);
+	camera = new THREE.PerspectiveCamera(60, width / height, 100, 100000);
 	// 카메라 기본 위치를 z 방향으로 200만큼 위에 위치
 	camera.position.z = 6000;
 
+	// 카메라에 맞춰서 돌리기 컨트롤을 생성
+	controls = new THREE.TrackballControls(camera);
+	
 	// 장면 생성
 	scene = new THREE.Scene();
 	// 장면 배경색
@@ -60,7 +65,7 @@ function init() {
 	document.body.appendChild( renderer.domElement );
 
 	var planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
-	var planeMaterial = new THREE.MeshBasicMaterial({color:0x444444, sid:THREE.DoubleSice});
+	var planeMaterial = new THREE.MeshBasicMaterial({color:0xdddddd, sid:THREE.DoubleSice});
 	plane = new THREE.Mesh(planeGeometry, planeMaterial);
 	scene.add(plane);
 
@@ -73,6 +78,8 @@ function init() {
 }
 
 function animate() {
+	// 화면 회전 정보 갱신
+	controls.update();
 	// 화면을 렌더러에 그림
 	renderer.render( scene, camera );
 	// 다음 프레임 지정
@@ -138,22 +145,28 @@ function moveMouse(event) {
 
 function drawWall() {
 	scene.remove(walls);
+	walls = new THREE.Group(); 
 	for(var i = 0; i < originalWalls.length; i++) {
 		var c1 = new THREE.Vector3(originalWalls[i].c1.x, originalWalls[i].c1.y, plane.z);
 		var c2 = new THREE.Vector3(originalWalls[i].c2.x, originalWalls[i].c2.y, plane.z);
 		// Cube
 		var geometry = new THREE.BoxGeometry(c1.clone().sub(c2).length(), wallThickness, room.height );
-		for ( var i = 0; i < geometry.faces.length; i += 2 ) {
+		for ( var j = 0; j < geometry.faces.length; j += 2 ) {
 			var hex = Math.random() * 0xffffff;
-			geometry.faces[ i ].color.setHex( hex );
-			geometry.faces[ i + 1 ].color.setHex( hex );
+			geometry.faces[ j ].color.setHex( hex );
+			geometry.faces[ j + 1 ].color.setHex( hex );
 		}
-		geometry.rotateZ(c1.angleTo(c2));
 		
 		var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
 		cube = new THREE.Mesh( geometry, material );
-		cube.position.copy(c1);
+		var cubeVector = new THREE.Vector3().copy(c1).lerp(c2, 0.5);
+		cubeVector.z += room.height/2;
+		cube.position.copy(cubeVector);
 		
+		var angle = new THREE.Vector3(1,0,0).angleTo(c1.clone().sub(c2).normalize());
+		cube.rotateZ(angle);
 		walls.add( cube );
 	}
+	console.log(walls);
+	scene.add(walls);
 }
