@@ -42,4 +42,12 @@ public interface RoomDAO {
 	 * @return
 	 */
 	public boolean deleteRoom(int memberId, int roomId);
+	
+	/**
+	 * 파라미터 형식으로 Room 데이터를 추가한다.
+	 * @param memberId member_id
+	 * @param roomPublic room_public
+	 * @return room_id
+	 */
+	public int insert(Room room);
 }

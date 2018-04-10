@@ -447,4 +447,23 @@
 		AND
 			ROOM_ID = #{1}
 	</delete>
+	
+	<insert id="insert">
+		INSERT INTO 
+			room
+			(
+				estate_id
+				,member_id
+				,room_public
+			)
+		VALUES
+			(
+				#{ESTATE_ID}
+				,#{MEMBER_ID}
+				,#{ROOM_PUBLIC}
+			)
+		<selectKey keyProperty="room_id" order="AFTER">
+			SELECT SEQ_ROOM_ID.currval FROM dual
+		</selectKey>
+	</insert>
 </mapper>

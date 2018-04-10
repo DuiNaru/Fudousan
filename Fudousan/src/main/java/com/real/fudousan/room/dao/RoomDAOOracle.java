@@ -117,4 +117,22 @@ public class RoomDAOOracle implements RoomDAO {
 		logger.info("deleteRoom("+memberId+", "+roomId+") End");
 		return result;
 	}
+
+	@Override
+	public int insert(Room room) {
+		logger.info("insert("+room+") Start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		int result = -1;
+
+		try{
+			result = mapper.insert(room);
+			if(result == 1) {
+				result = room.getRoomId();
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("insert("+room+") End");
+		return result;
+	}
 }

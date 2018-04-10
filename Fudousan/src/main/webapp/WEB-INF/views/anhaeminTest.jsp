@@ -42,7 +42,7 @@
 	<script src="resources/js/socket.io.js"></script>
 	  <script>
 	  
-		var socket = io('http://localhost:8000');
+		var socket = io('http://localhost:7000');
 		var chatBtn = document.querySelector('#chatBtn');
 		var Btn_object = document.querySelector('#Btn_object');
 		var Btn_blist = document.querySelector('#Btn_blist');
@@ -53,11 +53,7 @@
 		var Btn_realSelect = document.querySelector('#Btn_realSelect');
 		var Btn_addGeometry = document.querySelector('#Btn_addGeometry');
 		
-	//add 영역
-		Btn_addGeometry.addEventListener('click', function(event){
-			socket.emit('addGeometry' , null);
-				
-		});
+
 	//지오매트리 영역	
 		chatBtn.addEventListener("click", function(event) {
 			socket.emit('chat message', $('#sendMsg').val());
@@ -94,44 +90,30 @@
 			$('#msg').append($('<li>').text(msg));
 		});
 		
-		socket.on('addGeo', function(){
-			console.log('addGeo - Start');
-			
-			// 렌더러
-			renderer = new THREE.WebGLRenderer();
-			renderer.setPixelRatio( window.devicePixelRatio );
-			// 렌더러 크기
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			// 해당 렌더러를 화면에 추가하여서 사용
-			document.getElementById("threejsShow").appendChild( renderer.domElement );
-
-			// 외부 모델 로더 생성
-			const loader = new THREE.TDSLoader();
-			// 해당 모델의 텍스쳐 경로 설정
-			loader.setPath("/fudousan/resources/model/testchair/");
-			// 모델 데이터 경로 설정 및 로딩 완료시 리스너 지정
-			loader.load("/fudousan/resources/model/testchair/Armchair.3ds", (object) => {
-				// x축 기준으로 -90도 회전
-				object.rotation.x = Math.PI * -90 / 180;
-
-				// 해당 모델을 가장 가깝게 에워싸는 육면체인 BoundingBox 생성
-				var boundingBox = new THREE.Box3();
-				boundingBox.setFromObject(object);
-
-				// 바운딩 박스의 z 값을 이용하여 이동
-				object.position.z = boundingBox.max.z;
-				// 화면에 추가
-				scene.add(object);
-				// 완료 Alert 띄움
-				alert("add");
-				var objects = [];
-				objects.push(object);	// 해당 object는 Groups 객체로써 DragControls와 호환 X
-				chair = object;
-			});
-
-			animate();
+		//바닥 색 바꾸기
+		Btn_addGeometry.addEventListener('click', function(event){
+			socket.emit('planeChange');
 		});
 		
+		socket.on('cocoa', function(){
+			console.log('cocoa - Start');
+			console.time('cocoa_time');
+			var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
+			var planeMaterial = new THREE.MeshBasicMaterial({color:0xb5f441, sid:THREE.DoubleSice});
+			plane = new THREE.Mesh(planeGeometry, planeMaterial);
+			scene.add(plane);
+			socket.emit('planeChangeOk', 1);
+			console.timeEnd('cocoa_time');
+			animate();
+			
+				
+			
+			console.log('cocoa - End');
+		});
+		
+		socket.on('planeChangeOkMassage', function(data){
+			alert(data);
+		});
 		
 	</script>
 	

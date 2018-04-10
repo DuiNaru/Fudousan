@@ -88,7 +88,8 @@
 			<c:forEach var="room" varStatus="status" items="${realRoomList}">
 				<div id="room${room.roomId}" class="col-sm-12">
 					<label>${room.estate.estateId } : ${room.estate.estateName }</label>
-					<input class="btn btn-default" type="button" value="꾸미기">
+					<a class="btn btn-default" href="../newRoom?estateId=${room.estate.estateId}&roomPublic=0">새로 꾸미기</a>
+					<input class="btn btn-default" type="button" value="수정">
 					<label class="radio-inline"><input name="public${room.roomId}" type="radio" value="1" roomId="${room.roomId}"<c:if test="${room.roomPublic == 1}"> checked="checked"</c:if>>공개</label>
 					<label class="radio-inline"><input name="public${room.roomId}" type="radio" value="0" roomId="${room.roomId}"<c:if test="${room.roomPublic == 0}"> checked="checked"</c:if>>비공개</label>
 				</div>
