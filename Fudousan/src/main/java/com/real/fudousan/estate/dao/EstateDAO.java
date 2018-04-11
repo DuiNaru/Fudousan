@@ -20,17 +20,23 @@ public interface EstateDAO {
 	public int insertByIds(Estate estate);
 	
 	
-	
+
 	//업데이트
 	public int updateByIds(Estate estate);
 	
 	/* 목록 기능 테스트*/
 
 	public List<Estate> select(Set<Integer> estateIds);
+
+
+	//삭제
+
+
 	
 
 	// INSERT TRANS 
 	public int insertTrans(TransType trans);
+
 	
 	// INSERT MUNICIPALITY CODE
 	public int insertMunicipalitycode(MunicipalityCode mun);

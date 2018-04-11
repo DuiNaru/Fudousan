@@ -103,6 +103,37 @@ function init() {
 		controls.enabled = true;
 	} );
 
+	//GUI 상의 기능들 구현하기
+	  var options = {
+			  velx: 0,
+			  vely: 0,
+			  camera: {
+				speed: 0.0001
+			  },
+			  stop: function() {
+				console.log('stop');
+			  },
+			  reset: function() {
+				console.log('reset');
+			  },
+			  blueColor : function(){
+				console.log('blue');  
+			  },
+			  greenColor : function(){
+				console.log('green');  
+			  }
+			  };
+	//GUI 추가하기 
+	  	  var gui = new dat.GUI({ resizable : false }); 
+			gui.add(options, 'stop');
+			gui.add(options, 'reset');
+			var changeCeiling  = gui.addFolder('Ceiling');
+			changeCeiling.add(options, 'blueColor');
+			changeCeiling.add(options, 'greenColor');
+			changeCeiling.open();
+			
+			
+	
 	var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
 	var planeMaterial = new THREE.MeshBasicMaterial({color:0xffff00, sid:THREE.DoubleSice});
 	plane = new THREE.Mesh(planeGeometry, planeMaterial);
@@ -114,6 +145,9 @@ function init() {
 	document.getElementById("threejsShow").addEventListener('mouseup', this.onDocumentMouseUp, false);
 
 }
+
+
+
 
 function animate() {
 	// 화면 회전 정보 갱신
@@ -174,3 +208,4 @@ function onDocumentMouseUp(event) {
 	console.log('chair : '+chair);
 	
 }
+

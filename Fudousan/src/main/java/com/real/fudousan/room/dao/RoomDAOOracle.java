@@ -126,6 +126,7 @@ public class RoomDAOOracle implements RoomDAO {
 
 		try{
 			result = mapper.insert(room);
+			logger.debug("result : " + result + ":" + room);
 			if(result == 1) {
 				result = room.getRoomId();
 			}
@@ -133,6 +134,22 @@ public class RoomDAOOracle implements RoomDAO {
 			e.printStackTrace();
 		}
 		logger.info("insert("+room+") End");
+		return result;
+	}
+
+	@Override
+	public Room select(int roomId) {
+		logger.info("select("+roomId+") Start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		Room result = null;
+		
+		try{
+			result = mapper.selectById(roomId);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.debug("result : " + result);
+		logger.info("select("+roomId+") End");
 		return result;
 	}
 }

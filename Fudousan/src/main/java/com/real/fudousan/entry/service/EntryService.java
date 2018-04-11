@@ -55,8 +55,10 @@ public class EntryService {
 	 * @param entry
 	 * @return
 	 */
-	public boolean delEntry(Entry entry) {
-		return false;
+	public int deleteEntry(Entry entry) {
+		int result = dao.deleteEntry(entry);
+		
+		return result;
 	}
 	
 	/**
@@ -65,9 +67,9 @@ public class EntryService {
 	 * @param estateId
 	 * @return
 	 */
-	public boolean delEntry(int agencyId, int estateId) {
-		return delEntry(new Entry(/* TODO */));
-	}
+	/*public boolean delEntry(int agencyId, int estateId) {
+		return delEntry(new Entry( TODO ));
+	}*/
 	
 	/**
 	 * 매물 가격 수정

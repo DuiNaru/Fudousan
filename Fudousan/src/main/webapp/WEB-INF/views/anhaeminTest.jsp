@@ -9,6 +9,8 @@
 	<script src="/fudousan/resources/js/TDSLoader.js"></script>
 	<script src="/fudousan/resources/js/TrackballControls.js"></script>
 	<script src="/fudousan/resources/js/DragControls.js"></script>
+	<script src="/fudousan/resources/js/dat.gui.js"></script>
+	<script src="/fudousan/resources/js/stats.js"></script>
     <style type="text/css">
     	#threejsShow {
     		position:absolute;
@@ -30,7 +32,7 @@
 	<button id="Btn_clear" type="button">array 1초기화</button>
 	<button id="Btn_blistRecovery" type="button">앞으로가기</button><br>
 	<button id="Btn_realSelect" type="button">리얼셀렉트버튼</button>
-	<button id="Btn_addGeometry" type="button">지오메트리 추가</button>
+	<button id="Btn_addGeometry" type="button">바닥색 변경</button>
     <ul id="msg"></ul>
 </div>
 <div id="threejsShow">
@@ -42,6 +44,7 @@
 	<script src="resources/js/socket.io.js"></script>
 	  <script>
 	  
+	  
 		var socket = io('http://localhost:7000');
 		var chatBtn = document.querySelector('#chatBtn');
 		var Btn_object = document.querySelector('#Btn_object');
@@ -52,7 +55,7 @@
 		var Btn_clear = document.querySelector('#Btn_clear');
 		var Btn_realSelect = document.querySelector('#Btn_realSelect');
 		var Btn_addGeometry = document.querySelector('#Btn_addGeometry');
-		
+		var cocoa_count = 0;
 
 	//지오매트리 영역	
 		chatBtn.addEventListener("click", function(event) {
@@ -98,21 +101,29 @@
 		socket.on('cocoa', function(){
 			console.log('cocoa - Start');
 			console.time('cocoa_time');
+			scene.remove(plane);
 			var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
 			var planeMaterial = new THREE.MeshBasicMaterial({color:0xb5f441, sid:THREE.DoubleSice});
 			plane = new THREE.Mesh(planeGeometry, planeMaterial);
 			scene.add(plane);
-			socket.emit('planeChangeOk', 1);
-			console.timeEnd('cocoa_time');
-			animate();
 			
-				
+			cocoa_count += 1;
+			var arrayOkSign = ['퍼스트','세컨드'];
+			if(cocoa_count == 1){
+				var sendSign = arrayOkSign[0];
+			}else{
+				var sendSign = arrayOkSign[1];
+			}
+			socket.emit('planeChangeOk', sendSign);
+			console.timeEnd('cocoa_time');
+			
 			
 			console.log('cocoa - End');
 		});
 		
 		socket.on('planeChangeOkMassage', function(data){
-			alert(data);
+			/* alert(data); */
+			cocoa_count = 0;
 		});
 		
 	</script>

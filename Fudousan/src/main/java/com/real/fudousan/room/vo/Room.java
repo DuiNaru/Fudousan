@@ -41,7 +41,7 @@ public class Room implements Serializable {
 	private Date delDate;
 
 	/** HEIGTH. */
-	private Integer heigth;
+	private Integer height;
 
 	/** 텍스쳐. */
 	private Texture floorTexture;
@@ -56,7 +56,7 @@ public class Room implements Serializable {
 	private int roomPublic;
 	
 	public Room(){}
-	public Room(Integer roomId, Estate estate, String snapshot, String map, Date creDate, Date delDate, Integer heigth,
+	public Room(Integer roomId, Estate estate, String snapshot, String map, Date creDate, Date delDate, Integer height,
 			Texture floorTexture, Texture ceilingTexture, int memberId, int roomPublic) {
 		super();
 		this.roomId = roomId;
@@ -65,7 +65,7 @@ public class Room implements Serializable {
 		this.map = map;
 		this.creDate = creDate;
 		this.delDate = delDate;
-		this.heigth = heigth;
+		this.height = height;
 		this.floorTexture = floorTexture;
 		this.ceilingTexture = ceilingTexture;
 		this.memberId = memberId;
@@ -86,6 +86,17 @@ public class Room implements Serializable {
 
 	public void setEstate(Estate estate) {
 		this.estate = estate;
+	}
+	
+	public int getEstateId() {
+		return estate==null?-1:estate.getEstateId();
+	}
+	
+	public void setEstateId(int estateId) {
+		if(estate == null) {
+			estate = new Estate();
+		}
+		estate.setEstateId(estateId);
 	}
 
 	public String getSnapshot() {
@@ -120,12 +131,12 @@ public class Room implements Serializable {
 		this.delDate = delDate;
 	}
 
-	public Integer getHeigth() {
-		return heigth;
+	public Integer getHeight() {
+		return height;
 	}
 
-	public void setHeigth(Integer heigth) {
-		this.heigth = heigth;
+	public void setHeight(Integer height) {
+		this.height = height;
 	}
 
 	public Texture getFloorTexture() {
@@ -167,7 +178,7 @@ public class Room implements Serializable {
 	@Override
 	public String toString() {
 		return "Room [roomId=" + roomId + ", estate=" + estate + ", snapshot=" + snapshot + ", map=" + map
-				+ ", creDate=" + creDate + ", delDate=" + delDate + ", heigth=" + heigth + ", floorTexture="
+				+ ", creDate=" + creDate + ", delDate=" + delDate + ", height=" + height + ", floorTexture="
 				+ floorTexture + ", ceilingTexture=" + ceilingTexture + ", memberId=" + memberId + ", roomPublic="
 				+ roomPublic + "]";
 	}

@@ -49,8 +49,9 @@ public class RoomWallDAOOracle implements RoomWallDAO {
 				}
 				// DB의 커넥터 PK로 수정하여서 insert
 				for(RoomWall wall : roomWall) {
+					wall.setRoomId(roomId);
 					logger.debug(wall.toString());
-					/*// 치환 맵에서 치환된 PK로 변경
+					// 치환 맵에서 치환된 PK로 변경
 					Integer c1 = convertMap.get(wall.getRoomWallConnector1().getConnectorId());
 					Integer c2 = convertMap.get(wall.getRoomWallConnector2().getConnectorId());
 					// 둘다 있으면 치환
@@ -63,7 +64,7 @@ public class RoomWallDAOOracle implements RoomWallDAO {
 						logger.debug("convertMap : " + convertMap);
 						// 만일 없으면 에러
 						throw new RuntimeException("기존 연결점에 해당하는 연결점 ID가 존재하지 않습니다.");
-					}*/
+					}
 					// 만일 두 커넥트가 동일한 벽이 있으면 insert 패스
 					if(wall.getRoomWallConnector1().equals(wall.getRoomWallConnector2())) {
 						continue;

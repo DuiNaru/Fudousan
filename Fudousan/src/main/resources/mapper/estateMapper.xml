@@ -261,7 +261,7 @@ SET
 </if>
 
 WHERE
- ESTATE_ID = #{ ESTATE_ID}
+ ESTATE_ID = #{ESTATE_ID}
 
 
 
@@ -280,7 +280,7 @@ where estate_id = #{estateId}
 			,MAP
 			,ROOM.CRE_DATE CRE_DATE
 			,ROOM.DEL_DATE DEL_DATE
-			,HEIGTH
+			,HEIGHT
 			,FLOOR_TEXTURE_ID
 			,CEILING_TEXTURE_ID
 			,MEMBER_ID
@@ -318,6 +318,7 @@ where estate_id = #{estateId}
 			,ESTATE_NAME
 			,ESTATE_X
 			,ESTATE_Y
+			,BASE_ROOM_ID
 		from
 			ESTATE
 		join
@@ -421,6 +422,7 @@ VALUES
 		<result property="estateName" 				column="ESTATE_NAME"/>
 		<result property="estateX" 					column="ESTATE_X"/>
 		<result property="estateY" 					column="ESTATE_Y"/>
+		<result property="baseRoomId" 				column="BASE_ROOM_ID"/>
 		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
 		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
 	</resultMap>

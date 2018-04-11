@@ -22,6 +22,7 @@ import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
 import com.real.fudousan.roomwall.service.RoomWallService;
+import com.real.fudousan.roomwall.vo.RoomWall;
 
 @SessionAttributes("loginId")
 @Controller
@@ -98,7 +99,7 @@ public class RoomController {
 		
 		if(room.getEstate() != null) {
 			Map<String, List<?>> map = roomWallService.getWallAndConnector(roomId);
-			model.addAttribute("wallsAndConnectors", map);
+			model.addAttribute("walls", map.get("walls"));
 		}
 		
 		logger.info("newRoom("+loginId+", "+room+") End");

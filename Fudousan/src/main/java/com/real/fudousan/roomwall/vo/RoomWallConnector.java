@@ -92,4 +92,10 @@ public class RoomWallConnector implements Serializable {
 			return false;
 		return true;
 	}
+
+	@Override
+	public RoomWallConnector clone() {
+		
+		return new RoomWallConnector(connectorId, x, y);
+	}
 }

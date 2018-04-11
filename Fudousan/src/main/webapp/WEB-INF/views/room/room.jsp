@@ -13,17 +13,30 @@
 <script src="<c:url value="/resources/js/DragControls.js"/>"></script>
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
 <script type="text/javascript">
-	var roomId = ${room.roomId};
-	var originalWalls = [];
-	var originalConnectors = [];
-	<c:if test="${!empty wallsAndConnectors}">
-		<c:forEach var="wall" items="${wallsAndConnectors.walls}" >
-			originalWalls.push({startPoint:${wall.roomWallConnector1.connectorId}, endPoint:${wall.roomWallConnector2.connectorId}});
+	var room = {
+		roomId:${room.roomId}
+		,roomPublic:${room.roomPublic}
+		,height:${room.height}
+		<c:if test="${!empty room.ceilingTexture}">
+		,ceilingTexture:${room.ceilingTexture},
+		</c:if>
+		<c:if test="${!empty room.floorTexture}">
+		,floorTexture:${room.floorTexture},
+		</c:if>
+		<c:if test="${!empty room.snapshot}">
+		,snapshot:${room.snapshot}
+		</c:if>
+	};
+	var originalWalls = [
+		<c:forEach var="wall" varStatus="s" items="${walls}" >
+			<c:if test="${s.index != 0 }">
+				,
+			</c:if>
+				{	c1:{x:${wall.roomWallConnector1.x}, y:${wall.roomWallConnector1.y}},
+					c2:{x:${wall.roomWallConnector2.x}, y:${wall.roomWallConnector2.y}}
+				}
 		</c:forEach>
-		<c:forEach var="connector" items="${wallsAndConnectors.connectors}" >
-			originalConnectors.push(new THREE.Vector3(${connector.x}, ${connector.y}, 0));
-		</c:forEach>
-	</c:if>
+	];
 </script>
 <style type="text/css">
 canvas {
@@ -41,6 +54,7 @@ menu {
 </head>
 <body>
 <div class="left-menu">
+<script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
 	<menu>
 	</menu>
 </div>

@@ -40,26 +40,7 @@ public class EstateDAOOracle implements EstateDAO {
       return result;
    }
 
-   
-   /*@Override
-   public List<Estate> select(Set<Integer> estateIds) {
-      logger.info("select("+estateIds+") Start");
-      List<Estate> result = null;
-      try {
-         EstateMapper mapper = session.getMapper(EstateMapper.class);
-         result = mapper.select(estateIds);
-      } catch(Exception e) {
-         e.printStackTrace();
-      }
-      logger.info("select("+estateIds+") End");
-      return result;
-   }*/
 
-   
-   
-   
-   
-   
    
 /*매물등록*/
    @Override
@@ -79,6 +60,12 @@ public class EstateDAOOracle implements EstateDAO {
    }
 
 
+   //매물 삭제
+ 
+	   
+	   
+	   
+   
 
 
 @Override

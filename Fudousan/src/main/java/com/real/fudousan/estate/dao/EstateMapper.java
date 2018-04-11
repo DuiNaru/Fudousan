@@ -23,12 +23,16 @@ public interface EstateMapper {
 	
 	public int updateByIds(Estate estate);
 	
+
+	//매물 삭제 
+
 	
 	// INSERT TRANS 
 	public int insertTrans(TransType trans);
 	
 	// INSERT MUNICIPALITY CODE
 	public int insertMunicipalitycode(MunicipalityCode mun);
-	
+
+
 	
 }
