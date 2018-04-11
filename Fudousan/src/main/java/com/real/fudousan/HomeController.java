@@ -37,6 +37,8 @@ public class HomeController {
     
     @Autowired
     private AgencyService service; 
+    
+    @Autowired
     private EstateService eService; 
     
     
@@ -67,7 +69,7 @@ public class HomeController {
     	//매물 정보 API활용해서 가져오기 
     	String estateInfo = "";
 		RestTemplate restTemplate = new RestTemplate();
-		String estateInfoResult = restTemplate.getForObject("http://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20101&to=20134&station=02590", String.class, estateInfo);
+		String estateInfoResult = restTemplate.getForObject("http://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20101&to=20134&station=02592", String.class, estateInfo);
 		
 		// object setting 
 		Estate estate = new Estate();
@@ -83,10 +85,125 @@ public class HomeController {
 			
 			for (int i = 0; i < estateInfoArray.size(); i++) {
 				JSONObject  data= (JSONObject)estateInfoArray.get(i);
-				
-				// get estate Type 
+			
+				// get estate 			
 				String Type = data.get("Type").toString();
+					
+				String Region = data.get("Region").toString();
+				if (Region != null) {
+					estate.setRegion(Region);
+				}
+				String Prefecture = data.get("Prefecture").toString();
+				 if(Prefecture != null){
+						estate.setPrefecture(Prefecture);
+					}
+				String Municipality = data.get("Municipality").toString();
+				 if(Municipality != null){
+						estate.setMunicipality(Municipality);
+					}
+				String DistrictName = data.get("DistrictName").toString();
+				if(DistrictName != null){
+					estate.setDistrictname(DistrictName);
+				}
+				String NearestStation = data.get("NearestStation").toString();
+				 if(NearestStation != null){
+						estate.setNeareststation(NearestStation);
+					}
+				Integer TimeToNearestStation = Integer.parseInt(data.get("TimeToNearestStation").toString());
+				if(TimeToNearestStation != null){
+					estate.setTimetoneareststation(TimeToNearestStation);
+				}
+				Integer TradePrice = Integer.parseInt(data.get("TradePrice").toString());
+				if(TradePrice != null){
+						estate.setTradeprice(TradePrice);
+					}
+				Integer PricePerUnit = Integer.parseInt(data.get("PricePerUnit").toString());
+				if(PricePerUnit != null){
+						estate.setPriceperunit(PricePerUnit);
+					}
+				String FloorPlan = data.get("FloorPlan").toString();
+				if(FloorPlan != null){
+						estate.setFloorplan(FloorPlan);
+					} 
+				Integer Area = Integer.parseInt(data.get("Area").toString());
+				if(Area != null){
+						estate.setArea(Area);
+					}
+				Integer UnitPrice = Integer.parseInt(data.get("UnitPrice").toString());
+				if(UnitPrice != null){
+						estate.setUnitprice(UnitPrice);
+					}
+				String LandShape = data.get("LandShape").toString();
+				if(LandShape != null){
+						estate.setLandshape(LandShape);
+					}
+				Integer Frontage = Integer.parseInt(data.get("Frontage").toString());
+				if(Frontage != null){
+						estate.setFrontage(Frontage);
+					} 
+				Integer TotalFloorArea = Integer.parseInt(data.get("TotalFloorArea").toString());
+				if(TotalFloorArea != null){
+						estate.setTotalfloorarea(TotalFloorArea);
+					}
+				String BuildingYear = data.get("BuildingYear").toString();
+				if(BuildingYear != null){
+						estate.setBuildingyear(BuildingYear);
+					}
+				String Structure = data.get("Structure").toString();
+				if(Structure != null){
+						estate.setStructure(Structure);
+					}
+				String Use = data.get("Use").toString();
+				if(Use != null){
+					estate.setUse(Use);
+				}
+				String Purpose = data.get("Purpose").toString();
+				 if(Purpose != null){
+						estate.setPurpose(Purpose);
+					}
+				String Direction = data.get("Direction").toString();
+				if(Direction != null){
+						estate.setDirection(Direction);
+					}
+				String Classification = data.get("Classification").toString();
+				if(Classification != null){
+						estate.setClassification(Classification);
+					}
+				Integer Breadth = Integer.parseInt(data.get("Breadth").toString());
+				if(Breadth != null){
+					estate.setBreadth(Breadth);
+				}
+				String CityPlanning = data.get("CityPlanning").toString();
+				if(CityPlanning != null){
+					estate.setCityplanning(CityPlanning);
+				}
+				Integer CoverageRatio = Integer.parseInt(data.get("CoverageRatio").toString());
+				if(CoverageRatio != null){
+						estate.setCoverageratio(CoverageRatio);
+					}
+				Integer FloorAreaRatio = Integer.parseInt(data.get("FloorAreaRatio").toString());
+				 if(FloorAreaRatio != null){
+						estate.setFloorarearatio(FloorAreaRatio);
+					}
+				String Period = data.get("Period").toString();
+				if(Period != null){
+					estate.setPeriod(Period);
+				}
+				String Renovation = data.get("Renovation").toString();
+				if(Renovation != null){
+						estate.setRenovation(Renovation);
+					}
+				String Remarks = data.get("Remarks").toString();
+				if(Remarks != null){
+					estate.setRemarks(Remarks);
+				}
+							
+	
 				
+				
+				
+				
+				// estate setting 
 				
 				// trans name setting 
 				trans.setTransName(Type);	
@@ -94,23 +211,23 @@ public class HomeController {
 				
 				// trans id setting 
 				if (Type.contains("中古マンション等")) {
+					 
+						// trans type id setting to trans 
+						trans.setTransTypeId(1);
+							
+							// start insert trans
+							eService.insertTrans(trans);
 					
-					// trans type id setting to trans 
-					trans.setTransTypeId(1);
-						
-						// start insert trans
-						eService.insertTrans(trans);
 				
-				
-					// municipality Code setting to mun object 
-					mun.setMunicipalitycodeId(Integer.parseInt(data.get("MunicipalityCode").toString()));
-				
+						// municipality Code setting to mun object 
+						mun.setMunicipalitycodeId(Integer.parseInt(data.get("MunicipalityCode").toString()));
 					
-					//municipality name setting to mun object 
-					mun.setCodeName(data.get("Municipality").toString());
 						
-						// start insert Municipality code 
-						eService.insertMunicipalitycode(mun);
+						//municipality name setting to mun object 
+						mun.setCodeName(data.get("Municipality").toString());
+							
+							// start insert Municipality code 
+							eService.insertMunicipalitycode(mun);
 				
 					// estate setting 
 					estate.setTransType(trans);
@@ -174,23 +291,7 @@ public class HomeController {
 						eService.addEstate(estate);
 				}
 				
-				
-				
-			
-				
-				
-				
-				/*JSONObject geometryLocation=(JSONObject)data.get("geometry");
-				JSONObject location2 = (JSONObject)geometryLocation.get("location");
-				System.out.println("geometryLocation: "+ geometryLocation);
-			
-				String lat2 = location2.get("lat").toString();
-				String lng2 = location2.get("lng").toString();
-				agency.setGpsX(Double.parseDouble(lat2));
-				agency.setGpsY(Double.parseDouble(lng2));*/
-
-			}
-			
+			}	// for 문 end 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
