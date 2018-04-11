@@ -193,12 +193,12 @@ public class EstateController {
 		 
 		 logger.info("매물 수정 페이지로 이동 ");
 		 
-	
-		 entryService.modifyEstatepage(entry);
+	/*	 
+		 entryService.(entry);
 		 entry.getEstate(); 
 		 model.addAttribute("entry", entry);
 		 System.out.println(entry);
-		 	
+		 	*/
 		 
 	    	return "/brokers/bc";
 	 }
