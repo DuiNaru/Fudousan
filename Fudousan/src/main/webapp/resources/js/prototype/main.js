@@ -121,16 +121,52 @@ function init() {
 			  },
 			  greenColor : function(){
 				console.log('green');  
-			  }
+			  },
+			  redColor : function(){
+				  console.log('red');
+			  },
+			  의자추가 : function(){
+				  console.log('의자를 추가했어요');
+			  },
+			  뒤로가기 : function(){
+				  console.log('뒤로갔어요');
+			  },
+			  앞으로가기 : function(){
+				  console.log('앞으로갔어요');
+			  },
+			  저장 : function(){
+				  console.log('저장했어요');
+			  },
+			  초기화 : function(){
+				  console.log('초기화했어요');
+			  },
+			  종료 : function(){
+				  console.log('종료햇어요');
+			  },
+			  아이템제거하기 : function(){
+				  console.log('이제 클릭하면 제거됨');
+			  },
+			  
 			  };
 	//GUI 추가하기 
 	  	  var gui = new dat.GUI({ resizable : false }); 
 			gui.add(options, 'stop');
 			gui.add(options, 'reset');
-			var changeCeiling  = gui.addFolder('Ceiling');
+			var service = gui.addFolder('추가기능');
+			service.add(options, '뒤로가기');
+			service.add(options, '앞으로가기');
+			service.add(options, '저장');
+			service.add(options, '초기화');
+			service.add(options, '종료');
+			service.open();
+			var changeCeiling  = gui.addFolder('천장깔맞춤');
 			changeCeiling.add(options, 'blueColor');
 			changeCeiling.add(options, 'greenColor');
 			changeCeiling.open();
+			var AddOItem  = gui.addFolder('아이템 추가하기');
+			AddOItem.add(options, '의자추가');
+			AddOItem.open();
+			gui.add(options, '아이템제거하기');
 			
 			
 	
