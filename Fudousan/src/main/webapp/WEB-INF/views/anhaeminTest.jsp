@@ -122,7 +122,7 @@
 		});
 		
 		socket.on('planeChangeOkMassage', function(data){
-			/* alert(data); */
+			 alert(data); 
 			cocoa_count = 0;
 		});
 		
