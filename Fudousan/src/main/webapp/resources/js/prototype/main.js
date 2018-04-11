@@ -185,7 +185,17 @@ function init() {
 		saveTimeChange();
 	});
 	
+	//바닥을 green으로 바꾸는 메소드
 	socket.on('ServiceCall_greenPlane', function(){
+			green_floor();
+			if(whoAmI == 'selecter'){
+				socket.emit('goArray1', function(){
+					green_floor();
+				});
+			}
+	});
+	
+	function green_floor(){
 		scene.remove(plane);
 		console.time('텍스쳐 로딩 시간 체크 - Start');
 		var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
@@ -194,7 +204,10 @@ function init() {
 		scene.add(plane);
 		console.timeEnd('텍스쳐 로딩 시간 체크 - End');
 		saveTimeChange();
-	});
+	};
+	
+	
+	
 	
 	socket.on('whoAreYou',function(data){
 		whoAmI = data;
@@ -205,8 +218,10 @@ function init() {
 	socket.on('successChangeMessage', function(data){
 		if(whoAmI == 'selecter'){
 			alert('상대방도 선택사항이 적용되었습니다.')
+			whoAmI = "";
 		}else{
 			alert('상대방이 무언가를 바꾸었습니다.');
+			whoAmI = "";
 		}
 	});
 	
