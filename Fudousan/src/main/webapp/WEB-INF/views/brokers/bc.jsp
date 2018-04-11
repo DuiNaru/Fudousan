@@ -1,14 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
-    <title>공인중개사 수정</title>
+    <title>매물 수정 </title>
 
     <!-- 부트스트랩 -->
     <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
@@ -39,11 +43,31 @@
        
       }
    
-    
-      
 	</style>
   </head>
   <body>
+  
+  <!-- 로그인 모달 시작 -->
+  <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Login</h4>
+				</div>
+				
+				<div class="modal-body">
+					Email <input type="text" id="memberEmail" name="memberID">
+					Password <input type="password" id="password" name="password">
+					<button type="button" id="loginBtn">Login</button>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 로그인 모달 끝 -->
    <!-- Header -->
 		 <nav class="navbar navbar-default" style="margin: auto 0"> 
 		  <div class="container-fluid">
@@ -65,17 +89,24 @@
 		     
 		    
 		      <ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
-		        <li><a href="#">Login</a></li>
+		       <c:if test="${sessionScope.loginEmail == null}">
+					<li id="loginNameTag"></li>
+					<li id="loginAtag"><a data-toggle="modal" href="#loginModal">Login</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="join/join">Customer Join</a></li>
+							<li class="divider"></li>
+							<li><a href="join/agencyjoin">Agency Join</a></li>
+						</ul>
+					</li>
+				</c:if>
+				<c:if test="${sessionScope.loginEmail != null}">
+					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
+					<li><a href="/fudousan/bw">Logout</a></li>
+				</c:if>
 		    
-		         <li class="dropdown">
-			          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
-			          <ul class="dropdown-menu" role="menu">
-			            <li><a href="#">Customer Join</a></li>
-			            <li class="divider"></li>
-			            <li><a href="#">Agency Join</a></li>
-			           
-			          </ul>
-		         </li>
+		        
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
 		  </div><!-- /.container-fluid -->
@@ -86,10 +117,18 @@
  
  <article class="container">
         <div class="page-header">
-          <h1>物件の修正 <small>매물 수정</small></h1>
+          <h1> 物件修整<small>매물수정</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="estateupdate" method="post">
+          <form role="form" action="estateupdate" method="post" enctype="multipart/form-data">
+          
+          <div class="form-group">
+              <label for="inputMunicipality">매물이름</label>
+              <input type="text" class="form-control" id="inputestateName"  name="estateName" value="${entry.estate.estateId}">
+            </div>
+          
+          
+          
             <div class="form-group">
               <label for="inputType">取引タイプ(거래종류)</label>
               
@@ -99,6 +138,13 @@
   			<option value='2'>マンション</option>
 			</select>
             </div>
+            
+            
+            
+             <div class="form-group">
+              <label for="inputPrefecture">가격</label>
+              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 가격" name="price">
+           </div>
             
             
             <div class="form-group">
@@ -297,14 +343,26 @@
            
             
             <div class="form-group text-center">
-              <button type="submit" class="btn btn-info">修正完了<i class="fa fa-check spaceLeft"></i></button>
-              <button type="reset" class="btn btn-warning">初期化<i class="fa fa-times spaceLeft"></i></button>
+              <button type="submit" class="btn btn-info">登録完了<i class="fa fa-check spaceLeft"></i></button>
+              <button type="reset" class="btn btn-warning" >初期化<i class="fa fa-times spaceLeft"></i></button>
             </div>
           </form>
         </div>
 </article>
  
+ 
 
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  <!-- script -->
 
