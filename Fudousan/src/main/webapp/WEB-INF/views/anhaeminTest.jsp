@@ -38,7 +38,6 @@
 <div id="threejsShow">
 
 </div>
-<script src="/fudousan/resources/js/prototype/main.js"></script>
     <input type="hidden" value="88" id="itemId" name="itemId">
 	<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 	<script src="resources/js/socket.io.js"></script>
@@ -114,7 +113,7 @@
 			}else{
 				var sendSign = arrayOkSign[1];
 			}
-			socket.emit('planeChangeOk', sendSign);
+			socket.emit('sameTimeChange_check', sendSign);
 			console.timeEnd('cocoa_time');
 			
 			
@@ -122,12 +121,12 @@
 		});
 		
 		socket.on('planeChangeOkMassage', function(data){
-			/* alert(data); */
+			 alert(data); 
 			cocoa_count = 0;
 		});
 		
 	</script>
-	
+	<script src="/fudousan/resources/js/prototype/main.js"></script>
 	
 </body>
 </html>

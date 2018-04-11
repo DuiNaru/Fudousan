@@ -67,7 +67,7 @@ public class Estate implements Serializable {
 	private String landshape;
 
 	/** 間口.--- */
-	private Integer frontage;
+	private Double frontage;
 
 	/** 延床面積(平方メートル).-- */
 	private Integer totalfloorarea;
@@ -91,7 +91,7 @@ public class Estate implements Serializable {
 	private String classification;
 
 	/** 前面道路：幅員（ｍ）. */
-	private Integer breadth;
+	private Double breadth;
 
 	/** 都市計画. */
 	private String cityplanning;
@@ -138,8 +138,8 @@ public class Estate implements Serializable {
 	public Estate(Integer estateId, TransType transType, String region, MunicipalityCode municipalitycode,
 			String prefecture, String municipality, String districtname, String neareststation,
 			Integer timetoneareststation, Integer tradeprice, Integer priceperunit, String floorplan, Integer area,
-			Integer unitprice, String landshape, Integer frontage, Integer totalfloorarea, String buildingyear,
-			String structure, String use, String purpose, String direction, String classification, Integer breadth,
+			Integer unitprice, String landshape, Double frontage, Integer totalfloorarea, String buildingyear,
+			String structure, String use, String purpose, String direction, String classification, Double breadth,
 			String cityplanning, Integer coverageratio, Integer floorarearatio, String period, String renovation,
 			String remarks, Date delDate, String estateName, String address, double estateX, double estateY,
 			int baseRoomId) {
@@ -337,12 +337,12 @@ public class Estate implements Serializable {
 	}
 
 
-	public Integer getFrontage() {
+	public Double getFrontage() {
 		return frontage;
 	}
 
 
-	public void setFrontage(Integer frontage) {
+	public void setFrontage(Double frontage) {
 		this.frontage = frontage;
 	}
 
@@ -417,12 +417,12 @@ public class Estate implements Serializable {
 	}
 
 
-	public Integer getBreadth() {
+	public Double getBreadth() {
 		return breadth;
 	}
 
 
-	public void setBreadth(Integer breadth) {
+	public void setBreadth(Double breadth) {
 		this.breadth = breadth;
 	}
 

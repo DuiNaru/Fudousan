@@ -37,6 +37,8 @@ public class HomeController {
     
     @Autowired
     private AgencyService service; 
+    
+    @Autowired
     private EstateService eService; 
     
     
@@ -64,15 +66,20 @@ public class HomeController {
     	
     	logger.info("estateInfo Start");
     	
+    	
     	//매물 정보 API활용해서 가져오기 
     	String estateInfo = "";
 		RestTemplate restTemplate = new RestTemplate();
-		String estateInfoResult = restTemplate.getForObject("http://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20101&to=20134&station=02590", String.class, estateInfo);
+		String estateInfoResult = restTemplate.getForObject("http://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20101&to=20134&station=02592", String.class, estateInfo);
 		
 		// object setting 
 		Estate estate = new Estate();
 		TransType trans = new TransType();
 		MunicipalityCode mun = new MunicipalityCode();
+		String address = "";
+		String Prefecture = "";
+		String Municipality = "";
+		String DistrictName = "";
 		
 		try {
 			
@@ -80,13 +87,178 @@ public class HomeController {
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(estateInfoResult);
 			JSONArray  estateInfoArray = (JSONArray) jsonObject.get("data");
 			
-			
-			for (int i = 0; i < estateInfoArray.size(); i++) {
+			/*estateInfoArray.size()*/
+			for (int i = 0; i < 1; i++) {
 				JSONObject  data= (JSONObject)estateInfoArray.get(i);
-				
-				// get estate Type 
+			
+				// get estate 			
 				String Type = data.get("Type").toString();
 				
+				
+				if (data.get("Region") != null) {
+					String Region = data.get("Region").toString();
+					estate.setRegion(Region);					
+				}
+				
+				if(data.get("Prefecture") != null){
+					  Prefecture = data.get("Prefecture").toString();
+						estate.setPrefecture(Prefecture);
+				}
+				
+				if(data.get("Municipality") != null){
+					 Municipality = data.get("Municipality").toString();
+					 estate.setMunicipality(Municipality);
+					}
+				
+				if(data.get("DistrictName") != null){
+					DistrictName = data.get("DistrictName").toString();
+					estate.setDistrictname(DistrictName);
+				}
+				if(data.get("NearestStation") != null){
+					String NearestStation = data.get("NearestStation").toString();
+					estate.setNeareststation(NearestStation); 
+				}
+				
+				if(data.get("TimeToNearestStation")!= null){
+					Integer TimeToNearestStation = Integer.parseInt(data.get("TimeToNearestStation").toString());
+					estate.setTimetoneareststation(TimeToNearestStation);
+				}
+				
+				if(data.get("TradePrice") != null){
+					Integer TradePrice = Integer.parseInt(data.get("TradePrice").toString());
+					estate.setTradeprice(TradePrice);
+					}
+				if(data.get("PricePerUnit") != null){
+					Integer PricePerUnit = Integer.parseInt(data.get("PricePerUnit").toString());
+					estate.setPriceperunit(PricePerUnit);
+				}
+				
+				if(data.get("FloorPlan") != null){
+					String FloorPlan = data.get("FloorPlan").toString();
+					estate.setFloorplan(FloorPlan);
+				} 
+				
+				if(data.get("Area") != null){
+					Integer Area = Integer.parseInt(data.get("Area").toString());
+					estate.setArea(Area);
+				}
+				
+				if(data.get("UnitPrice") != null){
+					Integer UnitPrice = Integer.parseInt(data.get("UnitPrice").toString());
+					estate.setUnitprice(UnitPrice);
+				}
+				
+				if(data.get("LandShape") != null){
+					String LandShape = data.get("LandShape").toString();
+					estate.setLandshape(LandShape);
+				}
+				if(data.get("Frontage") != null){
+					Double Frontage = Double.parseDouble(data.get("Frontage").toString());
+					
+					estate.setFrontage(Frontage);
+				} 
+				if(data.get("TotalFloorArea") != null){
+					Integer TotalFloorArea = Integer.parseInt(data.get("TotalFloorArea").toString());
+					estate.setTotalfloorarea(TotalFloorArea);
+				}
+				if(data.get("BuildingYear") != null){
+					String BuildingYear = data.get("BuildingYear").toString();
+					estate.setBuildingyear(BuildingYear);
+				}
+				if(data.get("Structure") != null){
+					String Structure = data.get("Structure").toString();
+					estate.setStructure(Structure);
+				}
+				if(data.get("Use") != null){
+					String Use = data.get("Use").toString();
+					estate.setUse(Use);
+				}
+				 if(data.get("Purpose")!= null){
+					 String Purpose = data.get("Purpose").toString();
+					 estate.setPurpose(Purpose);
+				}
+				if(data.get("Direction") != null){
+					String Direction = data.get("Direction").toString();
+					estate.setDirection(Direction);
+				}
+				if(data.get("Classification") != null){
+					String Classification = data.get("Classification").toString();
+					estate.setClassification(Classification);
+				}
+				if(data.get("Breadth") != null){
+					Double Breadth = Double.parseDouble(data.get("Breadth").toString());
+					estate.setBreadth(Breadth);
+				}
+				if(data.get("CityPlanning") != null){
+					String CityPlanning = data.get("CityPlanning").toString();
+					estate.setCityplanning(CityPlanning);
+				}
+				if(data.get("CoverageRatio") != null){
+					Integer CoverageRatio = Integer.parseInt(data.get("CoverageRatio").toString());
+					estate.setCoverageratio(CoverageRatio);
+				}
+				 if(data.get("FloorAreaRatio") != null){
+					 Integer FloorAreaRatio = Integer.parseInt(data.get("FloorAreaRatio").toString());
+					 estate.setFloorarearatio(FloorAreaRatio);
+				} 
+				if(data.get("Period") != null){
+					String Period = data.get("Period").toString();
+					estate.setPeriod(Period);
+				}
+				if(data.get("Renovation") != null){
+					String Renovation = data.get("Renovation").toString();
+					estate.setRenovation(Renovation);
+				}
+				if(data.get("Remarks") != null){
+					String Remarks = data.get("Remarks").toString();
+					estate.setRemarks(Remarks);
+				}
+				
+				// address setting 
+				
+				int cho = (int) (Math.random() * 10) + 1;
+				int ban = (int) (Math.random() * 10) + 1;
+				int go = (int) (Math.random() * 10) + 1;
+				
+				String Scho = String.valueOf(cho);
+				String Sban = String.valueOf(ban);
+				String Sgo = String.valueOf(go);
+
+				address = Prefecture + Municipality + DistrictName+Scho+"-"+Sban+"-"+Sgo;
+				
+				estate.setAddress(address);
+				
+		    	String locationInfo = address;
+				RestTemplate AddressRestTemplate = new RestTemplate();
+				String locationResult = AddressRestTemplate.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address={a}&key=AIzaSyAlZMVBrvQGWP2QTDvf5ur7HrtEC3xlOf0", String.class, locationInfo);
+				System.out.println("locationInfo:::"+locationResult);
+				
+				
+				try {
+					
+					JSONParser AddressJsonParser = new JSONParser();
+					JSONObject AddressJsonObject = (JSONObject) AddressJsonParser.parse(locationResult);
+					JSONArray  locationArray = (JSONArray) AddressJsonObject.get("results");
+					
+					for (int j = 0; j < locationArray.size(); j++) {
+						JSONObject  geometry= (JSONObject)locationArray.get(i);
+						JSONObject geometryLocation=(JSONObject)geometry.get("geometry");
+						JSONObject location2 = (JSONObject)geometryLocation.get("location");
+						System.out.println("geometryLocation: "+ geometryLocation);
+					
+						String lat2 = location2.get("lat").toString();
+						String lng2 = location2.get("lng").toString();
+						estate.setEstateX(Double.parseDouble(lat2));
+						estate.setEstateY(Double.parseDouble(lng2));
+
+					}
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
+				
+				// estate setting 
 				
 				// trans name setting 
 				trans.setTransName(Type);	
@@ -94,28 +266,30 @@ public class HomeController {
 				
 				// trans id setting 
 				if (Type.contains("中古マンション等")) {
+					 
+						// trans type id setting to trans 
+						trans.setTransTypeId(1);
+							
+							// start insert trans
+							eService.insertTrans(trans);
 					
-					// trans type id setting to trans 
-					trans.setTransTypeId(1);
-						
-						// start insert trans
-						eService.insertTrans(trans);
 				
-				
-					// municipality Code setting to mun object 
-					mun.setMunicipalitycodeId(Integer.parseInt(data.get("MunicipalityCode").toString()));
-				
+						// municipality Code setting to mun object 
+						mun.setMunicipalitycodeId(Integer.parseInt(data.get("MunicipalityCode").toString()));
 					
-					//municipality name setting to mun object 
-					mun.setCodeName(data.get("Municipality").toString());
 						
-						// start insert Municipality code 
-						eService.insertMunicipalitycode(mun);
+						//municipality name setting to mun object 
+						mun.setCodeName(data.get("Municipality").toString());
+							
+							// start insert Municipality code 
+							eService.insertMunicipalitycode(mun);
 				
 					// estate setting 
 					estate.setTransType(trans);
 					estate.setMunicipalitycode(mun);
 						
+					
+						System.out.println(estate);
 						// start insert estate 
 						eService.addEstate(estate);
 					
@@ -142,7 +316,8 @@ public class HomeController {
 					// estate setting 
 					estate.setTransType(trans);
 					estate.setMunicipalitycode(mun);
-						
+					
+					System.out.println(estate);
 						// start insert estate 
 						eService.addEstate(estate);
 				
@@ -169,33 +344,21 @@ public class HomeController {
 					// estate setting 
 					estate.setTransType(trans);
 					estate.setMunicipalitycode(mun);
-						
+					
+					System.out.println(estate);
 						// start insert estate 
 						eService.addEstate(estate);
 				}
 				
-				
-				
-			
-				
-				
-				
-				/*JSONObject geometryLocation=(JSONObject)data.get("geometry");
-				JSONObject location2 = (JSONObject)geometryLocation.get("location");
-				System.out.println("geometryLocation: "+ geometryLocation);
-			
-				String lat2 = location2.get("lat").toString();
-				String lng2 = location2.get("lng").toString();
-				agency.setGpsX(Double.parseDouble(lat2));
-				agency.setGpsY(Double.parseDouble(lng2));*/
-
-			}
-			
+			}	// for 문 end 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		
+		
+		
+	
 		
     	 	
     	logger.info("Home End");
