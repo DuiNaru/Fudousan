@@ -197,12 +197,10 @@ function init() {
 	
 	function green_floor(){
 		scene.remove(plane);
-		console.time('텍스쳐 로딩 시간 체크 - Start');
 		var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
 		var planeMaterial = new THREE.MeshBasicMaterial({color:0x42f474, sid:THREE.DoubleSice});
 		plane = new THREE.Mesh(planeGeometry, planeMaterial);
 		scene.add(plane);
-		console.timeEnd('텍스쳐 로딩 시간 체크 - End');
 		saveTimeChange();
 	};
 	
@@ -229,14 +227,14 @@ function init() {
 	
 	//둘다 텍스쳐 로딩이 완료됬는지 확인하기 위한 메소드 
 	function saveTimeChange(){
-		connection_try += 1;
-		var arrayOkSign = ['퍼스트','세컨드'];
-		if(connection_try == 1){
-			var sendSign = arrayOkSign[0];
+		if(whoAmI == 'selecter'){
+			var sendSign = '클릭자';
 		}else{
-			var sendSign = arrayOkSign[1];
+			var sendSign = '피클릭자';
 		}
+		console.log('sendSign : '+sendSign);
 		socket.emit('interaction', sendSign);
+		
 	}
 	
 	
