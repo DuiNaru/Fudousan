@@ -5,6 +5,8 @@ var height = window.innerHeight;
 var plane, selection;
 var offset = new THREE.Vector3();
 var mouse = new THREE.Vector2();
+var connection_try = 0; //동시변경 확인을 위한 접속횟수체크 변수
+var whoAmI = ''; // 사용자가 누군지 판단하는 변수
 
 //의자
 var chair;
@@ -117,10 +119,10 @@ function init() {
 				console.log('reset');
 			  },
 			  blueColor : function(){
-				console.log('blue');  
+				  socket.emit('bluePlane');
 			  },
 			  greenColor : function(){
-				console.log('green');  
+				  socket.emit('greenPlane');
 			  },
 			  redColor : function(){
 				  console.log('red');
@@ -159,7 +161,7 @@ function init() {
 			service.add(options, '초기화');
 			service.add(options, '종료');
 			service.open();
-			var changeCeiling  = gui.addFolder('천장깔맞춤');
+			var changeCeiling  = gui.addFolder('바닥컬러교체');
 			changeCeiling.add(options, 'blueColor');
 			changeCeiling.add(options, 'greenColor');
 			changeCeiling.open();
@@ -169,6 +171,59 @@ function init() {
 			gui.add(options, '아이템제거하기');
 			
 			
+	//socket 통신 부분
+	
+	//바닥색을 blue로 바꾸는 메소드
+	socket.on('ServiceCall_bluePlane', function(){
+		scene.remove(plane);
+		console.time('텍스쳐 로딩 시간 체크 - Start');
+		var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
+		var planeMaterial = new THREE.MeshBasicMaterial({color:0x425ff4, sid:THREE.DoubleSice});
+		plane = new THREE.Mesh(planeGeometry, planeMaterial);
+		scene.add(plane);
+		console.timeEnd('텍스쳐 로딩 시간 체크 - End');
+		saveTimeChange();
+	});
+	
+	socket.on('ServiceCall_greenPlane', function(){
+		scene.remove(plane);
+		console.time('텍스쳐 로딩 시간 체크 - Start');
+		var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
+		var planeMaterial = new THREE.MeshBasicMaterial({color:0x42f474, sid:THREE.DoubleSice});
+		plane = new THREE.Mesh(planeGeometry, planeMaterial);
+		scene.add(plane);
+		console.timeEnd('텍스쳐 로딩 시간 체크 - End');
+		saveTimeChange();
+	});
+	
+	socket.on('whoAreYou',function(data){
+		whoAmI = data;
+	});
+	socket.on('interaction', function(data){
+		 alert(data); 
+	});
+	socket.on('successChangeMessage', function(data){
+		if(whoAmI == 'selecter'){
+			alert('상대방도 선택사항이 적용되었습니다.')
+		}else{
+			alert('상대방이 무언가를 바꾸었습니다.');
+		}
+	});
+	
+
+	
+	//둘다 텍스쳐 로딩이 완료됬는지 확인하기 위한 메소드 
+	function saveTimeChange(){
+		connection_try += 1;
+		var arrayOkSign = ['퍼스트','세컨드'];
+		if(connection_try == 1){
+			var sendSign = arrayOkSign[0];
+		}else{
+			var sendSign = arrayOkSign[1];
+		}
+		socket.emit('interaction', sendSign);
+	}
+	
 	
 	var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
 	var planeMaterial = new THREE.MeshBasicMaterial({color:0xffff00, sid:THREE.DoubleSice});
