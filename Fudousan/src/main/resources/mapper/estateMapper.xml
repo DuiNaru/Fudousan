@@ -56,12 +56,16 @@ insert into estate
 <if test = 'unitprice != null'>
 	,UNITPRICE
 </if>
-<if test = 'totalfloorarea != null'>
-	,TOTALFLOORAREA
-</if>
 <if test ='landshape != null'>
 	,LANDSHAPE
 </if>
+<if test ='frontage != null'>
+	,FRONTAGE
+</if>
+<if test = 'totalfloorarea != null'>
+	,TOTALFLOORAREA
+</if>
+
 
 <if test = 'buildingyear != null'>
 	,BUILDINGYEAR
@@ -72,12 +76,34 @@ insert into estate
 <if test = 'use != null'>
 	,USE
 </if>
+<if test = 'purpose != null'>
+	,PURPOSE
+</if>
+<if test = 'direction != null'>
+	,DIRECTION
+</if>
+<if test = 'classification != null'>
+	,CLASSIFICATION
+</if>
+<if test = 'breadth != null'>
+	,BREADTH
+</if>
+<if test = 'cityplanning != null'>
+	,CITYPLANNING
+</if>
 <if test ='coverageratio != null'>
 	,COVERAGERATIO</if>
-
-
 <if test = 'floorarearatio != null'>
 	,FLOORAREARATIO
+</if>
+<if test = 'period != null'>
+	,PERIOD
+</if>
+<if test = 'renovation != null'>
+	,RENOVATION
+</if>
+<if test = 'remarks != null'>
+	,REMARKS
 </if>
 
 <if test = 'delDate != null'>
@@ -130,6 +156,9 @@ SEQ_ESTATE_ID.nextval
 <if test='landshape != null'>
 ,#{landshape}
 </if>
+<if test='frontage != null'>
+,#{frontage}
+</if>
 <if test='totalfloorarea != null'>
 ,#{totalfloorarea}
 </if>
@@ -142,11 +171,35 @@ SEQ_ESTATE_ID.nextval
 <if test ='use != null'>
 ,#{use}
 </if>
+<if test ='purpose != null'>
+,#{purpose}
+</if>
+<if test ='direction != null'>
+,#{direction}
+</if>
+<if test ='classification != null'>
+,#{classification}
+</if>
+<if test ='breadth != null'>
+,#{breadth}
+</if>
+<if test ='cityplanning != null'>
+,#{cityplanning}
+</if>
 <if test='coverageratio != null'>
 ,#{coverageratio}
 </if>
 <if test='floorarearatio != null'>
 ,#{floorarearatio}
+</if>
+<if test='period != null'>
+,#{period}
+</if>
+<if test='renovation != null'>
+,#{renovation}
+</if>
+<if test='remarks != null'>
+,#{remarks}
 </if>
 <if test ='delDate != null'>
 ,#{delDate}

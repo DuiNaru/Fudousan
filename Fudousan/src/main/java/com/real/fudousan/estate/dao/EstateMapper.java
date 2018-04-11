@@ -1,8 +1,8 @@
 package com.real.fudousan.estate.dao;
 
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Set;
+
 
 import com.real.fudousan.estate.vo.Estate;
 import com.real.fudousan.estate.vo.MunicipalityCode;
