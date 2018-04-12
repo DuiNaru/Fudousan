@@ -149,12 +149,16 @@
 locations = [
 	
 	
-	
+	/* 중개소 위치  */
 	<c:forEach items="${locationList}" var="location" varStatus="status">
-		${location}<c:if test="${status.last eq false}">,</c:if>
+		${location},
 	</c:forEach>
-
+	/* 매물 위치  */
+	<c:forEach items="${elocationList}" var="elocation" varStatus="status">
+		${elocation}<c:if test="${status.last eq false}">,</c:if>
+	</c:forEach>
 	
+
 	/* 
 	
     {lat: -31.563910, lng: 147.154312},

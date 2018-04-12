@@ -114,6 +114,26 @@ public int insertMunicipalitycode(MunicipalityCode mun){
 }
    
 
+public List<Estate> selectEsatesLocation(){
+	 List<Estate> result = null;
+	 logger.info("select Estates Location");   
+     try {
+        EstateMapper mapper = session.getMapper(EstateMapper.class);
+        result = mapper.selectEsatesLocation();
+     } catch(Exception e) {
+        e.printStackTrace();
+     }
+     
+     logger.info("select Estates Location");
+     return result;
+
+	
+}
+
+
+
+
+
 }
 
 

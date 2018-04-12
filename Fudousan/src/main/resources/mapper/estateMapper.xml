@@ -66,7 +66,6 @@ insert into estate
 	,TOTALFLOORAREA
 </if>
 
-
 <if test = 'buildingyear != null'>
 	,BUILDINGYEAR
 </if>
@@ -111,6 +110,12 @@ insert into estate
 </if>
 <if test='estateName != null'>
 	,ESTATE_NAME
+</if>
+<if test='estateX != null'>
+	,ESTATE_X
+</if>
+<if test='estateY != null'>
+	,ESTATE_Y
 </if>
 )
 VALUES
@@ -205,8 +210,14 @@ SEQ_ESTATE_ID.nextval
 ,#{delDate}
 </if>
 <if test='estateName != null'>
-	,#{estateName}
-	</if>
+,#{estateName}
+</if>
+<if test='estateX != null'>
+,#{estateX}
+</if>
+<if test='estateY != null'>
+,#{estateY}
+</if>
 )
 
 
@@ -430,8 +441,18 @@ VALUES
 </insert>	
 	
 	
+<select id="selectEsatesLocation" resultMap="estateResultMap">
+	SELECT
+	   *
+	FROM
+	    estate
+
+</select>	
 	
-	
+<select id=""  resultMap="estateResultMap">
+
+
+</select>
 	
 	
 	
