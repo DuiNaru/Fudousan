@@ -5,6 +5,8 @@ var height = window.innerHeight;
 var plane, selection;
 var offset = new THREE.Vector3();
 var mouse = new THREE.Vector2();
+var connection_try = 0; //동시변경 확인을 위한 접속횟수체크 변수
+var whoAmI = ''; // 사용자가 누군지 판단하는 변수
 
 //의자
 var chair;
@@ -117,31 +119,55 @@ function init() {
 				console.log('reset');
 			  },
 			  blueColor : function(){
-				console.log('blue');  
+				  socket.emit('bluePlane');
 			  },
 			  greenColor : function(){
-				console.log('green');  
+				  socket.emit('greenPlane');
 			  },
 			  redColor : function(){
 				  console.log('red');
 			  },
 			  의자추가 : function(){
-				  console.log('의자를 추가했어요');
+				  console.log('의자가 생성됩니다.')
+					// 외부 모델 로더 생성
+					const loader = new THREE.TDSLoader();
+					// 해당 모델의 텍스쳐 경로 설정
+					loader.setPath("/fudousan/resources/model/testchair/");
+					// 모델 데이터 경로 설정 및 로딩 완료시 리스너 지정
+					loader.load("/fudousan/resources/model/testchair/Armchair.3ds", (object) => {
+						// x축 기준으로 -90도 회전
+						object.rotation.x = Math.PI * -90 / 180;
+
+						// 해당 모델을 가장 가깝게 에워싸는 육면체인 BoundingBox 생성
+						var boundingBox = new THREE.Box3();
+						boundingBox.setFromObject(object);
+
+						// 바운딩 박스의 z 값을 이용하여 이동
+						object.position.z = boundingBox.max.z;
+						// 화면에 추가
+						scene.add(object);
+						// 완료 Alert 띄움
+						alert("Complete");
+
+						objects.push(object);	// 해당 object는 Groups 객체로써 DragControls와 호환 X
+						chair = object;
+					});
 			  },
 			  뒤로가기 : function(){
-				  console.log('뒤로갔어요');
+				  console.log('뒤로가기를 눌렀습니다.');
+				 socket.emit('array_back');
 			  },
 			  앞으로가기 : function(){
-				  console.log('앞으로갔어요');
+				  console.log('앞으로가기 눌렀습니다.');
 			  },
 			  저장 : function(){
-				  console.log('저장했어요');
+				  console.log('저장하기 눌렀습니다.');
 			  },
 			  초기화 : function(){
-				  console.log('초기화했어요');
+				  console.log('초기화 눌렀습니다.');
 			  },
 			  종료 : function(){
-				  console.log('종료햇어요');
+				  console.log('종료눌렀습니다');
 			  },
 			  아이템제거하기 : function(){
 				  console.log('이제 클릭하면 제거됨');
@@ -159,7 +185,7 @@ function init() {
 			service.add(options, '초기화');
 			service.add(options, '종료');
 			service.open();
-			var changeCeiling  = gui.addFolder('천장깔맞춤');
+			var changeCeiling  = gui.addFolder('바닥컬러교체');
 			changeCeiling.add(options, 'blueColor');
 			changeCeiling.add(options, 'greenColor');
 			changeCeiling.open();
@@ -169,6 +195,94 @@ function init() {
 			gui.add(options, '아이템제거하기');
 			
 			
+	//socket 통신 부분
+	socket.on('whoAreYou',function(data){
+		whoAmI = data;
+	});
+	
+	socket.on('goback', function(data){
+		var abc = data;
+		switch(abc){
+		case 'bluePlane' : console.log(abc); //뒤로가기로 파란바닥 생성이 왔으니까 파란바닥을 생성해야한다.
+			socket.emit('bluePlane', 'goback');
+			break;
+		case 'greenPlane' : console.log(abc); //뒤로가기로 녹색바닥 생성이 왔으니까  녹색바닥을 생성해야한다.
+			socket.emit('greenPlane','goback'); 
+			break;
+		default : break;
+		};
+	
+	});
+	
+	//바닥색을 blue로 바꾸는 메소드
+	socket.on('ServiceCall_bluePlane', function(data){
+		blue_floor();
+		var abc = data
+		console.log(abc);
+		if(whoAmI == 'selecter' && data != 'goback'){ // 누른사람이면 selecet && 뒤로가기로 실행하는거면  저장안함
+			socket.emit('goArray1', "bluePlane"); // 배열1에 실행된거 기록하기
+		}
+	});
+	
+	//바닥을 green으로 바꾸는 메소드
+	socket.on('ServiceCall_greenPlane', function(data){
+			
+			green_floor();
+			var test = data;
+			if(whoAmI == 'selecter' && test != 'goback'){
+				socket.emit('goArray1', "greenPlane");
+			}
+	});
+	
+	function green_floor(){
+		scene.remove(plane);
+		var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
+		var planeMaterial = new THREE.MeshBasicMaterial({color:0x42f474, sid:THREE.DoubleSice});
+		plane = new THREE.Mesh(planeGeometry, planeMaterial);
+		scene.add(plane);
+		saveTimeChange();
+	};
+	
+	function blue_floor(){
+		scene.remove(plane);
+		var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
+		var planeMaterial = new THREE.MeshBasicMaterial({color:0x425ff4, sid:THREE.DoubleSice});
+		plane = new THREE.Mesh(planeGeometry, planeMaterial);
+		scene.add(plane);
+		saveTimeChange();
+	};
+	
+	
+	
+	
+	socket.on('interaction', function(data){
+		 alert(data); 
+	});
+	socket.on('successChangeMessage', function(data){
+		console.log(whoAmI);
+		if(whoAmI == 'selecter'){
+			alert('상대방도 선택사항이 적용되었습니다.')
+			whoAmI = "";
+		}else{
+			alert('상대방이 무언가를 바꾸었습니다.');
+			whoAmI = "";
+		}
+	});
+	
+
+	
+	//둘다 텍스쳐 로딩이 완료됬는지 확인하기 위한 메소드 
+	function saveTimeChange(){
+		if(whoAmI == 'selecter'){
+			var sendSign = '클릭자';
+		}else{
+			var sendSign = '피클릭자';
+		}
+		console.log('sendSign : '+sendSign);
+		socket.emit('interaction', sendSign);
+		
+	}
+	
 	
 	var planeGeometry = new THREE.PlaneGeometry(5000, 6000);
 	var planeMaterial = new THREE.MeshBasicMaterial({color:0xffff00, sid:THREE.DoubleSice});

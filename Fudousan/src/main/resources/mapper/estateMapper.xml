@@ -6,6 +6,55 @@
 
 <mapper namespace="com.real.fudousan.estate.dao.EstateMapper">
 
+<sql id="SELECT_ESTATE_SQL">
+	select
+			ESTATE_ID 
+			,Region
+			,Prefecture
+			,Municipality
+			,DistrictName
+			,NearestStation
+			,TimeToNearestStation
+			,TradePrice
+			,PricePerUnit
+			,FloorPlan
+			,Area
+			,UnitPrice
+			,LandShape
+			,Frontage
+			,TotalFloorArea
+			,BuildingYear
+			,Structure
+			,Use
+			,Purpose
+			,Direction
+			,Classification
+			,Breadth
+			,CityPlanning
+			,CoverageRatio
+			,FloorAreaRatio
+			,Period
+			,Renovation
+			,Remarks
+			,estate.DEL_DATE estate_DEL_DATE
+			,estate.MunicipalityCode_ID MunicipalityCode_ID
+			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
+			,ESTATE_NAME
+			,ESTATE_X
+			,ESTATE_Y
+			,BASE_ROOM_ID
+		from
+			ESTATE
+		join
+			MunicipalityCode
+		on
+			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
+		join
+			TRANS_TYPE
+		on
+			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
+</sql>
+
 <insert id="insertByIds" parameterType="estate">
 <selectKey resultType="int" keyProperty="estateId" order="AFTER">
 SELECT
@@ -338,61 +387,7 @@ where estate_id = #{estateId}
 </delete>
 
 	<select id="selectByIds" parameterType="java.util.Set" resultMap="estateResultMap">
-		select
-			ROOM_ID
-			,SNAPSHOT
-			,MAP
-			,ROOM.CRE_DATE CRE_DATE
-			,ROOM.DEL_DATE DEL_DATE
-			,HEIGHT
-			,FLOOR_TEXTURE_ID
-			,CEILING_TEXTURE_ID
-			,MEMBER_ID
-			,ROOM.ESTATE_ID ESTATE_ID 
-			,Region
-			,Prefecture
-			,Municipality
-			,DistrictName
-			,NearestStation
-			,TimeToNearestStation
-			,TradePrice
-			,PricePerUnit
-			,FloorPlan
-			,Area
-			,UnitPrice
-			,LandShape
-			,Frontage
-			,TotalFloorArea
-			,BuildingYear
-			,Structure
-			,Use
-			,Purpose
-			,Direction
-			,Classification
-			,Breadth
-			,CityPlanning
-			,CoverageRatio
-			,FloorAreaRatio
-			,Period
-			,Renovation
-			,Remarks
-			,estate.DEL_DATE estate_DEL_DATE
-			,estate.MunicipalityCode_ID MunicipalityCode_ID
-			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
-			,ESTATE_NAME
-			,ESTATE_X
-			,ESTATE_Y
-			,BASE_ROOM_ID
-		from
-			ESTATE
-		join
-			MunicipalityCode
-		on
-			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
-		join
-			TRANS_TYPE
-		on
-			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
+		<include refid="SELECT_ESTATE_SQL"></include>
 		where
 			room.MEMBER_ID IN <foreach collection="_parameter" item="id" open="(" separator=", " close=")">#{id}</foreach>
 	</select>
