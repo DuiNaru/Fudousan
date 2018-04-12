@@ -1,12 +1,16 @@
 package com.real.fudousan.common.util;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -164,6 +168,22 @@ public class FileService {
 		File[] tempFile = file.listFiles();
 		
 		return tempFile;
+		
+	}
+	
+	public static void writeFile(String fullPath, OutputStream os) {
+		File file = new File(fullPath);
+
+	    try {
+	      // get your file as InputStream
+	      FileInputStream is = new FileInputStream(file);
+	      // copy it to response's OutputStream
+	      org.apache.commons.io.IOUtils.copy(is, os);
+	      os.flush();
+	    } catch (IOException ex) {
+	      logger.info("Error writing file to output stream. Filename was '{}'", fullPath, ex);
+	      throw new RuntimeException("IOError writing file to output stream");
+	    }
 		
 	}
 }

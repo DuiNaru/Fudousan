@@ -1,6 +1,7 @@
 package com.real.fudousan.item.service;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -129,7 +130,13 @@ public class ItemService {
 		return result;
 	}
 	
-	
+	public boolean writeFile(int itemId, String fileName, OutputStream os) {
+		logger.info("writeFile({}, {}) Start", itemId, fileName);
+		boolean result = false;
+		FileService.writeFile(modelFileBaseDirectory + itemId + "/" + fileName, os);
+		logger.info("writeFile({}, {}) End", itemId, fileName);
+		return result;
+	}
 	
 
 	

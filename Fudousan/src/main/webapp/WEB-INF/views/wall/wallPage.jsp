@@ -29,7 +29,7 @@ canvas {
 <body>
 <div class="left-menu">
 	<script type="text/javascript">
-		var roomId = 2;
+		var roomId = ${roomId};
 		var originalWalls = [];
 		var originalConnectors = [];
 		<c:if test="${!empty wallsAndConnectors}">

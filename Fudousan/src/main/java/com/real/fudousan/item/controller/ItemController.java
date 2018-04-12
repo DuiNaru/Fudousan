@@ -1,19 +1,24 @@
 package com.real.fudousan.item.controller;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.item.service.ItemService;
 import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.item.vo.ItemType;
@@ -120,5 +125,19 @@ public class ItemController {
 		return result;
 	}
 	
-	
+	@RequestMapping(value = "/{file_path}/{file_name}", method = RequestMethod.GET)
+	public void getFile(
+			@PathVariable("file_path") int filePath, 
+			@PathVariable("file_name") String fileName, 
+			HttpServletResponse response) {
+		
+		logger.info("getFile({}, {}) Start", filePath, fileName);
+		try {
+			itemService.writeFile(filePath, fileName, response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		logger.info("getFile({}, {}) end", filePath, fileName);
+		
+	}
 }

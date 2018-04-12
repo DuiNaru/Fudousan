@@ -176,19 +176,23 @@
 			ROOM_ID = #{1}
 	</delete>
 	
-	<insert id="insert">
+	<insert id="insert" parameterType="room">
 		INSERT INTO 
 			room
 			(
-				estate_id
-				,member_id
+				member_id
 				,room_public
+				<if test="estate != null">
+				,estate_id
+				</if>
 			)
 		VALUES
 			(
-				#{estateId}
-				,#{memberId}
+				#{memberId}
 				,#{roomPublic}
+				<if test="estate != null">
+				,#{estate.estateId}
+				</if>
 			)
 		<selectKey keyProperty="roomId" order="AFTER" resultType="int">
 			SELECT SEQ_ROOM_ID.currval FROM dual
