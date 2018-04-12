@@ -107,55 +107,16 @@ public class EstateService {
 		return result;
 	}
 	
-	
-	
-	
-	 /*
-	
-	public String ApiOutput(){
-
-		// 중개 업소 주소 -> 좌표 변경 세팅  DB에 저장 
-
-		logger.info("ApiOutput Start");
+	public List<Estate> selectEsatesLocation() {
+		logger.info("selectEsatesLocation Start");
 		
-		//매물 주소 파싱  
-   	String estateInfo="";
-		RestTemplate restTemplate = new RestTemplate();
-		String estateResult = restTemplate.getForObject("http://www.land.mlit.go.jp/webland/api/TradeListSearch?from=20151&to=20152&city=13102", String.class, estateInfo);
-		System.out.println("estateInfo:::"+estateResult);
-		logger.info("ApiOutput End");
-		return estateResult; 
+		List<Estate> result= null;
+		result = dao.selectEsatesLocation();
 		
-		
-		try {
-			
-			JSONParser jsonParser = new JSONParser();
-			JSONObject jsonObject = (JSONObject) jsonParser.parse(locationResult);
-			JSONArray  locationArray = (JSONArray) jsonObject.get("results");
-			
-			for (int i = 0; i < locationArray.size(); i++) {
-				JSONObject  geometry= (JSONObject)locationArray.get(i);
-				JSONObject geometryLocation=(JSONObject)geometry.get("geometry");
-				JSONObject location2 = (JSONObject)geometryLocation.get("location");
-				System.out.println("geometryLocation: "+ geometryLocation);
-			
-				String lat2 = location2.get("lat").toString();
-				String lng2 = location2.get("lng").toString();
-				agency.setGpsX(Double.parseDouble(lat2));
-				agency.setGpsY(Double.parseDouble(lng2));
-
-			}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	
-		
-		
-		
+		logger.info("selectEsatesLocation End");
+		return result;
 	}
-	
-	*/
+
 
 	
 }

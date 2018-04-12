@@ -161,6 +161,7 @@
 			<input type="button" value="수정" class="btn btn-info" onclick="location.href='/fudousan/bc'">
 			<!-- 매물 작성으로 이동 -->
 		</tr>
+		
 		</c:forEach>
 	</table>
 
