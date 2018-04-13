@@ -37,13 +37,16 @@ public class Item implements Serializable {
 
 	/** 아이템 참고 사이트 목록. */
 	private Set<RefSite> refSiteSet;
+	
+	private double itemScale;
 
 	public Item() {
 		super();
 	}
 
+	
 	public Item(Integer itemId, ItemType itemType, String itemName, String text, String fileDirectory,
-			String modelFileName, Set<RefSite> refSiteSet) {
+			String modelFileName, Set<RefSite> refSiteSet, double itemScale) {
 		super();
 		this.itemId = itemId;
 		this.itemType = itemType;
@@ -52,7 +55,9 @@ public class Item implements Serializable {
 		this.fileDirectory = fileDirectory;
 		this.modelFileName = modelFileName;
 		this.refSiteSet = refSiteSet;
+		this.itemScale = itemScale;
 	}
+
 
 	public Integer getItemId() {
 		return itemId;
@@ -114,12 +119,24 @@ public class Item implements Serializable {
 		return serialVersionUID;
 	}
 
+	public double getItemScale() {
+		return itemScale;
+	}
+
+
+	public void setItemScale(double itemScale) {
+		this.itemScale = itemScale;
+	}
+
+	
+
 	@Override
 	public String toString() {
 		return "Item [itemId=" + itemId + ", itemType=" + itemType + ", itemName=" + itemName + ", text=" + text
 				+ ", fileDirectory=" + fileDirectory + ", modelFileName=" + modelFileName + ", refSiteSet=" + refSiteSet
-				+ "]";
+				+ ", itemScale=" + itemScale + "]";
 	}
+
 
 	@Override
 	public int hashCode() {

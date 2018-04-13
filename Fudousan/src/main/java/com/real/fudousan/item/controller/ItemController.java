@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -31,7 +33,7 @@ public class ItemController {
 	
 	@Autowired
 	private ItemService itemService;
-
+	
 	@RequestMapping(value="itemAddPage", method=RequestMethod.GET)
 	public String itemAddPage() {
 		logger.info("itemAddPage Start");
@@ -40,8 +42,11 @@ public class ItemController {
 	}
 
 	@RequestMapping(value="additem", method=RequestMethod.POST)
-	public String addItem(Item item, int itemTypeId, MultipartHttpServletRequest files, String[] titles, String[] sites) {
+	public String addItem(Item item, int itemTypeId, MultipartHttpServletRequest files, String[] titles, String[] sites, HttpServletRequest request) {
 		logger.info("addItem Start");
+		
+		String root_path = request.getSession().getServletContext().getRealPath("/");  
+		logger.debug("root_path" + root_path);
 		
 		item.setItemType(new ItemType(itemTypeId, null));
 		Set<RefSite> refSiteSet = new HashSet<>();
@@ -125,19 +130,20 @@ public class ItemController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/{file_path}/{file_name}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{file_path}/{file_name}.{file_ext}", method = RequestMethod.GET)
 	public void getFile(
 			@PathVariable("file_path") int filePath, 
 			@PathVariable("file_name") String fileName, 
+			@PathVariable("file_ext") String fileExt, 
 			HttpServletResponse response) {
 		
-		logger.info("getFile({}, {}) Start", filePath, fileName);
+		logger.info("getFile({}, {}) Start", filePath, fileName+"."+fileExt);
 		try {
-			itemService.writeFile(filePath, fileName, response.getOutputStream());
+			itemService.writeFile(filePath, fileName+"."+fileExt, response.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		logger.info("getFile({}, {}) end", filePath, fileName);
+		logger.info("getFile({}, {}, {}) end", filePath, fileName+"."+fileExt);
 		
 	}
 }

@@ -1,5 +1,7 @@
 package com.real.fudousan.roomitem.dao;
 
-public interface RoomItemMapper {
+import com.real.fudousan.roomitem.vo.RoomItem;
 
+public interface RoomItemMapper {
+	public int insert(RoomItem roomItem);
 }

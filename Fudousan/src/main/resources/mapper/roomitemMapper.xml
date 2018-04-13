@@ -5,6 +5,64 @@
 
 
 <mapper namespace="com.real.fudousan.roomitem.dao.RoomItemMapper">
-
+	<insert id="insert" parameterType="roomitem">
+		INSERT INTO
+			roomitem
+			(
+				room_id
+				,item_id
+				<if test="x != null">
+				,x
+				</if>
+				<if test="y != null">
+				,y
+				</if>
+				<if test="z != null">
+				,z
+				</if>
+				<if test="rotateX != null">
+				,rotate_x
+				</if>
+				<if test="rotateY != null">
+				,rotate_y
+				</if>
+				<if test="rotateZ != null">
+				,rotate_z
+				</if>
+				<if test="color != null">
+				,color
+				</if>
+			)
+		VALUES
+			(
+				#{roomId}
+				,#{item.itemId}
+				<if test="x != null">
+				,#{x}
+				</if>
+				<if test="y != null">
+				,#{y}
+				</if>
+				<if test="z != null">
+				,#{z}
+				</if>
+				<if test="rotateX != null">
+				,#{rotateX}
+				</if>
+				<if test="rotateY != null">
+				,#{rotateY}
+				</if>
+				<if test="rotateZ != null">
+				,#{rotateZ}
+				</if>
+				<if test="color != null">
+				,#{color}
+				</if>
+			)
+		<selectKey keyProperty="roomitemId" order="AFTER" resultType="int">
+			SELECT seq_roomitem_id.currval
+			FROM dual
+		</selectKey>
+	</insert>
 	
 </mapper>

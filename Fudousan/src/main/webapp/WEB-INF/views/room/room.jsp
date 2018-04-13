@@ -24,7 +24,7 @@
 		,floorTexture:${room.floorTexture},
 		</c:if>
 		<c:if test="${!empty room.snapshot}">
-		,snapshot:${room.snapshot}
+		,snapshot:"${room.snapshot}"
 		</c:if>
 	};
 	var originalWalls = [	
@@ -37,6 +37,7 @@
 				}
 		</c:forEach>
 	];
+	var items = [];
 </script>
 <style type="text/css">
 	canvas {
@@ -50,6 +51,10 @@
 		left: 0px;
 		z-index: 1;
 		background-color: rgba(255, 255, 255, 0.5);
+	}
+	.preview {
+		width: 100px;
+		height: 100px;
 	}
 			#blocker {
 				position: absolute;
@@ -79,17 +84,37 @@
 </style>
 </head>
 <body>
+<script id="template" type="notjs">
+	<div class="scene"></div>
+	<div class="description">Scene $</div>
+</script>	
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
 	<div class="left-menu">
 		<div>
 			<label>아이템 생성</label>
 			<ul>
 				<c:forEach var="item" items="${itemList}">
-					<li class="btn btn_default" value="${item.itemId }">
+					<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId});">
+						<script type="text/javascript">
+							var item${item.itemId} = new Item();
+							item${item.itemId}.fileDirectory = "${item.fileDirectory}";
+							item${item.itemId}.itemId = ${item.itemId};
+							item${item.itemId}.itemName = "${item.itemName}";
+							item${item.itemId}.itemType = new ItemType(${item.itemType.itemTypeId}, "${item.itemType.itemTypeName}");
+							item${item.itemId}.modelFileName = "${item.modelFileName}";
+							item${item.itemId}.text = "${item.text}";
+							item${item.itemId}.itemScale = "${item.itemScale}";
+							<c:forEach var="site" items="${item.refSiteSet}">
+								item${item.itemId}.siteSet.push(new RefSite("${site.creDate}", ${site.id}, ${site.itemId}, "${site.text}", "${site.url}"));
+							</c:forEach>
+							items.push(item${item.itemId});
+						</script>
 						<label>${item.itemName}</label>
-						<canvas id="itemPreview${item.itemId}">
-						<script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}")</script>
-						</canvas>
+						<div class="preview">
+							<canvas id="itemPreview${item.itemId}">
+							</canvas>
+						</div>
+						<script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
 					</li>
 				</c:forEach>
 			</ul>

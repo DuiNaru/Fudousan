@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.support.ServletContextResource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.real.fudousan.common.exception.DuplicateFileNameException;
@@ -173,7 +174,6 @@ public class FileService {
 	
 	public static void writeFile(String fullPath, OutputStream os) {
 		File file = new File(fullPath);
-
 	    try {
 	      // get your file as InputStream
 	      FileInputStream is = new FileInputStream(file);

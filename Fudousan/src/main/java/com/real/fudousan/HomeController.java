@@ -95,7 +95,7 @@ public class HomeController {
     	
     	logger.info("estateInfo Start");
     	
-    	
+    	/*
     	//매물 정보 API활용해서 가져오기 
     	String estateInfo = "";
 		RestTemplate restTemplate = new RestTemplate();
@@ -389,7 +389,7 @@ public class HomeController {
 		} catch (Exception e) {
 			
 		}
-		
+		*/
 
     	logger.info("Home End");
     	return "home";
