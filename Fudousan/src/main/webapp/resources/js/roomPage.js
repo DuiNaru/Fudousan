@@ -1,6 +1,3 @@
-/**
- * 
- */
 // 카메라 이동 단위
 var cameraMoveValue = 100;
 // 카메라 회전 단위
@@ -89,6 +86,11 @@ function init() {
 	
 	window.addEventListener('resize', this.onResize, false);
 	window.addEventListener('keydown', this.onKeydown, false);
+	
+	
+	
+	
+	
 }
 
 function animate() {

@@ -12,6 +12,13 @@
 <script src="<c:url value="/resources/js/OrbitControls.js"/>"></script>
 <script src="<c:url value="/resources/js/DragControls.js"/>"></script>
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
+<script src="<c:url value="/resources/js/dat.gui.js"/>"></script>
+<script src="<c:url value="/resources/js/stats.js"/>"></script>
+<script src="<c:url value="/resources/js/socket.io.js"/>"></script>
+
+<script>
+ var socket = io('http://localhost:7000');
+</script>
 <script type="text/javascript">
 	var room = {
 		roomId:${room.roomId}
@@ -51,6 +58,14 @@
 		z-index: 1;
 		background-color: rgba(255, 255, 255, 0.5);
 	}
+	.right-menu {
+		position:absolute;
+		top: 10%;
+		right: 0px;
+		z-index: 1;
+		background-color: rgba(255, 255, 255, 0.5);
+	}
+
 			#blocker {
 				position: absolute;
 				width: 100%;
@@ -77,9 +92,12 @@
 				cursor: pointer;
 			}
 </style>
+<script src="<c:url value="/resources/js/wallPage_node.js"/>"></script>
 </head>
 <body>
-<script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
+<div class="dat">
+</div> 
+<%-- <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script> --%>
 	<div class="left-menu">
 		<div>
 			<label>아이템 생성</label>
@@ -88,10 +106,22 @@
 					<li class="btn btn_default" value="${item.itemId }">
 						<label>${item.itemName}</label>
 						<canvas id="itemPreview${item.itemId}">
-						<script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}")</script>
+						<!-- <script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}")</script> -->
 						</canvas>
 					</li>
 				</c:forEach>
+			</ul>
+		</div>
+	</div>
+	<div class="right-menu">
+		<div>
+			<label>종합기능</label>
+			<ul>
+						<li><button onclick="goback()">뒤로가기</button></li><br>
+						<li><button onclick="gofront()">앞으로가기</button></li><br>
+						<li><button onclick="save()">저장하기</button></li><br>
+						<li><button onclick="reset()">초기화</button></li><br>
+						<li><button onclick="esc()">종료</button>
 			</ul>
 		</div>
 	</div>
