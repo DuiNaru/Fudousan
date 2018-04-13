@@ -12,12 +12,15 @@
 <script src="<c:url value="/resources/js/OrbitControls.js"/>"></script>
 <script src="<c:url value="/resources/js/DragControls.js"/>"></script>
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
-<script src="<c:url value="/resources/js/dat.gui.js"/>"></script>
-<script src="<c:url value="/resources/js/stats.js"/>"></script>
 <script src="<c:url value="/resources/js/socket.io.js"/>"></script>
 
 <script>
  var socket = io('http://localhost:7000');
+ 
+ function goback(){
+	alert('고백'); 
+ };
+ 
 </script>
 <script type="text/javascript">
 	var room = {
@@ -92,12 +95,11 @@
 				cursor: pointer;
 			}
 </style>
-<script src="<c:url value="/resources/js/wallPage_node.js"/>"></script>
 </head>
 <body>
 <div class="dat">
 </div> 
-<%-- <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script> --%>
+<script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script> 
 	<div class="left-menu">
 		<div>
 			<label>아이템 생성</label>
