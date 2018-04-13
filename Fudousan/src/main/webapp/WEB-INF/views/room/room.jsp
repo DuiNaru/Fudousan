@@ -18,8 +18,28 @@
  var socket = io('http://localhost:7000');
  
  function goback(){
-	alert('고백'); 
+	console.log('뒤로가기'); 
+	socket.emit('array_back');
  };
+ 
+ function gofront(){
+	 console.log('앞으로가기');
+	 socket.emit('arrayBackCancel');
+ }
+ function save(){
+	 console.log('저장하기');
+	 console.log('저장하기 눌렀습니다.');
+ }
+ function reset(){
+	 console.log('초기화하기');
+	 var clearYes = confirm('진짜 초기화 하시겠습니까?');
+	  if(clearYes){
+		  socket.emit('clearArray');
+	  };
+ }
+ function esc(){
+	 console.log('종료하기');
+ }
  
 </script>
 <script type="text/javascript">
