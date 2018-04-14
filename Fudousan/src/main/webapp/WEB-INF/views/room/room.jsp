@@ -12,6 +12,36 @@
 <script src="<c:url value="/resources/js/OrbitControls.js"/>"></script>
 <script src="<c:url value="/resources/js/DragControls.js"/>"></script>
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
+<script src="<c:url value="/resources/js/socket.io.js"/>"></script>
+
+<script>
+ var socket = io('http://localhost:7000');
+ 
+ function goback(){
+	console.log('뒤로가기'); 
+	socket.emit('array_back');
+ };
+ 
+ function gofront(){
+	 console.log('앞으로가기');
+	 socket.emit('arrayBackCancel');
+ }
+ function save(){
+	 console.log('저장하기');
+	 console.log('저장하기 눌렀습니다.');
+ }
+ function reset(){
+	 console.log('초기화하기');
+	 var clearYes = confirm('진짜 초기화 하시겠습니까?');
+	  if(clearYes){
+		  socket.emit('clearArray');
+	  };
+ }
+ function esc(){
+	 console.log('종료하기');
+ }
+ 
+</script>
 <script type="text/javascript">
 	var room = {
 		roomId:${room.roomId}
@@ -89,6 +119,8 @@
 	<div class="description">Scene $</div>
 </script>	
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
+<div class="dat">
+</div> 
 	<div class="left-menu">
 		<div>
 			<label>아이템 생성</label>
@@ -117,6 +149,18 @@
 						<script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
 					</li>
 				</c:forEach>
+			</ul>
+		</div>
+	</div>
+	<div class="right-menu">
+		<div>
+			<label>종합기능</label>
+			<ul>
+						<li><button onclick="goback()">뒤로가기</button></li>
+						<li><button onclick="gofront()">앞으로가기</button></li>
+						<li><button onclick="save()">저장하기</button></li>
+						<li><button onclick="reset()">초기화</button></li>
+						<li><button onclick="esc()">종료</button>
 			</ul>
 		</div>
 	</div>
