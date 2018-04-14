@@ -17,7 +17,7 @@ public class RoomItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** ROOMITEM_ID. */
-	private Integer roomitemId;
+	private Integer roomItemId;
 
 	/** 3D 방 아이디. */
 	private int roomId;
@@ -46,12 +46,12 @@ public class RoomItem implements Serializable {
 	/** COLOR. */
 	private Integer color;
 
-	public Integer getRoomitemId() {
-		return roomitemId;
+	public Integer getRoomItemId() {
+		return roomItemId;
 	}
 
-	public void setRoomitemId(Integer roomitemId) {
-		this.roomitemId = roomitemId;
+	public void setRoomItemId(Integer roomItemId) {
+		this.roomItemId = roomItemId;
 	}
 
 	public int getRoomId() {
@@ -134,10 +134,10 @@ public class RoomItem implements Serializable {
 		super();
 	}
 
-	public RoomItem(Integer roomitemId, int roomId, Item item, Double x, Double y, Double z, Double rotateX,
+	public RoomItem(Integer roomItemId, int roomId, Item item, Double x, Double y, Double z, Double rotateX,
 			Double rotateY, Double rotateZ, Integer color) {
 		super();
-		this.roomitemId = roomitemId;
+		this.roomItemId = roomItemId;
 		this.roomId = roomId;
 		this.item = item;
 		this.x = x;
@@ -153,7 +153,7 @@ public class RoomItem implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((roomitemId == null) ? 0 : roomitemId.hashCode());
+		result = prime * result + ((roomItemId == null) ? 0 : roomItemId.hashCode());
 		return result;
 	}
 
@@ -166,12 +166,19 @@ public class RoomItem implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		RoomItem other = (RoomItem) obj;
-		if (roomitemId == null) {
-			if (other.roomitemId != null)
+		if (roomItemId == null) {
+			if (other.roomItemId != null)
 				return false;
-		} else if (!roomitemId.equals(other.roomitemId))
+		} else if (!roomItemId.equals(other.roomItemId))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "RoomItem [roomItemId=" + roomItemId + ", roomId=" + roomId + ", item=" + item + ", x=" + x + ", y=" + y
+				+ ", z=" + z + ", rotateX=" + rotateX + ", rotateY=" + rotateY + ", rotateZ=" + rotateZ + ", color="
+				+ color + "]";
 	}
 	
 	

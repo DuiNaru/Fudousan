@@ -23,66 +23,12 @@ var mouse = new THREE.Vector2();
 var walls = new THREE.Group();
 // 벽 두께
 var wallThickness = 10;
-// 배치된 아이템 VO
-var roomItems = []
-// 현재 화면에 존재하는 아이템들
+// 현재 화면에 존재하는 아이템들(메시 그룹)
 var curRoomItems = [];
-
-/**
- * Item VO
- * @returns
- */
-function Item() {
-	this.fileDirectory = "";
-	this.itemId = -1;
-	this.itemName = "";
-	this.itemType = new ItemType();
-	this.modelFileName = "";
-	this.siteSet = [];
-	this.text = "";
-	this.itemScale = 1;
-}
-
-/**
- * ItemType VO
- * @param itemTypeId
- * @param itemTypeName
- * @returns
- */
-function ItemType(itemTypeId, itemTypeName) {
-	this.itemTypeId = itemTypeId;
-	this.itemTypeName = itemTypeName;
-}
-
-/**
- * RefSite VO
- * @param creDate
- * @param id
- * @param itemId
- * @param text
- * @param url
- * @returns
- */
-function RefSite(creDate, id, itemId, text, url) {
-	this.creDate = creDate;
-	this.id = id;
-	this.itemId = itemId;
-	this.text = text;
-	this.url = url;
-}
-
-function RoomItem() {
-	this.color = 0;
-	this.item = new Item();
-	this.roomId = -1;
-	this.roomItemId = -1;
-	this.rotateX = 0;
-	this.rotateY = 0;
-	this.rotateZ = 0;
-	this.x = 0;
-	this.y = 0;
-	this.z = 0;
-}
+// 현재 선택 중인 아이템(메시 그룹)
+var curSelected;
+// 현재 선택 된 아이템이 움직였는가?
+var curMoving = false;
 
 document.addEventListener("DOMContentLoaded", function(){
 	//초기화
@@ -126,12 +72,12 @@ function init() {
 	// controls
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	//controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
-	controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-	controls.dampingFactor = 0.25;
-	controls.panningMode = THREE.HorizontalPanning; // default is THREE.ScreenSpacePanning
-	controls.minDistance = 100;
-	controls.maxDistance = 50000;
-	controls.maxPolarAngle = Math.PI / 2;
+	//controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+	//controls.dampingFactor = 0.25;
+	//controls.panningMode = THREE.HorizontalPanning; // default is THREE.ScreenSpacePanning
+	//controls.minDistance = 100;
+	//controls.maxDistance = 50000;
+	//controls.maxPolarAngle = Math.PI / 2;
 	
 	//camera.rotation.x = 90 * Math.PI / 180;
 
@@ -150,8 +96,13 @@ function init() {
 	
 	
 	
+	var axesHelper = new THREE.AxesHelper( 1000 );
+	scene.add( axesHelper );
 	
-	
+	// roomitems 의 배열의 Roomitem VO에 따라 오브젝트 추가
+	$.each(roomItems, function(index, obj) {
+		placeRoomItem(obj);
+	});
 }
 
 function animate() {
@@ -250,14 +201,45 @@ function onKeydown(event) {
 }
 
 function onDocumentMouseDown(event) {
+	raycaster.setFromCamera(mouse, camera);
+	var intersects = raycaster.intersectObjects(curRoomItems, true);
+	if (intersects.length > 0) {
+		// 현재 배치된 모든 아이템의 매시에 클릭이 되니까, 그 메시 그룹을 가져온다.
+		curSelected = intersects[0].object.parent;
+		
+		// 화면 돌리기 불가
+		controls.enabled = false;
+	}
 }
 
 function onDocumentMouseMove(event) {
 	// 마우스 이동 저장
 	moveMouse(event);
+
+	if (curSelected != null) {
+		// 드래그 중인 아이템이 있으면 지면에 맞게 움직인다.
+		raycaster.setFromCamera(mouse, camera);
+		var intersects = raycaster.intersectObjects([plane]);
+		if (intersects.length > 0) {
+			move(curSelected, intersects[0].point.x, intersects[0].point.y, intersects[0].point.z);
+		}
+	}
+	
 }
 
 function onDocumentMouseUp(event) {
+	if(curSelected != null) {
+		// 움직였으면 DB 저장
+		if(curMoving) {
+			curMoving = false;
+			saveRoomItem(curSelected.roomItem);
+		}
+	}
+
+	// 선택된 아이템이 있으면 선택 해재
+	curSelected = null;
+	// 컨트롤 활성화
+	controls.enabled = true;
 }
 
 function moveMouse(event) {
@@ -303,7 +285,6 @@ function drawWall() {
 	}
 	walls.rotateX(-90*Math.PI/180);
 	walls.position.y += room.height/2;
-	console.log(walls);
 	scene.add(walls);
 }
 
@@ -374,12 +355,13 @@ function previewItem(itemId, fileName) {
  * @returns
  */
 function createItem(item) {
-	// 화면 가운데로 이동
+	// 화면 가운데
 	raycaster.setFromCamera( new THREE.Vector2(), camera ); 
 	//raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() );
+	
 	var intersects = raycaster.intersectObjects([plane]);
 	if (intersects.length > 0) {
-		// DB 연결
+		// 방 아이템 추가하고 그 아이템 가져오기
 		$.ajax({
 			url:"roomItem/create",
 			type:"GET",
@@ -393,22 +375,10 @@ function createItem(item) {
 			dataType:"json",
 			success:function(data) {
 				if(data != null && data != "null") {
-
-					var roomItem = new RoomItem();
-					roomItem.color = data.color;
-					roomItem.roomId = data.roomId;
-					roomItem.roomItemId = data.roomItemId;
-					roomItem.rotateX = data.rotateX;
-					roomItem.rotateY = data.rotateY;
-					roomItem.rotateZ = data.rotateZ;
-					roomItem.x = data.x;
-					roomItem.y = data.y;
-					roomItem.z = data.z;
-					var item = new Item();
-					item
-					roomItem.item = item;
-					console.log(roomItem);
-					addRoomItem(roomItem);
+					// 받은 데이터를 roomitem vo로 변환
+					var roomItem = objToRoomItem(data);
+					// roomitem을 화면에 배치
+					placeRoomItem(roomItem);
 				} else {
 					alert("아이템 배치에 실패하였습니다.");
 				}
@@ -423,20 +393,19 @@ function createItem(item) {
 
 /**
  * 아이템을 제거한다.
- * @param item
+ * @param roomItem VO
  * @returns
  */
-function deleteItem(item) {
+function deleteItem(roomItem) {
 	
 }
 
 /**
  * RoomItem VO 대로 화면에 Item 을 배치한다.
- * @param roomItem
+ * @param roomItem VO
  * @returns
  */
-function addRoomItem(roomItem) {
-	roomItems.push(roomItem);
+function placeRoomItem(roomItem) {
 	
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
@@ -444,33 +413,84 @@ function addRoomItem(roomItem) {
 	loader.setPath("/fudousan/item/"+(roomItem.item.itemId)+"/");
 	// 모델 데이터 경로 설정 및 로딩 완료시 리스너 지정
 	loader.load("/fudousan/item/"+(roomItem.item.itemId)+"/"+(roomItem.item.modelFileName), (object) => {
+		// Group 를 확장하여 roomitem VO를 가지도록 한다.
+		object.roomItem = roomItem;
 		
 		object.position.x = roomItem.x;
 		object.position.y = roomItem.y;
 		object.position.z = roomItem.z;
 
-		object.rotation.x = roomItem.rotateX;
-		object.rotation.y = roomItem.rotateY;
-		object.rotation.z = roomItem.rotateZ;
+		object.rotation.x = roomItem.rotateX * Math.PI / 180;
+		object.rotation.y = roomItem.rotateY * Math.PI / 180;
+		object.rotation.z = roomItem.rotateZ * Math.PI / 180;
+		
+		object.scale.x = roomItem.item.itemScale;
+		object.scale.y = roomItem.item.itemScale;
+		object.scale.z = roomItem.item.itemScale;
 		
 		scene.add( object );
+
 		curRoomItems.push(object);
-		// 완료 Alert 띄움
-		alert("Complete");
 	});
 }
 
-function jsonToItem(itemJson) {
-	var item = new Item();
-	item.fileDirectory = itemJson.fileDirectory;
-	item.itemId = itemJson.itemId;
-	item.itemName = itemJson.itemName;
-	item.itemType = new ItemType(itemJson.itemType.itemTypeId, itemJson.itemType.itemTypeName);
-	item.modelFileName = itemJson.modelFileName;
-	item.text = itemJson.text;
-	item.itemScale = itemJson.itemScale;
-	$.each(itemJson.refSiteSet, function(index, obj) {
-		item.siteSet.push(new RefSite(obj.creDate, obj.id, obj.itemId, obj.text, obj.url));
+
+/**
+ * 화면에 배치된 object을 특정 좌표로 이동
+ * @param object
+ * @param x
+ * @param y
+ * @param z
+ * @returns
+ */
+function move(object, x, y, z) {
+	object.roomItem.x = object.position.x = x;
+	object.roomItem.y = object.position.y = y;
+	object.roomItem.z = object.position.z = z;
+	// 움직이고 나서 움직였음을 표시한다.
+	curMoving = true;
+}
+
+/**
+ * 화면에 배치된 object을 각 축을 기준으로 회전
+ * @param object
+ * @param rx
+ * @param ry
+ * @param rz
+ * @returns
+ */
+function rotate(object, rx, ry, rz) {
+	object.roomItem.rotateX = object.rotate.x = rx;
+	object.roomItem.rotateY = object.rotate.y = ry;
+	object.roomItem.rotateZ = object.rotate.z = rz;
+}
+
+/**
+ * roomitem의 값을 저장한다.
+ * @param roomItem
+ * @returns
+ */
+function saveRoomItem(roomItem) {
+	var refSiteSet = roomItem.item.refSiteSet;
+	roomItem.item.refSiteSet = null;
+	console.log(JSON.stringify(roomItem));
+	$.ajax({
+		url:"roomItem/save",
+		type:"POST",
+		data: JSON.stringify(roomItem),
+		contentType: 'application/json; charset=utf-8',
+		dataType:"json",
+		success:function(data) {
+			if(data != null && data != 0) {
+
+			} else {
+				alert("아이템 저장에 실패하였습니다.");
+			}
+		},
+		error:function(e) {
+			console.log(e);
+			alert("아이템 저장 중 오류가 발생하였습니다.");
+		}
 	});
-	return item;
+	roomItem.item.refSiteSet = refSiteSet;
 }

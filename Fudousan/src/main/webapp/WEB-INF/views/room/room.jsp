@@ -13,8 +13,9 @@
 <script src="<c:url value="/resources/js/DragControls.js"/>"></script>
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
 <script src="<c:url value="/resources/js/socket.io.js"/>"></script>
+<script src="<c:url value="/resources/js/vo.js"/>"></script>
 
-<script>
+<!-- <script>
  var socket = io('http://localhost:7000');
  
  function goback(){
@@ -41,7 +42,7 @@
 	 console.log('종료하기');
  }
  
-</script>
+</script> -->
 <script type="text/javascript">
 	var room = {
 		roomId:${room.roomId}
@@ -68,6 +69,56 @@
 		</c:forEach>
 	];
 	var items = [];
+	var roomItems = [
+		<c:forEach var="roomitem" varStatus="s" items="${roomitemList}" >
+		<c:if test="${s.index != 0 }">
+			,
+		</c:if>
+			objToRoomItem({
+				color: ${roomitem.color},
+				roomId: ${roomitem.roomId},
+				roomitemId: ${roomitem.roomItemId},
+				rotateX: ${roomitem.rotateX},
+				rotateY: ${roomitem.rotateY},
+				rotateZ: ${roomitem.rotateZ},
+				x: ${roomitem.x},
+				y: ${roomitem.y},
+				z: ${roomitem.z},
+				item: {
+					fileDirectory: "${roomitem.item.fileDirectory}",
+					itemId: ${roomitem.item.itemId},
+					itemName: "${roomitem.item.itemName}",
+					itemType: {
+						itemTypeId: ${roomitem.item.itemType.itemTypeId},
+						itemTypeName: "${roomitem.item.itemType.itemTypeName}"
+					},
+					modelFileName: "${roomitem.item.modelFileName}",
+					text: "${roomitem.item.text}",
+					itemScale: ${roomitem.item.itemScale},
+					itemRotateX: ${roomitem.item.itemRotateX},
+					itemRotateY: ${roomitem.item.itemRotateY},
+					itemRotateZ: ${roomitem.item.itemRotateZ},
+					itemX: ${roomitem.item.itemX},
+					itemY: ${roomitem.item.itemY},
+					itemZ: ${roomitem.item.itemZ},
+					refSiteSet: [
+						<c:forEach var="site" varStatus="s" items="${roomitem.item.refSiteSet}" >
+						<c:if test="${s.index != 0 }">
+							,
+						</c:if>
+							{
+								creDate: "${site.creDate}",
+								id: ${site.id},
+								itemId: ${site.itemId},
+								text: "${site.text}",
+								url: "${site.url}"
+							}
+						</c:forEach>
+					]
+				}
+			})
+	</c:forEach>
+	];
 </script>
 <style type="text/css">
 	canvas {
@@ -135,9 +186,9 @@
 							item${item.itemId}.itemType = new ItemType(${item.itemType.itemTypeId}, "${item.itemType.itemTypeName}");
 							item${item.itemId}.modelFileName = "${item.modelFileName}";
 							item${item.itemId}.text = "${item.text}";
-							item${item.itemId}.itemScale = "${item.itemScale}";
+							item${item.itemId}.itemScale = ${item.itemScale};
 							<c:forEach var="site" items="${item.refSiteSet}">
-								item${item.itemId}.siteSet.push(new RefSite("${site.creDate}", ${site.id}, ${site.itemId}, "${site.text}", "${site.url}"));
+								item${item.itemId}.refSiteSet.push(new RefSite("${site.creDate}", ${site.id}, ${site.itemId}, "${site.text}", "${site.url}"));
 							</c:forEach>
 							items.push(item${item.itemId});
 						</script>

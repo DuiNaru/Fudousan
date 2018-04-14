@@ -2,6 +2,7 @@ package com.real.fudousan.item.vo;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.real.fudousan.roomitem.vo.RoomItem;
@@ -36,17 +37,30 @@ public class Item implements Serializable {
 	private String modelFileName;
 
 	/** 아이템 참고 사이트 목록. */
-	private Set<RefSite> refSiteSet;
+	private List<RefSite> refSiteSet;
 	
 	private double itemScale;
+	
+	private double itemRotateX;
+	
+	private double itemRotateY;
+	
+	private double itemRotateZ;
+	
+	private double itemX;
+	
+	private double itemY;
+	
+	private double itemZ;
 
 	public Item() {
 		super();
 	}
 
-	
+
 	public Item(Integer itemId, ItemType itemType, String itemName, String text, String fileDirectory,
-			String modelFileName, Set<RefSite> refSiteSet, double itemScale) {
+			String modelFileName, List<RefSite> refSiteSet, double itemScale, double itemRotateX, double itemRotateY,
+			double itemRotateZ, double itemX, double itemY, double itemZ) {
 		super();
 		this.itemId = itemId;
 		this.itemType = itemType;
@@ -56,6 +70,12 @@ public class Item implements Serializable {
 		this.modelFileName = modelFileName;
 		this.refSiteSet = refSiteSet;
 		this.itemScale = itemScale;
+		this.itemRotateX = itemRotateX;
+		this.itemRotateY = itemRotateY;
+		this.itemRotateZ = itemRotateZ;
+		this.itemX = itemX;
+		this.itemY = itemY;
+		this.itemZ = itemZ;
 	}
 
 
@@ -107,11 +127,11 @@ public class Item implements Serializable {
 		this.modelFileName = modelFileName;
 	}
 
-	public Set<RefSite> getRefSiteSet() {
+	public List<RefSite> getRefSiteSet() {
 		return refSiteSet;
 	}
 
-	public void setRefSiteSet(Set<RefSite> refSiteSet) {
+	public void setRefSiteSet(List<RefSite> refSiteSet) {
 		this.refSiteSet = refSiteSet;
 	}
 
@@ -130,11 +150,89 @@ public class Item implements Serializable {
 
 	
 
+	public double getItemRotateX() {
+		return itemRotateX;
+	}
+
+
+
+
+
+	public double getItemX() {
+		return itemX;
+	}
+
+
+	public void setItemX(double itemX) {
+		this.itemX = itemX;
+	}
+
+
+	public double getItemY() {
+		return itemY;
+	}
+
+
+	public void setItemY(double itemY) {
+		this.itemY = itemY;
+	}
+
+
+	public double getItemZ() {
+		return itemZ;
+	}
+
+
+	public void setItemZ(double itemZ) {
+		this.itemZ = itemZ;
+	}
+
+
+	public void setItemRotateX(double itemRotateX) {
+		this.itemRotateX = itemRotateX;
+	}
+
+
+
+
+
+	public double getItemRotateY() {
+		return itemRotateY;
+	}
+
+
+
+
+
+	public void setItemRotateY(double itemRotateY) {
+		this.itemRotateY = itemRotateY;
+	}
+
+
+
+
+
+	public double getItemRotateZ() {
+		return itemRotateZ;
+	}
+
+
+
+
+
+	public void setItemRotateZ(double itemRotateZ) {
+		this.itemRotateZ = itemRotateZ;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		return "Item [itemId=" + itemId + ", itemType=" + itemType + ", itemName=" + itemName + ", text=" + text
 				+ ", fileDirectory=" + fileDirectory + ", modelFileName=" + modelFileName + ", refSiteSet=" + refSiteSet
-				+ ", itemScale=" + itemScale + "]";
+				+ ", itemScale=" + itemScale + ", itemRotateX=" + itemRotateX + ", itemRotateY=" + itemRotateY
+				+ ", itemRotateZ=" + itemRotateZ + ", itemX=" + itemX + ", itemY=" + itemY + ", itemZ=" + itemZ + "]";
 	}
 
 
