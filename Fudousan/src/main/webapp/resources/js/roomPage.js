@@ -408,6 +408,8 @@ function deleteItem(roomItem) {
  * @returns
  */
 function placeRoomItem(roomItem) {
+	var cache = THREE.Cache;
+	console.log(cache.get(roomItem.itemId));
 	
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
@@ -434,8 +436,7 @@ function placeRoomItem(roomItem) {
 
 		curRoomItems.push(object);
 		
-		console.log("Cache List");
-		console.log(THREE.Cache);
+		console.log(object);
 	});
 }
 
