@@ -41,6 +41,8 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 function init() {
+	// Loader Cache Enabled
+	THREE.Cache.enabled = true;
 	// 카메라 생성 및 초기화
 	camera = new THREE.PerspectiveCamera(60, width / height, 100, 100000);
 	camera.position.y = 10000;
@@ -431,6 +433,9 @@ function placeRoomItem(roomItem) {
 		scene.add( object );
 
 		curRoomItems.push(object);
+		
+		console.log("Cache List");
+		console.log(THREE.Cache);
 	});
 }
 
