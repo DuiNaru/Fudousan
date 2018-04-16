@@ -19,8 +19,10 @@ import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
 import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
+import com.real.fudousan.item.service.ItemService;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
+import com.real.fudousan.roomitem.service.RoomItemService;
 import com.real.fudousan.roomwall.service.RoomWallService;
 import com.real.fudousan.roomwall.vo.RoomWall;
 
@@ -37,6 +39,10 @@ public class RoomController {
 	private AdviceService Aservice;
 	@Autowired
 	private RoomWallService roomWallService;
+	@Autowired
+	private ItemService itemService;
+	@Autowired
+	private RoomItemService roomItemService;
 	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
 	public String searchMyRoom(Model model,String roomSearch,int memberId){
@@ -92,17 +98,38 @@ public class RoomController {
 	@RequestMapping(value="newRoom", method=RequestMethod.GET)
 	public String newRoom(@ModelAttribute("loginId") int loginId, Room room, Model model) {
 		logger.info("newRoom("+loginId+", "+room+") Start");
+		String returnedURL = "redirect:roomPage";
 		
 		room.setMemberId(loginId);
 		int roomId = Rservice.createRoom(room);
-		model.addAttribute("room", room);
-		
-		if(room.getEstate() != null) {
-			Map<String, List<?>> map = roomWallService.getWallAndConnector(roomId);
-			model.addAttribute("walls", map.get("walls"));
+		model.addAttribute("roomId", roomId);
+		// 만약, 실제 방이 존재하지 않는 방이면 벽 생성화면으로 이동한다.
+		if(room.getEstate() == null) {
+			returnedURL = "redirect:wall/wallPage";
 		}
 		
+		
 		logger.info("newRoom("+loginId+", "+room+") End");
+		return returnedURL;
+	}
+	
+	@RequestMapping(value="roomPage", method=RequestMethod.GET)
+	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model) {
+		logger.info("roomPage("+loginId+", "+roomId+") Start");
+		
+		Room room = Rservice.showRoom(roomId);
+		if (room != null) {
+			model.addAttribute("room", room);
+			
+			Map<String, List<?>> map = roomWallService.getWallAndConnector(roomId);
+			model.addAttribute("walls", map.get("walls"));
+			
+			model.addAttribute("itemList", itemService.allList());
+			
+			model.addAttribute("roomitemList", roomItemService.getRoomItemsInRoom(roomId));
+		}
+		
+		logger.info("roomPage("+loginId+", "+roomId+") End");
 		return "room/room";
 	}
 }

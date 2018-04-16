@@ -12,6 +12,12 @@
 <script src="<c:url value="/resources/js/TrackballControls.js"/>"></script>
 <script src="<c:url value="/resources/js/DragControls.js"/>"></script>
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
+<script src="<c:url value="/resources/js/dat.gui.js"/>"></script>
+<script src="<c:url value="/resources/js/stats.js"/>"></script>
+<script src="<c:url value="/resources/js/socket.io.js"/>"></script>
+<script>
+ var socket = io('http://localhost:7000');
+</script>
 <style type="text/css">
 canvas {
     position: fixed;
@@ -29,7 +35,7 @@ canvas {
 <body>
 <div class="left-menu">
 	<script type="text/javascript">
-		var roomId = 2;
+		var roomId = ${roomId};
 		var originalWalls = [];
 		var originalConnectors = [];
 		<c:if test="${!empty wallsAndConnectors}">
@@ -51,5 +57,6 @@ canvas {
 		<li><input type="button" class="btn btn-default" value="리셋" onclick="reset()"></li>
 	</menu>
 </div>
+
 </body>
 </html>

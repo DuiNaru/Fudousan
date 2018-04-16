@@ -48,7 +48,6 @@ THREE.TDSLoader.prototype = {
 		loader.setResponseType( 'arraybuffer' );
 
 		loader.load( url, function ( data ) {
-
 			onLoad( scope.parse( data, path ) );
 
 		}, onProgress, onError );
@@ -73,9 +72,17 @@ THREE.TDSLoader.prototype = {
 		this.readFile( arraybuffer, path );
 
 		for ( var i = 0; i < this.meshes.length; i ++ ) {
+			
+			var cache = THREE.Cache.get("MaterialCache"+path+i);
+			
+			if ( cache === undefined) {
+				THREE.Cache.add( "MaterialCache"+path+i, this.meshes[ i ].material );
+			} else {
+				delete this.meshes[ i ].material;
+				this.meshes[ i ].material = cache;
+			}
 
 			this.group.add( this.meshes[ i ] );
-
 		}
 
 		return this.group;

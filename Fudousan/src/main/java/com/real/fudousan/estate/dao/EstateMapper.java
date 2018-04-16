@@ -32,6 +32,6 @@ public interface EstateMapper {
 	// INSERT MUNICIPALITY CODE
 	public int insertMunicipalitycode(MunicipalityCode mun);
 
-
-	
+	// SELECT selectEsatesLocation
+	public List<Estate> selectEsatesLocation(); 
 }

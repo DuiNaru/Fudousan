@@ -42,6 +42,9 @@ public interface EstateDAO {
 	
 	// INSERT MUNICIPALITY CODE
 	public int insertMunicipalitycode(MunicipalityCode mun);
+	
+	// SELECT ESTATES LOCATION 
+	public List<Estate> selectEsatesLocation();
 
 
 	

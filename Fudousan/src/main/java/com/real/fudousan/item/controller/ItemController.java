@@ -1,19 +1,27 @@
 package com.real.fudousan.item.controller;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.item.service.ItemService;
 import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.item.vo.ItemType;
@@ -26,7 +34,7 @@ public class ItemController {
 	
 	@Autowired
 	private ItemService itemService;
-
+	
 	@RequestMapping(value="itemAddPage", method=RequestMethod.GET)
 	public String itemAddPage() {
 		logger.info("itemAddPage Start");
@@ -35,11 +43,14 @@ public class ItemController {
 	}
 
 	@RequestMapping(value="additem", method=RequestMethod.POST)
-	public String addItem(Item item, int itemTypeId, MultipartHttpServletRequest files, String[] titles, String[] sites) {
+	public String addItem(Item item, int itemTypeId, MultipartHttpServletRequest files, String[] titles, String[] sites, HttpServletRequest request) {
 		logger.info("addItem Start");
 		
+		String root_path = request.getSession().getServletContext().getRealPath("/");  
+		logger.debug("root_path" + root_path);
+		
 		item.setItemType(new ItemType(itemTypeId, null));
-		Set<RefSite> refSiteSet = new HashSet<>();
+		List<RefSite> refSiteSet = new ArrayList<>();
 		if (sites != null) {
 			for (int i = 0; i < sites.length; i++) {
 				refSiteSet.add(new RefSite(i, sites[i], null, titles[i], -1));
@@ -73,7 +84,7 @@ public class ItemController {
 		logger.info("modItem Start");
 		
 		item.setItemType(new ItemType(itemTypeId, null));
-		Set<RefSite> refSiteSet = new HashSet<>();
+		List<RefSite> refSiteSet = new ArrayList<>();
 		if (sites != null) {
 			for (int i = 0; i < sites.length; i++) {
 				refSiteSet.add(new RefSite(i, sites[i], null, titles[i], -1));
@@ -120,5 +131,20 @@ public class ItemController {
 		return result;
 	}
 	
-	
+	@RequestMapping(value = "/{file_path}/{file_name}.{file_ext}", method = RequestMethod.GET)
+	public void getFile(
+			@PathVariable("file_path") String filePath, 
+			@PathVariable("file_name") String fileName, 
+			@PathVariable("file_ext") String fileExt, 
+			HttpServletResponse response) {
+		
+		logger.info("getFile({}, {}) Start", filePath, fileName+"."+fileExt);
+		try {
+			itemService.downloadFile(filePath, fileName+"."+fileExt, response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		logger.info("getFile({}, {}) end", filePath, fileName+"."+fileExt);
+		
+	}
 }

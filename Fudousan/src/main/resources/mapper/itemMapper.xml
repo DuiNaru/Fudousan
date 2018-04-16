@@ -11,6 +11,13 @@
 		<result property="text" column="text"/>
 		<result property="fileDirectory" column="file_directory"/>
 		<result property="modelFileName" column="model_file_name"/>
+		<result property="itemScale" column="item_scale"/>
+		<result property="itemRotateX" column="item_rotate_x"/>
+		<result property="itemRotateY" column="item_rotate_y"/>
+		<result property="itemRotateZ" column="item_rotate_z"/>
+		<result property="itemX" column="item_x"/>
+		<result property="itemY" column="item_y"/>
+		<result property="itemZ" column="item_z"/>
 		<association property="itemType" column="item_type_id" javaType="com.real.fudousan.item.vo.ItemType" resultMap="itemTypeResultMap"/>
 		<collection property="refSiteSet" column="id" ofType="com.real.fudousan.item.vo.RefSite" resultMap="refSiteResultMap"/>
 	</resultMap>
@@ -26,17 +33,27 @@
 		<result property="creDate" column="cre_date"/>
 		<result property="text" column="ref_site_text"/>
 	</resultMap>
-
-	<select id="selectAll" resultMap="itemResultMap">
+	
+	<sql id="SELECT_ITEM_SQL">
+	
 		SELECT
 			item.item_id item_id
 			, item_name
 			, item.text text
 			, file_directory
 			, model_file_name
-			, item.item_type_id item_type_id
+			, item_scale
+			,item_rotate_x
+			,item_rotate_y
+			,item_rotate_z
+			,item_x
+			,item_y
+			,item_z
+			
 			-- item_type
+			, item.item_type_id item_type_id
 			, item_type_name
+			
 			-- ref_site
 			, id
 			, url
@@ -52,62 +69,21 @@
 			ref_site
 		ON
 			item.item_id = ref_site.item_id
+	
+	</sql>
+
+	<select id="selectAll" resultMap="itemResultMap">
+		<include refid="SELECT_ITEM_SQL"></include>
 	</select>
 	
 	<select id="selectById" parameterType="int" resultMap="itemResultMap">
-		SELECT
-			item.item_id item_id
-			, item_name
-			, item.text text
-			, file_directory
-			, model_file_name
-			, item.item_type_id item_type_id
-			-- item_type
-			, item_type_name
-			-- ref_site
-			, id
-			, url
-			, cre_date
-			, ref_site.text ref_site_text
-		FROM
-			item
-		JOIN
-			item_type
-		ON
-			item.item_type_id = item_type.item_type_id
-		LEFT OUTER JOIN
-			ref_site
-		ON
-			item.item_id = ref_site.item_id
+		<include refid="SELECT_ITEM_SQL"></include>
 		WHERE
 			item.item_id = #{0}
 	</select>
 	
 	<select id="selectByName" parameterType="String" resultMap="itemResultMap">
-		SELECT
-			item.item_id item_id
-			, item_name
-			, item.text text
-			, file_directory
-			, model_file_name
-			, item.item_type_id item_type_id
-			-- item_type
-			, item_type_name
-			-- ref_site
-			, id
-			, url
-			, cre_date
-			, ref_site.text ref_site_text
-		FROM
-			item
-		JOIN
-			item_type
-		ON
-			item.item_type_id = item_type.item_type_id
-		LEFT OUTER JOIN
-			ref_site
-		ON
-			item.item_id = ref_site.item_id
+		<include refid="SELECT_ITEM_SQL"></include>
 		WHERE
 			item.item_name LIKE '%'||#{0}||'%'
 	</select>

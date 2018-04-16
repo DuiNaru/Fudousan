@@ -64,6 +64,7 @@ public class ItemDAOOracle implements ItemDAO {
 		try {
 			ItemMapper mapper = session.getMapper(ItemMapper.class);
 			result = mapper.selectById(itemId);
+			logger.debug("result : " + result);
 		} catch(Exception e) {
 			e.printStackTrace();
 			result = null;

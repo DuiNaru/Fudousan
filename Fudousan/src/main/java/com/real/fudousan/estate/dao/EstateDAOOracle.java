@@ -35,9 +35,33 @@ public class EstateDAOOracle implements EstateDAO {
 			e.printStackTrace();
 		}
 
+
 		logger.info("select(" + email + ") End");
 		return result;
 	}
+
+public List<Estate> selectEsatesLocation(){
+	 List<Estate> result = null;
+	 logger.info("select Estates Location");   
+     try {
+        EstateMapper mapper = session.getMapper(EstateMapper.class);
+        result = mapper.selectEsatesLocation();
+     } catch(Exception e) {
+        e.printStackTrace();
+     }
+     
+     logger.info("select Estates Location");
+     return result;
+
+	
+}
+
+
+
+
+
+
+
 
 	/* 매물등록 */
 	@Override
