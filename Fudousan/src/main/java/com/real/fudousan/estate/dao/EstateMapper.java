@@ -20,11 +20,10 @@ public interface EstateMapper {
 	
 	//public ArrayList<Estate> estatelist();
 	//업데이트
-	
 	public int updateByIds(Estate estate);
 	
-
-	//매물 삭제 
+	//매물가져올때
+	public Estate viewEstate(int estateId);
 
 	
 	// INSERT TRANS 

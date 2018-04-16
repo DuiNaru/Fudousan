@@ -128,15 +128,25 @@
             </div>
           
           
-          
+
             <div class="form-group">
               <label for="inputType">取引タイプ(거래종류)</label>
               
             <select name='transTypeId' class="form-control" data-live-search="true" >
+  			
+  			<c:set var="transTypeId"/>
+  			
+  			
   			<option value='0' selected>-- 選択 --</option>
-  			<option value='1'>アパート</option>
-  			<option value='2'>マンション</option>
+  			
+  			
+  			<option value='1'>中古マンション等</option>
+  			
+  			<option value='2'>宅地(土地と建物)</option>
+  			<option value='3'>宅地(土地)</option>
+			
 			</select>
+			
             </div>
             
             
@@ -151,101 +161,75 @@
               <label for="inputRegion">地域名(지역이름)</label>
             	<!-- Localname = 지역이름 -->
              <select name='municipalitycodeId' data-live-search="true"  class="form-control">
-  <option value='00' selected>-- 選択 --</option>
+   <option value='00'>-- 選択 --</option>
   <!-- 홋카이도 -->
-  <option value='10000'>北海道</option>
+  
+  <option value='13102'>中央区</option>
   <!-- 아오모리현 -->
-  <option value='20000'>青森県</option>
-  <!-- 이와테현 -->
-  <option value='30000'>岩手県</option>
+
+  <option value='13105'>文京区</option>
   <!-- 미야기현 -->
-  <option value='04'>宮城県</option>
+  <option value='13101'>千代田区</option>
   <!-- 아키타현 -->
-  <option value='05'>秋田県</option>
+  <option value='40101'>北九州市門司区</option>
    <!-- 야가마타현 -->
-  <option value='06'>山形県</option>
+  <option value='13103'>港区</option>
   <!-- 후쿠시마현-->
-  <option value='07'>福島県</option>
+  <option value='13104'>新宿区</option>
   <!-- 이바라키현 -->
-  <option value='08'>茨城県</option>
+  <option value='13106'>台東区</option>
   <!-- 토치 기현 -->
-  <option value='09'>栃木県</option>
+  <option value='13107'>墨田区</option>
   <!-- 군마현 -->
-  <option value='10'>群馬県</option>
+  <option value='13108'>江東区</option>
   <!-- 사이타마 현 -->
-  <option value='11'>埼玉県</option>
+  <option value='13109'>品川区</option>
   <!-- 치바현 -->
-  <option value='12'>千葉県</option>
+  <option value='13110'>目黒区</option>
  <!--  도쿄도 -->
-  <option value='13'>東京都</option>
+  <option value='1101'>札幌市中央区</option>
   <!-- 가나가와 현 -->
-  <option value='14'>神奈川県</option>
+  <option value='1202'>函館市</option>
   <!-- 니가타 현 -->
-  <option value='15'>新潟県</option>
+  <option value='1203'>小樽市</option>
   <!-- 도야마 현 -->
-  <option value='16'>新潟県</option>
+  <option value='1204'>旭川市</option>
   <!-- 이시카와 현 -->
-  <option value='17'>石川県</option>
+  <option value='1205'>室蘭市</option>
   <!-- 후쿠이 현 -->
-  <option value='18'>福井県</option>
+  <option value='2201'>青森市</option>
   <!-- 야마나시 현 -->
-  <option value='19'>山梨県</option>
+  <option value='2202'>弘前市</option>
   <!-- 나가노 현 -->
-  <option value='20'>長野県</option>
+  <option value='3201'>盛岡市</option>
   <!-- 기후현 -->
-  <option value='21'>岐阜県</option>
+  <option value='4101'>仙台市青葉区</option>
   <!-- 스지오카현 -->
-  <option value='22'>静岡県</option>
+  <option value='5201'>秋田市</option>
   <!-- 아이치현 -->
-  <option value='23'>愛知県</option>
+  <option value='6201'>山形市</option>
   <!-- 미에현 -->
-  <option value='24'>三重県</option>
+  <option value='7201'>福島市</option>
   <!-- 시가현 -->
-  <option value='25'>滋賀県</option>
+  <option value='9201'>宇都宮市</option>
   <!-- 교토부 -->
-  <option value='26'>京都府</option>
+  <option value='7202'>会津若松市</option>
   <!-- 오사카부 -->
-  <option value='27'>大阪府</option>
+  <option value='7203'>郡山市</option>
   <!-- 효고현 -->
-  <option value='28'>兵庫県</option>
+  <option value='8202'>日立市</option>
   <!-- 나라현 -->
-  <option value='29'>奈良県</option>
+  <option value='8203'>土浦市</option>
   <!-- 와카야마현 -->
-  <option value='30'>和歌山県</option>
+  <option value='10201'>前橋市</option>
   <!-- 돗토리현 -->
-  <option value='31'>鳥取県</option>
+  <option value='12101'>千葉市中央区</option>
   <!-- 시마네현 -->
-  <option value='32'>島根県</option>
+  <option value='14101'>横浜市鶴見区</option>
   <!-- 오카야마현 -->
-  <option value='33'>岡山県</option>
+  <option value='15101'>新潟市北区</option>
   <!-- 히로시마현 -->
-  <option value='34'>広島県</option>
-  <!-- 야마구치현 -->
-  <option value='35'>山口県</option>
-  <!-- 도쿠시마현 -->
-  <option value='36'>徳島県</option>
-  <!-- 가가와현 -->
-  <option value='37'>香川県</option>
-  <!-- 에히메현 -->
-  <option value='38'>愛媛県</option>
-  <!-- 고치현 -->
-  <option value='39'>高知県</option>
-  <!-- 후쿠오카현 -->
-  <option value='40'>福岡県</option>
-  <!-- 사가현 -->
-  <option value='41'>佐賀県</option>
-  <!-- 나가사키현 -->
-  <option value='42'>長崎県</option>
-  <!-- 구마모토현 -->
-  <option value='43'>熊本県</option>
-  <!-- 오이타현 -->
-  <option value='44'>大分県</option>
-  <!-- 미야자키현 -->
-  <option value='45'>宮崎県</option>
-  <!-- 가고시마현 -->
-  <option value='46'>鹿児島県</option>
-  <!-- 오키나와 -->
-  <option value='47'>沖縄県</option>
+  <option value='16201'>富山市</option>
 </select>
              
             </div>

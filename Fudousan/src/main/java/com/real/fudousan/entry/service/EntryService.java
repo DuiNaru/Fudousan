@@ -61,15 +61,23 @@ public class EntryService {
 		return result;
 	}
 	
+	//매물 수정 페이지로 이동
+	public int modifyEstatePage(Entry entry){
+		int result = dao.modifyEstatePage(entry);
+		
+		return result;
+		
+	}
+	
+	
+	
 	/**
 	 * 매물 삭제
 	 * @param agencyId
 	 * @param estateId
 	 * @return
 	 */
-	/*public boolean delEntry(int agencyId, int estateId) {
-		return delEntry(new Entry( TODO ));
-	}*/
+	
 	
 	/**
 	 * 매물 가격 수정

@@ -23,6 +23,8 @@ public class Estate implements Serializable {
 
 	/** ESTATE_ID. */
 	private Integer estateId;
+	/** estateName. */
+	private String estateName;
 
 	/** 거래 유형. */
 	private TransType transType;
@@ -114,8 +116,7 @@ public class Estate implements Serializable {
 	/** DEL_DATE. */
 	private Date delDate;
 	
-	/** estateName. */
-	private String estateName;
+	
 	
 
 	private String address;

@@ -43,6 +43,7 @@
 			,ESTATE_X
 			,ESTATE_Y
 			,BASE_ROOM_ID
+			,ADDRESS
 		from
 			ESTATE
 		join
@@ -293,12 +294,50 @@ SEQ_ESTATE_ID.nextval
 	ORDER BY
 		estate_id ASC
 </select>
-
-
-
-
-
 <update id="updateByIds" parameterType="estate" >
+
+
+UPDATE ESTATE
+SET	
+	
+	TRANS_TYPE_ID=#{transType.transTypeId}
+	,REGION=#{region}
+	,MunicipalityCode_ID=#{municipalitycode.municipalitycodeId}
+	,PREFECTURE=#{prefecture}
+	,MUNICIPALITY=#{municipality}
+	,DISTRICTNAME=#{districtname}
+	,ADDRESS=#{address}
+	,NEARESTSTATION=#{neareststation}
+	,TIMETONEARESTSTATION=#{timetoneareststation}
+	,TRADEPRICE=#{tradeprice}
+	,PRICEPERUNIT=#{priceperunit}
+	,FLOORPLAN=#{floorplan}
+	,AREA=#{area}
+	,UNITPRICE=#{unitprice}
+	,TOTALFLOORAREA=#{totalfloorarea}
+	,LANDSHAPE=#{landshape}
+	,ESTATE_NAME=#{estateName}
+	,BUILDINGYEAR=#{buildingyear}
+	,STRUCTURE=#{structure}
+	,USE=#{use}
+	,COVERAGERATIO=#{coverageratio}
+	,FLOORAREARATIO=#{floorarearatio}
+	,DEL_DATE=#{delDate}
+	WHERE
+	 ESTATE_ID = #{ESTATE_ID}
+
+</update>
+
+
+
+
+<!-- <update id="estateupdate" parameterType="estate" >
+<selectKey resultType="int" keyProperty="estateId" order="AFTER">
+SELECT
+SEQ_ESTATE_ID.CURRVAL
+FROM DUAL
+</selectKey>
+
 UPDATE ESTATE
 SET	
 	
@@ -378,7 +417,7 @@ WHERE
 
 
 
-</update>
+</update> -->
 
 <delete id="deleteByIds" parameterType="int">
 delete 
@@ -386,8 +425,8 @@ from ESTATE
 where estate_id = #{estateId}
 </delete>
 
-	<select id="selectByIds" parameterType="java.util.Set" resultMap="estateResultMap">
-		<include refid="SELECT_ESTATE_SQL"></include>
+<select id="selectByIds" parameterType="java.util.Set" resultMap="estateResultMap">
+	<include refid="SELECT_ESTATE_SQL"></include>
 		where
 			room.MEMBER_ID IN <foreach collection="_parameter" item="id" open="(" separator=", " close=")">#{id}</foreach>
 	</select>
@@ -436,6 +475,14 @@ VALUES
 </insert>	
 	
 	
+
+<select id="viewEstate" resultMap="estateResultMap">
+	<include refid="SELECT_ESTATE_SQL"></include>
+	WHERE
+		estate_id = #{0}
+</select>
+	
+
 <select id="selectEsatesLocation" resultMap="estateResultMap">
 	SELECT
 	   *
@@ -448,6 +495,7 @@ VALUES
 
 
 </select>
+
 	
 	
 	
@@ -473,6 +521,7 @@ VALUES
 		<result property="unitprice" 				column="UnitPrice"/>
 		<result property="landshape" 				column="LandShape"/>
 		<result property="frontage" 				column="Frontage"/>
+		<result property="address" 					column="address"/>
 		<result property="totalfloorarea" 			column="TotalFloorArea"/>
 		<result property="buildingyear" 			column="BuildingYear"/>
 		<result property="structure" 				column="Structure"/>

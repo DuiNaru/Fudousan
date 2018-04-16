@@ -52,5 +52,22 @@ public class EntryDAOOracle implements EntryDAO {
 		      
 		      return result;
 		   }
+	  //매물 수정페이지에 매물 정보 가져오기 
+	  @Override
+	  public int modifyEstatePage(Entry entry){
+		  int result = 0;
+		  
+		  try{
+		         EntryMapper mapper = session.getMapper(EntryMapper.class);
+		        // EntryMapper mapper2= session.getMapper(EntryMapper.class);
+		         result = mapper.modifyEstatePage(entry);
+		      }
+		      catch(Exception e){
+		         e.printStackTrace();
+		      }
+		      
+		      return result;
+		
+	     }
 	
-}
+     }

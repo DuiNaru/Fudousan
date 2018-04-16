@@ -160,6 +160,4 @@ where ESTATE_ID =#{estate.estateId} and AGENCY_ID =#{agency.agencyId}
 
 </delete>
 
-
-	
 </mapper>

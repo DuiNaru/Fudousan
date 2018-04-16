@@ -20,6 +20,8 @@ public interface EstateDAO {
 	public int insertByIds(Estate estate);
 	
 	
+	public int modifyEstatepage(Estate estate);
+	
 
 	//업데이트
 	public int updateByIds(Estate estate);
@@ -29,8 +31,8 @@ public interface EstateDAO {
 	public List<Estate> select(Set<Integer> estateIds);
 
 
-	//삭제
-
+	//가져올때
+	public Estate viewEstate(int estateId);
 
 	
 
@@ -43,5 +45,8 @@ public interface EstateDAO {
 	
 	// SELECT ESTATES LOCATION 
 	public List<Estate> selectEsatesLocation();
+
+
+	
 
 }
