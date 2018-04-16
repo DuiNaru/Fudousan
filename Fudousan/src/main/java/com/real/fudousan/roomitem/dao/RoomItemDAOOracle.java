@@ -88,4 +88,21 @@ public class RoomItemDAOOracle implements RoomItemDAO {
 		return result;
 	}
 
+	@Override
+	public boolean delete(int roomItemId) {
+		logger.info("delete("+roomItemId+") Start");
+		RoomItemMapper roomItemMapper = sqlSession.getMapper(RoomItemMapper.class);
+		
+		boolean result = false;
+		
+		try {
+			result = roomItemMapper.delete(roomItemId);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+
+		logger.info("delete("+roomItemId+") End");
+		return result;
+	}
+
 }

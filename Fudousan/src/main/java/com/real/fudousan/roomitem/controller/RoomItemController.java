@@ -49,4 +49,13 @@ public class RoomItemController {
 		logger.info("save("+roomItem+") End");
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="delete", method=RequestMethod.GET)
+	public boolean delete(int roomItemId) {
+		logger.info("delete("+roomItemId+") Start");
+		boolean result = service.remove(roomItemId);
+		logger.info("delete("+roomItemId+") End");
+		return result;
+	}
 }
