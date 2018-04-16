@@ -475,14 +475,14 @@ VALUES
 </insert>	
 	
 	
-<<<<<<< HEAD
+
 <select id="viewEstate" resultMap="estateResultMap">
 	<include refid="SELECT_ESTATE_SQL"></include>
 	WHERE
 		estate_id = #{0}
 </select>
 	
-=======
+
 <select id="selectEsatesLocation" resultMap="estateResultMap">
 	SELECT
 	   *
