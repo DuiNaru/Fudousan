@@ -10,6 +10,9 @@ public interface EntryMapper {
 	//삭제
 	public int deleteEntry(Entry entry);
 	
-	// 가져오기
+	//가져오기
 	public Entry selectEntry(int agencyId, int estateId);
+	
+	//수정할때 매물 불러오기
+	public int modifyEstatePage(Entry entry);
 }

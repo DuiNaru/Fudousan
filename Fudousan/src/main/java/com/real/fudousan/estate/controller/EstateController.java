@@ -187,11 +187,29 @@ public class EstateController {
 	 }
 	 //수정 페이지로 이동  
 	 @RequestMapping(value="bc", method=RequestMethod.GET)
-	    public String modifyEstatePage(Model model, HttpSession session,  Entry entry){
+	    public String modifyEstatePage(Model model, HttpSession session, int estateId, Entry entry
+				){
 			
-	
 		 
 		 logger.info("매물 수정 페이지로 이동 ");
+		 logger.debug("estateId : " + estateId);
+		Estate estate = estateService.viewEstate(estateId);
+	
+		
+		model.addAttribute("estate", estate);
+		
+		entry.getPrice();
+		model.addAttribute("entry", entry) ;
+		 System.out.println(estate);
+		 System.out.println(entry);
+		 
+		
+			
+		
+		
+		// entryService.modifyEstatePage(entry);
+		 
+		 
 		 
 	/*	 
 		 entryService.(entry);
@@ -204,11 +222,69 @@ public class EstateController {
 	 }
 	 
 	 /*수정*/
-	/*@RequestMapping(value="estateupdate", method=RequestMethod.POST)
-	    public String estateupdate(
+	@RequestMapping(value="updateByIds", method=RequestMethod.POST)
+	    public String updateByIds(Model model, HttpSession session, Estate estate, TransType transType
+				,MunicipalityCode municipalitycode , String prefecture ,String municipality,String districtname
+				,String neareststation,Integer  timetoneareststation,Integer tradeprice,Integer priceperunit,String floorplan ,Integer area,
+				Integer unitprice,String landshape, Integer totalfloorarea ,String buildingyear,String structure,String use,
+			    Integer  coverageratio ,Integer  floorarearatio , String address , String estateName, Integer price){
 			
+			logger.info("매물 수정 시작");
+			Entry entry = new Entry();
 			
 			System.out.println("estate = " +   estate);
+			entry.setPrice(price);
+			estate.setEstateName(estateName);
+			estate.setTransType(transType);
+			estate.setMunicipalitycode(municipalitycode);
+			estate.setPrefecture(prefecture);
+			estate.setMunicipality(municipality);
+			estate.setDistrictname(districtname);
+			estate.setNeareststation(neareststation);
+			estate.setTimetoneareststation(timetoneareststation);
+			estate.setTradeprice(tradeprice);
+			estate.setPriceperunit(priceperunit);
+			estate.setFloorplan(floorplan);
+			estate.setArea(area);
+			estate.setUnitprice(unitprice);
+			estate.setLandshape(landshape);
+			estate.setTotalfloorarea(totalfloorarea);
+			estate.setBuildingyear(buildingyear);
+			estate.setStructure(structure);
+			estate.setUse(use);
+			estate.setCoverageratio(coverageratio);
+			estate.setFloorarearatio(floorarearatio);
+			estate.setAddress(address);
+			
+			System.out.println(price);
+			estateService.addEstate(estate);
+			int estate_id = estate.getEstateId();
+			
+			String email = (String) session.getAttribute("loginEmail");
+			int agency_id = agencyService.selectAgencyId(email);
+			
+			logger.info("estate_id : " + estate_id);
+			entry.setEstate(estate);
+			Agency agency = new Agency();
+			agency.setAgencyId(agency_id);
+			entry.setAgency(agency);
+			//entry.setEstate_id(estate_id);
+			//entry.setAgency_id(agency_id);
+			entryService.addEntry(entry);
+
+			logger.info("매물 수정 완료");
+		
+		
+		
+		return "redirect:/bm";
+	}
+	
+			
+	    		
+	    		
+	    		
+			
+			/*System.out.println("estate = " +   estate);
 			entry.setPrice(price);
 			estate.setEstateName(estateName);
 			estate.setTransType(transType);
@@ -250,9 +326,9 @@ public class EstateController {
 
 		//	logger.info("매물 수정 완료");
 		 
-	    	return "/brokers/bm";
-	 }
-	 */
+	    	return "/brokers/bm";*/
+	 
+	 
 	 
 	 @RequestMapping(value="bm", method=RequestMethod.GET)
 	 public String bm(Model model, HttpSession session,Agency agency) {

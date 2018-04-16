@@ -29,11 +29,16 @@ public class EstateService {
 	 * @param estateId
 	 * @return
 	 */
-	public Estate viewEstate(int estateId) {
-/*public List<Estate> select(Set<Integer> estateId); */
-		return null;
-	}
+	/*public Estate viewEstate(int estateId) {
 	
+		return null;
+	}*/
+	public Estate viewEstate(int estateId) {
+		
+		Estate result = dao.viewEstate(estateId);
+		
+		return result;
+	}
 	/**
 	 * 매물 추가
 	 * @param estate
@@ -53,8 +58,10 @@ public class EstateService {
 	 */
 	public boolean modifyEstate(Estate estate) {
 		
-		
-		
+		return false;
+	}
+	//매물 수정 페이지로 이동
+public boolean modifyEstatepage(Estate estate) {
 		
 		return false;
 	}
