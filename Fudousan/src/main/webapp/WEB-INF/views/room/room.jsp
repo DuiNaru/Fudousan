@@ -28,7 +28,7 @@
  }
  function save(){
 	 console.log('저장하기');
-	 console.log('저장하기 눌렀습니다.');
+	 console .log('저장하기 눌렀습니다.');
  }
  function reset(){
 	 console.log('초기화하기');
