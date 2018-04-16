@@ -28,6 +28,7 @@ socket.on('successChangeMessage', function(data){
 socket.on('lookSamePage',function(data){
 	var product = objToRoomItem(JSON.parse(data));
 	console.dir(product);
+	console.log(data);
 });
 
 
