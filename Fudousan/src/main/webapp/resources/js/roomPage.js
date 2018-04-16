@@ -30,6 +30,8 @@ var curRoomItems = [];
 var curSelected;
 // 현재 선택 된 아이템이 움직였는가?
 var curMoving = false;
+// 마우스 다운 이후로 마우스 업이 되었는가?
+var isMouseUp = false;
 
 document.addEventListener("DOMContentLoaded", function(){
 	//초기화
@@ -218,6 +220,7 @@ function onKeydown(event) {
 }
 
 function onDocumentMouseDown(event) {
+	isMouseUp = false;;
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(curRoomItems, true);
 	if (intersects.length > 0) {
@@ -237,7 +240,7 @@ function onDocumentMouseMove(event) {
 	// 마우스 이동 저장
 	moveMouse(event);
 
-	if (curSelected != null) {
+	if (curSelected != null && !isMouseUp) {
 		// 드래그 중인 아이템이 있으면 지면에 맞게 움직인다.
 		raycaster.setFromCamera(mouse, camera);
 		var intersects = raycaster.intersectObjects([plane]);
@@ -251,16 +254,15 @@ function onDocumentMouseMove(event) {
 }
 
 function onDocumentMouseUp(event) {
+	isMouseUp = true;
 	if(curSelected != null) {
 		// 움직였으면 DB 저장
 		if(curMoving) {
 			curMoving = false;
 			saveRoomItem(curSelected.roomItem);
+			curSelected = null;
 		}
 	}
-
-	// 선택된 아이템이 있으면 선택 해재
-	curSelected = null;
 	// 컨트롤 활성화
 	controls.enabled = true;
 }
@@ -312,7 +314,7 @@ function drawWall() {
 }
 
 function previewItem(itemId, fileName) {
-	console.log(itemId);
+	/*console.log(itemId);
 	console.log(fileName);
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
@@ -369,7 +371,7 @@ function previewItem(itemId, fileName) {
 		
 		// 완료 Alert 띄움
 		alert("Complete");
-	});
+	});*/
 }
 
 /**
