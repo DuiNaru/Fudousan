@@ -133,10 +133,9 @@
  <div style="margin-top: 20px"> 
 <input  type="button" value="매물 작성" class="btn btn-info" onclick="location.href='/fudousan/bw'"/>
  </div>
-<!-- <input type="radio" name="cr_page1">공개 
-<input type="radio" name="cr_page1">비공개 -->
-	
 
+<!-- 테스쳐 업로드 페이지로 이동 -->
+<input type="button" value="텍스쳐 업로드" class="btn btn-info" onclick="location.href='/texture/uproad'" > 
 
 
 
@@ -152,14 +151,16 @@
 		<tr>
 			<td>${estate.estateId}</td>
 			<td>${estate.estateName} </td>
+			
 			<td>
-			
 			<input type="button" value="삭제"  class="btn btn-info" 
-			onclick="location.href='deleteEntry?agencyId=${agencyId}&estateId=${select.get(0).estateId}'">
-		
+			onclick="location.href='deleteEntry?agencyId=${agencyId}&estateId=${estate.estateId}'">
 			
-			<input type="button" value="수정" class="btn btn-info" onclick="location.href='/fudousan/bc'">
+			
+			<input type="button" value="수정" class="btn btn-info" onclick="location.href='/fudousan/bc?estateId=${estate.estateId}'">
 			<!-- 매물 작성으로 이동 -->
+			<%-- transType=${estate.transType.transTypeId} --%>
+			<%-- <input type="hidden" name="estate_id" id="estate_id" value="${estate.estateId}"> --%>
 		</tr>
 		
 		</c:forEach>

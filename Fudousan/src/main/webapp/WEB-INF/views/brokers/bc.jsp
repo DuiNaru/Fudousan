@@ -120,11 +120,11 @@
           <h1> 物件修整<small>매물수정</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="estateupdate" method="post" enctype="multipart/form-data">
+          <form role="form" action="updateByIds" method="post" enctype="multipart/form-data">
           
           <div class="form-group">
               <label for="inputMunicipality">매물이름</label>
-              <input type="text" class="form-control" id="inputestateName"  name="estateName" value="${entry.estate.estateId}">
+              <input type="text" class="form-control" id="inputestateName"  name="estateName" value="${estate.estateName}">
             </div>
           
           
@@ -132,10 +132,14 @@
             <div class="form-group">
               <label for="inputType">取引タイプ(거래종류)</label>
               
-            <select name='transTypeId' class="form-control" data-live-search="true" >
-  			<option value='0' selected>-- 選択 --</option>
-  			<option value='1'>アパート</option>
-  			<option value='2'>マンション</option>
+            <select name='transTypeId' class="form-control" data-live-search="true">
+  			
+  			
+  			
+  			
+  			<option value='1' <c:if test="${estate.transType.transTypeId == 1}"> selected </c:if>>中古マンション等</option>
+  			<option value='2' <c:if test="${estate.transType.transTypeId == 2}"> selected </c:if>>宅地(土地と建物)</option>
+  			<option value='3' <c:if test="${estate.transType.transTypeId == 3}"> selected </c:if>>宅地(土地)</option>
 			</select>
             </div>
             
@@ -143,7 +147,7 @@
             
              <div class="form-group">
               <label for="inputPrefecture">가격</label>
-              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 가격" name="price">
+              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 가격" name="price" value="${estate.tradeprice}">
            </div>
             
             
@@ -151,192 +155,167 @@
               <label for="inputRegion">地域名(지역이름)</label>
             	<!-- Localname = 지역이름 -->
              <select name='municipalitycodeId' data-live-search="true"  class="form-control">
-  <option value='00' selected>-- 選択 --</option>
+  <option value='00'>-- 選択 --</option>
   <!-- 홋카이도 -->
-  <option value='10000'>北海道</option>
+  
+  <option value='13102'>中央区</option>
   <!-- 아오모리현 -->
-  <option value='20000'>青森県</option>
-  <!-- 이와테현 -->
-  <option value='30000'>岩手県</option>
+
+  <option value='13105'>文京区</option>
   <!-- 미야기현 -->
-  <option value='04'>宮城県</option>
+  <option value='13101'>千代田区</option>
   <!-- 아키타현 -->
-  <option value='05'>秋田県</option>
+  <option value='40101'>北九州市門司区</option>
    <!-- 야가마타현 -->
-  <option value='06'>山形県</option>
+  <option value='13103'>港区</option>
   <!-- 후쿠시마현-->
-  <option value='07'>福島県</option>
+  <option value='13104'>新宿区</option>
   <!-- 이바라키현 -->
-  <option value='08'>茨城県</option>
+  <option value='13106'>台東区</option>
   <!-- 토치 기현 -->
-  <option value='09'>栃木県</option>
+  <option value='13107'>墨田区</option>
   <!-- 군마현 -->
-  <option value='10'>群馬県</option>
+  <option value='13108'>江東区</option>
   <!-- 사이타마 현 -->
-  <option value='11'>埼玉県</option>
+  <option value='13109'>品川区</option>
   <!-- 치바현 -->
-  <option value='12'>千葉県</option>
+  <option value='13110'>目黒区</option>
  <!--  도쿄도 -->
-  <option value='13'>東京都</option>
+  <option value='1101'>札幌市中央区</option>
   <!-- 가나가와 현 -->
-  <option value='14'>神奈川県</option>
+  <option value='1202'>函館市</option>
   <!-- 니가타 현 -->
-  <option value='15'>新潟県</option>
+  <option value='1203'>小樽市</option>
   <!-- 도야마 현 -->
-  <option value='16'>新潟県</option>
+  <option value='1204'>旭川市</option>
   <!-- 이시카와 현 -->
-  <option value='17'>石川県</option>
+  <option value='1205'>室蘭市</option>
   <!-- 후쿠이 현 -->
-  <option value='18'>福井県</option>
+  <option value='2201'>青森市</option>
   <!-- 야마나시 현 -->
-  <option value='19'>山梨県</option>
+  <option value='2202'>弘前市</option>
   <!-- 나가노 현 -->
-  <option value='20'>長野県</option>
+  <option value='3201'>盛岡市</option>
   <!-- 기후현 -->
-  <option value='21'>岐阜県</option>
+  <option value='4101'>仙台市青葉区</option>
   <!-- 스지오카현 -->
-  <option value='22'>静岡県</option>
+  <option value='5201'>秋田市</option>
   <!-- 아이치현 -->
-  <option value='23'>愛知県</option>
+  <option value='6201'>山形市</option>
   <!-- 미에현 -->
-  <option value='24'>三重県</option>
+  <option value='7201'>福島市</option>
   <!-- 시가현 -->
-  <option value='25'>滋賀県</option>
+  <option value='9201'>宇都宮市</option>
   <!-- 교토부 -->
-  <option value='26'>京都府</option>
+  <option value='7202'>会津若松市</option>
   <!-- 오사카부 -->
-  <option value='27'>大阪府</option>
+  <option value='7203'>郡山市</option>
   <!-- 효고현 -->
-  <option value='28'>兵庫県</option>
+  <option value='8202'>日立市</option>
   <!-- 나라현 -->
-  <option value='29'>奈良県</option>
+  <option value='8203'>土浦市</option>
   <!-- 와카야마현 -->
-  <option value='30'>和歌山県</option>
+  <option value='10201'>前橋市</option>
   <!-- 돗토리현 -->
-  <option value='31'>鳥取県</option>
+  <option value='12101'>千葉市中央区</option>
   <!-- 시마네현 -->
-  <option value='32'>島根県</option>
+  <option value='14101'>横浜市鶴見区</option>
   <!-- 오카야마현 -->
-  <option value='33'>岡山県</option>
+  <option value='15101'>新潟市北区</option>
   <!-- 히로시마현 -->
-  <option value='34'>広島県</option>
-  <!-- 야마구치현 -->
-  <option value='35'>山口県</option>
-  <!-- 도쿠시마현 -->
-  <option value='36'>徳島県</option>
-  <!-- 가가와현 -->
-  <option value='37'>香川県</option>
-  <!-- 에히메현 -->
-  <option value='38'>愛媛県</option>
-  <!-- 고치현 -->
-  <option value='39'>高知県</option>
-  <!-- 후쿠오카현 -->
-  <option value='40'>福岡県</option>
-  <!-- 사가현 -->
-  <option value='41'>佐賀県</option>
-  <!-- 나가사키현 -->
-  <option value='42'>長崎県</option>
-  <!-- 구마모토현 -->
-  <option value='43'>熊本県</option>
-  <!-- 오이타현 -->
-  <option value='44'>大分県</option>
-  <!-- 미야자키현 -->
-  <option value='45'>宮崎県</option>
-  <!-- 가고시마현 -->
-  <option value='46'>鹿児島県</option>
-  <!-- 오키나와 -->
-  <option value='47'>沖縄県</option>
+  <option value='16201'>富山市</option>
+  
 </select>
              
             </div>
             <div class="form-group">
               <label for="inputPrefecture">都道府県</label>
-              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 도시 이름 (도도부현)" name="prefecture">
+              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 도시 이름 (도도부현)" name="prefecture" value="${estate.prefecture}">
            
             </div>
             <div class="form-group">
               <label for="inputMunicipality">市区町村</label>
-              <input type="text" class="form-control" id="inputMunicipality" placeholder="도시 이름 (시구정촌)" name="municipality">
+              <input type="text" class="form-control" id="inputMunicipality" placeholder="도시 이름 (시구정촌)" name="municipality" value="${estate.municipality}">
             </div>
             <div class="form-group">
               <label for="inputDistrictName">地球人</label>
-              <input type="text" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)" name="districtname">
+              <input type="text" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)" name="districtname" value="${estate.districtname}">
             </div>
             
            <div class="form-group">
               <label for="inputNearestStation"> 나머지 주소 </label>
-              <input type="text" class="form-control" id="inputNearestStation" placeholder="나머지 주소" name="address">
+              <input type="text" class="form-control" id="inputNearestStation" placeholder="나머지 주소" name="address" value="${estate.address}">
             </div>
             
             
             <div class="form-group">
               <label for="inputNearestStation"> 最寄駅</label>
-              <input type="text" class="form-control" id="inputNearestStation" placeholder="전제일 가까운 역 : 명칭 " name="neareststation">
+              <input type="text" class="form-control" id="inputNearestStation" placeholder="전제일 가까운 역 : 명칭 " name="neareststation" value="${estate.neareststation}">
             </div>
          
 		<div class="form-group">
               <label for="inputTimeToNearestStation"> 最寄駅の距離（分）</label>
-              <input type="text" class="form-control" id="inputTimeToNearestStation" placeholder="제일 가까운역 거리(분)" name="timetoneareststation">
+              <input type="text" class="form-control" id="inputTimeToNearestStation" placeholder="제일 가까운역 거리(분)" name="timetoneareststation" value="${estate.timetoneareststation}">
             </div>
             
             <div class="form-group">
               <label for="inputTradePrice"> 取引価格（総額）</label>
-              <input type="text" class="form-control" id="inputTradePrice" placeholder="거래 가격(총액)" name="tradeprice">
+              <input type="text" class="form-control" id="inputTradePrice" placeholder="거래 가격(총액)" name="tradeprice" value="${estate.tradeprice}">
             </div>
             
             <div class="form-group">
               <label for="inputPricePerUnit"> 坪単価</label>
-              <input type="text" class="form-control" id="inputPricePerUnit" placeholder="평단가" name="priceperunit">
+              <input type="text" class="form-control" id="inputPricePerUnit" placeholder="평단가" name="priceperunit" value="${estate.priceperunit}">
             </div>
               <!-- -- -->
             <div class="form-group">
               <label for="inputFloorPlan"> 構造</label>
-              <input type="text" class="form-control" id="inputFloorPlan" placeholder="구조 " name="floorplan">
+              <input type="text" class="form-control" id="inputFloorPlan" placeholder="구조 " name="floorplan" value="${estate.floorplan}">
             </div>
             
             <div class="form-group">
               <label for="inputArea"> 面積（平方メートル</label>
-              <input type="text" class="form-control" id="inputArea" placeholder="면적(평방 미터)" name="area">
+              <input type="text" class="form-control" id="inputArea" placeholder="면적(평방 미터)" name="area" value="${estate.area}">
             </div>
             
             <div class="form-group">
               <label for="inputUnitPrice"> 取引価格（平方メートル単価）</label>
-              <input type="text" class="form-control" id="inputUnitPrice" placeholder="거래 가격(평방 미터 단가 )" name="unitprice">
+              <input type="text" class="form-control" id="inputUnitPrice" placeholder="거래 가격(평방 미터 단가 )" name="unitprice" value="${estate.unitprice}">
             </div>
             
             <div class="form-group">
               <label for="inputLandShape">土地の形状 </label>
-              <input type="text" class="form-control" id="inputLandShape" placeholder="토지의 형상" name="landshape">
+              <input type="text" class="form-control" id="inputLandShape" placeholder="토지의 형상" name="landshape" value="${estate.landshape}">
             </div>
             
            <div class="form-group">
               <label for="inputTotalFloorArea">延べ面積（㎡） </label>
-              <input type="text" class="form-control" id="inputTotalFloorArea" placeholder="연면적 (㎡)" name="totalfloorarea">
+              <input type="text" class="form-control" id="inputTotalFloorArea" placeholder="연면적 (㎡)" name="totalfloorarea" value="${estate.totalfloorarea}">
             </div>
             
             <div class="form-group">
               <label for="inputBuildingYear">設した年 </label>
-              <input type="text" class="form-control" id="inputBuildingYear" placeholder="건축 년도 " name="buildingyear">
+              <input type="text" class="form-control" id="inputBuildingYear" placeholder="건축 년도 " name="buildingyear" value="${estate.buildingyear}">
             </div>
             
             <div class="form-group">
               <label for="inputStructure">建物の構造 </label>
-              <input type="text" class="form-control" id="inputStructure" placeholder="건물의 구조 " name="structure">
+              <input type="text" class="form-control" id="inputStructure" placeholder="건물의 구조 " name="structure" value="${estate.structure}">
             </div>
             
             <div class="form-group">
               <label for="inputUse">用途</label>
-              <input type="text" class="form-control" id="inputUse" placeholder="용도" name="use">
+              <input type="text" class="form-control" id="inputUse" placeholder="용도" name="use" value="${estate.use}">
             </div>
         
         <div class="form-group">
               <label for="inputCoverageRatio">建ぺい率（％）</label>
-              <input type="text" class="form-control" id="inputCoverageRatio" placeholder="건폐율 (%)" name="coverageratio">
+              <input type="text" class="form-control" id="inputCoverageRatio" placeholder="건폐율 (%)" name="coverageratio" value="${estate.coverageratio}" >
             </div>
             
             <div class="form-group">
               <label for="inputFloorAreaRatio">容積率（％）</label>
-              <input type="text" class="form-control" id="inputFloorAreaRatio" placeholder="용적률 (%)" name="floorarearatio">
+              <input type="text" class="form-control" id="inputFloorAreaRatio" placeholder="용적률 (%)" name="floorarearatio" value="${estate.floorarearatio}">
             </div>
         
 

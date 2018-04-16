@@ -11,4 +11,6 @@ public interface EntryDAO {
 	
 	public int deleteEntry(Entry entry);
 	
+	public int modifyEstatePage(Entry entry);
+	
 }

@@ -45,4 +45,11 @@ public class RoomItemService {
 		logger.info("modify("+roomItem+") End");
 		return result;
 	}
+	
+	public boolean remove(int roomItemId) {
+		logger.info("remove("+roomItemId+") Start");
+		boolean result = dao.delete(roomItemId);
+		logger.info("remove("+roomItemId+") End");
+		return result;
+	}
 }

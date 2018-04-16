@@ -14,35 +14,13 @@
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
 <script src="<c:url value="/resources/js/socket.io.js"/>"></script>
 <script src="<c:url value="/resources/js/vo.js"/>"></script>
+<script src="<c:url value="/resources/js/CopyShader.js"/>"></script>
+<script src="<c:url value="/resources/js/FXAAShader.js"/>"></script>
+<script src="<c:url value="/resources/js/EffectComposer.js"/>"></script>
+<script src="<c:url value="/resources/js/RenderPass.js"/>"></script>
+<script src="<c:url value="/resources/js/ShaderPass.js"/>"></script>
+<script src="<c:url value="/resources/js/OutlinePass.js"/>"></script>
 
-<!-- <script>
- var socket = io('http://localhost:7000');
- 
- function goback(){
-	console.log('뒤로가기'); 
-	socket.emit('array_back');
- };
- 
- function gofront(){
-	 console.log('앞으로가기');
-	 socket.emit('arrayBackCancel');
- }
- function save(){
-	 console.log('저장하기');
-	 console .log('저장하기 눌렀습니다.');
- }
- function reset(){
-	 console.log('초기화하기');
-	 var clearYes = confirm('진짜 초기화 하시겠습니까?');
-	  if(clearYes){
-		  socket.emit('clearArray');
-	  };
- }
- function esc(){
-	 console.log('종료하기');
- }
- 
-</script> -->
 <script type="text/javascript">
 	var room = {
 		roomId:${room.roomId}
@@ -77,7 +55,7 @@
 			objToRoomItem({
 				color: ${roomitem.color},
 				roomId: ${roomitem.roomId},
-				roomitemId: ${roomitem.roomItemId},
+				roomItemId: ${roomitem.roomItemId},
 				rotateX: ${roomitem.rotateX},
 				rotateY: ${roomitem.rotateY},
 				rotateZ: ${roomitem.rotateZ},
@@ -126,10 +104,24 @@
 	    top: 0;
 	    left: 0;
 	}
+	.top-menu {
+		position:absolute;
+		top:0%;
+		margin-left: auto;
+		z-index: 1;
+		background-color: rgba(255, 255, 255, 0.5);
+	}
 	.left-menu {
 		position:absolute;
-		top: 10%;
+		bottom: 10%;
 		left: 0px;
+		z-index: 1;
+		background-color: rgba(255, 255, 255, 0.5);
+	}
+	.right-menu {
+		position:absolute;
+		top: 10%;
+		right: 0px;
 		z-index: 1;
 		background-color: rgba(255, 255, 255, 0.5);
 	}
@@ -165,6 +157,44 @@
 </style>
 </head>
 <body>
+
+<script>
+ var socket = io('http://localhost:8000');
+ 
+ function goback(){
+	console.log('뒤로가기'); 
+	socket.emit('array_back');
+ };
+ 
+ function gofront(){
+	 console.log('앞으로가기');
+	 socket.emit('arrayBackCancel');
+ }
+ function save(){
+	 console.log('저장하기');
+	 console.log('저장하기 눌렀습니다.');
+ }
+ function reset(){
+	 console.log('초기화하기');
+	 var clearYes = confirm('진짜 초기화 하시겠습니까?');
+	  if(clearYes){
+		  socket.emit('clearArray');
+	  };
+ }
+ function esc(){
+	 console.log('종료하기');
+ }
+ function checkArray(){
+	 socket.emit('goArray1');
+ }
+ function AddItem(roomitem){
+	console.dir(roomitem);
+	 socket.emit('addItem',JSON.stringify(roomitem));
+ }
+ 
+ socket.on('takeMyOrder')
+ 
+</script>
 <script id="template" type="notjs">
 	<div class="scene"></div>
 	<div class="description">Scene $</div>
@@ -172,12 +202,15 @@
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
 <div class="dat">
 </div> 
+	<div class="top-menu">
+		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem);">
+	</div>
 	<div class="left-menu">
 		<div>
 			<label>아이템 생성</label>
 			<ul>
 				<c:forEach var="item" items="${itemList}">
-					<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId});">
+					<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId}, AddItem);">
 						<script type="text/javascript">
 							var item${item.itemId} = new Item();
 							item${item.itemId}.fileDirectory = "${item.fileDirectory}";
@@ -194,8 +227,6 @@
 						</script>
 						<label>${item.itemName}</label>
 						<div class="preview">
-							<canvas id="itemPreview${item.itemId}">
-							</canvas>
 						</div>
 						<script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
 					</li>
@@ -207,11 +238,14 @@
 		<div>
 			<label>종합기능</label>
 			<ul>
-						<li><button onclick="goback()">뒤로가기</button></li>
-						<li><button onclick="gofront()">앞으로가기</button></li>
-						<li><button onclick="save()">저장하기</button></li>
-						<li><button onclick="reset()">초기화</button></li>
+						<li><button onclick="goback()">뒤로가기</button></li><br>
+						<li><button onclick="gofront()">앞으로가기</button></li><br>
+						<li><button onclick="save()">저장하기</button></li><br>
+						<li><button onclick="reset()">초기화</button></li><br>
 						<li><button onclick="esc()">종료</button>
+						<br><br><br>
+						<li><button onclick="checkArray()">Array 보기</button>
+						<li><button onclick="AddItem()">의자 넣기</button>
 			</ul>
 		</div>
 	</div>
