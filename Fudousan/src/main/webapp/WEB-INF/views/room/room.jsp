@@ -159,7 +159,7 @@
 <body>
 
 <script>
- var socket = io('http://localhost:7000');
+ var socket = io('http://localhost:8000');
  
  function goback(){
 	console.log('뒤로가기'); 
@@ -188,8 +188,8 @@
 	 socket.emit('goArray1');
  }
  function AddItem(roomitem){
-	console.log('의자 추가');
-	socket.emit('addItem',JSON.stringify(roomitem));
+	console.dir(roomitem);
+	 socket.emit('addItem',JSON.stringify(roomitem));
  }
  
  socket.on('takeMyOrder')
