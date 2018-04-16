@@ -152,11 +152,31 @@ public class RoomService {
 		return result;
 	}
 	
+	/**
+	 * 특정 회원이 특정 방 삭제
+	 * @param memberId
+	 * @param roomId
+	 * @return
+	 */
 	public boolean deleteRoom(int memberId, int roomId) {
 		logger.info("changeRoomPublic("+memberId+", "+roomId+") Start");
 		boolean result = false;
 		result = dao.deleteRoom(memberId, roomId);
 		logger.info("changeRoomPublic("+memberId+", "+roomId+") End");
+		return result;
+	}
+
+
+	/**
+	 * 방 보기
+	 * @param roomId
+	 * @return
+	 */
+	public Room showRoom(int roomId) {
+		logger.info("showRoom("+roomId+") Start");
+		Room result = null;
+		result = dao.select(roomId);
+		logger.info("showRoom("+roomId+") End");
 		return result;
 	}
 }

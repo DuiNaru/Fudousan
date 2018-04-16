@@ -35,8 +35,9 @@ public class RoomWallController {
 	private RoomWallService service;
 
 	@RequestMapping(value="wallPage", method=RequestMethod.GET)
-	public String roomPage(@RequestParam(value="roomId", defaultValue="-1") int roomId, Model model) {
+	public String wallPage(int roomId, Model model) {
 		logger.info("wallPage("+roomId+") Start");
+		model.addAttribute("roomId", roomId);
 		if (roomId >= 0) {
 			Map<String, List<?>> map = service.getWallAndConnector(roomId);
 			model.addAttribute("wallsAndConnectors", map);
@@ -54,6 +55,7 @@ public class RoomWallController {
 			String dots) {
 		logger.info("save() Start");
 		boolean result = false;
+		logger.debug("roomId : "+ roomId);
 		logger.debug("walls : "+ walls);
 		logger.debug("dots : "+ dots);
 		

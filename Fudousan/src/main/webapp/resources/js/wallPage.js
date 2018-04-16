@@ -776,6 +776,7 @@ function back(event) {
 	event.stopPropagation();
 	if(curIndex > 0) curIndex -= 1;
 	redraw();
+	
 }
 
 function forward(event) {

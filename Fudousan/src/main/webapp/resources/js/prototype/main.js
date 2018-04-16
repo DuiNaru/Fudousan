@@ -71,7 +71,7 @@ function init() {
 		// 화면에 추가
 		scene.add(object);
 		// 완료 Alert 띄움
-		alert("Complete");
+		alert("방이 생성됩니다.");
 
 		objects.push(object);	// 해당 object는 Groups 객체로써 DragControls와 호환 X
 		chair = object;
@@ -159,12 +159,17 @@ function init() {
 			  },
 			  앞으로가기 : function(){
 				  console.log('앞으로가기 눌렀습니다.');
+				  socket.emit('arrayBackCancel');
 			  },
 			  저장 : function(){
 				  console.log('저장하기 눌렀습니다.');
 			  },
 			  초기화 : function(){
 				  console.log('초기화 눌렀습니다.');
+				  var clearYes = confirm('진짜 초기화 하실?');
+				  if(clearYes){
+					  socket.emit('clearArray');
+				  };
 			  },
 			  종료 : function(){
 				  console.log('종료눌렀습니다');
@@ -189,9 +194,9 @@ function init() {
 			changeCeiling.add(options, 'blueColor');
 			changeCeiling.add(options, 'greenColor');
 			changeCeiling.open();
-			var AddOItem  = gui.addFolder('아이템 추가하기');
-			AddOItem.add(options, '의자추가');
-			AddOItem.open();
+			var AddItem  = gui.addFolder('아이템 추가하기');
+			AddItem.add(options, '의자추가');
+			AddItem.open();
 			gui.add(options, '아이템제거하기');
 			
 			
@@ -209,9 +214,30 @@ function init() {
 		case 'greenPlane' : console.log(abc); //뒤로가기로 녹색바닥 생성이 왔으니까  녹색바닥을 생성해야한다.
 			socket.emit('greenPlane','goback'); 
 			break;
+		/*
+		 * 마지막에 실행한게 의자생성이라 치자 뒤로가기를 하면 의자가 삭제된다.
+		 case : 'chairAdd' : 의자삭제 소켓보내서 서버에서 처리
+		 * */	
 		default : break;
 		};
 	
+	});
+	
+	socket.on('ABC_Cancel', function(data){
+		var abc = data;
+		switch(abc){
+		case 'bluePlane' : console.log(abc); //뒤로가기로 파란바닥 생성이 왔으니까 파란바닥을 생성해야한다.
+		socket.emit('bluePlane', 'goback');
+		break;
+		case 'greenPlane' : console.log(abc); //뒤로가기로 녹색바닥 생성이 왔으니까  녹색바닥을 생성해야한다.
+		socket.emit('greenPlane','goback'); 
+		break;
+		/*
+		 어레이2에 있던게 의자생성이라고 치자 어레이1로 끌고왔을거고 array1의 맨마직에 있는게 의자생성이 오면  의자생성해주면된다.
+		 */
+		default : break;
+		};
+		
 	});
 	
 	//바닥색을 blue로 바꾸는 메소드

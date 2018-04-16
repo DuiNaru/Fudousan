@@ -89,7 +89,7 @@
 				<div id="room${room.roomId}" class="col-sm-12">
 					<label>${room.estate.estateId } : ${room.estate.estateName }</label>
 					<a class="btn btn-default" href="../newRoom?estateId=${room.estate.estateId}&roomPublic=0">새로 꾸미기</a>
-					<input class="btn btn-default" type="button" value="수정">
+					<a class="btn btn-default" href="../roomPage?roomId=${room.roomId}">수정</a>
 					<label class="radio-inline"><input name="public${room.roomId}" type="radio" value="1" roomId="${room.roomId}"<c:if test="${room.roomPublic == 1}"> checked="checked"</c:if>>공개</label>
 					<label class="radio-inline"><input name="public${room.roomId}" type="radio" value="0" roomId="${room.roomId}"<c:if test="${room.roomPublic == 0}"> checked="checked"</c:if>>비공개</label>
 				</div>
@@ -102,8 +102,8 @@
 					<label>${virtual.roomId} : ${virtual.snapshot}</label>
 					<div>
 						<div>
-							<input class="btn btn-default" type="button" value="꾸미기">
-							<input class="btn btn-default" type="button" value="수정">
+							<a class="btn btn-default" href="../wall/wallPage?roomId=${virtual.roomId}">벽 수정</a>
+							<a class="btn btn-default" href="../roomPage?roomId=${virtual.roomId}">수정</a>
 							<input class="btn btn-default" type="button" value="삭제" onclick="deleteRoom(${virtual.roomId})">
 						</div>
 						<div>
@@ -113,7 +113,7 @@
 					</div>
 				</div>
 			</c:forEach>
-			<a class="btn btn-default" href="">모델링 작성</a>
+			<a class="btn btn-default" href="../newRoom?roomPublic=0">모델링 작성</a>
 		</div>
 	</div>
 	<footer class="col-sm-12">푸터</footer>
