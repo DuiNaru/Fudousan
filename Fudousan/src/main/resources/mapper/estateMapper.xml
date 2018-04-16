@@ -43,6 +43,7 @@
 			,ESTATE_X
 			,ESTATE_Y
 			,BASE_ROOM_ID
+			,ADDRESS
 		from
 			ESTATE
 		join
@@ -165,6 +166,9 @@ insert into estate
 </if>
 <if test='estateY != null'>
 	,ESTATE_Y
+</if>
+<if test='address != null'>
+	,ADDRESS
 </if>
 )
 VALUES
@@ -437,10 +441,7 @@ VALUES
 	
 	
 <select id="selectEsatesLocation" resultMap="estateResultMap">
-	SELECT
-	   *
-	FROM
-	    estate
+	<include refid="SELECT_ESTATE_SQL"></include>
 
 </select>	
 	
@@ -492,6 +493,7 @@ VALUES
 		<result property="estateX" 					column="ESTATE_X"/>
 		<result property="estateY" 					column="ESTATE_Y"/>
 		<result property="baseRoomId" 				column="BASE_ROOM_ID"/>
+		<result property="address" 				    column="ADDRESS"/>
 		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
 		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
 	</resultMap>
