@@ -112,7 +112,7 @@
 	}
 	.left-menu {
 		position:absolute;
-		top: 10%;
+		bottom: 10%;
 		left: 0px;
 		z-index: 1;
 		background-color: rgba(255, 255, 255, 0.5);
@@ -226,8 +226,6 @@
 						</script>
 						<label>${item.itemName}</label>
 						<div class="preview">
-							<canvas id="itemPreview${item.itemId}">
-							</canvas>
 						</div>
 						<script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
 					</li>
