@@ -174,10 +174,12 @@
  function checkArray(){
 	 socket.emit('goArray1');
  }
- function AddItem(){
+ function AddItem(roomitem){
 	console.log('의자 추가');
-	socket.emit('addItem','addItem');
+	socket.emit('addItem',JSON.stringify(roomitem));
  }
+ 
+ socket.on('takeMyOrder')
  
 </script>
 <script id="template" type="notjs">
@@ -192,7 +194,7 @@
 			<label>아이템 생성</label>
 			<ul>
 				<c:forEach var="item" items="${itemList}">
-					<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId});">
+					<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId}, AddItem);">
 						<script type="text/javascript">
 							var item${item.itemId} = new Item();
 							item${item.itemId}.fileDirectory = "${item.fileDirectory}";
