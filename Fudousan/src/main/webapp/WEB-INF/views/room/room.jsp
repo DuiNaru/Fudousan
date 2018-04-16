@@ -14,6 +14,11 @@
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
 <script src="<c:url value="/resources/js/socket.io.js"/>"></script>
 <script src="<c:url value="/resources/js/vo.js"/>"></script>
+<script src="<c:url value="/resources/js/CopyShader.js"/>"></script>
+<script src="<c:url value="/resources/js/EffectComposer.js"/>"></script>
+<script src="<c:url value="/resources/js/RenderPass.js"/>"></script>
+<script src="<c:url value="/resources/js/ShaderPass.js"/>"></script>
+<script src="<c:url value="/resources/js/OutlinePass.js"/>"></script>
 
 <script type="text/javascript">
 	var room = {
@@ -98,6 +103,13 @@
 	    top: 0;
 	    left: 0;
 	}
+	.top-menu {
+		position:absolute;
+		top:0%;
+		margin-left: auto;
+		z-index: 1;
+		background-color: rgba(255, 255, 255, 0.5);
+	}
 	.left-menu {
 		position:absolute;
 		top: 10%;
@@ -180,6 +192,9 @@
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
 <div class="dat">
 </div> 
+	<div class="top-menu">
+		<input type="button" value="삭제" onclick="deleteItem(curSelected);">
+	</div>
 	<div class="left-menu">
 		<div>
 			<label>아이템 생성</label>
