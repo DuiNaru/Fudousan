@@ -1,12 +1,9 @@
 package com.real.fudousan;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,22 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.client.RestTemplate;
 
-import com.google.code.geocoder.Geocoder;
-import com.google.code.geocoder.GeocoderRequestBuilder;
-import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderRequest;
-import com.google.code.geocoder.model.GeocoderResult;
-import com.google.code.geocoder.model.GeocoderStatus;
-import com.google.code.geocoder.model.LatLng;
+
 import com.real.fudousan.agency.service.AgencyService;
 import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.estate.service.EstateService;
 import com.real.fudousan.estate.vo.Estate;
-import com.real.fudousan.estate.vo.MunicipalityCode;
-import com.real.fudousan.estate.vo.TransType;
-import com.real.fudousan.member.service.MemberService;
 
 
 @Controller
