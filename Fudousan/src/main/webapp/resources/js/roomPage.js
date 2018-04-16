@@ -7,6 +7,7 @@ var cameraLookAngle = 0;
 // 카메라, 씬, 렌더러, 카메라 컨트롤
 var camera, scene, renderer, controls;
 var scenes = [];
+var composer, outlinePass;
 // 화면 가로 길이
 var width = window.innerWidth;
 // 화면 세로 길이
@@ -65,6 +66,7 @@ function init() {
 	// 렌더러
 	renderer = new THREE.WebGLRenderer();
 	//renderer = new THREE.WebGLRenderer( { canvas: canvas, antialias: true } );
+	renderer.shadowMap.enabled = true;
 	renderer.setPixelRatio( window.devicePixelRatio );
 	// 렌더러 크기
 	renderer.setSize(width, height);
@@ -101,6 +103,16 @@ function init() {
 	var axesHelper = new THREE.AxesHelper( 1000 );
 	scene.add( axesHelper );
 	
+	// postprocessing
+	composer = new THREE.EffectComposer( renderer );
+	var renderPass = new THREE.RenderPass( scene, camera );
+	composer.addPass( renderPass );
+	outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
+	outlinePass.edgeStrength = 3;
+	outlinePass.edgeThickness = 1;
+	outlinePass.visibleEdgeColor.set( 0xFFFFFF );
+	composer.addPass( outlinePass );
+	
 	// roomitems 의 배열의 Roomitem VO에 따라 오브젝트 추가
 	$.each(roomItems, function(index, obj) {
 		placeRoomItem(obj);
@@ -108,17 +120,19 @@ function init() {
 }
 
 function animate() {
-	renderer.clear();
+	//renderer.clear();
 	// 다음 프레임 지정
 	requestAnimationFrame( animate );
 	// 화면 회전 정보 갱신
 	controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
 
-	renderer.setViewport( 0, 0, width, height );
-	renderer.setScissor( 0, 0, width, height );
+	//renderer.setViewport( 0, 0, width, height );
+	//renderer.setScissor( 0, 0, width, height );
 	// 화면을 렌더러에 그림
 	renderer.render( scene, camera );
+	composer.render();
 
+	/*
 	scenes.forEach( function( s ) {
 		// so something moves
 		s.children[0].rotation.y = Date.now() * 0.001;
@@ -144,7 +158,7 @@ function animate() {
 		//c.updateProjectionMatrix();
 		//s.userData.controls.update();
 		renderer.render( s, c );
-	} );
+	} );*/
 }
 
 
@@ -158,6 +172,7 @@ function onResize() {
 	camera.updateProjectionMatrix();
 	// 렌더러 화면 크기 변경
 	renderer.setSize(width, height);
+	composer.setSize( width, height );
 }
 
 function onKeydown(event) {
@@ -206,8 +221,12 @@ function onDocumentMouseDown(event) {
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(curRoomItems, true);
 	if (intersects.length > 0) {
+		
 		// 현재 배치된 모든 아이템의 매시에 클릭이 되니까, 그 메시 그룹을 가져온다.
 		curSelected = intersects[0].object.parent;
+
+		// 선택 상태 아웃 라인 표시
+		outlinePass.selectedObjects = curSelected.children;
 		
 		// 화면 돌리기 불가
 		controls.enabled = false;
@@ -358,7 +377,7 @@ function previewItem(itemId, fileName) {
  * @param item VO
  * @returns
  */
-function createItem(item) {
+function createItem(item, onCreate) {
 	// 화면 가운데
 	raycaster.setFromCamera( new THREE.Vector2(), camera ); 
 	//raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() );
@@ -383,6 +402,11 @@ function createItem(item) {
 					var roomItem = objToRoomItem(data);
 					// roomitem을 화면에 배치
 					placeRoomItem(roomItem);
+					
+					if ( onCreate !== undefined ) {
+						onCreate(roomItem);
+					}
+				
 				} else {
 					alert("아이템 배치에 실패하였습니다.");
 				}
@@ -401,7 +425,7 @@ function createItem(item) {
  * @returns
  */
 function deleteItem(roomItem) {
-	
+	alert(roomItem);
 }
 
 /**

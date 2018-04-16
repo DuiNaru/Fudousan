@@ -74,7 +74,7 @@ function objToRoomItem(roomitemObj) {
 	var roomItem = new RoomItem();
 	roomItem.color = roomitemObj.color;
 	roomItem.roomId = roomitemObj.roomId;
-	roomItem.roomItemId = roomitemObj.roomitemId;
+	roomItem.roomItemId = roomitemObj.roomItemId;
 	roomItem.rotateX = roomitemObj.rotateX;
 	roomItem.rotateY = roomitemObj.rotateY;
 	roomItem.rotateZ = roomitemObj.rotateZ;
