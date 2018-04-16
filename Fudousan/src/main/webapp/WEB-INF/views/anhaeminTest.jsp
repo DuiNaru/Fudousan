@@ -11,7 +11,6 @@
 	<script src="/fudousan/resources/js/DragControls.js"></script>
 	<script src="/fudousan/resources/js/dat.gui.js"></script>
 	<script src="/fudousan/resources/js/stats.js"></script>
-	<script src="/fudousan/resources/js/node_communication.js"></script>
     <style type="text/css">
     	#threejsShow {
     		position:absolute;

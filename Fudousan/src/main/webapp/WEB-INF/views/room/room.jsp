@@ -177,24 +177,6 @@
  function AddItem(){
 	console.log('의자 추가');
 	socket.emit('addItem','addItem');
-	
-	const loader = new THREE.TDSLoader();
-	// 해당 모델의 텍스쳐 경로 설정
-	loader.setPath("/fudousan/resources/model/glass/");
-	// 모델 데이터 경로 설정 및 로딩 완료시 리스너 지정
-	loader.load("/fudousan/resources/model/testchair/grassmodels(formats).3ds", (object) => {
-		// x축 기준으로 -90도 회전
-		object.rotation.x = Math.PI * -90 / 180;
-
-		// 해당 모델을 가장 가깝게 에워싸는 육면체인 BoundingBox 생성
-		var boundingBox = new THREE.Box3();
-		boundingBox.setFromObject(object);
-
-		// 바운딩 박스의 z 값을 이용하여 이동
-		object.position.z = boundingBox.max.z;
-		// 화면에 추가
-		scene.add(object);
-	
  }
  
 </script>
