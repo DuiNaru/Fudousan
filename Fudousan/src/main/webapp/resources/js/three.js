@@ -31328,8 +31328,6 @@
 
 		load: function ( url, onLoad, onProgress, onError ) {
 
-			console.log("TextureLoader load : " + url);
-			
 			var cacheKey = "TextureCache"+this.path;
 			
 			var texture;
@@ -31368,6 +31366,7 @@
 
 					//console.log("TextureLoader add cache("+cacheKey+url+")");
 					//console.dir(texture);
+					
 					THREE.Cache.add(cacheKey+url, texture);
 					
 				}, onProgress, onError );

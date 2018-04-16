@@ -42,16 +42,12 @@ THREE.TDSLoader.prototype = {
 		var scope = this;
 
 		var path = this.path !== undefined ? this.path : THREE.LoaderUtils.extractUrlBase( url );
-		
-		console.log("TDSLoader load");
-		console.dir(this);
 
 		var loader = new THREE.FileLoader( this.manager );
 
 		loader.setResponseType( 'arraybuffer' );
 
 		loader.load( url, function ( data ) {
-			console.log("loader.load");
 			onLoad( scope.parse( data, path ) );
 
 		}, onProgress, onError );
@@ -77,19 +73,18 @@ THREE.TDSLoader.prototype = {
 
 		for ( var i = 0; i < this.meshes.length; i ++ ) {
 			
-			var cache = THREE.Cache.get("MesheCache"+path+i);
+			var cache = THREE.Cache.get("MaterialCache"+path+i);
 			
 			if ( cache === undefined) {
-				THREE.Cache.add( "MesheCache"+path+i, this.meshes[ i ].material );
+				THREE.Cache.add( "MaterialCache"+path+i, this.meshes[ i ].material );
 			} else {
+				delete this.meshes[ i ].material;
 				this.meshes[ i ].material = cache;
 			}
 
 			this.group.add( this.meshes[ i ] );
 		}
 
-		console.log("TDSLoader Parse Complete");
-		console.dir(this.group);
 		return this.group;
 
 	},

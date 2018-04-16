@@ -74,11 +74,11 @@ function init() {
 	// controls
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	//controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
-	//controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-	//controls.dampingFactor = 0.25;
-	//controls.panningMode = THREE.HorizontalPanning; // default is THREE.ScreenSpacePanning
-	//controls.minDistance = 100;
-	//controls.maxDistance = 50000;
+	controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+	controls.dampingFactor = 0.25;
+	controls.panningMode = THREE.HorizontalPanning; // default is THREE.ScreenSpacePanning
+	controls.minDistance = 100;
+	controls.maxDistance = 50000;
 	//controls.maxPolarAngle = Math.PI / 2;
 	
 	//camera.rotation.x = 90 * Math.PI / 180;
@@ -224,6 +224,8 @@ function onDocumentMouseMove(event) {
 		var intersects = raycaster.intersectObjects([plane]);
 		if (intersects.length > 0) {
 			move(curSelected, intersects[0].point.x, intersects[0].point.y, intersects[0].point.z);
+			// 움직이고 나서 움직였음을 표시한다.
+			curMoving = true;
 		}
 	}
 	
@@ -409,7 +411,6 @@ function deleteItem(roomItem) {
  */
 function placeRoomItem(roomItem) {
 	var cache = THREE.Cache;
-	console.log(cache.get(roomItem.itemId));
 	
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
@@ -453,22 +454,20 @@ function move(object, x, y, z) {
 	object.roomItem.x = object.position.x = x;
 	object.roomItem.y = object.position.y = y;
 	object.roomItem.z = object.position.z = z;
-	// 움직이고 나서 움직였음을 표시한다.
-	curMoving = true;
 }
 
 /**
  * 화면에 배치된 object을 각 축을 기준으로 회전
  * @param object
- * @param rx
- * @param ry
- * @param rz
+ * @param rx 도
+ * @param ry 도
+ * @param rz 도
  * @returns
  */
 function rotate(object, rx, ry, rz) {
-	object.roomItem.rotateX = object.rotate.x = rx;
-	object.roomItem.rotateY = object.rotate.y = ry;
-	object.roomItem.rotateZ = object.rotate.z = rz;
+	object.roomItem.rotateX = object.rotate.x = rx * Math.PI / 180;
+	object.roomItem.rotateY = object.rotate.y = ry * Math.PI / 180;
+	object.roomItem.rotateZ = object.rotate.z = rz * Math.PI / 180;
 }
 
 /**
