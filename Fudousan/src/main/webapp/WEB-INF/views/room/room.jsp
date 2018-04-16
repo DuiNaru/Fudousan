@@ -15,34 +15,6 @@
 <script src="<c:url value="/resources/js/socket.io.js"/>"></script>
 <script src="<c:url value="/resources/js/vo.js"/>"></script>
 
-<!-- <script>
- var socket = io('http://localhost:7000');
- 
- function goback(){
-	console.log('뒤로가기'); 
-	socket.emit('array_back');
- };
- 
- function gofront(){
-	 console.log('앞으로가기');
-	 socket.emit('arrayBackCancel');
- }
- function save(){
-	 console.log('저장하기');
-	 console .log('저장하기 눌렀습니다.');
- }
- function reset(){
-	 console.log('초기화하기');
-	 var clearYes = confirm('진짜 초기화 하시겠습니까?');
-	  if(clearYes){
-		  socket.emit('clearArray');
-	  };
- }
- function esc(){
-	 console.log('종료하기');
- }
- 
-</script> -->
 <script type="text/javascript">
 	var room = {
 		roomId:${room.roomId}
@@ -133,6 +105,13 @@
 		z-index: 1;
 		background-color: rgba(255, 255, 255, 0.5);
 	}
+	.right-menu {
+		position:absolute;
+		top: 10%;
+		right: 0px;
+		z-index: 1;
+		background-color: rgba(255, 255, 255, 0.5);
+	}
 	.preview {
 		width: 100px;
 		height: 100px;
@@ -165,6 +144,35 @@
 </style>
 </head>
 <body>
+
+<script>
+ var socket = io('http://localhost:7000');
+ 
+ function goback(){
+	console.log('뒤로가기'); 
+	socket.emit('array_back');
+ };
+ 
+ function gofront(){
+	 console.log('앞으로가기');
+	 socket.emit('arrayBackCancel');
+ }
+ function save(){
+	 console.log('저장하기');
+	 console .log('저장하기 눌렀습니다.');
+ }
+ function reset(){
+	 console.log('초기화하기');
+	 var clearYes = confirm('진짜 초기화 하시겠습니까?');
+	  if(clearYes){
+		  socket.emit('clearArray');
+	  };
+ }
+ function esc(){
+	 console.log('종료하기');
+ }
+ 
+</script>
 <script id="template" type="notjs">
 	<div class="scene"></div>
 	<div class="description">Scene $</div>
