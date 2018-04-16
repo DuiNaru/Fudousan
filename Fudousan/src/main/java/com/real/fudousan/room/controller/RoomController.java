@@ -22,6 +22,7 @@ import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.item.service.ItemService;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
+import com.real.fudousan.roomitem.service.RoomItemService;
 import com.real.fudousan.roomwall.service.RoomWallService;
 import com.real.fudousan.roomwall.vo.RoomWall;
 
@@ -40,6 +41,8 @@ public class RoomController {
 	private RoomWallService roomWallService;
 	@Autowired
 	private ItemService itemService;
+	@Autowired
+	private RoomItemService roomItemService;
 	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
 	public String searchMyRoom(Model model,String roomSearch,int memberId){
@@ -122,6 +125,8 @@ public class RoomController {
 			model.addAttribute("walls", map.get("walls"));
 			
 			model.addAttribute("itemList", itemService.allList());
+			
+			model.addAttribute("roomitemList", roomItemService.getRoomItemsInRoom(roomId));
 		}
 		
 		logger.info("roomPage("+loginId+", "+roomId+") End");

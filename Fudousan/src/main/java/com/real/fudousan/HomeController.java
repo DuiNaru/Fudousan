@@ -36,20 +36,17 @@ import com.real.fudousan.member.service.MemberService;
 public class HomeController {
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
     
-
-    
     @Autowired
     private AgencyService service; 
     
     @Autowired
     private EstateService eService; 
     
-    
     @RequestMapping(value="/", method=RequestMethod.GET)
     public String Home(Model model) {
     	logger.info("Home Start");
     	
-    	List<Agency> result = null;
+    	/*List<Agency> result = null;
     	List<String> locationList = new ArrayList<>();
     	String location = "";
     	result = service.agencyLocationPrint();
@@ -66,10 +63,6 @@ public class HomeController {
 			locationList.add(location);
 			model.addAttribute("locationList", locationList);
 		}
-    	
-    	
-    	
-    	
     	
     	List<Estate> Eresult = null;
 		List<String> ElocationList = new ArrayList<>();
@@ -88,14 +81,8 @@ public class HomeController {
 		}
 		model.addAttribute("elocationList", ElocationList);
     	
-    	
-    	
-    	
-    		
-    	
     	logger.info("estateInfo Start");
     	
-    	/*
     	//매물 정보 API활용해서 가져오기 
     	String estateInfo = "";
 		RestTemplate restTemplate = new RestTemplate();
@@ -402,16 +389,6 @@ public class HomeController {
     	return "prototype/prototype";
     }
     
-
-
-    @RequestMapping(value="/crossdomain", method=RequestMethod.GET)
-    public String crossdomain() {
-    	logger.info("crossdomain Start");
-    	logger.info("crossdomain End");
-    	return "crossdomain";
-    }
-
-	
     @RequestMapping(value="/anhaemin",method=RequestMethod.GET)
     public String stackTest(){
     	return "anhaeminTest";

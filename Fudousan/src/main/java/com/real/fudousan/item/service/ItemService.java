@@ -130,11 +130,11 @@ public class ItemService {
 		return result;
 	}
 	
-	public boolean writeFile(int itemId, String fileName, OutputStream os) {
-		logger.info("writeFile({}, {}) Start", itemId, fileName);
+	public boolean downloadFile(String filePath, String fileName, OutputStream os) {
+		logger.info("downloadFile({}, {}) Start", filePath, fileName);
 		boolean result = false;
-		FileService.writeFile(modelFileBaseDirectory + itemId + "/" + fileName, os);
-		logger.info("writeFile({}, {}) End", itemId, fileName);
+		FileService.writeFile(modelFileBaseDirectory + filePath + "/" + fileName, os);
+		logger.info("downloadFile({}, {}) End", filePath, fileName);
 		return result;
 	}
 	

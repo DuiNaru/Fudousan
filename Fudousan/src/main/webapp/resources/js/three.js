@@ -30489,7 +30489,7 @@
 
 			if ( this.enabled === false ) return;
 
-			// console.log( 'THREE.Cache', 'Adding key:', key );
+			console.log( 'THREE.Cache', 'Adding key:', key );
 
 			this.files[ key ] = file;
 
@@ -30499,7 +30499,7 @@
 
 			if ( this.enabled === false ) return;
 
-			// console.log( 'THREE.Cache', 'Checking key:', key );
+			console.log( 'THREE.Cache', 'Checking key:', key );
 
 			return this.files[ key ];
 
@@ -31328,29 +31328,49 @@
 
 		load: function ( url, onLoad, onProgress, onError ) {
 
-			var texture = new Texture();
+			var cacheKey = "TextureCache"+this.path;
+			
+			var texture;
+			var cache = THREE.Cache.get(cacheKey+url);
+			
+			if(cache !== undefined) {
+				
+				//console.log("TextureLoader load from cache");
+				//console.dir(cache);
+				
+				texture = cache;
+				
+			} else {
+				
+				texture = new Texture();
+				
+				var loader = new ImageLoader( this.manager );
+				loader.setCrossOrigin( this.crossOrigin );
+				loader.setPath( this.path );
 
-			var loader = new ImageLoader( this.manager );
-			loader.setCrossOrigin( this.crossOrigin );
-			loader.setPath( this.path );
+				loader.load( url, function ( image ) {
 
-			loader.load( url, function ( image ) {
+					texture.image = image;
 
-				texture.image = image;
+					// JPEGs can't have an alpha channel, so memory can be saved by storing them as RGB.
+					var isJPEG = url.search( /\.(jpg|jpeg)$/ ) > 0 || url.search( /^data\:image\/jpeg/ ) === 0;
 
-				// JPEGs can't have an alpha channel, so memory can be saved by storing them as RGB.
-				var isJPEG = url.search( /\.(jpg|jpeg)$/ ) > 0 || url.search( /^data\:image\/jpeg/ ) === 0;
+					texture.format = isJPEG ? RGBFormat : RGBAFormat;
+					texture.needsUpdate = true;
 
-				texture.format = isJPEG ? RGBFormat : RGBAFormat;
-				texture.needsUpdate = true;
+					if ( onLoad !== undefined ) {
 
-				if ( onLoad !== undefined ) {
+						onLoad( texture );
 
-					onLoad( texture );
+					}
 
-				}
-
-			}, onProgress, onError );
+					//console.log("TextureLoader add cache("+cacheKey+url+")");
+					//console.dir(texture);
+					
+					THREE.Cache.add(cacheKey+url, texture);
+					
+				}, onProgress, onError );
+			}
 
 			return texture;
 

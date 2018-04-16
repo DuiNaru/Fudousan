@@ -17,7 +17,7 @@ public class RoomItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** ROOMITEM_ID. */
-	private Integer roomitemId;
+	private Integer roomItemId;
 
 	/** 3D 방 아이디. */
 	private int roomId;
@@ -26,23 +26,160 @@ public class RoomItem implements Serializable {
 	private Item item;
 
 	/** X. */
-	private Integer x;
+	private Double x;
 
 	/** Y. */
-	private Integer y;
+	private Double y;
 
 	/** Z. */
-	private Integer z;
+	private Double z;
 
 	/** ROTATE_X. */
-	private Integer rotateX;
+	private Double rotateX;
 
 	/** ROTATE_Y. */
-	private Integer rotateY;
+	private Double rotateY;
 
 	/** ROTATE_Z. */
-	private Integer rotateZ;
+	private Double rotateZ;
 
 	/** COLOR. */
 	private Integer color;
+
+	public Integer getRoomItemId() {
+		return roomItemId;
+	}
+
+	public void setRoomItemId(Integer roomItemId) {
+		this.roomItemId = roomItemId;
+	}
+
+	public int getRoomId() {
+		return roomId;
+	}
+
+	public void setRoomId(int roomId) {
+		this.roomId = roomId;
+	}
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public Double getX() {
+		return x;
+	}
+
+	public void setX(Double x) {
+		this.x = x;
+	}
+
+	public Double getY() {
+		return y;
+	}
+
+	public void setY(Double y) {
+		this.y = y;
+	}
+
+	public Double getZ() {
+		return z;
+	}
+
+	public void setZ(Double z) {
+		this.z = z;
+	}
+
+	public Double getRotateX() {
+		return rotateX;
+	}
+
+	public void setRotateX(Double rotateX) {
+		this.rotateX = rotateX;
+	}
+
+	public Double getRotateY() {
+		return rotateY;
+	}
+
+	public void setRotateY(Double rotateY) {
+		this.rotateY = rotateY;
+	}
+
+	public Double getRotateZ() {
+		return rotateZ;
+	}
+
+	public void setRotateZ(Double rotateZ) {
+		this.rotateZ = rotateZ;
+	}
+
+	public Integer getColor() {
+		return color;
+	}
+
+	public void setColor(Integer color) {
+		this.color = color;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public RoomItem() {
+		super();
+	}
+
+	public RoomItem(Integer roomItemId, int roomId, Item item, Double x, Double y, Double z, Double rotateX,
+			Double rotateY, Double rotateZ, Integer color) {
+		super();
+		this.roomItemId = roomItemId;
+		this.roomId = roomId;
+		this.item = item;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.rotateX = rotateX;
+		this.rotateY = rotateY;
+		this.rotateZ = rotateZ;
+		this.color = color;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((roomItemId == null) ? 0 : roomItemId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RoomItem other = (RoomItem) obj;
+		if (roomItemId == null) {
+			if (other.roomItemId != null)
+				return false;
+		} else if (!roomItemId.equals(other.roomItemId))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "RoomItem [roomItemId=" + roomItemId + ", roomId=" + roomId + ", item=" + item + ", x=" + x + ", y=" + y
+				+ ", z=" + z + ", rotateX=" + rotateX + ", rotateY=" + rotateY + ", rotateZ=" + rotateZ + ", color="
+				+ color + "]";
+	}
+	
+	
 }
