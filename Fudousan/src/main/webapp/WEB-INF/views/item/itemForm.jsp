@@ -19,7 +19,7 @@
 				</div>
 				<div class="form-group">
 					<label>3Dモデルファイル名</label>
-					<input id="model" name="modelFileName" class="form-control" type="text" required="required"<c:if test="${!empty item}"> value="${item.modelFileName}"</c:if>>
+					<input id="model" name="modelFileName" class="form-control" type="text" required="required"<c:if test="${!empty item}"> value="${item.modelFileName}" onchange="onModelFileNameChange('${item.itemId}')"</c:if>>
 				</div>
 				<c:if test="${empty item}">
 					<div class="form-group">
@@ -36,6 +36,55 @@
 							</c:forEach>
 							</ul>
 					</div>
+				</c:if>
+				<c:if test="${!empty item}">
+					<div class="form-group">
+						<label>3D詳細設定</label>
+						<div class="col-sm-12">
+							<div id="preview" class="preview col-sm-8">
+							</div>
+							<div id="objectController" class="col-sm-4">
+								<div>
+									<label>Axis X</label>
+									<input name="itemRotateX" type="hidden" value="${item.itemRotateX}">
+									<div id="ax">${item.itemRotateX}</div>
+								</div>
+								<div>
+									<label>Axis Y</label>
+									<input name="itemRotateY" type="hidden" value="${item.itemRotateY}">
+									<div id="ay">${item.itemRotateY}</div>
+								</div>
+								<div>
+									<label>Axis Z</label>
+									<input name="itemRotateZ" type="hidden" value="${item.itemRotateZ}">
+									<div id="az">${item.itemRotateZ}</div>
+								</div>
+								<div>
+									<label>Position X</label>
+									<input name="itemX" type="hidden" value="${item.itemX}">
+									<div id="px">${item.itemX}</div>
+								</div>
+								<div>
+									<label>Position Y</label>
+									<input name="itemY" type="hidden" value="${item.itemY}">
+									<div id="py">${item.itemY}</div>
+								</div>
+								<div>
+									<label>Position Z</label>
+									<input name="itemZ" type="hidden" value="${item.itemZ}">
+									<div id="pz">${item.itemZ}</div>
+								</div>
+								<div>
+									<label>Scale</label>
+									<input name="itemScale" type="hidden" value="${item.itemScale}">
+									<div id="scale">${item.itemScale}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<script type="text/javascript">
+					threeJSInit(${item.itemX}, ${item.itemY}, ${item.itemZ}, ${item.itemRotateX}, ${item.itemRotateY}, ${item.itemRotateZ}, ${item.itemScale}, ${item.itemId}, '${item.modelFileName}');
+					</script>
 				</c:if>
 				<div class="form-group">
 					<label>関連サイト</label>

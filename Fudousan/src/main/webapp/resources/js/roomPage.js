@@ -466,8 +466,6 @@ function deleteItem(roomItem, onDelete) {
  * @returns
  */
 function placeRoomItem(roomItem) {
-	var cache = THREE.Cache;
-	
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
 	// 해당 모델의 텍스쳐 경로 설정
@@ -481,9 +479,12 @@ function placeRoomItem(roomItem) {
 		object.position.y = roomItem.y;
 		object.position.z = roomItem.z;
 
-		object.rotation.x = roomItem.rotateX * Math.PI / 180;
+		/*object.rotation.x = roomItem.rotateX * Math.PI / 180;
 		object.rotation.y = roomItem.rotateY * Math.PI / 180;
-		object.rotation.z = roomItem.rotateZ * Math.PI / 180;
+		object.rotation.z = roomItem.rotateZ * Math.PI / 180;*/
+		object.rotateX(roomItem.rotateX * Math.PI / 180);
+		object.rotateY(roomItem.rotateY * Math.PI / 180);
+		object.rotateZ(roomItem.rotateZ * Math.PI / 180);
 		
 		object.scale.x = roomItem.item.itemScale;
 		object.scale.y = roomItem.item.itemScale;
