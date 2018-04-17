@@ -15,6 +15,7 @@
 <script src="<c:url value="/resources/js/socket.io.js"/>"></script>
 <script src="<c:url value="/resources/js/vo.js"/>"></script>
 <script src="<c:url value="/resources/js/CopyShader.js"/>"></script>
+<script src="<c:url value="/resources/js/FXAAShader.js"/>"></script>
 <script src="<c:url value="/resources/js/EffectComposer.js"/>"></script>
 <script src="<c:url value="/resources/js/RenderPass.js"/>"></script>
 <script src="<c:url value="/resources/js/ShaderPass.js"/>"></script>
@@ -54,7 +55,7 @@
 			objToRoomItem({
 				color: ${roomitem.color},
 				roomId: ${roomitem.roomId},
-				roomitemId: ${roomitem.roomItemId},
+				roomItemId: ${roomitem.roomItemId},
 				rotateX: ${roomitem.rotateX},
 				rotateY: ${roomitem.rotateY},
 				rotateZ: ${roomitem.rotateZ},
@@ -202,7 +203,7 @@
 <div class="dat">
 </div> 
 	<div class="top-menu">
-		<input type="button" value="삭제" onclick="deleteItem(curSelected);">
+		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem);">
 	</div>
 	<div class="left-menu">
 		<div>

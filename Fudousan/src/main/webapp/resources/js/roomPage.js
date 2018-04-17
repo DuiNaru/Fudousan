@@ -115,6 +115,12 @@ function init() {
 	outlinePass.visibleEdgeColor.set( 0xFFFFFF );
 	composer.addPass( outlinePass );
 	
+	effectFXAA = new THREE.ShaderPass( THREE.FXAAShader );
+	console.dir(effectFXAA);
+	effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
+	effectFXAA.renderToScreen = true;
+	composer.addPass( effectFXAA );
+	
 	// roomitems 의 배열의 Roomitem VO에 따라 오브젝트 추가
 	$.each(roomItems, function(index, obj) {
 		placeRoomItem(obj);
@@ -131,7 +137,7 @@ function animate() {
 	//renderer.setViewport( 0, 0, width, height );
 	//renderer.setScissor( 0, 0, width, height );
 	// 화면을 렌더러에 그림
-	renderer.render( scene, camera );
+	//renderer.render( scene, camera );
 	composer.render();
 
 	/*
@@ -220,27 +226,28 @@ function onKeydown(event) {
 }
 
 function onDocumentMouseDown(event) {
-	isMouseUp = false;;
+	
+	isMouseUp = false;
+	deSelect();
+	
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(curRoomItems, true);
 	if (intersects.length > 0) {
 		
 		// 현재 배치된 모든 아이템의 매시에 클릭이 되니까, 그 메시 그룹을 가져온다.
-		curSelected = intersects[0].object.parent;
-
-		// 선택 상태 아웃 라인 표시
-		outlinePass.selectedObjects = curSelected.children;
+		select(intersects[0].object.parent);
 		
 		// 화면 돌리기 불가
 		controls.enabled = false;
 	}
+	
 }
 
 function onDocumentMouseMove(event) {
 	// 마우스 이동 저장
 	moveMouse(event);
 
-	if (curSelected != null && !isMouseUp) {
+	if (curSelected != null && !isMouseUp && !controls.enabled) {
 		// 드래그 중인 아이템이 있으면 지면에 맞게 움직인다.
 		raycaster.setFromCamera(mouse, camera);
 		var intersects = raycaster.intersectObjects([plane]);
@@ -260,7 +267,7 @@ function onDocumentMouseUp(event) {
 		if(curMoving) {
 			curMoving = false;
 			saveRoomItem(curSelected.roomItem);
-			curSelected = null;
+			deSelect();
 		}
 	}
 	// 컨트롤 활성화
@@ -426,8 +433,31 @@ function createItem(item, onCreate) {
  * @param roomItem VO
  * @returns
  */
-function deleteItem(roomItem) {
-	alert(roomItem);
+function deleteItem(roomItem, onDelete) {
+	console.dir(roomItem);
+	$.ajax({
+		url:"roomItem/delete",
+		type:"GET",
+		data:{
+			roomItemId:roomItem.roomItemId
+		},
+		dataType:"json",
+		success:function(data) {
+			if(data != null && data != "false") {
+				deplaceRoomItem(roomItem);
+				if ( onDelete !== undefined ) {
+					onDelete(roomItem);
+				}
+			
+			} else {
+				alert("아이템 제거에 실패하였습니다.");
+			}
+		},
+		error:function(e) {
+			console.log(e);
+			alert("아이템 제거 중 오류가 발생하였습니다.");
+		}
+	});
 }
 
 /**
@@ -469,6 +499,25 @@ function placeRoomItem(roomItem) {
 
 
 /**
+ * 해당 룸아이템을 찾아서 배치 해제한다.
+ * @param roomItem
+ * @returns
+ */
+function deplaceRoomItem(roomItem) {
+	console.dir(curRoomItems);
+	for(var i = 0; i < curRoomItems.length; i++) {
+		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+			if ( curSelect == curRoomItems[i] ) deSelect();
+			scene.remove(curRoomItems[i]);
+			//curRoomItems = curRoomItems.splice(i, 1);
+			console.dir(curRoomItems);
+			return;
+		}
+	}
+}
+
+
+/**
  * 화면에 배치된 object을 특정 좌표로 이동
  * @param object
  * @param x
@@ -496,6 +545,18 @@ function rotate(object, rx, ry, rz) {
 	object.roomItem.rotateZ = object.rotate.z = rz * Math.PI / 180;
 }
 
+function select(group) {
+	curSelected = group;
+	// 선택 상태 아웃 라인 표시
+	outlinePass.selectedObjects = curSelected.children;
+}
+
+function deSelect() {
+	curSelect = null;
+	// 선택 상태 아웃 라인 표시
+	outlinePass.selectedObjects = [];
+}
+
 /**
  * roomitem의 값을 저장한다.
  * @param roomItem
@@ -504,6 +565,7 @@ function rotate(object, rx, ry, rz) {
 function saveRoomItem(roomItem) {
 	var refSiteSet = roomItem.item.refSiteSet;
 	roomItem.item.refSiteSet = null;
+	console.dir(roomItem);
 	console.log(JSON.stringify(roomItem));
 	$.ajax({
 		url:"roomItem/save",

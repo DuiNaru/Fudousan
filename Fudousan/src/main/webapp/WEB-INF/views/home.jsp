@@ -10,24 +10,102 @@
 
     <!-- 부트스트랩 -->
     <link href="<c:url value="resources/css/bootstrap.min.css"/>" rel="stylesheet">
-	
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
 <style type="text/css">
-	  /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 91%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow-y: hidden; overflow-x: hidden;
-       
-      }
+html {
+    height: 100%
+}
+
+body {
+    height: 80%;
+    margin: 0;
+    padding: 0
+}
+
+#map_canvas {
+    height: 100%
+}
 </style>
+<script type="text/javascript"
+    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&sensor=false">
+</script>
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script type="text/javascript">
+
+var locations = [
+	/* 중개소 위치  */
+	<c:forEach items="${locationList}" var="location" varStatus="status">
+		${location},
+	</c:forEach>
+	/* 매물 위치  */
+	<c:forEach items="${elocationList}" var="elocation" varStatus="status">
+		${elocation}<c:if test="${status.last eq false}">,</c:if>
+	</c:forEach>
+];
+
+function initialize() {
+	 
+	
+    var myOptions = {
+        center: new google.maps.LatLng(33.890542, 151.274856),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+
+    };
+    var map = new google.maps.Map(document.getElementById("default"),
+        myOptions);
+
+    setMarkers(map, locations)
+    
+    
+}
+
+
+
+function setMarkers(map, locations) {
+	var marker;
+	var markers = [];
+	// Create an array of alphabetical characters used to label the markers.
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	
+    var  i
+    for (i = 0; i < locations.length; i++) {
+
+        var loan = locations[i][0]
+        var lat = locations[i][1]
+        var lng = locations[i][2]
+        var add = locations[i][3]
+
+        latlngset = new google.maps.LatLng(lat, lng);
+
+        marker = new google.maps.Marker({
+            map: map, title: loan, position: latlngset,
+            label: labels[i % labels.length]
+        });
+       /*  map.setCenter(marker.getPosition()) */
+		
+        
+        var content =  loan + '</h3>' + ', ' + add
+        var infowindow = new google.maps.InfoWindow()
+
+        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+            return function() {
+                infowindow.setContent(content);
+                infowindow.open(map,marker);
+            };
+        })(marker,content,infowindow)); 
+        
+        markers.push(marker);
+    }
+    
+    var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+}
+
+
+</script>
 </head>
-<body>
+<body onload="initialize()">
 
 
 	<!-- 로그인 모달 -->
@@ -116,36 +194,10 @@
    
   
 	<!-- Map -->
-	<div id="map">
-	
-	</div>
-
+<div id="default" style="width:100%; height:100%"></div>
 <!-- agency Location List -->
 
 
-
-<script src="resources/js/googlemaps-settings.js"></script>
-<script type="text/javascript" >
-
-locations = [
-	
-	
-	/* 중개소 위치  */
-	<c:forEach items="${locationList}" var="location" varStatus="status">
-		${location},
-	</c:forEach>
-	/* 매물 위치  */
-	<c:forEach items="${elocationList}" var="elocation" varStatus="status">
-		${elocation}<c:if test="${status.last eq false}">,</c:if>
-	</c:forEach>
-	
-  ];
-
-</script>
-
-
-<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlZMVBrvQGWP2QTDvf5ur7HrtEC3xlOf0 &callback=initMap"></script>
 <script src="resources/js/jquery-3.3.1.js"></script>
 <script src="resources/js/login.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
