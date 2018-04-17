@@ -6,7 +6,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>アイテム追加パージ</title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/itemForm.css"/>">
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
+<script src="<c:url value="/resources/js/three.js"/>"></script>
+<script src="<c:url value="/resources/js/TDSLoader.js"/>"></script>
+<script src="<c:url value="/resources/js/OrbitControls.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/itemForm.js"/>"></script>
 <script type="text/javascript">
 	function formsubmit() {
