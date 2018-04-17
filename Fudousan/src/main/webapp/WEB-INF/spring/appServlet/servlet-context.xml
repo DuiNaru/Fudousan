@@ -32,6 +32,15 @@
 	<beans:bean id="adminInterceptor" class="com.real.fudousan.common.interceptor.AdminInterceptor"/>
 	<!-- 로그인 인터셉터 빈 -->
 	<beans:bean id="loginInterceptor" class="com.real.fudousan.common.interceptor.LoginInterceptor"/>
+	
+	<!-- 다국어 처리 -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basenames" value="locale/messages"/>
+	</beans:bean>
+	
+	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<beans:property name="defaultLocale" value="en"/>
+	</beans:bean>
 
 	<!-- 인터셉터 설정 -->
 	<!-- <mvc:interceptors>
@@ -45,11 +54,17 @@
 			<mvc:mapping path="/item/deleteItem"/>
 			<beans:ref bean="adminInterceptor"/>
 		</mvc:interceptor>
+		
 		<mvc:interceptor>
 			<mvc:mapping path="/interior/**"/>
 			<beans:ref bean="loginInterceptor"/>
 		</mvc:interceptor>
 		
+		<mvc:interceptor>
+			<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+				<beans:property name="paramName" value="lang"/>
+			</beans:bean>
+		</mvc:interceptor>
 	</mvc:interceptors> -->
 	
 	<context:component-scan base-package="com.real.fudousan" />
