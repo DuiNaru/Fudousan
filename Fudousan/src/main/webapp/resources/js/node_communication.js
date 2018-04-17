@@ -5,15 +5,23 @@ var socket = io('http://localhost:8000');
 	 var userName = document.getElementById('userName').value;
 	 var user = {
 			 userId : userId,
-			 userName : userName
+			 userName : userName,
+			 roomId: room.roomId
 	 }
-	 var userJOSN = JSON.stringify(user) // Id와 Name을 합쳐서 제이슨 객체로 보내주자.
-	 console.log(userJOSN);
 	 
-	 socket.emit('room_join', room.roomId);
-	 socket.emit('connection_id',userJOSN);
+	 socket.emit('room_join', user);
  });
 
+socket.on('insa',function(data){
+	console.log(data);
+});
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  function goback(){
 	console.log('뒤로가기'); 
@@ -84,13 +92,5 @@ socket.on('lookSamePage',function(data){
 });
 
 
-/*socket.on('ServiceCall_greenPlane', function(data){
-	
-	green_floor();
-	var test = data;
-	if(whoAmI == 'selecter' && test != 'goback'){
-		socket.emit('goArray1', "greenPlane");
-	}
-});*/
 
 
