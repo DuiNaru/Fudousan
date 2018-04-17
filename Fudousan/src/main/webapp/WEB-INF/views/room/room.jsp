@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ROOMPAGE</title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 <script src="<c:url value="/resources/js/three.js"/>"></script>
 <script src="<c:url value="/resources/js/TDSLoader.js"/>"></script>
@@ -20,6 +21,7 @@
 <script src="<c:url value="/resources/js/RenderPass.js"/>"></script>
 <script src="<c:url value="/resources/js/ShaderPass.js"/>"></script>
 <script src="<c:url value="/resources/js/OutlinePass.js"/>"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
 
@@ -116,8 +118,14 @@
 	}
 	.left-menu {
 		position:absolute;
-		bottom: 10%;
-		left: 0px;
+		left:0px;
+		z-index: 1;
+		background-color: rgba(255, 255, 255, 0.5);
+	}
+	.bottom-menu {
+		position:absolute;
+		bottom: 0px;
+		right: 0px;
 		z-index: 1;
 		background-color: rgba(255, 255, 255, 0.5);
 	}
@@ -171,9 +179,59 @@
 <div class="dat">
 </div> 
 	<div class="top-menu">
-		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem);">
 	</div>
 	<div class="left-menu">
+		<div class="form-group">
+			<label>아이템 이름</label>
+			<p id="leftItemName" class="form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<label>아이템 유형</label>
+			<p id="leftItemType" class="form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<label>아이템 설명</label>
+			<p id="leftItemText" class="form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<label>아이템 참고 사이트</label>
+			<p id="leftItemSite" class="form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<div>
+				<label>Axis X</label> 
+				<input name="itemRotateX" type="hidden">
+				<div id="ax"></div>
+			</div>
+			<div>
+				<label>Axis Y</label> 
+				<input name="itemRotateY" type="hidden">
+				<div id="ay"></div>
+			</div>
+			<div>
+				<label>Axis Z</label> 
+				<input name="itemRotateZ" type="hidden">
+				<div id="az"></div>
+			</div>
+			<div>
+				<label>Position X</label> 
+				<input name="itemX" type="hidden">
+				<div id="px"></div>
+			</div>
+			<div>
+				<label>Position Y</label> 
+				<input name="itemY" type="hidden">
+				<div id="py"></div>
+			</div>
+			<div>
+				<label>Position Z</label> 
+				<input name="itemZ" type="hidden">
+				<div id="pz"></div>
+			</div>
+		</div>
+		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem);">
+	</div>
+	<div class="bottom-menu">
 		<div>
 			<label>아이템 생성</label>
 			<ul>

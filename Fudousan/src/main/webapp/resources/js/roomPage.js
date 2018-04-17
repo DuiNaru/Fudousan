@@ -33,15 +33,94 @@ var curMoving = false;
 // 마우스 다운 이후로 마우스 업이 되었는가?
 var isMouseUp = false;
 
-document.addEventListener("DOMContentLoaded", function(){
+$(function() {
+
+	$( "#ax" ).slider({
+		value: 0,
+		min: 0,
+		max: 360,
+		step: 1,
+		orientation: "horizontal",
+		range: "min",
+		animate: true,
+		slide: function( event, ui ) {
+			console.log(curSelected);
+			rotate(curSelected, ui.value, null, null);
+			$("input[name='itemRotateX']").val(ui.value);
+		}
+	});
+	$( "#ay" ).slider({
+		value: 0,
+		min: 0,
+		max: 360,
+		step: 1,
+		orientation: "horizontal",
+		range: "min",
+		animate: true,
+		slide: function( event, ui ) {
+			rotate(curSelected, null, ui.value, null);
+			$("input[name='itemRotateY']").val(ui.value);
+		}
+	});
+	$( "#az" ).slider({
+		value: 0,
+		min: 0,
+		max: 360,
+		step: 1,
+		orientation: "horizontal",
+		range: "min",
+		animate: true,
+		slide: function( event, ui ) {
+			rotate(curSelected, null, null, ui.value);
+			$("input[name='itemRotateZ']").val(ui.value);
+		}
+	});
+	$( "#px" ).slider({
+		value: 0,
+		min: -100,
+		max: 100,
+		step: 0.1,
+		orientation: "horizontal",
+		range: "min",
+		animate: true,
+		slide: function( event, ui ) {
+			move(curObject, ui.value, null, null);
+			$("input[name='itemX']").val(ui.value);
+		}
+	});
+	$( "#py" ).slider({
+		value: 0,
+		min: -100,
+		max: 100,
+		step: 0.1,
+		orientation: "horizontal",
+		range: "min",
+		animate: true,
+		slide: function( event, ui ) {
+			move(curObject, null, ui.value, null);
+			$("input[name='itemY']").val(ui.value);
+		}
+	});
+	$( "#pz" ).slider({
+		value: 0,
+		min: -100,
+		max: 100,
+		step: 0.1,
+		orientation: "horizontal",
+		range: "min",
+		animate: true,
+		slide: function( event, ui ) {
+			move(curObject, null, null, ui.value);
+			$("input[name='itemZ']").val(ui.value);
+		}
+	});
 	//초기화
 	init();
 	//화면 그리기
 	animate();
 	
 	drawWall();
-	});
-
+});
 
 function init() {
 	// Loader Cache Enabled
@@ -531,9 +610,25 @@ function deplaceRoomItem(roomItem) {
  * @returns
  */
 function move(object, x, y, z) {
-	object.roomItem.x = object.position.x = x;
-	object.roomItem.y = object.position.y = y;
-	object.roomItem.z = object.position.z = z;
+	
+	if ( x != null ) {
+
+		object.roomItem.x = object.position.x = x;
+		
+	}
+	
+	if ( y != null ) {
+
+		object.roomItem.y = object.position.y = y;
+		
+	}
+	
+	if ( z != null ) {
+
+		object.roomItem.z = object.position.z = z;
+		
+	}
+	
 }
 
 /**
@@ -545,15 +640,38 @@ function move(object, x, y, z) {
  * @returns
  */
 function rotate(object, rx, ry, rz) {
-	object.roomItem.rotateX = object.rotate.x = rx * Math.PI / 180;
-	object.roomItem.rotateY = object.rotate.y = ry * Math.PI / 180;
-	object.roomItem.rotateZ = object.rotate.z = rz * Math.PI / 180;
+	
+	if ( rx != null ) {
+		
+		object.roomItem.rotateX = object.rotation.x = rx * Math.PI / 180;
+		
+	}
+	
+	if ( ry != null ) {
+		
+		object.roomItem.rotateY = object.rotation.y = ry * Math.PI / 180;
+		
+	}
+	
+	if ( rz != null ) {
+
+		object.roomItem.rotateZ = object.rotation.z = rz * Math.PI / 180;
+		
+	}
+	
 }
 
 function select(group) {
 	curSelected = group;
 	// 선택 상태 아웃 라인 표시
 	outlinePass.selectedObjects = curSelected.children;
+
+	setInfoX(curSelected.roomItem.x);
+	setInfoY(curSelected.roomItem.y);
+	setInfoZ(curSelected.roomItem.z);
+	setInfoRX(curSelected.roomItem.rotateX);
+	setInfoRY(curSelected.roomItem.rotateY);
+	setInfoRZ(curSelected.roomItem.rotateZ);
 }
 
 function deSelect() {
@@ -570,8 +688,6 @@ function deSelect() {
 function saveRoomItem(roomItem) {
 	var refSiteSet = roomItem.item.refSiteSet;
 	roomItem.item.refSiteSet = null;
-	console.dir(roomItem);
-	console.log(JSON.stringify(roomItem));
 	$.ajax({
 		url:"roomItem/save",
 		type:"POST",
@@ -591,4 +707,67 @@ function saveRoomItem(roomItem) {
 		}
 	});
 	roomItem.item.refSiteSet = refSiteSet;
+}
+
+/**
+ * 좌측 X축 회전 바 설정
+ * @param value
+ * @returns
+ */
+function setInfoRX(value) {
+	console.log(value);
+	$("input[name='itemRotateX']").val(value);
+	$( "#ax" ).slider("value", value);
+}
+
+
+/**
+ * 좌측 Y축 회전 바 설정
+ * @param value
+ * @returns
+ */
+function setInfoRY(value) {
+	$("input[name='itemRotateY']").val(value);
+	$( "#ay" ).slider("value", value);
+}
+
+
+/**
+ * 좌측 Z축 회전 바 설정
+ * @param value
+ * @returns
+ */
+function setInfoRZ(value) {
+	$("input[name='itemRotateZ']").val(value);
+	$( "#az" ).slider("value", value);
+}
+
+/**
+ * 좌측 X축 바 설정
+ * @param value
+ * @returns
+ */
+function setInfoX(value) {
+	$("input[name='itemX']").val(value);
+	$( "#px" ).slider("value", value);
+}
+
+/**
+ * 좌측 Y축 바 설정
+ * @param value
+ * @returns
+ */
+function setInfoY(value) {
+	$("input[name='itemY']").val(value);
+	$( "#py" ).slider("value", value);
+}
+
+/**
+ * 좌측 Z축 바 설정
+ * @param value
+ * @returns
+ */
+function setInfoZ(value) {
+	$("input[name='itemZ']").val(value);
+	$( "#pz" ).slider("value", value);
 }
