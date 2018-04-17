@@ -252,7 +252,11 @@ function onDocumentMouseMove(event) {
 		raycaster.setFromCamera(mouse, camera);
 		var intersects = raycaster.intersectObjects([plane]);
 		if (intersects.length > 0) {
-			move(curSelected, intersects[0].point.x, intersects[0].point.y, intersects[0].point.z);
+			var x = curSelected.roomItem.item.itemX;
+			var y = curSelected.roomItem.item.itemY;
+			var z = curSelected.roomItem.item.itemZ;
+			// 원점 보정해서 움직임
+			move(curSelected, intersects[0].point.x+x, intersects[0].point.y+y, intersects[0].point.z+z);
 			// 움직이고 나서 움직였음을 표시한다.
 			curMoving = true;
 		}

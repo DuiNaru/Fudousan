@@ -19,7 +19,7 @@
 				</div>
 				<div class="form-group">
 					<label>3Dモデルファイル名</label>
-					<input id="model" name="modelFileName" class="form-control" type="text" required="required"<c:if test="${!empty item}"> value="${item.modelFileName}" onchange="onModelFileNameChange('${item.itemId}')"</c:if>>
+					<input id="model" name="modelFileName" class="form-control" type="text" required="required"<c:if test="${!empty item}"> value="${item.modelFileName}" onchange="onModelFileChange('${item.itemId}')"</c:if>>
 				</div>
 				<c:if test="${empty item}">
 					<div class="form-group">

@@ -47,6 +47,8 @@ $(function() {
 	var value = parseInt( $( "#px" ).text(), 10 );
 	$( "#px" ).empty().slider({
 		value: value,
+		min: -100,
+		max: 100,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -59,6 +61,8 @@ $(function() {
 	var value = parseInt( $( "#py" ).text(), 10 );
 	$( "#py" ).empty().slider({
 		value: value,
+		min: -100,
+		max: 100,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -71,6 +75,8 @@ $(function() {
 	var value = parseInt( $( "#pz" ).text(), 10 );
 	$( "#pz" ).empty().slider({
 		value: value,
+		min: -100,
+		max: 100,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -249,15 +255,12 @@ function onResize() {
 }
 
 function place(itemId, modelFileName) {
-	console.log(itemId + modelFileName);
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
 	// 해당 모델의 텍스쳐 경로 설정
-	loader.setPath("item/"+itemId);
+	loader.setPath(itemId+"/");
 	// 모델 데이터 경로 설정 및 로딩 완료시 리스너 지정
 	loader.load(itemId+"/"+modelFileName, (object) => {
-
-		console.log(objectInitValues);
 		scene.add( object );
 
 		curObject = object;
@@ -271,8 +274,6 @@ function place(itemId, modelFileName) {
 		object.scale.x = objectInitValues.s;
 		object.scale.y = objectInitValues.s;
 		object.scale.z = objectInitValues.s;
-		
-		console.log(object);
 	});
 }
 
