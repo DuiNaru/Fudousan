@@ -1,3 +1,63 @@
+var socket = io('http://localhost:8000');
+ 
+ $(function(){
+	 var userId = document.getElementById('userId').value;
+	 var userName = document.getElementById('userName').value;
+	 var user = {
+			 userId : userId,
+			 userName : userName,
+			 roomId: room.roomId
+	 }
+	 
+	 socket.emit('room_join', user);
+ });
+
+socket.on('insa',function(data){
+	console.log(data);
+});
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ function goback(){
+	console.log('뒤로가기'); 
+	socket.emit('array_back');
+ };
+ 
+ function gofront(){
+	 console.log('앞으로가기');
+	 socket.emit('arrayBackCancel');
+ }
+ function save(){
+	 console.log('저장하기');
+	 console.log('저장하기 눌렀습니다.');
+ }
+ function reset(){
+	 console.log('초기화하기');
+	 var clearYes = confirm('진짜 초기화 하시겠습니까?');
+	  if(clearYes){
+		  socket.emit('clearArray');
+	  };
+ }
+ function esc(){
+	 console.log('종료하기');
+ }
+ function checkArray(){
+	 socket.emit('goArray1');
+ }
+ function AddItem(roomitem){
+	console.dir(roomitem);
+	 socket.emit('addItem',JSON.stringify(roomitem));
+ }
+ 
+ socket.on('takeMyOrder')
+ 
+
+
 function saveTimeChange(){
 		if(whoAmI == 'selecter'){
 			var sendSign = '클릭자';
@@ -28,14 +88,9 @@ socket.on('successChangeMessage', function(data){
 socket.on('lookSamePage',function(data){
 	var product = objToRoomItem(JSON.parse(data));
 	console.dir(product);
+	console.log(data);
 });
 
 
-/*socket.on('ServiceCall_greenPlane', function(data){
-	
-	green_floor();
-	var test = data;
-	if(whoAmI == 'selecter' && test != 'goback'){
-		socket.emit('goArray1', "greenPlane");
-	}
-});*/
+
+

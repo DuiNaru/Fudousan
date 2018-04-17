@@ -100,6 +100,7 @@ public class MemberController {
         	//안해민이라는 사람이 회원의 정체를 파악하고자 소우치한 시쿠미 끝
     		
     		session.setAttribute("loginId", loginMember.getMemberId());
+    		session.setAttribute("what_your_name", loginMember.getMemberName());
     		session.setAttribute("loginEmail", email);
     		session.setAttribute("loginMemberName", loginMember.getMemberName());
     		// 회원 권한 분류 세션에 추가 (2018.4.4 15:11)
