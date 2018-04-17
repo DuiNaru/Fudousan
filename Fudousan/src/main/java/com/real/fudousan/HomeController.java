@@ -42,8 +42,8 @@ public class HomeController {
 			Double gpsX = agency.getGpsX();
 			Double gpsY = agency.getGpsY();
 			
-			String agencyAddress= "agency Address: "+agency.getAddressMain()+agency.getAddressMiddle()+agency.getAddressSmall()+agency.getAddressSub();
-			String agencyId = "agency Id: "+String.valueOf(agency.getAgencyId());
+			String agencyAddress= "AgencyAddress:"+agency.getAddressMain()+agency.getAddressMiddle()+agency.getAddressSmall()+agency.getAddressSub();
+			String agencyId = "AgencyId:"+String.valueOf(agency.getAgencyId());
 			
 			String lat =gpsX.toString();
 			String lng =gpsY.toString();
@@ -63,8 +63,8 @@ public class HomeController {
     		Double estateX = estate.getEstateX();
 			Double estateY = estate.getEstateY();
 			
-			String estateId ="estate Id: "+String.valueOf(estate.getEstateId());
-			String estateAddress = "estate Address: "+estate.getAddress();
+			String estateId ="EstateId:"+String.valueOf(estate.getEstateId());
+			String estateAddress = "EstateAddress:"+estate.getAddress();
 			String lat = estateX.toString();
 			String lng = estateY.toString(); 
 			

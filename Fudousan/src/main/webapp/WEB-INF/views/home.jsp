@@ -11,99 +11,90 @@
     <!-- 부트스트랩 -->
     <link href="<c:url value="resources/css/bootstrap.min.css"/>" rel="stylesheet">
 	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
-<style type="text/css">
-html {
-    height: 100%
-}
+ <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 95%;
+        margin: 0;
+        padding: 0;
+      }
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
 
-body {
-    height: 80%;
-    margin: 0;
-    padding: 0
-}
+      #infowindow-content .title {
+        font-weight: bold;
+      }
 
-#map_canvas {
-    height: 100%
-}
+      #infowindow-content {
+        display: none;
+      }
+
+      #map #infowindow-content {
+        display: inline;
+      }
+
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      #target {
+        width: 345px;
+      }
 </style>
-<script type="text/javascript"
-    src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&sensor=false">
-</script>
-<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-<script type="text/javascript">
 
-var locations = [
-	/* 중개소 위치  */
-	<c:forEach items="${locationList}" var="location" varStatus="status">
-		${location},
-	</c:forEach>
-	/* 매물 위치  */
-	<c:forEach items="${elocationList}" var="elocation" varStatus="status">
-		${elocation}<c:if test="${status.last eq false}">,</c:if>
-	</c:forEach>
-];
-
-function initialize() {
-	 
-	
-    var myOptions = {
-        center: new google.maps.LatLng(33.890542, 151.274856),
-        zoom: 8,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-
-    };
-    var map = new google.maps.Map(document.getElementById("default"),
-        myOptions);
-
-    setMarkers(map, locations)
-    
-    
-}
-
-
-
-function setMarkers(map, locations) {
-	var marker;
-	var markers = [];
-	// Create an array of alphabetical characters used to label the markers.
-    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	
-    var  i
-    for (i = 0; i < locations.length; i++) {
-
-        var loan = locations[i][0]
-        var lat = locations[i][1]
-        var lng = locations[i][2]
-        var add = locations[i][3]
-
-        latlngset = new google.maps.LatLng(lat, lng);
-
-        marker = new google.maps.Marker({
-            map: map, title: loan, position: latlngset,
-            label: labels[i % labels.length]
-        });
-       /*  map.setCenter(marker.getPosition()) */
-		
-        
-        var content =  loan + '</h3>' + ', ' + add
-        var infowindow = new google.maps.InfoWindow()
-
-        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
-            return function() {
-                infowindow.setContent(content);
-                infowindow.open(map,marker);
-            };
-        })(marker,content,infowindow)); 
-        
-        markers.push(marker);
-    }
-    
-    var markerCluster = new MarkerClusterer(map, markers,
-            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
-}
-
-
-</script>
 </head>
 <body onload="initialize()">
 
@@ -193,8 +184,12 @@ function setMarkers(map, locations) {
 	</nav>
    
   
-	<!-- Map -->
-<div id="default" style="width:100%; height:100%"></div>
+<!-- Map -->
+
+<div class="form-group">
+	<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box" style="z-index: 1; margin: 100px 0 0 0">
+</div>
+<div id="map" style="width:100%; height:100%"></div>
 <!-- agency Location List -->
 
 
@@ -202,7 +197,147 @@ function setMarkers(map, locations) {
 <script src="resources/js/login.js"></script>
 <script src="resources/js/bootstrap.min.js"></script>
 
+<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+<script type="text/javascript">
 
+var locations = [
+	/* 중개소 위치  */
+	<c:forEach items="${locationList}" var="location" varStatus="status">
+		${location},
+	</c:forEach>
+	/* 매물 위치  */
+	<c:forEach items="${elocationList}" var="elocation" varStatus="status">
+		${elocation}<c:if test="${status.last eq false}">,</c:if>
+	</c:forEach>
+];
+
+function initialize() {
+	 
+	
+    var myOptions = {
+        center: new google.maps.LatLng(35.4969467, 139.6627667),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+
+    };
+    var map = new google.maps.Map(document.getElementById('map'),
+            myOptions);
+    
+    setMarkers(map, locations)
+    
+    var input = document.getElementById('pac-input');
+    var searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', function() {
+      searchBox.setBounds(map.getBounds());
+    });
+    
+    var markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+
+      if (places.length == 0) {
+        return;
+      }
+
+      // Clear out the old markers.
+      markers.forEach(function(marker) {
+        marker.setMap(null);
+      });
+      markers = [];
+
+      // For each place, get the icon, name and location.
+      var bounds = new google.maps.LatLngBounds();
+      places.forEach(function(place) {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        var icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25)
+        };
+
+        // Create a marker for each place.
+        markers.push(new google.maps.Marker({
+          map: map,
+          icon: icon,
+          title: place.name,
+          position: place.geometry.location
+        }));
+
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    });
+}
+
+
+
+function setMarkers(map, locations) {
+	var marker;
+	var markers = [];
+	// Create an array of alphabetical characters used to label the markers.
+    var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	
+    var  i
+    for (i = 0; i < locations.length; i++) {
+
+        var loan = locations[i][0]
+        var lat = locations[i][1]
+        var lng = locations[i][2]
+        var add = locations[i][3]
+
+        latlngset = new google.maps.LatLng(lat, lng);
+
+        marker = new google.maps.Marker({
+            map: map, title: loan, position: latlngset,
+            label: labels[i % labels.length]
+        });
+       /*  map.setCenter(marker.getPosition()) */
+		
+       if (loan.includes="Agency") {
+           var content =  '<div>'+'<h3>'+'Infomation'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'<a href="agency/detailedinfomation?id='+loan+'">'+'detailed infomation'+'</a>'+'</div>'		
+	   }
+       
+       if (loan.includes="Estate"){
+        var content =  '<div>'+'<h3>'+'Infomation'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'<a href="estate/detailedinfomation?id='+loan+'">'+'detailed infomation'+'</a>'+'</div>'
+		   
+	   } 
+       
+       
+        var infowindow = new google.maps.InfoWindow()
+
+        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+            return function() {
+                infowindow.setContent(content);
+                infowindow.open(map,marker);
+            };
+        })(marker,content,infowindow)); 
+        
+        markers.push(marker);
+    }
+    
+    var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+}
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&libraries=places&callback=initialize"
+         async defer></script>
 
 
 
