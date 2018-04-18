@@ -107,6 +107,8 @@ public class MemberController {
     		session.setAttribute("loginMemberName", loginMember.getMemberName());
     		// 회원 권한 분류 세션에 추가 (2018.4.4 15:11)
     		session.setAttribute("permissionId", loginMember.getPermission().getPermissionId());
+    		// 회원 아이디 세션에 추가 
+    		session.setAttribute("memberId", loginMember.getMemberId());
     		System.out.println(loginMember.getPermission().getPermissionId());
     		logger.info("로그인 성공");
     		

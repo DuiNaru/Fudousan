@@ -370,6 +370,7 @@ public class EstateController {
 		
 		System.out.println(estateId);
 		Estate resultEstate= estateService.viewEstate(estateId);
+		model.addAttribute("estateId", estateId);
 		model.addAttribute("resultEstate",resultEstate);
 		
 		logger.info("매물 상세 보기 이동 종료 "); 

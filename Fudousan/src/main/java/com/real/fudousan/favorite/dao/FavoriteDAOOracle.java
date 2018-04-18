@@ -48,4 +48,34 @@ public class FavoriteDAOOracle implements FavoriteDAO {
 		logger.info("사사용자 찜목록 검색 - Start");
 		return fslist;
 	}
+	
+	@Override
+	public boolean add(Favorite favorite){
+		logger.info("찜목록 등록 dao oracle - Start");
+		
+		FavoriteMapper mapper = sqlsession.getMapper(FavoriteMapper.class);
+		boolean result = false; 
+		try{
+			result = mapper.add(favorite);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("찜 목록 등록 dao oracle - end");
+		return result;
+	}
+	
+	public Favorite selectFavorite(Favorite favorite){
+		logger.info("찜목록 가져오기 dao oracle - Start");
+		
+		FavoriteMapper mapper = sqlsession.getMapper(FavoriteMapper.class);
+		Favorite result = null; 
+		try{
+			result = mapper.selectFavorite(favorite);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("찜 목록 가져오기 dao oracle - end");
+		
+		return result; 
+	}
 }

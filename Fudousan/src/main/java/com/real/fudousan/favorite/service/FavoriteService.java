@@ -54,8 +54,20 @@ public class FavoriteService {
 	 * @param estateId
 	 * @return
 	 */
-	public boolean add(String id, int estateId) {
-		
-		return false;
+	public boolean add(Favorite favorite) {
+		logger.info("찜하기 서비스 시작 ");
+		boolean result=dao.add(favorite);
+		logger.info("찜하기 서비스 종료 ");
+		return result;
 	}
+	
+	public Favorite selectFavorite(Favorite favorite){
+		logger.info("찜하기 가져오기 서비스 시작");
+		
+		Favorite result = dao.selectFavorite(favorite);
+		logger.info("찜하기 가져오기 서비스 종료");
+		
+		return result; 
+	}
+	
 }

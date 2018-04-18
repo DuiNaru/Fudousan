@@ -120,7 +120,29 @@
 		where
 			favorite.MEMBER_ID = #{0} and estate.ESTATE_NAME = #{1}
 	</select>
-
+	
+	<insert id="add" parameterType="favorite">
+	 INSERT INTO favorite
+	 (
+	 	member_id,
+	 	estate_id		
+	 ) 
+	 VALUES
+	 (
+	 	#{memberId},
+	 	#{estate.estateId}
+	 )
+	</insert>
+	<select id="selectFavorite" resultMap="FavoriteAll">
+		SELECT 
+			member_id, 
+			estate_id
+		FROM 
+			favorite
+		WHERE 
+			member_id=#{memberId} AND estate_id = #{estate.estateId}
+	</select>
+	
 	
 	
 	<resultMap type="favorite" id="FavoriteAll">

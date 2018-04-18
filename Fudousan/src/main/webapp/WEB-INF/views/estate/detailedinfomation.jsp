@@ -360,6 +360,11 @@ label input[type="checkbox"] {
       <h1>Details</h1>
       	<p>${resultEstate.address},  ${resultEstate.region }</p>
       <hr>
+         <label for="id-of-input" class="custom-checkbox">
+		  <input type="checkbox" id="id-of-input"/>
+		  <i class="glyphicon glyphicon-star-empty" id="empty"></i>
+		  <i class="glyphicon glyphicon-star" id="full"></i>
+		</label>
       
       <div id="map"></div>
     
@@ -607,11 +612,7 @@ label input[type="checkbox"] {
     </div>
     <div class="col-sm-2 sidenav">
       <div class="well">
-        <label for="id-of-input" class="custom-checkbox">
-		  <input type="checkbox" id="id-of-input"/>
-		  <i class="glyphicon glyphicon-star-empty"></i>
-		  <i class="glyphicon glyphicon-star"></i>
-		</label>
+     
       </div>
       <div class="well">
         <p>인테리어 업자에게 연락하기</p>
@@ -626,7 +627,8 @@ label input[type="checkbox"] {
 </footer>
 <input type="hidden" value="${resultEstate.estateX}" id="lat">
 <input type="hidden" value="${resultEstate.estateY}" id="lng">
-
+<input type="hidden" value="${estateId}" id="estateId">
+<input type="hidden" value="${sessionScope.memberId }" id="memberId">
 <script src="../resources/js/jquery-3.3.1.js"></script>
 <script src="../resources/js/login.js"></script>
 <script src="../resources/js/bootstrap.min.js"></script>
@@ -653,6 +655,83 @@ label input[type="checkbox"] {
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&callback=initMap">
+    </script>
+    
+    <script type="text/javascript">
+	    $(function() {
+	    	setTimeout(function(){
+			      	$.ajax({
+						url : "../selectFavorite",
+						type : "POST",
+						data : { "estateId": $('#estateId').val(), "memberId": $('#memberId').val() },
+						 //서버로 부터 받아오는 타입
+						dataType : "json",
+						success : function(obj){
+							var oMemberId = obj.memberId
+							var memberId = $('#memberId').val();
+							var oEstateId = obj.estate.estateId
+							var estateId = $('#estateId').val();
+							console.log(oMemberId);
+							console.log(memberId);
+							console.log(oEstateId);
+							console.log(estateId);
+							if (oMemberId == memberId && oEstateId == estateId ) {
+								$("#id-of-input").attr("checked", "checked");
+							}else{
+								$("input:checkbox[id='#id-of-input']").prop("checked", false);
+								
+							}
+						},
+						error : function(e){//에러 정보를 갖고 있는 
+							alert(JSON.stringify(e));
+						} 
+						
+		      	  });
+	        }, 100);
+	    	
+	     
+	
+	        
+	    });
+	    
+    
+    
+    
+    
+
+
+	
+		    
+		   $(function(){
+		    $( '#id-of-input' ).on('click', function(){
+ 		    	var check =$('#id-of-input').is(":checked");
+		    	
+		    	if (check == true) {
+					
+		    		$.ajax({
+						url : "../insertFavorite",
+						type : "POST",
+						data :   { "estateId": $('#estateId').val(), "memberId": $('#memberId').val() } ,
+						 //서버로 부터 받아오는 타입
+						dataType : "text",
+						success : function(data){
+								
+						},
+						error : function(e){//에러 정보를 갖고 있는 
+							alert(JSON.stringify(e));
+						} 
+		    		});
+		    		
+				}else{
+					
+		    		alert("fail");
+				}
+		    });
+			   
+		   });
+    
+
+    
     </script>
 
 </body>
