@@ -123,6 +123,8 @@ $(function() {
 	animate();
 	
 	drawWall();
+
+	$( "#blocker" ).hide();
 });
 
 function init() {
@@ -584,7 +586,7 @@ function placeRoomItem(roomItem, onLoad, onError) {
 		if ( onLoad !== undefined ) {
 			onLoad();
 		}
-	}, function(){}, onError);
+	}, undefined, onError);
 }
 
 
@@ -824,12 +826,17 @@ function resetInfo() {
 	infoDataChange = false;
 }
 
+function itemApplyListener() {
+	applyItemChange(curSelected.roomItem);
+}
+
 /**
  * 아이템 변경사항을 적용한다.
  * @param roomItem 
  * @returns
  */
 function applyItemChange(roomItem) {
+	$( "#blocker" ).show();
 	$.ajax({
 		url:"roomItem/modify",
 		type:"POST",
@@ -838,7 +845,7 @@ function applyItemChange(roomItem) {
 		dataType:"json",
 		success:function(data) {
 			
-			if(data != null && data != "false") {
+			if(data != null && data != false && data != "false") {
 				
 				infoDataChange = false;
 				
@@ -847,12 +854,16 @@ function applyItemChange(roomItem) {
 				alert("아이템 변경에 실패하였습니다.");
 				
 			}
+
+			$( "#blocker" ).hide();
 			
 		},
 		error:function(e) {
 			
 			console.log(e);
 			alert("아이템 변경 중 오류가 발생하였습니다.");
+
+			$( "#blocker" ).hide();
 			
 		}
 	});
