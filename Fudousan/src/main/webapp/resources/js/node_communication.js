@@ -24,14 +24,15 @@ function Command(){
  });
 
 socket.on('commandPass',function(data){
+	console.log('data : : : '+data);
+	if(data != 'success'){
 	var catch_command = JSON.parse(data);
-	console.log(catch_command);
 	var cName = catch_command.name;
 	var cTarget = objToRoomItem(catch_command.roomItem);
 	console.log(cTarget);
 	var direc = catch_command.direction;
 	var youtoWhat = catch_command.youtoWhat;
-	
+	}
 	if(data == 'success'){  //상대방 추가 성공했으면
 		alert('상대방도 성공적으로 추가되었습니다.');
 	}
@@ -53,7 +54,6 @@ socket.on('commandPass',function(data){
 	console.log(cName);
 	console.log(cTarget);
 	
-	
 });
  
  
@@ -74,7 +74,9 @@ socket.on('youto',function(data){
 	}
 });
  
- 
+ socket.on('commandSuccess',function(data){
+	console.log('상대방도 적용 되었습니다');
+ });
  
  
  function goback(){
