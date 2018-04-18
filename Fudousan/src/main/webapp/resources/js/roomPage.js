@@ -329,7 +329,10 @@ function onDocumentMouseDown(event) {
 
 function onDocumentMouseMove(event) {
 	// 마우스 이동 저장
-	moveMouse(event);
+	if ( !moveMouse(event) ) {
+		// 제자리 그대로면 종료
+		return;
+	}
 
 	if (curSelected != null && !isMouseUp && !controls.enabled) {
 		// 드래그 중인 아이템이 있으면 지면에 맞게 움직인다.
@@ -367,8 +370,13 @@ function moveMouse(event) {
 	var mouseX = (event.clientX / window.innerWidth) * 2 - 1;
 	var mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
 	
-	mouse.x = mouseX;
-	mouse.y = mouseY;
+	if ( mouse.x != mouseX || mouse.y != mouseY ) {
+		mouse.x = mouseX;
+		mouse.y = mouseY;
+	} else {
+		return false;
+	}
+	return true;
 }
 
 /**
