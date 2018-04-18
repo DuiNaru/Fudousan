@@ -261,6 +261,7 @@ public class EstateController {
 		return "/textureuproadpage";
 		}
 	 
+
 		
 		// 업로드 버튼 눌렀을때 
 		@RequestMapping(value="textureuproad", method=RequestMethod.POST)
@@ -282,6 +283,25 @@ public class EstateController {
 		
 			return "redirect:/textureuproadpage";
 		}
+
+	/*메물 상세 페이지 이동*/
+	 
+	 @RequestMapping(value="estate/detailedinfomation", method=RequestMethod.GET)
+	public String detailedInfomation(Estate estate, String id, Model model){
+		logger.info("매물 상세 보기 이동 시작 ");
+		System.out.println("id"+id);
+		String result[] = id.split(":"); 
+		String estateIdString = result[1];	
+		int estateId=Integer.parseInt(estateIdString);
+		
+		System.out.println(estateId);
+		Estate resultEstate= estateService.viewEstate(estateId);
+		model.addAttribute("resultEstate",resultEstate);
+		
+		logger.info("매물 상세 보기 이동 종료 "); 
+		 return "estate/detailedinfomation";
+	}
+
 	 
 	 
 	 

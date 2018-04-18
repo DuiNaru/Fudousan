@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>ROOMPAGE</title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 <script src="<c:url value="/resources/js/three.js"/>"></script>
 <script src="<c:url value="/resources/js/TDSLoader.js"/>"></script>
@@ -14,8 +15,16 @@
 <script src="<c:url value="/resources/js/THREE.MeshLine.js"/>"></script>
 <script src="<c:url value="/resources/js/socket.io.js"/>"></script>
 <script src="<c:url value="/resources/js/vo.js"/>"></script>
+<script src="<c:url value="/resources/js/CopyShader.js"/>"></script>
+<script src="<c:url value="/resources/js/FXAAShader.js"/>"></script>
+<script src="<c:url value="/resources/js/EffectComposer.js"/>"></script>
+<script src="<c:url value="/resources/js/RenderPass.js"/>"></script>
+<script src="<c:url value="/resources/js/ShaderPass.js"/>"></script>
+<script src="<c:url value="/resources/js/OutlinePass.js"/>"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
+
 	var room = {
 		roomId:${room.roomId}
 		,roomPublic:${room.roomPublic}
@@ -49,7 +58,7 @@
 			objToRoomItem({
 				color: ${roomitem.color},
 				roomId: ${roomitem.roomId},
-				roomitemId: ${roomitem.roomItemId},
+				roomItemId: ${roomitem.roomItemId},
 				rotateX: ${roomitem.rotateX},
 				rotateY: ${roomitem.rotateY},
 				rotateZ: ${roomitem.rotateZ},
@@ -92,16 +101,31 @@
 	</c:forEach>
 	];
 </script>
+<script src="<c:url value="/resources/js/node_communication.js"/>"></script>
+<script> </script>
 <style type="text/css">
 	canvas {
 	    position: fixed;
 	    top: 0;
 	    left: 0;
 	}
+	.top-menu {
+		position:absolute;
+		top:0%;
+		margin-left: auto;
+		z-index: 1;
+		background-color: rgba(255, 255, 255, 0.5);
+	}
 	.left-menu {
 		position:absolute;
-		top: 10%;
-		left: 0px;
+		left:0px;
+		z-index: 1;
+		background-color: rgba(255, 255, 255, 0.5);
+	}
+	.bottom-menu {
+		position:absolute;
+		bottom: 0px;
+		right: 0px;
 		z-index: 1;
 		background-color: rgba(255, 255, 255, 0.5);
 	}
@@ -144,35 +168,9 @@
 </style>
 </head>
 <body>
+<input type="hidden" id="userId" value="${sessionScope.loginId}">
+<input type="hidden" id="userName" value="${sessionScope.what_your_name}">
 
-<script>
- var socket = io('http://localhost:7000');
- 
- function goback(){
-	console.log('뒤로가기'); 
-	socket.emit('array_back');
- };
- 
- function gofront(){
-	 console.log('앞으로가기');
-	 socket.emit('arrayBackCancel');
- }
- function save(){
-	 console.log('저장하기');
-	 console .log('저장하기 눌렀습니다.');
- }
- function reset(){
-	 console.log('초기화하기');
-	 var clearYes = confirm('진짜 초기화 하시겠습니까?');
-	  if(clearYes){
-		  socket.emit('clearArray');
-	  };
- }
- function esc(){
-	 console.log('종료하기');
- }
- 
-</script>
 <script id="template" type="notjs">
 	<div class="scene"></div>
 	<div class="description">Scene $</div>
@@ -180,12 +178,65 @@
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
 <div class="dat">
 </div> 
+	<div class="top-menu">
+	</div>
 	<div class="left-menu">
+		<div class="form-group">
+			<label>아이템 이름</label>
+			<p id="leftItemName" class="form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<label>아이템 유형</label>
+			<p id="leftItemType" class="form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<label>아이템 설명</label>
+			<p id="leftItemText" class="form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<label>아이템 참고 사이트</label>
+			<p id="leftItemSite" class="form-control-static"></p>
+		</div>
+		<div class="form-group">
+			<div>
+				<label>Axis X</label> 
+				<input name="itemRotateX" type="hidden">
+				<div id="ax"></div>
+			</div>
+			<div>
+				<label>Axis Y</label> 
+				<input name="itemRotateY" type="hidden">
+				<div id="ay"></div>
+			</div>
+			<div>
+				<label>Axis Z</label> 
+				<input name="itemRotateZ" type="hidden">
+				<div id="az"></div>
+			</div>
+			<div>
+				<label>Position X</label> 
+				<input name="itemX" type="hidden">
+				<div id="px"></div>
+			</div>
+			<div>
+				<label>Position Y</label> 
+				<input name="itemY" type="hidden">
+				<div id="py"></div>
+			</div>
+			<div>
+				<label>Position Z</label> 
+				<input name="itemZ" type="hidden">
+				<div id="pz"></div>
+			</div>
+		</div>
+		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem);">
+	</div>
+	<div class="bottom-menu">
 		<div>
 			<label>아이템 생성</label>
 			<ul>
 				<c:forEach var="item" items="${itemList}">
-					<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId});">
+					<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId}, AddItem);">
 						<script type="text/javascript">
 							var item${item.itemId} = new Item();
 							item${item.itemId}.fileDirectory = "${item.fileDirectory}";
@@ -202,8 +253,6 @@
 						</script>
 						<label>${item.itemName}</label>
 						<div class="preview">
-							<canvas id="itemPreview${item.itemId}">
-							</canvas>
 						</div>
 						<script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
 					</li>
@@ -215,11 +264,14 @@
 		<div>
 			<label>종합기능</label>
 			<ul>
-						<li><button onclick="goback()">뒤로가기</button></li>
-						<li><button onclick="gofront()">앞으로가기</button></li>
-						<li><button onclick="save()">저장하기</button></li>
-						<li><button onclick="reset()">초기화</button></li>
+						<li><button onclick="goback()">뒤로가기</button></li><br>
+						<li><button onclick="gofront()">앞으로가기</button></li><br>
+						<li><button onclick="save()">저장하기</button></li><br>
+						<li><button onclick="reset()">초기화</button></li><br>
 						<li><button onclick="esc()">종료</button>
+						<br><br><br>
+						<li><button onclick="checkArray()">Array 보기</button>
+						<li><button onclick="AddItem()">의자 넣기</button>
 			</ul>
 		</div>
 	</div>

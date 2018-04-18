@@ -171,4 +171,8 @@
 		WHERE
 			roomitem_id = #{roomItemId}
 	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM roomitem WHERE roomitem_id = #{0}
+	</delete>
 </mapper>

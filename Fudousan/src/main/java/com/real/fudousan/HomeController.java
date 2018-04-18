@@ -37,15 +37,18 @@ public class HomeController {
     	List<String> locationList = new ArrayList<>();
     	String location = "";
     	result = service.agencyLocationPrint();
-    	
+    	/*['loan 1', 33.890542, 151.274856, 'address 1']*/
     	for (Agency agency : result) {
 			Double gpsX = agency.getGpsX();
 			Double gpsY = agency.getGpsY();
 			
-			String lat = "lat: "+ gpsX.toString();
-			String lng = "lng: "+ gpsY.toString();
+			String agencyAddress= "AgencyAddress:"+agency.getAddressMain()+agency.getAddressMiddle()+agency.getAddressSmall()+agency.getAddressSub();
+			String agencyId = "AgencyId:"+String.valueOf(agency.getAgencyId());
 			
-			location = "{"+lat +", "+lng+"}";
+			String lat =gpsX.toString();
+			String lng =gpsY.toString();
+			
+			location = "["+"'"+agencyId+"'"+","+lat +", "+lng+","+"'"+agencyAddress+"'"+"]";
 					
 			locationList.add(location);
 			model.addAttribute("locationList", locationList);
@@ -59,10 +62,13 @@ public class HomeController {
     		
     		Double estateX = estate.getEstateX();
 			Double estateY = estate.getEstateY();
-			String lat = "lat: "+ estateX.toString();
-			String lng = "lng: "+ estateY.toString(); 
 			
-			String estateLocation = "{"+lat +", "+lng+"}";
+			String estateId ="EstateId:"+String.valueOf(estate.getEstateId());
+			String estateAddress = "EstateAddress:"+estate.getAddress();
+			String lat = estateX.toString();
+			String lng = estateY.toString(); 
+			
+			String estateLocation =  "["+"'"+estateId+"'"+","+lat +", "+lng+","+"'"+estateAddress+"'"+"]";
 			
 			ElocationList.add(estateLocation);
 		}

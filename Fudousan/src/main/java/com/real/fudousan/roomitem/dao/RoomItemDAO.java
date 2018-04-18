@@ -13,4 +13,6 @@ public interface RoomItemDAO {
 	public Set<RoomItem> selectAllByRoomId(int roomId);
 	
 	public int update(RoomItem roomItem);
+	
+	public boolean delete(int roomItemId);
 }

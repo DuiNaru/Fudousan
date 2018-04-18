@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
@@ -98,8 +100,9 @@ public class MemberController {
         		session.setAttribute("isNormal", "normal");
         	}
         	//안해민이라는 사람이 회원의 정체를 파악하고자 소우치한 시쿠미 끝
-    		
+    		logger.debug("login Member : " + loginMember);
     		session.setAttribute("loginId", loginMember.getMemberId());
+    		session.setAttribute("what_your_name", loginMember.getMemberName());
     		session.setAttribute("loginEmail", email);
     		session.setAttribute("loginMemberName", loginMember.getMemberName());
     		// 회원 권한 분류 세션에 추가 (2018.4.4 15:11)
@@ -109,7 +112,7 @@ public class MemberController {
     		
     		HashMap<String, Object> result = new HashMap<>();
     		result.put("result", true);
-    		result.put("memeberName", loginMember.getMemberName());
+    		result.put("memberName", loginMember.getMemberName());
     		
     		return result;
     	}
@@ -119,7 +122,8 @@ public class MemberController {
     public String logout(HttpSession session){
     	logger.info("로그아웃 시작");
     	
-    	session.removeAttribute("loginEmail");
+    	//session.removeAttribute("loginEmail");
+    	session.invalidate();
     	
     	logger.info("로그아웃 성공");
     	return "redirect:/";

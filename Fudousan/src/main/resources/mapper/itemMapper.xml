@@ -140,6 +140,13 @@
 			, item_type_id = #{itemType.itemTypeId}
 			, model_file_name = #{modelFileName}
 			, text = #{text}
+			, item_scale = #{itemScale}
+			, item_rotate_x = #{itemRotateX}
+			, item_rotate_y = #{itemRotateY}
+			, item_rotate_z = #{itemRotateZ}
+			, item_x = #{itemX}
+			, item_y = #{itemY}
+			, item_z = #{itemZ}
 		WHERE item_id = #{itemId}
 	</update>
 	

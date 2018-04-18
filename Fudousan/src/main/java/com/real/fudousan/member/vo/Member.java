@@ -174,7 +174,7 @@ public class Member implements Serializable {
 	public String toString() {
 		return "Member [memberId=" + memberId + ", email=" + email + ", password=" + password + ", phone=" + phone
 				+ ", picture=" + picture + ", text=" + text + ", creDate=" + creDate + ", delDate=" + delDate
-				+ ", permission=" + permission + ", designer=" + designer + ", memberName" + memberName + "]";
+				+ ", permission=" + permission + ", designer=" + designer + ", memberName : " + memberName + "]";
 	}
 
 	@Override
