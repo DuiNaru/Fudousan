@@ -479,8 +479,9 @@ function previewItem(itemId, fileName) {
 }
 
 /**
- * 아이템을 불러와서 배치한다.
+ * 아이템을 DB에 추가하고 화면에 배치한다.
  * @param item VO
+ * @param onCreate 성공시 호출
  * @returns
  */
 function createItem(item, onCreate) {
@@ -530,8 +531,9 @@ function createItem(item, onCreate) {
 }
 
 /**
- * 아이템을 제거한다.
+ * 아이템을 DB와 화면에서 제거한다.
  * @param roomItem VO
+ * @param onDelete 성공시 호출
  * @returns
  */
 function deleteItem(roomItem, onDelete) {
