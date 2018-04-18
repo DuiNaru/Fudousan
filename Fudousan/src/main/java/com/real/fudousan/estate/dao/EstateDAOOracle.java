@@ -56,13 +56,6 @@ public List<Estate> selectEsatesLocation(){
 	
 }
 
-
-
-
-
-
-
-
 	/* 매물등록 */
 	@Override
 	public int insertByIds(Estate estate) {
