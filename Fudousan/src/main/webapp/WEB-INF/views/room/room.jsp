@@ -7,6 +7,7 @@
 <title>ROOMPAGE</title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/loading.css"/>"/>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 <script src="<c:url value="/resources/js/three.js"/>"></script>
 <script src="<c:url value="/resources/js/TDSLoader.js"/>"></script>
@@ -104,70 +105,91 @@
 <script src="<c:url value="/resources/js/node_communication.js"/>"></script>
 <script> </script>
 <style type="text/css">
-	canvas {
-	    position: fixed;
-	    top: 0;
-	    left: 0;
-	}
-	.top-menu {
-		position:absolute;
-		top:0%;
-		margin-left: auto;
-		z-index: 1;
-		background-color: rgba(255, 255, 255, 0.5);
-	}
-	.left-menu {
-		position:absolute;
-		left:0px;
-		z-index: 1;
-		background-color: rgba(255, 255, 255, 0.5);
-	}
-	.bottom-menu {
-		position:absolute;
-		bottom: 0px;
-		right: 0px;
-		z-index: 1;
-		background-color: rgba(255, 255, 255, 0.5);
-	}
-	.right-menu {
-		position:absolute;
-		top: 10%;
-		right: 0px;
-		z-index: 1;
-		background-color: rgba(255, 255, 255, 0.5);
-	}
-	.preview {
-		width: 100px;
-		height: 100px;
-	}
-			#blocker {
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				background-color: rgba(0,0,0,0.5);
-			}
-			#instructions {
-				width: 100%;
-				height: 100%;
-				display: -webkit-box;
-				display: -moz-box;
-				display: box;
-				-webkit-box-orient: horizontal;
-				-moz-box-orient: horizontal;
-				box-orient: horizontal;
-				-webkit-box-pack: center;
-				-moz-box-pack: center;
-				box-pack: center;
-				-webkit-box-align: center;
-				-moz-box-align: center;
-				box-align: center;
-				color: #ffffff;
-				text-align: center;
-				cursor: pointer;
-			}
+canvas {
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.top-menu {
+	position: absolute;
+	top: 0%;
+	margin-left: auto;
+	z-index: 1;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.left-menu {
+	position: absolute;
+	left: 0px;
+	z-index: 1;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.bottom-menu {
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	z-index: 1;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.right-menu {
+	position: absolute;
+	top: 10%;
+	right: 0px;
+	z-index: 1;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.preview {
+	width: 100px;
+	height: 100px;
+}
+
+#blocker {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 2;
+}
+#blocker > div {
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:100px;
+  height:100px;
+  margin:-50px 0 0 -50px;
+}
+
+#instructions {
+	width: 100%;
+	height: 100%;
+	display: -webkit-box;
+	display: -moz-box;
+	display: box;
+	-webkit-box-orient: horizontal;
+	-moz-box-orient: horizontal;
+	box-orient: horizontal;
+	-webkit-box-pack: center;
+	-moz-box-pack: center;
+	box-pack: center;
+	-webkit-box-align: center;
+	-moz-box-align: center;
+	box-align: center;
+	color: #ffffff;
+	text-align: center;
+	cursor: pointer;
+}
 </style>
 </head>
 <body>
+<div id="blocker">
+	<div>
+		<img src="<c:url value="/resources/image/loading.svg"/>" class="ld ld-spin"/>
+	</div>
+</div>
 <input type="hidden" id="userId" value="${sessionScope.loginId}">
 <input type="hidden" id="userName" value="${sessionScope.what_your_name}">
 
@@ -180,7 +202,7 @@
 </div> 
 	<div class="top-menu">
 	</div>
-	<div class="left-menu">
+	<div id="itemInfo" class="left-menu">
 		<div class="form-group">
 			<label>아이템 이름</label>
 			<p id="leftItemName" class="form-control-static"></p>
@@ -229,7 +251,8 @@
 				<div id="pz"></div>
 			</div>
 		</div>
-		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem);">
+		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem)">
+		<input type="button" value="적용" onclick="itemApplyListener()">
 	</div>
 	<div class="bottom-menu">
 		<div>
@@ -271,7 +294,6 @@
 						<li><button onclick="esc()">종료</button>
 						<br><br><br>
 						<li><button onclick="checkArray()">Array 보기</button>
-						<li><button onclick="AddItem()">의자 넣기</button>
 			</ul>
 		</div>
 	</div>

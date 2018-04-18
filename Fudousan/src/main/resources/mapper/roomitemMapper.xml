@@ -175,4 +175,8 @@
 	<delete id="delete" parameterType="int">
 		DELETE FROM roomitem WHERE roomitem_id = #{0}
 	</delete>
+	
+	<delete id="deleteAll">
+		DELETE FROM roomitem WHERE room_id = #{1} AND 1 IN (SELECT DISTINCT 1 FROM room WHERE member_id = #{0})
+	</delete>
 </mapper>

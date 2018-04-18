@@ -52,4 +52,11 @@ public class RoomItemService {
 		logger.info("remove("+roomItemId+") End");
 		return result;
 	}
+	
+	public boolean reset(int memberId, int roomId) {
+		logger.info("reset("+memberId+", "+roomId+") Start");
+		boolean result = dao.deleteAll(memberId, roomId);
+		logger.info("reset("+memberId+", "+roomId+") End");
+		return result;
+	}
 }

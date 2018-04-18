@@ -1,3 +1,10 @@
+function Command() {
+	this.name = "";
+	this.roomItem = null;
+	this.onDo = null;
+	this.onRedo = null;
+}
+
 /**
  * Item VO
  * @returns
@@ -17,6 +24,24 @@ function Item() {
 	this.itemX = 0;
 	this.itemY = 0;
 	this.itemZ = 0;
+	this.clone = function() {
+		var c = new Item();
+		c.fileDirectory = this.fileDirectory;
+		c.itemId = this.itemId;
+		c.itemName = this.itemName;
+		c.itemType = this.itemType.clone();
+		c.modelFileName = this.modelFileName;
+		c.refSiteSet = this.refSiteSet.slice();
+		c.text = this.text;
+		c.itemScale = this.itemScale;
+		c.itemRotateX = this.itemRotateX;
+		c.itemRotateY = this.itemRotateY;
+		c.itemRotateZ = this.itemRotateZ;
+		c.itemX = this.itemX;
+		c.itemY = this.itemY;
+		c.itemZ = this.itemZ;
+		return c;
+	}
 }
 
 /**
@@ -28,6 +53,10 @@ function Item() {
 function ItemType(itemTypeId, itemTypeName) {
 	this.itemTypeId = itemTypeId;
 	this.itemTypeName = itemTypeName;
+	this.clone = function() {
+		var c = new ItemType(this.itemTypeId, this.itemTypeName);
+		return c;
+	}
 }
 
 /**
@@ -62,6 +91,20 @@ function RoomItem() {
 	this.x = 0;
 	this.y = 0;
 	this.z = 0;
+	this.clone = function() {
+		var c = new RoomItem();
+		c.color = this.color;
+		c.item = this.item.clone();
+		c.roomId = this.roomId;
+		c.roomItemId = this.roomItemId;
+		c.rotateX = this.rotateX;
+		c.rotateY = this.rotateY;
+		c.rotateZ = this.rotateZ;
+		c.x = this.x;
+		c.y = this.y;
+		c.z = this.z;
+		return c;
+	}
 }
 
 /**
