@@ -104,17 +104,17 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title"><span data-lang="login">Login</span></h4>
+					<h4 class="modal-title"><span data-lang="login"></span></h4>
 				</div>
 				
 				<div class="modal-body">
-					<span data-lang="email">Email</span> <input type="text" id="memberEmail" name="memberID">
-					<span data-lang="password">Password</span> <input type="password" id="password" name="password">
-					<button type="button" id="loginBtn"><span data-lang="login">Login</span></button>
+					<span data-lang="email"></span> <input type="text" id="memberEmail" name="memberID">
+					<span data-lang="password"></span> <input type="password" id="password" name="password">
+					<button type="button" id="loginBtn"><span data-lang="login"></span></button>
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal"><span data-lang="cancel">Cancel</span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal"><span data-lang="cancel"></span></button>
 				</div>
 			</div>
 		</div>
@@ -143,7 +143,7 @@
 				<ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
 				<c:if test="${sessionScope.loginEmail == null}">
 					<li id="loginNameTag"></li>
-					<li id="loginAtag"><a data-toggle="modal" href="#loginModal">Login</a></li>
+					<li id="loginAtag"><a data-toggle="modal" href="#loginModal"><span data-lang="login"></span></a></li>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
@@ -172,6 +172,10 @@
 					</li>
 					
 					<li><a href="bm">[okh test]</a></li>
+					
+					<li><a href="javascript:selectLanguage('ko')">한국어</a></li>
+					<li><a href="javascript:selectLanguage('jp')">日本語</a></li>
+					<li><a href="javascript:selectLanguage('en')">English</a></li>
 					
 					<c:if test="${sessionScope.loginId != null && sessionScope.isNormal == normal}">
 						<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>

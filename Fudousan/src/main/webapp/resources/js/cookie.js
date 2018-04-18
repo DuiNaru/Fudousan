@@ -1,6 +1,6 @@
 function setCookie(name, value, day){
     let expire = new Date();
-    expire.setDate(expire.getData() + day);
+    expire.setDate(expire.getDate() + day);
 
     let cookies = name + "=" + escape(value) + "; path=/";
 
