@@ -105,4 +105,21 @@ public class RoomItemDAOOracle implements RoomItemDAO {
 		return result;
 	}
 
+	@Override
+	public boolean deleteAll(int memberId, int roomId) {
+		logger.info("deleteAll("+memberId+", "+roomId+") Start");
+		RoomItemMapper roomItemMapper = sqlSession.getMapper(RoomItemMapper.class);
+		
+		boolean result = false;
+		
+		try {
+			result = roomItemMapper.deleteAll(memberId, roomId);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+
+		logger.info("deleteAll("+memberId+", "+roomId+") End");
+		return result;
+	}
+
 }

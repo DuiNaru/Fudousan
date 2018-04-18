@@ -14,4 +14,6 @@ public interface RoomItemMapper {
 	public int update(RoomItem roomItem);
 	
 	public boolean delete(int roomItemId);
+	
+	public boolean deleteAll(int memberId, int roomId);
 }
