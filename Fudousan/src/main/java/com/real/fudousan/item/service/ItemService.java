@@ -33,6 +33,7 @@ public class ItemService {
 	@Transactional
 	public int addItem(Item item, List<MultipartFile> files) {
 		logger.info("addItem(" + item + ", " + files +  ") Start");
+		item.setFileDirectory(modelFileBaseDirectory);
 		int result = -1;
 		if((result = itemDao.insert(item)) >= 0 && files != null) {
 			logger.info("DAO insert -> item ID : " + result);

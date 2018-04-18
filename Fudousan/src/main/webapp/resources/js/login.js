@@ -21,8 +21,9 @@ function formCheck(){
 			url: 'login',
 			type: 'post',
 			data: {email: memberEmail.val(), password: password.val()},
-			dataType: 'text',
+			dataType: 'json',
 			success: function(result){
+				console.dir(result);
 				if (result.result == false && result.errCode == '1'){
 					alert('Not found ID');
 				}

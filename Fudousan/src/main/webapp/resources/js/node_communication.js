@@ -6,13 +6,13 @@ var socket = io('http://localhost:8000');
 	 var user = {
 			 userId : userId,
 			 userName : userName,
-			 roomId: room.roomId
+			 roomId: room.roomId,
 	 }
 	 
 	 socket.emit('room_join', user);
  });
 
-socket.on('insa',function(data){
+socket.on('msgAlert',function(data){
 	console.log(data);
 });
  
@@ -25,7 +25,9 @@ socket.on('insa',function(data){
  
  function goback(){
 	console.log('뒤로가기'); 
-	socket.emit('array_back');
+	socket.emit('array_back', {
+		roomId: room.roomId
+	});
  };
  
  function gofront(){
