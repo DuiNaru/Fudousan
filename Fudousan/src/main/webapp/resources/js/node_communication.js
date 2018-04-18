@@ -107,9 +107,9 @@ socket.on('youto',function(data){
  function checkArray(){
 	 socket.emit('goArray1');
  }
+ 
+ //AddItem에서는 객체정보가 파라메터로 넘어가서 커맨더 만들어서 이름으로 커맨더 타입 지정하고 객체정보도 같이 보내서 서버가 밭게함
  function AddItem(roomitem){
-	
-	
 	var a = new Command();
 	a.name = "add";
 	a.roomItem = roomitem;
@@ -117,8 +117,6 @@ socket.on('youto',function(data){
 	 socket.emit('addItem',JSON.stringify(a));
  }
  
- 
-
 
 function saveTimeChange(){
 		if(whoAmI == 'selecter'){
