@@ -26,7 +26,6 @@ import com.real.fudousan.member.vo.Permission;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
 
-@SessionAttributes(value={"loginId", "what_your_name", "loginEmail", "loginMemberName", "permissionId"})
 @Controller
 public class MemberController {
 
@@ -66,7 +65,7 @@ public class MemberController {
     
     @ResponseBody
     @RequestMapping(value="login", method=RequestMethod.POST)
-    public HashMap<String, Object> login(HttpSession session, String email, String password, Model model){
+    public HashMap<String, Object> login(HttpSession session, String email, String password){
     	logger.info("로그인 시작");
     	
     	Member member = new Member();
@@ -102,12 +101,12 @@ public class MemberController {
         	}
         	//안해민이라는 사람이 회원의 정체를 파악하고자 소우치한 시쿠미 끝
     		logger.debug("login Member : " + loginMember);
-    		model.addAttribute("loginId", loginMember.getMemberId());
-    		model.addAttribute("what_your_name", loginMember.getMemberName());
-    		model.addAttribute("loginEmail", email);
-    		model.addAttribute("loginMemberName", loginMember.getMemberName());
+    		session.setAttribute("loginId", loginMember.getMemberId());
+    		session.setAttribute("what_your_name", loginMember.getMemberName());
+    		session.setAttribute("loginEmail", email);
+    		session.setAttribute("loginMemberName", loginMember.getMemberName());
     		// 회원 권한 분류 세션에 추가 (2018.4.4 15:11)
-    		model.addAttribute("permissionId", loginMember.getPermission().getPermissionId());
+    		session.setAttribute("permissionId", loginMember.getPermission().getPermissionId());
     		System.out.println(loginMember.getPermission().getPermissionId());
     		logger.info("로그인 성공");
     		
@@ -120,11 +119,11 @@ public class MemberController {
     }
     
     @RequestMapping(value="logout", method=RequestMethod.GET)
-    public String logout(SessionStatus ss){
+    public String logout(HttpSession session){
     	logger.info("로그아웃 시작");
     	
     	//session.removeAttribute("loginEmail");
-    	ss.setComplete();
+    	session.invalidate();
     	
     	logger.info("로그아웃 성공");
     	return "redirect:/";
