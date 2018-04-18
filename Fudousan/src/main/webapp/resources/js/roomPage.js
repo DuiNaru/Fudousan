@@ -549,9 +549,10 @@ function deleteItem(roomItem, onDelete) {
  * RoomItem VO 대로 화면에 Item 을 배치한다.
  * @param roomItem VO
  * @param onLoad 아이템 불러오기 성공시 호출되는 콜백함수
+ * @param onError 아이템 불러오기 실패시 호출되는 콜백함수
  * @returns
  */
-function placeRoomItem(roomItem, onLoad) {
+function placeRoomItem(roomItem, onLoad, onError) {
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
 	// 해당 모델의 텍스쳐 경로 설정
@@ -583,7 +584,7 @@ function placeRoomItem(roomItem, onLoad) {
 		if ( onLoad !== undefined ) {
 			onLoad();
 		}
-	});
+	}, null, onError);
 }
 
 
