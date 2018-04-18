@@ -24,7 +24,6 @@ function Command(){
  });
 
 socket.on('commandPass',function(data){
-	console.log('data : : : '+data);
 	if(data != 'success'){
 	var catch_command = JSON.parse(data);
 	var cName = catch_command.name;
@@ -34,7 +33,7 @@ socket.on('commandPass',function(data){
 	var youtoWhat = catch_command.youtoWhat;
 	}
 	if(data == 'success'){  //상대방 추가 성공했으면
-		alert('상대방도 성공적으로 추가되었습니다.');
+		console.log('상대방도 성공적으로 추가되었습니다.');
 	}
 	if(cName =='add' && youtoWhat=='fail'){  //추가된거 상대방 실패하면 본인도 삭제한다.
 		deplaceRoomItem(cTarget);
@@ -42,10 +41,11 @@ socket.on('commandPass',function(data){
 	
 	if(cName=='add' && direc=='back'){
 		//추가된 아이템을 back해서 삭제됨
-		deplaceRoomItem(cTarget); // 파라메터 받은 대상의 것을 삭제시킨다.
+		deleteItem(cTarget,function(){
+			/*deplaceRoomItem(cTarget); // 파라메터 받은 대상의 것을 삭제시킨다.
+*/		});
 	}
 	else if(cName='add' && direc=='forward'){
-		alert('add로 왔는가2');
 		//삭제되었던 아이템을 forward해서 추가됨
 		placeRoomItem(cTarget); //파라메터 받은 대상의 것을 추가한다.
 	}
@@ -61,14 +61,14 @@ socket.on('youto',function(data){
 	console.log(data);
 	var catch_command = JSON.parse(data);
 	var cName = catch_command.name;
-	var cTarget = catch_command.roomItem;
+	var cTarget = objToRoomItem(catch_command.roomItem);
 	
 	if(cName=='add'){
 		placeRoomItem(cTarget, function() {
 			console.log('상대방이 정보를 변경함');
 			socket.emit('youtoWhat','success');
 		}, function(){
-			alert('youtowhat fail');
+			console.log('상대방이 정보를 변경실패');
 			socket.emit('youtoWhat','fail');
 		}); 
 	}
@@ -149,9 +149,9 @@ socket.on('successChangeMessage', function(data){
 
 //크롬에서 개발자 도구로 콘솔에서 보기
 socket.on('lookSamePage',function(data){
-	var product = objToRoomItem(JSON.parse(data));
-	console.dir(product);
-	console.log(data);
+	var product = JSON.parse(data);
+	var abc = objToRoomItem(product.roomItem);
+	console.log(abc);
 });
 
 
