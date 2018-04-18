@@ -599,7 +599,7 @@ function deplaceRoomItem(roomItem) {
 	console.dir(curRoomItems);
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
-			if ( curSelect == curRoomItems[i] ) deSelect();
+			if ( curSelected == curRoomItems[i] ) deSelect();
 			scene.remove(curRoomItems[i]);
 			//curRoomItems = curRoomItems.splice(i, 1);
 			console.dir(curRoomItems);
