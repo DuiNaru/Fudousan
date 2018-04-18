@@ -1,19 +1,19 @@
 {
-    "ko":{
+    "ko": {
         "login":"로그인",
         "email":"이메일",
         "password":"비밀번호",
         "cancel":"취소"
     },
 
-    "jp":{
+    "jp": {
         "login":"ログイン",
-        "email":"E-メール",
+        "email":"メール",
         "password":"暗証番号",
         "cancel":"キャンセル"
     },
 
-    "en":{
+    "en": {
         "login":"Login",
         "email":"E-mail",
         "password":"Password",
