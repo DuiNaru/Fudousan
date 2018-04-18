@@ -584,7 +584,7 @@ function placeRoomItem(roomItem, onLoad, onError) {
 		if ( onLoad !== undefined ) {
 			onLoad();
 		}
-	}, null, onError);
+	}, function(){}, onError);
 }
 
 
