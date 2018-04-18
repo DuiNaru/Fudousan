@@ -10,6 +10,7 @@
 
     <!-- 부트스트랩 -->
     <link href="<c:url value="../resources/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
 <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
@@ -212,7 +213,48 @@
     color: #fff;
 } /* End Color Blue */
 /* END PRICE TABLE */   
-       
+
+label {
+  /* Presentation */
+  font-size: 48px
+}
+
+/* Required Styling */
+
+label input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox {
+  margin-left: 2em;
+  position: relative;
+  cursor: pointer;
+}
+
+.custom-checkbox .glyphicon {
+  color: gold;
+  position: absolute;
+  top: 0.4em;
+  left: -1.25em;
+  font-size: 0.75em;
+}
+
+.custom-checkbox .glyphicon-star-empty {
+  color: gray;
+}
+
+.custom-checkbox .glyphicon-star {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.custom-checkbox:hover .glyphicon-star{
+  opacity: 0.5;
+}
+
+.custom-checkbox input[type="checkbox"]:checked ~ .glyphicon-star {
+  opacity: 1;
+}       
        
        
   </style>	
@@ -565,7 +607,11 @@
     </div>
     <div class="col-sm-2 sidenav">
       <div class="well">
-        <p>매물 찜하기</p>
+        <label for="id-of-input" class="custom-checkbox">
+		  <input type="checkbox" id="id-of-input"/>
+		  <i class="glyphicon glyphicon-star-empty"></i>
+		  <i class="glyphicon glyphicon-star"></i>
+		</label>
       </div>
       <div class="well">
         <p>인테리어 업자에게 연락하기</p>
@@ -592,7 +638,7 @@
     	
         var myOptions = {
                 center: new google.maps.LatLng(lat, lng),
-                zoom: 13,
+                zoom: 17,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
 
             };
