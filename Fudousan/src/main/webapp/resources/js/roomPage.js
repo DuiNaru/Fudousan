@@ -485,7 +485,7 @@ function previewItem(itemId, fileName) {
  * @returns
  */
 function createItem(item, onCreate) {
-	if(!(item instanceof RoomItem)) {
+	if(!(item instanceof Item)) {
 		throw "아이템이 아닙니다.";
 	}
 	
@@ -918,6 +918,44 @@ function applyItemChange(roomItem) {
 			
 			console.log(e);
 			alert("아이템 변경 중 오류가 발생하였습니다.");
+
+			$( "#blocker" ).hide();
+			
+		}
+	});
+}
+
+function reset() {
+	$.ajax({
+		url:"roomItem/reset",
+		type:"POST",
+		data:{roomId:room.roomId},
+		dataType:"json",
+		success:function(data) {
+			
+			if(data != null && data != false && data != "false") {
+
+				for( var i = curRoomItems.length - 1; i >= 0; i--) {
+					scene.remove(curRoomItems[i]);
+				}
+				
+				curRoomItems = [];
+				curSelected = null;
+				curSelectedOriginal = null;
+				
+			} else {
+				
+				alert("리셋에 실패하였습니다.");
+				
+			}
+
+			$( "#blocker" ).hide();
+			
+		},
+		error:function(e) {
+			
+			console.log(e);
+			alert("리셋 중 오류가 발생하였습니다.");
 
 			$( "#blocker" ).hide();
 			
