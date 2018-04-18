@@ -28,10 +28,14 @@ var wallThickness = 10;
 var curRoomItems = [];
 // 현재 선택 중인 아이템(메시 그룹)
 var curSelected;
+// 현재 선택 중인 아이템(메시 그룹)
+var curSelectedOriginal;
 // 현재 선택 된 아이템이 움직였는가?
 var curMoving = false;
 // 마우스 다운 이후로 마우스 업이 되었는가?
 var isMouseUp = false;
+// 정보 화면에서 아이템 정보를 변경하였는가?
+var infoDataChange = false;
 
 $(function() {
 
@@ -42,11 +46,10 @@ $(function() {
 		step: 1,
 		orientation: "horizontal",
 		range: "min",
-		animate: true,
 		slide: function( event, ui ) {
-			console.log(curSelected);
 			rotate(curSelected, ui.value, null, null);
 			$("input[name='itemRotateX']").val(ui.value);
+			infoDataChange = true;
 		}
 	});
 	$( "#ay" ).slider({
@@ -56,10 +59,10 @@ $(function() {
 		step: 1,
 		orientation: "horizontal",
 		range: "min",
-		animate: true,
 		slide: function( event, ui ) {
 			rotate(curSelected, null, ui.value, null);
 			$("input[name='itemRotateY']").val(ui.value);
+			infoDataChange = true;
 		}
 	});
 	$( "#az" ).slider({
@@ -69,10 +72,10 @@ $(function() {
 		step: 1,
 		orientation: "horizontal",
 		range: "min",
-		animate: true,
 		slide: function( event, ui ) {
 			rotate(curSelected, null, null, ui.value);
 			$("input[name='itemRotateZ']").val(ui.value);
+			infoDataChange = true;
 		}
 	});
 	$( "#px" ).slider({
@@ -82,10 +85,10 @@ $(function() {
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
-		animate: true,
 		slide: function( event, ui ) {
-			move(curObject, ui.value, null, null);
+			move(curSelected, ui.value, null, null);
 			$("input[name='itemX']").val(ui.value);
+			infoDataChange = true;
 		}
 	});
 	$( "#py" ).slider({
@@ -95,10 +98,10 @@ $(function() {
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
-		animate: true,
 		slide: function( event, ui ) {
-			move(curObject, null, ui.value, null);
+			move(curSelected, null, ui.value, null);
 			$("input[name='itemY']").val(ui.value);
+			infoDataChange = true;
 		}
 	});
 	$( "#pz" ).slider({
@@ -108,10 +111,10 @@ $(function() {
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
-		animate: true,
 		slide: function( event, ui ) {
-			move(curObject, null, null, ui.value);
+			move(curSelected, null, null, ui.value);
 			$("input[name='itemZ']").val(ui.value);
+			infoDataChange = true;
 		}
 	});
 	//초기화
@@ -126,7 +129,7 @@ function init() {
 	// Loader Cache Enabled
 	THREE.Cache.enabled = true;
 	// 카메라 생성 및 초기화
-	camera = new THREE.PerspectiveCamera(60, width / height, 100, 100000);
+	camera = new THREE.PerspectiveCamera(60, width / height, 10, 100000);
 	camera.position.y = 10000;
 	camera.lookAt(0, 0, 0);
 	
@@ -517,7 +520,6 @@ function createItem(item, onCreate) {
  * @returns
  */
 function deleteItem(roomItem, onDelete) {
-	console.dir(roomItem);
 	$.ajax({
 		url:"roomItem/delete",
 		type:"GET",
@@ -546,9 +548,10 @@ function deleteItem(roomItem, onDelete) {
 /**
  * RoomItem VO 대로 화면에 Item 을 배치한다.
  * @param roomItem VO
+ * @param onLoad 아이템 불러오기 성공시 호출되는 콜백함수
  * @returns
  */
-function placeRoomItem(roomItem) {
+function placeRoomItem(roomItem, onLoad) {
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
 	// 해당 모델의 텍스쳐 경로 설정
@@ -576,8 +579,10 @@ function placeRoomItem(roomItem) {
 		scene.add( object );
 
 		curRoomItems.push(object);
-		
-		console.log(object);
+
+		if ( onLoad !== undefined ) {
+			onLoad();
+		}
 	});
 }
 
@@ -585,7 +590,7 @@ function placeRoomItem(roomItem) {
 /**
  * 해당 룸아이템을 찾아서 배치 해제한다.
  * @param roomItem
- * @returns
+ * @returns true 또는 false
  */
 function deplaceRoomItem(roomItem) {
 	console.dir(curRoomItems);
@@ -595,9 +600,10 @@ function deplaceRoomItem(roomItem) {
 			scene.remove(curRoomItems[i]);
 			//curRoomItems = curRoomItems.splice(i, 1);
 			console.dir(curRoomItems);
-			return;
+			return true;
 		}
 	}
+	return false;
 }
 
 
@@ -642,20 +648,20 @@ function move(object, x, y, z) {
 function rotate(object, rx, ry, rz) {
 	
 	if ( rx != null ) {
-		
-		object.roomItem.rotateX = object.rotation.x = rx * Math.PI / 180;
+		object.rotation.x = rx * Math.PI / 180;
+		object.roomItem.rotateX = rx;
 		
 	}
 	
 	if ( ry != null ) {
-		
-		object.roomItem.rotateY = object.rotation.y = ry * Math.PI / 180;
+		object.rotation.y = ry * Math.PI / 180;
+		object.roomItem.rotateY = ry;
 		
 	}
 	
 	if ( rz != null ) {
-
-		object.roomItem.rotateZ = object.rotation.z = rz * Math.PI / 180;
+		object.rotation.z = rz * Math.PI / 180;
+		object.roomItem.rotateZ = rz;
 		
 	}
 	
@@ -663,6 +669,9 @@ function rotate(object, rx, ry, rz) {
 
 function select(group) {
 	curSelected = group;
+	
+	curSelectedOriginal = group.roomItem.clone();
+	
 	// 선택 상태 아웃 라인 표시
 	outlinePass.selectedObjects = curSelected.children;
 
@@ -675,9 +684,17 @@ function select(group) {
 }
 
 function deSelect() {
-	curSelect = null;
+	if ( infoDataChange ) {
+		curSelected.roomItem = curSelectedOriginal;
+		applyRoomItem(curSelected);
+		curSelectedOriginal = null;
+	}
+	
+	curSelected = null;
 	// 선택 상태 아웃 라인 표시
 	outlinePass.selectedObjects = [];
+	
+	resetInfo();
 }
 
 /**
@@ -715,7 +732,6 @@ function saveRoomItem(roomItem) {
  * @returns
  */
 function setInfoRX(value) {
-	console.log(value);
 	$("input[name='itemRotateX']").val(value);
 	$( "#ax" ).slider("value", value);
 }
@@ -749,6 +765,8 @@ function setInfoRZ(value) {
  */
 function setInfoX(value) {
 	$("input[name='itemX']").val(value);
+	$( "#px" ).slider("option", "min", value-100);
+	$( "#px" ).slider("option", "max", value+100);
 	$( "#px" ).slider("value", value);
 }
 
@@ -759,6 +777,8 @@ function setInfoX(value) {
  */
 function setInfoY(value) {
 	$("input[name='itemY']").val(value);
+	$( "#py" ).slider("option", "min", value-100);
+	$( "#py" ).slider("option", "max", value+100);
 	$( "#py" ).slider("value", value);
 }
 
@@ -769,5 +789,70 @@ function setInfoY(value) {
  */
 function setInfoZ(value) {
 	$("input[name='itemZ']").val(value);
+	$( "#pz" ).slider("option", "min", value-100);
+	$( "#pz" ).slider("option", "max", value+100);
 	$( "#pz" ).slider("value", value);
+}
+
+/**
+ * 해당 three js 객체의 roomItem의 값대로 해당 객체를 변경한다.
+ * @param object
+ * @returns
+ */
+function applyRoomItem(object) {
+	object.position.x = object.roomItem.x;
+	object.position.y = object.roomItem.y;
+	object.position.z = object.roomItem.z;
+	object.rotation.x = object.roomItem.rotateX * Math.PI / 180;
+	object.rotation.y = object.roomItem.rotateY * Math.PI / 180;
+	object.rotation.z = object.roomItem.rotateZ * Math.PI / 180;
+}
+
+/**
+ * 아이템 정보창을 초기화 한다.
+ * @returns
+ */
+function resetInfo() {
+	setInfoX(0);
+	setInfoY(0);
+	setInfoZ(0);
+	setInfoRX(0);
+	setInfoRY(0);
+	setInfoRZ(0);
+	
+	infoDataChange = false;
+}
+
+/**
+ * 아이템 변경사항을 적용한다.
+ * @param roomItem 
+ * @returns
+ */
+function applyItemChange(roomItem) {
+	$.ajax({
+		url:"roomItem/modify",
+		type:"POST",
+		data:JSON.stringify(roomItem),
+		contentType: 'application/json; charset=utf-8',
+		dataType:"json",
+		success:function(data) {
+			
+			if(data != null && data != "false") {
+				
+				infoDataChange = false;
+				
+			} else {
+				
+				alert("아이템 변경에 실패하였습니다.");
+				
+			}
+			
+		},
+		error:function(e) {
+			
+			console.log(e);
+			alert("아이템 변경 중 오류가 발생하였습니다.");
+			
+		}
+	});
 }
