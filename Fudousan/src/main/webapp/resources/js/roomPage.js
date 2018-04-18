@@ -38,6 +38,7 @@ var isMouseUp = false;
 var infoDataChange = false;
 
 $(function() {
+	$("#itemInfo").hide();
 
 	$( "#ax" ).slider({
 		value: 0,
@@ -483,6 +484,10 @@ function previewItem(itemId, fileName) {
  * @returns
  */
 function createItem(item, onCreate) {
+	if(!(item instanceof RoomItem)) {
+		throw "아이템이 아닙니다.";
+	}
+	
 	// 화면 가운데
 	raycaster.setFromCamera( new THREE.Vector2(), camera ); 
 	//raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() );
@@ -530,6 +535,10 @@ function createItem(item, onCreate) {
  * @returns
  */
 function deleteItem(roomItem, onDelete) {
+	if(!(roomItem instanceof RoomItem)) {
+		throw "룸 아이템이 아닙니다.";
+	}
+	
 	$.ajax({
 		url:"roomItem/delete",
 		type:"GET",
@@ -563,6 +572,10 @@ function deleteItem(roomItem, onDelete) {
  * @returns
  */
 function placeRoomItem(roomItem, onLoad, onError) {
+	if(!(roomItem instanceof RoomItem)) {
+		throw "룸 아이템이 아닙니다.";
+	}
+	
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
 	// 해당 모델의 텍스쳐 경로 설정
@@ -604,7 +617,10 @@ function placeRoomItem(roomItem, onLoad, onError) {
  * @returns true 또는 false
  */
 function deplaceRoomItem(roomItem) {
-	console.dir(curRoomItems);
+	if(!(roomItem instanceof RoomItem)) {
+		throw "룸 아이템이 아닙니다.";
+	}
+	
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
 			if ( curSelected == curRoomItems[i] ) deSelect();
@@ -686,12 +702,7 @@ function select(group) {
 	// 선택 상태 아웃 라인 표시
 	outlinePass.selectedObjects = curSelected.children;
 
-	setInfoX(curSelected.roomItem.x);
-	setInfoY(curSelected.roomItem.y);
-	setInfoZ(curSelected.roomItem.z);
-	setInfoRX(curSelected.roomItem.rotateX);
-	setInfoRY(curSelected.roomItem.rotateY);
-	setInfoRZ(curSelected.roomItem.rotateZ);
+	initInfo();
 }
 
 function deSelect() {
@@ -714,6 +725,10 @@ function deSelect() {
  * @returns
  */
 function saveRoomItem(roomItem) {
+	if(!(roomItem instanceof RoomItem)) {
+		throw "룸 아이템이 아닙니다.";
+	}
+	
 	var refSiteSet = roomItem.item.refSiteSet;
 	roomItem.item.refSiteSet = null;
 	$.ajax({
@@ -820,10 +835,35 @@ function applyRoomItem(object) {
 }
 
 /**
- * 아이템 정보창을 초기화 한다.
+ * 아이템 정보창을 초기화(시작) 한다.
+ * @returns
+ */
+function initInfo() {
+	$("#leftItemName").html(curSelected.roomItem.item.itemName);
+	$("#leftItemType").html(curSelected.roomItem.item.itemType.itemTypeName);
+	$("#leftItemText").html(curSelected.roomItem.item.text);
+	$("#leftItemSite").html(curSelected.roomItem.item.refSiteSet);
+
+	setInfoX(curSelected.roomItem.x);
+	setInfoY(curSelected.roomItem.y);
+	setInfoZ(curSelected.roomItem.z);
+	setInfoRX(curSelected.roomItem.rotateX);
+	setInfoRY(curSelected.roomItem.rotateY);
+	setInfoRZ(curSelected.roomItem.rotateZ);
+	
+	$("#itemInfo").show( "slide" );
+}
+
+/**
+ * 아이템 정보창을 초기화(끝) 한다.
  * @returns
  */
 function resetInfo() {
+	$("#leftItemName").empty();
+	$("#leftItemType").empty();
+	$("#leftItemText").empty();
+	$("#leftItemSite").empty();
+	
 	setInfoX(0);
 	setInfoY(0);
 	setInfoZ(0);
@@ -832,6 +872,8 @@ function resetInfo() {
 	setInfoRZ(0);
 	
 	infoDataChange = false;
+	
+	$("#itemInfo").hide( "slide" );
 }
 
 function itemApplyListener() {
@@ -844,6 +886,10 @@ function itemApplyListener() {
  * @returns
  */
 function applyItemChange(roomItem) {
+	if(!(roomItem instanceof RoomItem)) {
+		throw "룸 아이템이 아닙니다.";
+	}
+	
 	$( "#blocker" ).show();
 	$.ajax({
 		url:"roomItem/modify",

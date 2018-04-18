@@ -202,7 +202,7 @@ canvas {
 </div> 
 	<div class="top-menu">
 	</div>
-	<div class="left-menu">
+	<div id="itemInfo" class="left-menu">
 		<div class="form-group">
 			<label>아이템 이름</label>
 			<p id="leftItemName" class="form-control-static"></p>
