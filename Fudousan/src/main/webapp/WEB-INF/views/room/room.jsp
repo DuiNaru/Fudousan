@@ -271,7 +271,6 @@
 						<li><button onclick="esc()">종료</button>
 						<br><br><br>
 						<li><button onclick="checkArray()">Array 보기</button>
-						<li><button onclick="AddItem()">의자 넣기</button>
 			</ul>
 		</div>
 	</div>

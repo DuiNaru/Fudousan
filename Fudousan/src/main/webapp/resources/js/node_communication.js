@@ -1,5 +1,16 @@
 var socket = io('http://localhost:8000');
- 
+
+function Command(){
+	this.name = "";
+	this.roomItem = null;
+	this.onDo = null;
+	this.onRedo = null;
+}
+
+
+
+
+
  $(function(){
 	 var userId = document.getElementById('userId').value;
 	 var userName = document.getElementById('userName').value;
@@ -12,13 +23,56 @@ var socket = io('http://localhost:8000');
 	 socket.emit('room_join', user);
  });
 
-socket.on('msgAlert',function(data){
-	console.log(data);
+socket.on('commandPass',function(data){
+	var catch_command = JSON.parse(data);
+	console.log(catch_command);
+	var cName = catch_command.name;
+	var cTarget = objToRoomItem(catch_command.roomItem);
+	console.log(cTarget);
+	var direc = catch_command.direction;
+	var youtoWhat = catch_command.youtoWhat;
+	
+	if(data == 'success'){  //상대방 추가 성공했으면
+		alert('상대방도 성공적으로 추가되었습니다.');
+	}
+	if(cName =='add' && youtoWhat=='fail'){  //추가된거 상대방 실패하면 본인도 삭제한다.
+		deplaceRoomItem(cTarget);
+	}
+	
+	if(cName=='add' && direc=='back'){
+		//추가된 아이템을 back해서 삭제됨
+		deplaceRoomItem(cTarget); // 파라메터 받은 대상의 것을 삭제시킨다.
+	}
+	else if(cName='add' && direc=='forward'){
+		alert('add로 왔는가2');
+		//삭제되었던 아이템을 forward해서 추가됨
+		placeRoomItem(cTarget); //파라메터 받은 대상의 것을 추가한다.
+	}
+	
+	console.log('가져온정보');
+	console.log(cName);
+	console.log(cTarget);
+	
+	
 });
  
  
- 
- 
+socket.on('youto',function(data){
+	console.log(data);
+	var catch_command = JSON.parse(data);
+	var cName = catch_command.name;
+	var cTarget = catch_command.roomItem;
+	
+	if(cName=='add'){
+		placeRoomItem(cTarget, function() {
+			console.log('상대방이 정보를 변경함');
+			socket.emit('youtoWhat','success');
+		}, function(){
+			alert('youtowhat fail');
+			socket.emit('youtoWhat','fail');
+		}); 
+	}
+});
  
  
  
@@ -52,11 +106,15 @@ socket.on('msgAlert',function(data){
 	 socket.emit('goArray1');
  }
  function AddItem(roomitem){
-	console.dir(roomitem);
-	 socket.emit('addItem',JSON.stringify(roomitem));
+	
+	
+	var a = new Command();
+	a.name = "add";
+	a.roomItem = roomitem;
+	console.dir(a);
+	 socket.emit('addItem',JSON.stringify(a));
  }
  
- socket.on('takeMyOrder')
  
 
 
@@ -87,6 +145,7 @@ socket.on('successChangeMessage', function(data){
 	}
 });
 
+//크롬에서 개발자 도구로 콘솔에서 보기
 socket.on('lookSamePage',function(data){
 	var product = objToRoomItem(JSON.parse(data));
 	console.dir(product);
