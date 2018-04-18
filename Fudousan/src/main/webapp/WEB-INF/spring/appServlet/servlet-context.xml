@@ -32,15 +32,6 @@
 	<beans:bean id="adminInterceptor" class="com.real.fudousan.common.interceptor.AdminInterceptor"/>
 	<!-- 로그인 인터셉터 빈 -->
 	<beans:bean id="loginInterceptor" class="com.real.fudousan.common.interceptor.LoginInterceptor"/>
-	
-	<!-- 다국어 처리 -->
-	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
-		<beans:property name="basenames" value="locale/messages"/>
-	</beans:bean>
-	
-	<beans:bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-		<beans:property name="defaultLocale" value="en"/>
-	</beans:bean>
 
 	<!-- 인터셉터 설정 -->
 	<!-- <mvc:interceptors>

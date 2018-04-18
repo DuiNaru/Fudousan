@@ -104,17 +104,17 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Login</h4>
+					<h4 class="modal-title"><span data-lang="login">Login</span></h4>
 				</div>
 				
 				<div class="modal-body">
-					Email <input type="text" id="memberEmail" name="memberID">
-					Password <input type="password" id="password" name="password">
-					<button type="button" id="loginBtn">Login</button>
+					<span data-lang="email">Email</span> <input type="text" id="memberEmail" name="memberID">
+					<span data-lang="password">Password</span> <input type="password" id="password" name="password">
+					<button type="button" id="loginBtn"><span data-lang="login">Login</span></button>
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal"><span data-lang="cancel">Cancel</span></button>
 				</div>
 			</div>
 		</div>
@@ -345,6 +345,7 @@ function setMarkers(map, locations) {
 
 
 
-
+<script src="resources/js/cookie.js"></script>
+<script src="resources/js/translation.js"></script>
 </body>
 </html>
