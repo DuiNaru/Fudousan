@@ -5,6 +5,31 @@
 
 
 <mapper namespace="com.real.fudousan.texture.dao.TextureMapper">
+
+<insert id="textureuproad" parameterType="texture">
+
+insert into texture
+(
+TEXTURE_ID
+,MEMBER_ID
+,TEXTURE_NAME
+,TEXT
+,TEXTURE_FILE
+) values(
+SEQ_TEXTURE_ID.nextval
+,#{memberId}
+,#{name}
+,#{text}
+,#{file}
+)
+
+
+
+</insert>
+
+
+
+
 	<resultMap type="texture" id="textureResultMap">
 		<id 	property="textureId" 	column="TEXTURE_ID"/>
 		<result property="memberId"  	column="MEMBER_ID"/>

@@ -135,7 +135,7 @@
  </div>
 
 <!-- 테스쳐 업로드 페이지로 이동 -->
-<input type="button" value="텍스쳐 업로드" class="btn btn-info" onclick="location.href='/texture/uproad'" > 
+<input type="button" value="텍스쳐 업로드" class="btn btn-info" onclick="location.href='/fudousan/textureuproadpage'" > 
 
 
 

@@ -41,13 +41,13 @@ public class FileService {
 		if (mfile == null || mfile.isEmpty() || mfile.getSize() == 0) {
 			return null;
 		}
-
+		
 		// 저장 폴더가 없으면 생성
 		File path = new File(uploadPath);
 		if (!path.isDirectory()) {
 			path.mkdirs();
 		}
-
+		
 		// 원본 파일명
 		String originalFilename = mfile.getOriginalFilename();
 
