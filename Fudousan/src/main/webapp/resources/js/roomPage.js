@@ -12,10 +12,10 @@ var composer, outlinePass;
 var width = window.innerWidth;
 // 화면 세로 길이
 var height = window.innerHeight;
-// 지면
-var plane;
+// 방 바닥
+var roomFloor;
 // 지면(사이즈)
-var planeSize = 999999;
+var earthSize = 999999;
 // Raycaster
 var raycaster = new THREE.Raycaster();
 // 마우스
@@ -172,11 +172,30 @@ function init() {
 	
 	//camera.rotation.x = 90 * Math.PI / 180;
 
-	var planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
-	var planeMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
-	plane = new THREE.Mesh(planeGeometry, planeMaterial);
-	plane.rotateX(-90 * Math.PI / 180);
-	scene.add(plane);
+	//var roomFloorGeometry = new THREE.PlaneGeometry(roomFloorSize, roomFloorSize);
+	var temp = [];
+	for(var i = 0; i < originalWalls.length; i++) {
+		temp.push(new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y));
+		temp.push(new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y));
+	}
+	var t2 = new THREE.Path(temp);
+	console.log(t2);
+	
+	var roomShape = new THREE.Shape(t2);
+	/*roomShape.autoClose = true;
+	for(var i = 0; i < originalWalls.length; i++) {
+		roomShape.moveTo( originalWalls[i].c1.x, originalWalls[i].c1.y );
+		roomShape.lineTo( originalWalls[i].c2.x, originalWalls[i].c2.y );
+		console.log(originalWalls[i]);
+	}
+	roomShape.lineTo( originalWalls[0].c1.x, originalWalls[0].c1.y );*/
+	console.log(roomShape);
+
+	var roomFloorGeometry = new THREE.ShapeGeometry( roomShape );
+	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
+	roomFloor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
+	roomFloor.rotateX(-90 * Math.PI / 180);
+	scene.add(roomFloor);
 
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
 	renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, false);
@@ -338,7 +357,7 @@ function onDocumentMouseMove(event) {
 	if (curSelected != null && !isMouseUp && !controls.enabled) {
 		// 드래그 중인 아이템이 있으면 지면에 맞게 움직인다.
 		raycaster.setFromCamera(mouse, camera);
-		var intersects = raycaster.intersectObjects([plane]);
+		var intersects = raycaster.intersectObjects([roomFloor]);
 		if (intersects.length > 0) {
 			var x = curSelected.roomItem.item.itemX;
 			var y = curSelected.roomItem.item.itemY;
@@ -388,8 +407,8 @@ function drawWall() {
 	scene.remove(walls);
 	walls = new THREE.Group(); 
 	for(var i = 0; i < originalWalls.length; i++) {
-		var c1 = new THREE.Vector3(originalWalls[i].c1.x, originalWalls[i].c1.y, plane.z);
-		var c2 = new THREE.Vector3(originalWalls[i].c2.x, originalWalls[i].c2.y, plane.z);
+		var c1 = new THREE.Vector3(originalWalls[i].c1.x, originalWalls[i].c1.y, roomFloor.z);
+		var c2 = new THREE.Vector3(originalWalls[i].c2.x, originalWalls[i].c2.y, roomFloor.z);
 		// Cube
 		var geometry = new THREE.BoxGeometry(c1.clone().sub(c2).length(), wallThickness, room.height );
 		for ( var j = 0; j < geometry.faces.length; j += 2 ) {
@@ -493,7 +512,7 @@ function createItem(item, onCreate) {
 	raycaster.setFromCamera( new THREE.Vector2(), camera ); 
 	//raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() );
 	
-	var intersects = raycaster.intersectObjects([plane]);
+	var intersects = raycaster.intersectObjects([roomFloor]);
 	if (intersects.length > 0) {
 		// 방 아이템 추가하고 그 아이템 가져오기
 		$.ajax({

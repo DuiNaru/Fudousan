@@ -14,6 +14,7 @@
 		<result 	 property="height"      	column="HEIGHT"/>
 		<result 	 property="memberId"  		column="MEMBER_ID"/>
 		<result		 property="roomPublic"		column="ROOM_PUBLIC"/>
+		<result		 property="roomTitle"		column="ROOM_TITLE"/>
 		<association property="estate"   		column="estate_id" 			javaType="com.real.fudousan.estate.vo.Estate" resultMap="com.real.fudousan.estate.dao.EstateMapper.estateResultMap"/>
 		<association property="floorTexture"   	column="FLOOR_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" columnPrefix="f_"/>
 		<association property="ceilingTexture"  column="CEILING_TEXTURE_ID" javaType="com.real.fudousan.texture.vo.Texture" resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" columnPrefix="c_"/>
@@ -86,6 +87,7 @@
 			,ESTATE_X
 			,ESTATE_Y
 			,BASE_ROOM_ID
+			,ROOM_TITLE
 		from
 			room
 		left outer join
