@@ -418,20 +418,141 @@ function drawWall() {
 }
 
 function drawFloor() {
-	var roomShape = new THREE.Shape(t2);
-	roomShape.autoClose = true;
+	
+	// 커넥터 추출
+	var con = [];
 	for(var i = 0; i < originalWalls.length; i++) {
-		roomShape.moveTo( originalWalls[i].c1.x, originalWalls[i].c1.y );
-		roomShape.lineTo( originalWalls[i].c2.x, originalWalls[i].c2.y );
-		console.log(originalWalls[i]);
+		var c1 = new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y);
+		var c2 = new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y);
+		
+		var flag1 = false;
+		var flag2 = false;
+		for(var j = 0; j < con.length; j++ ) {
+			if ( c1.equals( con[j] )) flag1 = true;
+			if ( c2.equals( con[j] )) flag2 = true;
+		}
+		
+		if(!flag1) con.push(c1);
+		if(!flag2) con.push(c2);
 	}
-	roomShape.lineTo( originalWalls[0].c1.x, originalWalls[0].c1.y );
+	console.log(con);
+	
+	// 방문 기록
+	var visit = [];
+	// 인접 행렬 생성
+	var adjMatrix = new Array(con.length);
+	for(var i = 0; i < con.length; i++) {
+		adjMatrix[i] = new Array(con.length);
+		for(var j = 0; j < adjMatrix[i].length; j++) {
+			adjMatrix[i][j] = 0;
+		}
+	}
+	for(var i = 0; i < originalWalls.length; i++) {
+		var c1 = new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y);
+		var c2 = new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y);
+		
+		for(var j = 0; j < con.length; j++) {
+			if ( con[j].equals(c1) ) {
+				c1 = j;
+			}
+			if ( con[j].equals(c2) ) {
+				c2 = j;
+			}
+		}
+		// 대칭
+		adjMatrix[c1][c2] = 1;
+		adjMatrix[c2][c1] = 1;
+		
+	}
+	console.log(adjMatrix);
+	/*
+	var shape = new THREE.Shape();
+	// 탐색 시작
+	DFS(0, adjMatrix, visit, shape, con);
+	*/
 
-	var roomFloorGeometry = new THREE.ShapeGeometry( roomShape );
+	var shape = new THREE.Shape();
+	//shape.autoClose = true;
+	// 벽 대로 선 긋기
+	/*for(var i = 0; i < originalWalls.length; i++) {
+		shape.moveTo(originalWalls[i].c1.x, originalWalls[i].c1.y);
+		shape.lineTo(originalWalls[i].c2.x, originalWalls[i].c2.y);
+	}*/
+	
+	// 가장 바깥쪽 선 으로 이어서 만들기
+	// 1. 시작점 (가장 왼쪽, 가장 아래)
+	var startIndex = 0;
+	for(var i = 1; i < con.length; i++) {
+		if(con[i].x < con[startIndex].x) {
+			startIndex = i;
+		}
+	}
+	console.log("start index : " + startIndex);
+	
+	var pastIndex = startIndex;
+	// 2. 시작점에서 연결된 지점에서 가장 왼쪽의 점으로 이동하기
+	shape.moveTo(con[startIndex].x, con[startIndex].y);
+	var count = 1;
+	while(count <= con.length) {
+		var minVector = con[startIndex];
+		var minIndex = startIndex;
+		for(var i=0; i < adjMatrix[startIndex].length; i++) {
+			if (adjMatrix[startIndex][i] == 1 && pastIndex != i) {
+				var dot = con[i].clone().sub(con[startIndex]).dot(minVector);
+				console.log(startIndex+" to " + i + " = " + dot);
+				if ( dot > 0 ) {
+					minVector = con[i].clone().sub(con[startIndex]);
+					minIndex = i;
+				}
+				
+			}
+		}
+		// 현재 점은 체크
+		pastIndex = startIndex;
+		shape.lineTo(con[minIndex].x, con[minIndex].y);
+		if (minIndex != startIndex) {
+			// 다음 점이 있을 경우,
+			console.log("다음 점 으로 : " + minIndex);
+			startIndex = minIndex;
+			count++;
+		} else {
+			// 다음 점 없다.
+			console.log("끝 : " + minIndex);
+			break;
+		}
+	}
+	
+	
+	
+	//var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
+	var roomFloorGeometry = new THREE.ShapeGeometry( shape );
 	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
 	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
 	
 	return floor;
+}
+
+function DFS(v, map, visit, shape, con)
+{
+	visit[v] = 1; // 정점 v를 방문했다고 표시
+	shape.moveTo(con[v].x, con[v].y);
+	for (var i = 1; i <= map.length; i++)
+	{
+		// 정점 v와 정점 i가 연결되었고,
+		if (map[v][i] == 1)
+		{
+			shape.lineTo(con[i].x, con[i].y);
+			//  정점 i를 방문하지 않았다면
+			if (!visit[i]) {
+				console.log(v+"에서 "+i+"로 이동");
+				// 정점 i에서 다시 DFS를 시작한다
+				DFS(i, map, visit, shape, con);
+			}/* else {
+				console.log(v+"에서 "+i+"로 끝");
+				shape.moveTo(con[v].x, con[v].y);
+			}*/
+		}
+	}
 }
 
 function previewItem(itemId, fileName) {
@@ -497,31 +618,48 @@ function previewItem(itemId, fileName) {
 
 /**
  * 아이템을 DB에 추가하고 화면에 배치한다.
- * @param item VO
+ * @param item Item VO 또는 RoomItem VO
  * @param onCreate 성공시 호출
  * @returns
  */
 function createItem(item, onCreate) {
-	if(!(item instanceof Item)) {
+	var x;
+	var y;
+	var z;
+	var itemId;
+	if(item instanceof Item) {
+		// 화면 가운데
+		raycaster.setFromCamera( new THREE.Vector2(), camera ); 
+		//raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() );
+		
+		var intersects = raycaster.intersectObjects([roomFloor]);
+
+		if (intersects.length > 0) {
+			x = intersects[0].point.x;
+			y = intersects[0].point.y;
+			z = intersects[0].point.z;
+			itemId = item.itemId;
+		}
+	} else if(item instanceof RoomItem) {
+		x = item.x;
+		y = item.y;
+		z = item.z;
+		itemId = item.item.itemId;
+	} else {
 		throw "아이템이 아닙니다.";
 	}
 	
-	// 화면 가운데
-	raycaster.setFromCamera( new THREE.Vector2(), camera ); 
-	//raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() );
-	
-	var intersects = raycaster.intersectObjects([roomFloor]);
-	if (intersects.length > 0) {
+	if (x !== undefined && y !== undefined && z !== undefined) {
 		// 방 아이템 추가하고 그 아이템 가져오기
 		$.ajax({
 			url:"roomItem/create",
 			type:"GET",
 			data:{
 				roomId:room.roomId,
-				itemId:item.itemId,
-				x:intersects[0].point.x,
-				y:intersects[0].point.y,
-				z:intersects[0].point.z,
+				itemId:itemId,
+				x:x,
+				y:y,
+				z:z,
 			},
 			dataType:"json",
 			success:function(data) {
