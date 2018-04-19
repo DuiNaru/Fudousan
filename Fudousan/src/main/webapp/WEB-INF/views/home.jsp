@@ -147,27 +147,27 @@
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout">Logout</a></li>
+					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
 					<li><a href="memberupdate/memberupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 3 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout">Logout</a></li>
+					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
 					<li><a href="memberupdate/agencyupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout">Logout</a></li>
+					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
 				</c:if>
 				
 				
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span data-lang="join"></span><span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="join/join">Customer Join</a></li>
+							<li><a href="join/join"><span data-lang="customerjoin"></span></a></li>
 							<li class="divider"></li>
 							
-							<li><a href="join/agencyjoin">Agency Join</a></li>
+							<li><a href="join/agencyjoin"><span data-lang="agencyjoin"></span></a></li>
 						</ul>
 					</li>
 					
