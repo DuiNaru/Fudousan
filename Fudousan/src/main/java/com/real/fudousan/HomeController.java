@@ -46,15 +46,14 @@ public class HomeController {
 			String agencyAddress= "AgencyAddress:"+agency.getAddressMain()+agency.getAddressMiddle()+agency.getAddressSmall()+agency.getAddressSub();
 			String agencyId = "AgencyId:"+String.valueOf(agency.getAgencyId());
 			
-			String lat =gpsX.toString();
-			String lng =gpsY.toString();
+			String lat = gpsX.toString();
+			String lng = gpsY.toString();
 			
 			location = "["+"'"+agencyId+"'"+","+lat +", "+lng+","+"'"+agencyAddress+"'"+"]";
 					
 			locationList.add(location);
 		}
-    	
-    	
+
     	List<Estate> Eresult = null;
 		List<String> ElocationList = new ArrayList<>();
     	Eresult = eService.selectEsatesLocation();

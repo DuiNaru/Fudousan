@@ -182,8 +182,7 @@
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</nav>
-   
-  
+
 	<!-- Map -->
 	<div class="form-group">
 		<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box" style="z-index: 1; margin: 100px 0 0 0">
@@ -194,7 +193,6 @@
 	<script src="resources/js/jquery-3.3.1.js"></script>
 	<script src="resources/js/login.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
-	
 	<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 	<script type="text/javascript">
 	
@@ -210,8 +208,6 @@
 	];
 	
 	function initialize() {
-		 
-		
 	    var myOptions = {
 	        center: new google.maps.LatLng(35.4969467, 139.6627667),
 	        zoom: 8,
@@ -281,9 +277,7 @@
 	      map.fitBounds(bounds);
 	    });
 	}
-	
-	
-	
+
 	function setMarkers(map, locations) {
 		var marker;
 		var markers = [];
@@ -332,9 +326,8 @@
 	            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 	}
 	</script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&libraries=places&callback=initialize"
-	         async defer></script>
-	
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&libraries=places&callback=initialize" async defer></script>
+	<!-- 다국어 처리 -->
 	<script src="resources/js/cookie.js"></script>
 	<script src="resources/js/translation.js"></script>
 </body>
