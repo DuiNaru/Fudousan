@@ -173,27 +173,8 @@ function init() {
 	//camera.rotation.x = 90 * Math.PI / 180;
 
 	//var roomFloorGeometry = new THREE.PlaneGeometry(roomFloorSize, roomFloorSize);
-	var temp = [];
-	for(var i = 0; i < originalWalls.length; i++) {
-		temp.push(new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y));
-		temp.push(new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y));
-	}
-	var t2 = new THREE.Path(temp);
-	console.log(t2);
 	
-	var roomShape = new THREE.Shape(t2);
-	/*roomShape.autoClose = true;
-	for(var i = 0; i < originalWalls.length; i++) {
-		roomShape.moveTo( originalWalls[i].c1.x, originalWalls[i].c1.y );
-		roomShape.lineTo( originalWalls[i].c2.x, originalWalls[i].c2.y );
-		console.log(originalWalls[i]);
-	}
-	roomShape.lineTo( originalWalls[0].c1.x, originalWalls[0].c1.y );*/
-	console.log(roomShape);
-
-	var roomFloorGeometry = new THREE.ShapeGeometry( roomShape );
-	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
-	roomFloor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
+	roomFloor = drawFloor();
 	roomFloor.rotateX(-90 * Math.PI / 180);
 	scene.add(roomFloor);
 
@@ -434,6 +415,23 @@ function drawWall() {
 	walls.rotateX(-90*Math.PI/180);
 	walls.position.y += room.height/2;
 	scene.add(walls);
+}
+
+function drawFloor() {
+	var roomShape = new THREE.Shape(t2);
+	roomShape.autoClose = true;
+	for(var i = 0; i < originalWalls.length; i++) {
+		roomShape.moveTo( originalWalls[i].c1.x, originalWalls[i].c1.y );
+		roomShape.lineTo( originalWalls[i].c2.x, originalWalls[i].c2.y );
+		console.log(originalWalls[i]);
+	}
+	roomShape.lineTo( originalWalls[0].c1.x, originalWalls[0].c1.y );
+
+	var roomFloorGeometry = new THREE.ShapeGeometry( roomShape );
+	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
+	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
+	
+	return floor;
 }
 
 function previewItem(itemId, fileName) {
