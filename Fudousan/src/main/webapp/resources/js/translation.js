@@ -25,14 +25,38 @@ $(function(){
 	};
 	
 	let changeLanguage = function(lang, json){
+		if (lang === "jp"){
+			$("style").append("* {font-family: meriyo}");
+		}
+		
+		let jsonLang = json[lang];
+		
 		let span = $.makeArray($("span").map(function(){
 			return $(this).data("lang");
 		}));
 		
-		let jsonLang = json[lang];
-		
 		for (let i = 0; i < span.length; i++){
 			$("span[data-lang=" + span[i] + "]").html(jsonLang[span[i]]);
+		}
+		
+		let input = $.makeArray($("input").map(function(){
+			return $(this).data("lang");
+		}));
+		
+		if (input.length > 0){
+			for (let i = 0; i < input.length; i++){
+				$("input[data-lang=" + input[i] + "]").attr("placeholder", jsonLang[input[i]]);
+			}
+		}
+		
+		let textarea = $.makeArray($("textarea").map(function(){
+			return $(this).data("lang");
+		}));
+		
+		if (textarea.length > 0){
+			for (let i = 0; i < textarea.length; i++){
+				$("textarea[data-lang=" + textarea[i] + "]").attr("placeholder", jsonLang[textarea[i]]);
+			}
 		}
 	};
 })

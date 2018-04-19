@@ -212,7 +212,7 @@ function init() {
 	});
 }
 
-function animate() {
+function animate(time) {
 	//renderer.clear();
 	// 다음 프레임 지정
 	requestAnimationFrame( animate );
@@ -252,6 +252,8 @@ function animate() {
 		//s.userData.controls.update();
 		renderer.render( s, c );
 	} );*/
+	
+	TWEEN.update(time);
 }
 
 
