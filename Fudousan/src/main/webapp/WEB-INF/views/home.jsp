@@ -104,17 +104,17 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Login</h4>
+					<h4 class="modal-title"><span data-lang="login"></span></h4>
 				</div>
 				
 				<div class="modal-body">
-					Email <input type="text" id="memberEmail" name="memberID">
-					Password <input type="password" id="password" name="password">
-					<button type="button" id="loginBtn">Login</button>
+					<span data-lang="email"></span> <input type="text" id="memberEmail" name="memberID">
+					<span data-lang="password"></span> <input type="password" id="password" name="password">
+					<button type="button" id="loginBtn"><span data-lang="login"></span></button>
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal"><span data-lang="cancel"></span></button>
 				</div>
 			</div>
 		</div>
@@ -143,35 +143,39 @@
 				<ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
 				<c:if test="${sessionScope.loginEmail == null}">
 					<li id="loginNameTag"></li>
-					<li id="loginAtag"><a data-toggle="modal" href="#loginModal">Login</a></li>
+					<li id="loginAtag"><a data-toggle="modal" href="#loginModal"><span data-lang="login"></span></a></li>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout">Logout</a></li>
+					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
 					<li><a href="memberupdate/memberupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 3 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout">Logout</a></li>
+					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
 					<li><a href="memberupdate/agencyupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout">Logout</a></li>
+					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
 				</c:if>
 				
 				
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span data-lang="join"></span><span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="join/join">Customer Join</a></li>
+							<li><a href="join/join"><span data-lang="customerjoin"></span></a></li>
 							<li class="divider"></li>
 							
-							<li><a href="join/agencyjoin">Agency Join</a></li>
+							<li><a href="join/agencyjoin"><span data-lang="agencyjoin"></span></a></li>
 						</ul>
 					</li>
 					
 					<li><a href="bm">[okh test]</a></li>
+					
+					<li><a href="javascript:selectLanguage('ko')">한국어</a></li>
+					<li><a href="javascript:selectLanguage('jp')">日本語</a></li>
+					<li><a href="javascript:selectLanguage('en')">English</a></li>
 					
 					<c:if test="${sessionScope.loginId != null && sessionScope.isNormal == normal}">
 						<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>
@@ -345,6 +349,7 @@ function setMarkers(map, locations) {
 
 
 
-
+<script src="resources/js/cookie.js"></script>
+<script src="resources/js/translation.js"></script>
 </body>
 </html>

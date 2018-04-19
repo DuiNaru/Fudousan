@@ -12,6 +12,9 @@ public interface FavoriteDAO {
 	//사용자의 찜목록에서 
 	public List<Favorite> searchFavorite(int memberId,String favoSearch);
 	
+	// 찜하기 등록
+	public boolean add(Favorite favorite);
 	
+	public Favorite selectFavorite(Favorite favorite);
 	
 }

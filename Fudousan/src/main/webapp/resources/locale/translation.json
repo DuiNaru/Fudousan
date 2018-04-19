@@ -1,0 +1,34 @@
+{
+    "ko": {
+        "login":"로그인",
+        "logout": "로그아웃",
+        "email":"이메일",
+        "password":"비밀번호",
+        "cancel":"취소",
+        "join": "회원가입",
+        "customerjoin": "사용자 회원가입",
+        "agencyjoin": "중개업자 회원가입"
+    },
+
+    "jp": {
+        "login":"ログイン",
+        "logout": "ログアウト",
+        "email":"メール",
+        "password":"暗証番号",
+        "cancel":"キャンセル",
+        "join": "会員登録",
+        "customerjoin": "ユーザー会員登録",
+        "agencyjoin": "エイジェンシー会員登録"
+    },
+
+    "en": {
+        "login":"Login",
+        "logout": "Logout",
+        "email":"E-mail",
+        "password":"Password",
+        "cancel":"Cancel",
+        "join": "Join",
+        "customerjoin": "Customer Join",
+        "agencyjoin": "Agency Join"
+    }
+}

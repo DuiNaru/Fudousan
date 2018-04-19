@@ -59,7 +59,7 @@ public class JoinController {
 			// result가 true이면 
 			logger.info("회원 등록 성공");
 			model.addAttribute(memberResult);
-			return "redirect:join/joinresult";
+			return "redirect:/";
 			
 		}
 		else{
@@ -69,7 +69,8 @@ public class JoinController {
 			return "redirect:join/join";
 		}	
 	}
-
+		
+	
 
 	@RequestMapping(value="insertAgency",  method=RequestMethod.POST)
 	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency, String main){
@@ -91,7 +92,7 @@ public class JoinController {
 			// result가 true이면 
 			logger.info("회원 등록 성공");
 			model.addAttribute(memberResult);
-			return "join/agencyjoinresult";
+			return "redirect:/";
 			
 		}
 		else{

@@ -4,15 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.roomitem.service.RoomItemService;
 import com.real.fudousan.roomitem.vo.RoomItem;
 
+@SessionAttributes("loginId")
 @RequestMapping("roomItem")
 @Controller
 public class RoomItemController {
@@ -58,4 +61,23 @@ public class RoomItemController {
 		logger.info("delete("+roomItemId+") End");
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="modify", method=RequestMethod.POST)
+	public boolean modify(@RequestBody RoomItem roomItem) {
+		logger.info("modify("+roomItem+") Start");
+		boolean result = service.modify(roomItem) == 1;
+		logger.info("modify("+roomItem+") End");
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="reset", method=RequestMethod.POST)
+	public boolean reset(int roomId, @ModelAttribute("loginId") int loginId) {
+		logger.info("reset("+roomId+", "+loginId+") Start");
+		boolean result = service.reset(loginId, roomId);
+		logger.info("reset("+roomId+", "+loginId+") End");
+		return result;
+	}
+	
 }

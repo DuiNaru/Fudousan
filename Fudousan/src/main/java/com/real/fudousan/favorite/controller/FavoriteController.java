@@ -7,11 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
+import com.real.fudousan.estate.vo.Estate;
 import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.room.service.RoomService;
@@ -25,8 +28,7 @@ public class FavoriteController {
 	private FavoriteService service;
 	@Autowired
 	private RoomService Rservice;
-	@Autowired
-	private FavoriteService Fservice;
+
 	@Autowired
 	private AdviceService Aservice;
 	
@@ -46,4 +48,52 @@ public class FavoriteController {
 	
 		return "user/mypagecustomer";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertFavorite", method=RequestMethod.POST)
+	public String insertFavorite(String estateId, String memberId ){
+			logger.info("찜하기 시작");
+			Favorite favorite = new Favorite();
+			Estate estate = new Estate();
+			int estateIdResult = Integer.parseInt(estateId);
+			int memberIdResult = Integer.parseInt(memberId);
+			
+			//estate setting 
+			estate.setEstateId(estateIdResult);
+			
+			// favorite setting 
+			favorite.setMemberId(memberIdResult);
+			favorite.setEstate(estate);
+			
+			service.add(favorite);
+			logger.info("찜하기 종료");
+			
+		return "";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="selectFavorite", method=RequestMethod.POST)
+	public Favorite selectFavorite(String estateId, String memberId ){
+			logger.info("찜하기  가져오기 시작");
+			Favorite favorite = new Favorite();
+			Estate estate = new Estate();
+			int estateIdResult = Integer.parseInt(estateId);
+			int memberIdResult = Integer.parseInt(memberId);
+			
+			//estate setting 
+			estate.setEstateId(estateIdResult);
+			
+			// favorite setting 
+			favorite.setMemberId(memberIdResult);
+			favorite.setEstate(estate);
+			
+			Favorite result=service.selectFavorite(favorite);
+			
+			
+			logger.info("찜하기 가져오기 종료");
+			
+		return result;
+	}
+	
+	
 }
