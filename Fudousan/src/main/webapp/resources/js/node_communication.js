@@ -1,5 +1,6 @@
 var socket = io('http://localhost:8000');
-
+var justOne = 0;
+var whoAmI = 'x';
 function Command(){
 	this.name = "";
 	this.roomItem = null;
@@ -45,18 +46,37 @@ socket.on('commandPass',function(data){
 			/*deplaceRoomItem(cTarget); // 파라메터 받은 대상의 것을 삭제시킨다.
 */		});
 	}
-	else if(cName='add' && direc=='forward'){
+	if(cName=='add' && direc=='forward'){
 		//삭제되었던 아이템을 forward해서 추가됨
-		placeRoomItem(cTarget); //파라메터 받은 대상의 것을 추가한다.
-	}
-	
-	console.log('가져온정보');
-	console.log(cName);
-	console.log(cTarget);
-	
+		if(whoAmI == 'selecter'){ // 누른사람
+			createItem(cTarget.item,function(roomitem){ // 2배열에서 보관해던거 꺼내서 생성함 (데이터베이스상)
+				cTarget.roomItemId = roomitem.roomItemId;
+				AddItem(cTarget); //이 과정을 해줘야 2배앨에서 보관했던거 1배열에 넣음 (노드서버)
+				whoAmI = 'x';
+				
+				socket.emit('forXman',JSON.stringify(cTarget));
+			});
+		}else{
+			socket.on('forXman2',function(data){
+				var xMan = JSON.parse(data);
+				placeRoomItem(xMan);
+			});
+		}
+	}// else if 끝
 });
  
  
+//AddItem에서는 객체정보가 파라메터로 넘어가서 커맨더 만들어서 이름으로 커맨더 타입 지정하고 객체정보도 같이 보내서 서버가 밭게함
+function AddItem(roomitem){
+	var a = new Command();
+	a.name = "add";
+	a.roomItem = roomitem;
+	console.dir(a);
+	 socket.emit('addItem',JSON.stringify(a));
+}
+
+
+
 socket.on('youto',function(data){
 	console.log(data);
 	var catch_command = JSON.parse(data);
@@ -88,8 +108,12 @@ socket.on('youto',function(data){
  
  function gofront(){
 	 console.log('앞으로가기');
-	 socket.emit('arrayBackCancel');
+	 socket.emit('arrayBackCancel',{
+			roomId: room.roomId
+		});
  }
+ 
+ 
  function save(){
 	 console.log('저장하기');
 	 console.log('저장하기 눌렀습니다.');
@@ -105,18 +129,10 @@ socket.on('youto',function(data){
 	 console.log('종료하기');
  }
  function checkArray(){
-	 socket.emit('goArray1');
+	 socket.emit('showmethe');
  }
  
- //AddItem에서는 객체정보가 파라메터로 넘어가서 커맨더 만들어서 이름으로 커맨더 타입 지정하고 객체정보도 같이 보내서 서버가 밭게함
- function AddItem(roomitem){
-	var a = new Command();
-	a.name = "add";
-	a.roomItem = roomitem;
-	console.dir(a);
-	 socket.emit('addItem',JSON.stringify(a));
- }
- 
+
 
 function saveTimeChange(){
 		if(whoAmI == 'selecter'){
