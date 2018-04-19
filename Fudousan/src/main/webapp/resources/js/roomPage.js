@@ -962,3 +962,106 @@ function reset() {
 		}
 	});
 }
+
+//-------------
+// socket 통신
+//-------------
+let sendCreateItem = function(obj){
+	// 현재 방 번호와 만들 아이템 번호를 전송합니다.
+	socket.emit("create-item", {
+		roomId: room.roomId,
+		itemId: obj.itemId
+	});
+}
+
+let sendStartDrag = function(obj){
+	// 현재 방 번호와 이동할 아이템 이름을 전송합니다.
+	socket.emit("start-drag", {
+		roomId: room.roomId,
+		name: obj.name
+	});
+}
+
+let sendMoveItem = function(obj){
+	// 현재 방 번호와 아이템의 위치 정보를 전송합니다.
+	socket.emit("move-item", {
+		roomId: room.roomId,
+		name: obj.name,
+		x: obj.position.x,
+		y: obj.position.y,
+		z: obj.position.z,
+		rx: obj.rotation.x,
+		ry: obj.rotation.y,
+		rz: obj.rotation.z
+	});
+}
+
+let sendDeleteItem = function(obj){
+	// 현재 방 번호와 삭제할 아이템 이름을 전송합니다.
+	socket.emit("delete-item", {
+		roomId: room.roomId,
+		name: obj.name
+	});
+}
+
+socket.on("create-item", function(data){
+	// 다른 사람에게 아이템 생성 신호를 받는 부분입니다.
+	// 신호를 받으면 자신에게 전달 받은 아이템 번호를 이용하여
+	// 화면에 추가합니다.
+	
+});
+
+socket.on("start-drag", function(data){
+	// 이름을 이용하여 해당하는 아이템 찾습니다.
+	let object = scene.getObjectByName(data.itemId);
+
+	// 해당 아이템이 컨트롤 중이라는 것을 색깔로 표시합니다.
+	for (let i = 0; i < object.children.length; i++){
+		object.children[i].material.emissive.setHex(0x7a0000);
+	}
+});
+
+socket.on("move-item", function(data){
+	// 이름을 이용하여 해당하는 아이템을 찾습니다.
+	let object = scene.getObjectByName(data.itemId);
+
+	// 해당 아이템의 색깔을 원래 색으로 돌립니다.
+	for (let i = 0; i < object.children.length; i++){
+		object.children[i].material.emissive.setHex(0);
+	}
+
+	// 애니메이션 시작 위치
+	let start = {
+		x: object.position.x,
+		y: object.position.y,
+		z: object.position.z,
+		rx: object.rotation.x,
+		ry: object.rotation.y,
+		rz: object.rotation.z
+	};
+
+	// 애니메이션 끝 위치
+	let target = {
+		x: data.positionX,
+		y: data.positionY,
+		z: data.positionZ,
+		rx: data.rx,
+		ry: data.ry,
+		rz: data.rz
+	};
+	
+	// 애니메이션 설정
+	let tween = new TWEEN.Tween(position).to(target, 1000);
+	tween.onUpdate(function(){
+		object.position.x = start.x;
+		object.position.y = start.y;
+		object.position.z = start.z;
+		object.rotation.x = start.rx;
+		object.rotation.y = start.ry;
+		object.rotation.z = start.rz;
+	});
+	tween.easing(TWEEN.Easing.Exponential.Out);
+	
+	// 애니메이션 적용
+	tween.start();
+});
