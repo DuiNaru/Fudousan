@@ -26,7 +26,7 @@ $(function(){
 	
 	let changeLanguage = function(lang, json){
 		if (lang === "jp"){
-			$("style").append("* {font-family: meriyo}");
+			$("style").append("* {font-family: 'Yu Gothic Medium'}");
 		}
 		
 		let jsonLang = json[lang];
