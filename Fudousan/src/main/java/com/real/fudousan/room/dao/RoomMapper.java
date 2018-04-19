@@ -49,4 +49,11 @@ public interface RoomMapper {
 	 * @return ROOM_ID
 	 */
 	public int insert(Room room);
+	
+	/*벽높이*/
+	public int wallheightchange(Room room);
+	
+	
+	
+	
 }

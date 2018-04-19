@@ -132,4 +132,21 @@ public class RoomController {
 		logger.info("roomPage("+loginId+", "+roomId+") End");
 		return "room/room";
 	}
+	
+	/*방높이*/
+	@RequestMapping(value="wallheightchange", method=RequestMethod.POST)
+	public String wallheightchange(Room room,Integer height,Integer roomId){
+		logger.info("방높이 변경 시작");
+		
+		room.setHeight(height);
+		
+		
+		
+		
+		return "";
+	}
+	
+	
+	
+	
 }
