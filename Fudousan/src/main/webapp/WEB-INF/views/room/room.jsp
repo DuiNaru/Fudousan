@@ -23,6 +23,8 @@
 <script src="<c:url value="/resources/js/ShaderPass.js"/>"></script>
 <script src="<c:url value="/resources/js/OutlinePass.js"/>"></script>
 <script src="<c:url value="/resources/js/Tween.js"/>"></script>
+<script src="<c:url value="/resources/js/ConvexGeometry.js"/>"></script>
+<script src="<c:url value="/resources/js/QuickHull.js"/>"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
