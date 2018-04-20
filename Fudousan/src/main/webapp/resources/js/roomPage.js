@@ -175,7 +175,7 @@ function init() {
 	//var roomFloorGeometry = new THREE.PlaneGeometry(roomFloorSize, roomFloorSize);
 	
 	roomFloor = drawFloor();
-	roomFloor.rotateX(-90 * Math.PI / 180);
+	//roomFloor.rotateX(-90 * Math.PI / 180);
 	scene.add(roomFloor);
 
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
@@ -414,8 +414,8 @@ function drawWall() {
 		
 		walls.add( cube );
 	}
-	walls.rotateX(-90*Math.PI/180);
-	walls.position.y += room.height/2;
+	//walls.rotateX(-90*Math.PI/180);
+	//walls.position.y += room.height/2;
 	scene.add(walls);
 }
 
@@ -424,8 +424,8 @@ function drawFloor() {
 	// 커넥터 추출
 	var con = [];
 	for(var i = 0; i < originalWalls.length; i++) {
-		var c1 = new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y);
-		var c2 = new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y);
+		var c1 = new THREE.Vector3(originalWalls[i].c1.x, originalWalls[i].c1.y, 0);
+		var c2 = new THREE.Vector3(originalWalls[i].c2.x, originalWalls[i].c2.y, 0);
 		
 		var flag1 = false;
 		var flag2 = false;
@@ -438,7 +438,7 @@ function drawFloor() {
 		if(!flag2) con.push(c2);
 	}
 	console.log(con);
-	
+	/*
 	// 방문 기록
 	var visit = [];
 	// 인접 행렬 생성
@@ -467,19 +467,19 @@ function drawFloor() {
 		
 	}
 	console.log(adjMatrix);
-	/*
+	
 	var shape = new THREE.Shape();
 	// 탐색 시작
 	DFS(0, adjMatrix, visit, shape, con);
-	*/
+	
 
 	var shape = new THREE.Shape();
 	//shape.autoClose = true;
 	// 벽 대로 선 긋기
-	/*for(var i = 0; i < originalWalls.length; i++) {
+	for(var i = 0; i < originalWalls.length; i++) {
 		shape.moveTo(originalWalls[i].c1.x, originalWalls[i].c1.y);
 		shape.lineTo(originalWalls[i].c2.x, originalWalls[i].c2.y);
-	}*/
+	}
 	
 	// 가장 바깥쪽 선 으로 이어서 만들기
 	// 1. 시작점 (가장 왼쪽, 가장 아래)
@@ -504,7 +504,8 @@ function drawFloor() {
 				var pastAngle = con[pastIndex].clone().sub(con[startIndex]).angle();
 				var curAngle = con[i].clone().sub(con[startIndex]).angle();
 				curAngle = curAngle-pastAngle;
-				console.log(con[startIndex].x + ":" + con[startIndex].y + " to " + con[i].x + ":" + con[i].y + " = " + curAngle);
+				if(curAngle < 0) curAngle *= -1;
+				console.log(con[startIndex].x + ":" + con[startIndex].y + " to " + con[i].x + ":" + con[i].y + " = " + (curAngle*180/Math.PI));
 				if ( curAngle > minAngle ) {
 					minAngle = curAngle;
 					minIndex = i;
@@ -524,14 +525,16 @@ function drawFloor() {
 			console.log("끝 : " + minIndex);
 			break;
 		}
-	}
+	}*/
 	
-	
-	
-	var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
+	var hullGeometry = new THREE.ConvexGeometry(con);
+	console.dir(hullGeometry);
+	//var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
 	//var roomFloorGeometry = new THREE.ShapeGeometry( shape );
 	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
-	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
+	//floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
+	floor = new THREE.Mesh(hullGeometry, roomFloorMaterial);
+	floor.material.side = THREE.FrontSide;
 	
 	return floor;
 }
@@ -650,7 +653,7 @@ function createItem(item, onCreate) {
 		z = item.z;
 		itemId = item.item.itemId;
 	} else {
-		throw "아이템이 아닙니다.";
+		throw new Error("아이템이 아닙니다.");
 	}
 	
 	if (x !== undefined && y !== undefined && z !== undefined) {
@@ -697,7 +700,7 @@ function createItem(item, onCreate) {
  */
 function deleteItem(roomItem, onDelete) {
 	if(!(roomItem instanceof RoomItem)) {
-		throw "룸 아이템이 아닙니다.";
+		throw new Error("룸 아이템이 아닙니다.");
 	}
 	
 	$.ajax({
@@ -734,7 +737,7 @@ function deleteItem(roomItem, onDelete) {
  */
 function placeRoomItem(roomItem, onLoad, onError) {
 	if(!(roomItem instanceof RoomItem)) {
-		throw "룸 아이템이 아닙니다.";
+		throw new Error("룸 아이템이 아닙니다.");
 	}
 	
 	// 외부 모델 로더 생성
@@ -779,7 +782,7 @@ function placeRoomItem(roomItem, onLoad, onError) {
  */
 function deplaceRoomItem(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
-		throw "룸 아이템이 아닙니다.";
+		throw new Error("룸 아이템이 아닙니다.");
 	}
 	
 	for(var i = 0; i < curRoomItems.length; i++) {
@@ -887,7 +890,7 @@ function deSelect() {
  */
 function saveRoomItem(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
-		throw "룸 아이템이 아닙니다.";
+		throw new Error("룸 아이템이 아닙니다.");
 	}
 	
 	var refSiteSet = roomItem.item.refSiteSet;
@@ -1048,7 +1051,7 @@ function itemApplyListener() {
  */
 function applyItemChange(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
-		throw "룸 아이템이 아닙니다.";
+		throw new Error("룸 아이템이 아닙니다.");
 	}
 	
 	$( "#blocker" ).show();
