@@ -36,6 +36,7 @@ public class HomeController {
     	List<Agency> result = null;
     	List<String> locationList = new ArrayList<>();
     	String location = "";
+    	
     	result = service.agencyLocationPrint();
     	/*['loan 1', 33.890542, 151.274856, 'address 1']*/
     	for (Agency agency : result) {
@@ -45,18 +46,18 @@ public class HomeController {
 			String agencyAddress= "AgencyAddress:"+agency.getAddressMain()+agency.getAddressMiddle()+agency.getAddressSmall()+agency.getAddressSub();
 			String agencyId = "AgencyId:"+String.valueOf(agency.getAgencyId());
 			
-			String lat =gpsX.toString();
-			String lng =gpsY.toString();
+			String lat = gpsX.toString();
+			String lng = gpsY.toString();
 			
 			location = "["+"'"+agencyId+"'"+","+lat +", "+lng+","+"'"+agencyAddress+"'"+"]";
 					
 			locationList.add(location);
-			model.addAttribute("locationList", locationList);
 		}
-    	
+
     	List<Estate> Eresult = null;
 		List<String> ElocationList = new ArrayList<>();
     	Eresult = eService.selectEsatesLocation();
+    	
     	for (Estate estate : Eresult) {
     		System.out.println(estate);
     		
@@ -72,8 +73,9 @@ public class HomeController {
 			
 			ElocationList.add(estateLocation);
 		}
+    	
+    	model.addAttribute("locationList", locationList);
 		model.addAttribute("elocationList", ElocationList);
-
 
     	logger.info("Home End");
     	return "home";

@@ -55,9 +55,16 @@ public class Room implements Serializable {
 	/** 방 공개 여부. */
 	private int roomPublic;
 	
+	/**
+	 * 룸 타이틀
+	 */
+	private String roomTitle;
+	
 	public Room(){}
+	
+
 	public Room(Integer roomId, Estate estate, String snapshot, String map, Date creDate, Date delDate, Integer height,
-			Texture floorTexture, Texture ceilingTexture, int memberId, int roomPublic) {
+			Texture floorTexture, Texture ceilingTexture, int memberId, int roomPublic, String roomTitle) {
 		super();
 		this.roomId = roomId;
 		this.estate = estate;
@@ -70,7 +77,9 @@ public class Room implements Serializable {
 		this.ceilingTexture = ceilingTexture;
 		this.memberId = memberId;
 		this.roomPublic = roomPublic;
+		this.roomTitle = roomTitle;
 	}
+
 
 	public Integer getRoomId() {
 		return roomId;
@@ -174,13 +183,14 @@ public class Room implements Serializable {
 	public void setRoomPublic(int roomPublic) {
 		this.roomPublic = roomPublic;
 	}
-	
+
+
 	@Override
 	public String toString() {
 		return "Room [roomId=" + roomId + ", estate=" + estate + ", snapshot=" + snapshot + ", map=" + map
 				+ ", creDate=" + creDate + ", delDate=" + delDate + ", height=" + height + ", floorTexture="
 				+ floorTexture + ", ceilingTexture=" + ceilingTexture + ", memberId=" + memberId + ", roomPublic="
-				+ roomPublic + "]";
+				+ roomPublic + ", roomTitle=" + roomTitle + "]";
 	}
 	
 	
