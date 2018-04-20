@@ -48,31 +48,47 @@ socket.on('commandPass',function(data){
 	}
 	if(cName=='add' && direc=='forward'){
 		//삭제되었던 아이템을 forward해서 추가됨
-		if(whoAmI == 'selecter'){ // 누른사람
 			createItem(cTarget.item,function(roomitem){ // 2배열에서 보관해던거 꺼내서 생성함 (데이터베이스상)
 				cTarget.roomItemId = roomitem.roomItemId;
-				AddItem(cTarget); //이 과정을 해줘야 2배앨에서 보관했던거 1배열에 넣음 (노드서버)
+				cTarget.addForward = true;
+				cTarget.isForawrd = 'notFirst';
+				
+				
+				AddItemForward(cTarget); // 1배열에 주는것
+				
 				whoAmI = 'x';
 				
 				socket.emit('forXman',JSON.stringify(cTarget));
 			});
-		}else{
-			socket.on('forXman2',function(data){
-				var xMan = JSON.parse(data);
-				placeRoomItem(xMan);
-			});
-		}
 	}// else if 끝
+}); //commandPass의 끝
+ 
+socket.on('forXman2',function(data){
+	var xMan = objToRoomItem(JSON.parse(data));
+	console.log('넘겨준 최후의 것');
+	console.log(xMan);
+	console.log('넘겨준 최후의 것');
+
+	console.log('화면 생성술');
+	placeRoomItem(xMan);
+	console.log('화면 생성술');
 });
- 
- 
+
 //AddItem에서는 객체정보가 파라메터로 넘어가서 커맨더 만들어서 이름으로 커맨더 타입 지정하고 객체정보도 같이 보내서 서버가 밭게함
 function AddItem(roomitem){
 	var a = new Command();
 	a.name = "add";
 	a.roomItem = roomitem;
+	a.isForward = 'first';
 	console.dir(a);
 	 socket.emit('addItem',JSON.stringify(a));
+}
+
+function AddItemForward(roomitem){
+	var a = new Command();
+	a.name ="add";
+	a.roomItem = roomitem;
+	socket.emit('addItemForward',JSON.stringify(a));
 }
 
 
@@ -165,7 +181,7 @@ socket.on('successChangeMessage', function(data){
 socket.on('lookSamePage',function(data){
 	var product = JSON.parse(data);
 	var abc = objToRoomItem(product.roomItem);
-	console.log(abc);
+	/*console.log(abc);*/
 });
 
 

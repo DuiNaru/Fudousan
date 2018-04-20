@@ -202,7 +202,6 @@
 	</insert>
 	
 	
-
 	<update id="wallheightchange" parameterType="Integer">
 	update
 		ROOM
@@ -213,7 +212,7 @@
 
 	
 	</update>
-
+	
 	<select id="selectRoomEstate" resultMap="roomResultMap">
 		SELECT 
 			room_id,
@@ -227,7 +226,6 @@
 	
 	
 	</select>
-
 	
 	
 </mapper>
