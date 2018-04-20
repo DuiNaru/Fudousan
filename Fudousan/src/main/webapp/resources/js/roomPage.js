@@ -570,7 +570,7 @@ function drawFloor() {
 	// 1사분면(top to right)
 	var possible = [top];
 	var curX = con[top].x;
-	for(var i = sortY.length-2; con[sortY[i]].y >= con[right].y; i--) {
+	for(var i = sortY.length-2; i >= 0 && con[sortY[i]].y >= con[right].y; i--) {
 		if ( con[sortY[i]].x >= curX ) {
 			possible.push(sortY[i]);
 			curX = con[sortY[i]].x;
@@ -586,7 +586,7 @@ function drawFloor() {
 	// 2사분면(right to bottom)
 	var possible = [right];
 	var curY = con[right].y;
-	for( var i = sortX.length-2; con[sortX[i]].x >= con[bottom].x; i--) {
+	for( var i = sortX.length-2; i >= 0 && con[sortX[i]].x >= con[bottom].x; i--) {
 		if ( con[sortX[i]].y <= curY ) {
 			possible.push(sortX[i]);
 			curY = con[sortX[i]].y;
@@ -599,7 +599,7 @@ function drawFloor() {
 	// 3사분면(bottom to left)
 	var possible = [bottom];
 	var curX = con[bottom].x;
-	for(var i = 1; con[sortY[i]].y <= con[left].y; i++) {
+	for(var i = 1; i < sortY.length-1 && con[sortY[i]].y <= con[left].y; i++) {
 		if ( con[sortY[i]].x <= curX ) {
 			possible.push(sortY[i]);
 			curX = con[sortY[i]].x;
@@ -612,7 +612,7 @@ function drawFloor() {
 	// 4사분면(left to top)
 	var possible = [left];
 	var curY = con[left].y;
-	for( var i = 1; con[sortX[i]].x <= con[top].x; i++) {
+	for( var i = 1; i < sortX.length-1 && con[sortX[i]].x <= con[top].x; i++) {
 		if ( con[sortX[i]].y >= curY ) {
 			possible.push(sortX[i]);
 			curY = con[sortX[i]].y;
@@ -643,21 +643,6 @@ function drawFloor() {
 	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
 	
 	return floor;
-}
-
-function removeRightVector(array) {
-	for ( var i = possible.length-1; i > 2; i-- ) {
-		var n = possible[i];
-		var n1 = possible[i-1];
-		var n2 = possible[i-2];
-		var n2_to_n = con[n].clone().sub(con[n2]);
-		var n2_to_n1 = con[n1].clone().sub(con[n2]);
-		
-		if ( n2_to_n.dot(n2_to_n1) > 0 ) {
-			// n1이 오른쪽에 있다. == 외곽선이 아니다.
-			posible.splice( i-1, 1 );
-		}
-	}
 }
 
 function previewItem(itemId, fileName) {
@@ -903,7 +888,11 @@ function deplaceRoomItem(roomItem) {
 			console.log("delplaceRoomItem");
 			console.dir(curRoomItems[i]);
 			scene.remove(curRoomItems[i]);
-			//curRoomItems = curRoomItems.splice(i, 1);
+			
+			
+			curRoomItems.splice(i, 1);
+			
+			
 			return true;
 		}
 	}
