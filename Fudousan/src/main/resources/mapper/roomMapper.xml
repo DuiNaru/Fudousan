@@ -218,8 +218,7 @@
 	</insert>
 	
 	
-<<<<<<< HEAD
-=======
+
 	<update id="wallheightchange" parameterType="Integer">
 	update
 		ROOM
@@ -244,7 +243,7 @@
 	
 	
 	</select>
->>>>>>> a37797c97ba570d1457fba913f24507df1301cd3
+
 	
 	
 </mapper>

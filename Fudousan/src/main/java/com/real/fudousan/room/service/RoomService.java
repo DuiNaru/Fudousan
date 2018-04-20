@@ -194,7 +194,7 @@ public class RoomService {
 		return result;
 	}
 	
-<<<<<<< HEAD
+
 	public int getTotal(Integer estateId){
 		logger.info("getTotal_Service_Start");
 		int result = 0; 
@@ -202,8 +202,8 @@ public class RoomService {
 		logger.info("getTotal_Service_End");
 		return result; 
 	}
-}
-=======
+
+
 	//백 높이 수정 
 	public int wallheightchange(Room room){
 		
@@ -216,4 +216,3 @@ public class RoomService {
 	}
 	
 
->>>>>>> a37797c97ba570d1457fba913f24507df1301cd3

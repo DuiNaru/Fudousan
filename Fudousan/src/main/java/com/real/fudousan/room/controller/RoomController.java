@@ -178,12 +178,9 @@ public class RoomController {
 		List<Room> result= Rservice.selectEstateRoom(estateIdresult, navi.getStartRecord(), navi.getCountPerPage());
 		
 		logger.info("estate id에 해당하는 3d디자인 방 가져오기 종료");
-<<<<<<< HEAD
-		return result;
-=======
 
-		return "";
->>>>>>> a37797c97ba570d1457fba913f24507df1301cd3
+		return result;
+
 	}
 	
 	

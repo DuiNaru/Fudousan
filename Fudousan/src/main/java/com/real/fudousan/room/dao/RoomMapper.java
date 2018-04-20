@@ -57,13 +57,10 @@ public interface RoomMapper {
 	 */
 	public int insert(Room room);
 	
-<<<<<<< HEAD
-=======
+
 	/*벽높이*/
 	public int wallheightchange(Room room);
-	
-	
->>>>>>> a37797c97ba570d1457fba913f24507df1301cd3
+
 	
 	
 }
