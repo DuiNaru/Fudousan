@@ -200,16 +200,14 @@
 	</insert>
 	
 	
-	<update id="wallheightchange">
+	<update id="wallheightchange" parameterType="Integer">
 	update
 		ROOM
 	SET
 		HEIGHT=#{height}
 	WHERE
 		ROOM_ID=#{roomId}
-		
-	
-	
+
 	
 	</update>
 	
