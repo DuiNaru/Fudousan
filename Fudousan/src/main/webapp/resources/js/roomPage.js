@@ -847,6 +847,8 @@ function placeRoomItem(roomItem, onLoad, onError) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
+	console.log("다음의 roomitem을 화면에 배치하려 합니다.");
+	console.dir(roomItem);
 	
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
@@ -875,6 +877,8 @@ function placeRoomItem(roomItem, onLoad, onError) {
 		scene.add( object );
 
 		curRoomItems.push(object);
+		
+		console.log("배치 성공");
 
 		if ( onLoad !== undefined ) {
 			onLoad();
@@ -896,9 +900,10 @@ function deplaceRoomItem(roomItem) {
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
 			if ( curSelected == curRoomItems[i] ) deSelect();
+			console.log("delplaceRoomItem");
+			console.dir(curRoomItems[i]);
 			scene.remove(curRoomItems[i]);
 			//curRoomItems = curRoomItems.splice(i, 1);
-			console.dir(curRoomItems);
 			return true;
 		}
 	}
