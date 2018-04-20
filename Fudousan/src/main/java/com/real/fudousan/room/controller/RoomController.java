@@ -149,8 +149,8 @@ public class RoomController {
 		System.out.println("room: " + room);
 		Rservice.wallheightchange(room);
 	
-
-		
+		return "";
+	}
 
 	@ResponseBody
 	@RequestMapping(value="selectRoomEstate", method=RequestMethod.POST)
