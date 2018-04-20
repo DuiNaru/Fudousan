@@ -881,12 +881,14 @@ function deplaceRoomItem(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
+	console.log("현재 배치된 아이템은 다음과 같지만,");
+	console.dir(curRoomItems);
 	console.log("다음을 화면에서 배치 해제하려 합니다.");
 	console.dir(roomItem);
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
 			if ( curSelected == curRoomItems[i] ) deSelect();
-			console.log("delplaceRoomItem");
+			console.log("배치 해제 대상");
 			console.dir(curRoomItems[i].roomItem);
 			scene.remove(curRoomItems[i]);
 			
