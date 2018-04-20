@@ -175,7 +175,7 @@ function init() {
 	//var roomFloorGeometry = new THREE.PlaneGeometry(roomFloorSize, roomFloorSize);
 	
 	roomFloor = drawFloor();
-	//roomFloor.rotateX(-90 * Math.PI / 180);
+	roomFloor.rotateX(-90 * Math.PI / 180);
 	scene.add(roomFloor);
 
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
@@ -414,8 +414,8 @@ function drawWall() {
 		
 		walls.add( cube );
 	}
-	//walls.rotateX(-90*Math.PI/180);
-	//walls.position.y += room.height/2;
+	walls.rotateX(-90*Math.PI/180);
+	walls.position.y += room.height/2;
 	scene.add(walls);
 }
 
