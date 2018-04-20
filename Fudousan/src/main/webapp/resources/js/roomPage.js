@@ -832,6 +832,8 @@ function placeRoomItem(roomItem, onLoad, onError) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
+	console.log("현재는 다음이 화면에 배치되어 있습니다.");
+	console.dir(curRoomItems);
 	console.log("다음의 roomitem을 화면에 배치하려 합니다.");
 	console.dir(roomItem);
 	
