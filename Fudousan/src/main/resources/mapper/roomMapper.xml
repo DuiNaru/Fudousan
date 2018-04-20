@@ -218,6 +218,33 @@
 	</insert>
 	
 	
+<<<<<<< HEAD
+=======
+	<update id="wallheightchange" parameterType="Integer">
+	update
+		ROOM
+	SET
+		HEIGHT=#{height}
+	WHERE
+		ROOM_ID=#{roomId}
+
+	
+	</update>
+	
+	<select id="selectRoomEstate" resultMap="roomResultMap">
+		SELECT 
+			room_id,
+			room_title,
+			cre_date,
+			snapshot
+		FROM 
+		
+		WHERE 
+			estate_id=#{estate.estateId}
+	
+	
+	</select>
+>>>>>>> a37797c97ba570d1457fba913f24507df1301cd3
 	
 	
 </mapper>

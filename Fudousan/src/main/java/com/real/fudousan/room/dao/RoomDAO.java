@@ -62,5 +62,14 @@ public interface RoomDAO {
 	 * @return room_id
 	 */
 	public int insert(Room room);
+<<<<<<< HEAD
 	public int getTotal(Integer estateId);
+=======
+	
+	//벽높이 
+	public int wallheightchange(Room room);
+>>>>>>> a37797c97ba570d1457fba913f24507df1301cd3
 }
+
+
+	
