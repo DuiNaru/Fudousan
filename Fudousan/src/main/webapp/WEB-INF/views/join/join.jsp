@@ -40,17 +40,17 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title"><span data-lang="login"></span></h4>
+					<h4 class="modal-title" data-lang="0"></h4>
 				</div>
 				
 				<div class="modal-body">
-					<span data-lang="email"></span> <input type="text" id="memberEmail" name="memberID">
-					<span data-lang="password"></span> <input type="password" id="password" name="password">
-					<button type="button" id="loginBtn"><span data-lang="login"></span></button>
+					<span data-lang="2"></span> <input type="text" id="memberEmail" name="memberID">
+					<span data-lang="3"></span> <input type="password" id="password" name="password">
+					<button type="button" id="loginBtn" data-lang="0"></button>
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal"><span data-lang="cancel"></span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" data-lang="4"></button>
 				</div>
 			</div>
 		</div>
@@ -79,30 +79,29 @@
 				<ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
 				<c:if test="${sessionScope.loginEmail == null}">
 					<li id="loginNameTag"></li>
-					<li id="loginAtag"><a data-toggle="modal" href="#loginModal"><span data-lang="login"></span></a></li>
+					<li id="loginAtag"><a data-toggle="modal" href="#loginModal" data-lang="0"></a></li>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
+					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 					<li><a href="memberupdate/memberupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 3 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
+					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 					<li><a href="memberupdate/agencyupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
+					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 				</c:if>
-				
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span data-lang="join"></span><span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span data-lang="5"></span><span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="/fudousan/join/join"><span data-lang="customerjoin"></span></a></li>
+							<li><a href="/fudousan/join/join" data-lang="6"></a></li>
 							<li class="divider"></li>
 							
-							<li><a href="/fudousan/join/agencyjoin"><span data-lang="agencyjoin"></span></a></li>
+							<li><a href="/fudousan/join/agencyjoin" data-lang="7"></a></li>
 						</ul>
 					</li>
 					
@@ -115,7 +114,6 @@
 					<c:if test="${sessionScope.loginId != null && sessionScope.isNormal == normal}">
 						<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>
 					</c:if>
-					
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
@@ -124,57 +122,57 @@
 	<!--  join form  -->
 	<article class="container">
         <div class="page-header">
-			<h1><span data-lang="join"></span><small>basic form</small></h1>
+			<h1><span data-lang="6"></span>&nbsp;<small>basic form</small></h1>
 		</div>
 		
 		<div class="col-md-6 col-md-offset-3">
 			<form role="form" action="insertMember" method="post" enctype="multipart/form-data">
 				<div class="form-group">
-					<label for="InputName"><span data-lang="name"></span></label>
-					<input type="text" class="form-control" id="InputName" name="memberName" data-lang="name">
+					<label for="InputName" data-lang="8"></label>
+					<input type="text" class="form-control" id="InputName" name="memberName" data-lang="8">
 				</div>
 				
 				<div class="form-group">
-					<label for="InputPassword1"><span data-lang="password"></span></label>
-					<input type="password" class="form-control" id="InputPassword1" name="password" data-lang="password">
+					<label for="InputPassword1" data-lang="3"></label>
+					<input type="password" class="form-control" id="InputPassword1" name="password" data-lang="3">
 				</div>
 				
 				<div class="form-group">
-					<label for="InputPassword2"><span data-lang="confirm-password"></span></label>
-					<input type="password" class="form-control" id="InputPassword2" data-lang="confirm-password">
-					<p class="help-block"><span data-lang="confirm-password-sentence"></span></p>
+					<label for="InputPassword2" data-lang="9"></label>
+					<input type="password" class="form-control" id="InputPassword2" data-lang="9">
+					<p class="help-block" data-lang="10"></p>
 				</div>
 				
 				<div class="form-group">
-					<label for="InputEmail"><span data-lang="email"></span></label>
-					<input type="email" class="form-control" id="InputEmail" name="email" data-lang="email">
+					<label for="InputEmail" data-lang="2"></label>
+					<input type="email" class="form-control" id="InputEmail" name="email" data-lang="2">
 				</div>
 				
 				<div class="form-group">
-					<label for="InputText"><span data-lang="phone"></span></label>
-					<input type="text" class="form-control" id="userphone" name="phone" data-lang="input-your-phonenum">
+					<label for="InputText" data-lang="11"></label>
+					<input type="text" class="form-control" id="userphone" name="phone" data-lang="12">
 				</div>
 	            
 				<div class="input-group">
-					<label for="InputText"><span data-lang="member-introduce"></span></label>
-					<textarea class="form-control" rows="3" cols="100" style="resize:none" name="text" data-lang="input-your-introduce"></textarea>
+					<label for="InputText" data-lang="13"></label>
+					<textarea class="form-control" rows="3" cols="100" style="resize:none" name="text" data-lang="14"></textarea>
 				</div>
 			
 				<div class="form-group">
-					<label for="InputPhoto"><span data-lang="photo"></span></label>
+					<label for="InputPhoto" data-lang="15"></label>
 					<div class="input-group input-file" name="Fichier1">
 						<span class="input-group-btn">
-							<button class="btn btn-default btn-choose" type="button"><span data-lang="select"></span></button>
+							<button class="btn btn-default btn-choose" type="button" data-lang="16"></button>
 						</span>
-						<input type="text" class="form-control" data-lang="select-your-files" name="picture"/>
+						<input type="text" class="form-control" data-lang="17" name="picture"/>
 						<span class="input-group-btn">
-							<button class="btn btn-warning btn-reset" type="button"><span data-lang="reset"></span></button>
+							<button class="btn btn-warning btn-reset" type="button" data-lang="18"></button>
 						</span>
 					</div>
 				</div>
 	
 				<div class="form-group">
-					<label for="InputDesigner"><span data-lang="are-you-designer"></span></label>
+					<label for="InputDesigner" data-lang="19"></label>
 					<div class="btn-group" data-toggle="buttons">
 						<label class="btn btn-secondary active">
 							<input type="radio" name="designer" id="option1" autocomplete="off" value="1" checked> Yes
@@ -186,19 +184,19 @@
 				</div>
 	         
 				<div class="form-group">
-					<label><span data-lang="agree-terms"></span></label>
+					<label data-lang="20"></label>
 					<div data-toggle="buttons">
 						<label class="btn btn-primary active">
 							<span class="fa fa-check"></span>
 							<input id="agree" type="checkbox" autocomplete="off" name="checkbox" value="checked">
 						</label>
-						<span data-lang="i-agree-the-terms"></span>&nbsp;<a href="#"><span data-lang="see-the-terms"></span></a>
+						<span data-lang="21"></span>&nbsp;<a href="#" data-lang="22"></a>
 					</div>
 				</div>
 	         
 				<div class="form-group text-center">
-					<button type="submit" class="btn btn-info"><span data-lang="join"></span><i class="fa fa-check spaceLeft"></i></button>
-					<button type="submit" class="btn btn-warning"><span data-lang="cancel"></span><i class="fa fa-times spaceLeft"></i></button>
+					<button type="submit" class="btn btn-info"><span data-lang="5"></span><i class="fa fa-check spaceLeft"></i></button>
+					<button type="submit" class="btn btn-warning"><span data-lang="4"></span><i class="fa fa-times spaceLeft"></i></button>
 				</div>
 			</form>
 		</div>
