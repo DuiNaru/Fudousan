@@ -132,6 +132,22 @@
 			room.MEMBER_ID = #{MEMBER_ID}
 	</select>
 	
+	<select id="selectEstateRoom" resultMap="roomResultMap" parameterType="int">
+		<include refid="SELECT_ROOM_SQL"></include>
+		where
+			estate.ESTATE_ID = #{ESTATE_ID}
+	</select>
+	
+	<select id="getTotal" resultType="int" parameterType="int">
+		select 
+			count(*)
+		from 
+			room
+		where
+			estate.ESTATE_ID = #{ESTATE_ID}
+	</select>
+	
+	
 	<select id="selectByIds" resultMap="roomResultMap" parameterType="java.util.Set">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
@@ -202,19 +218,6 @@
 	</insert>
 	
 	
-	<select id="selectRoomEstate" resultMap="roomResultMap">
-		SELECT 
-			room_id,
-			room_title,
-			cre_date,
-			snapshot
-		FROM 
-		
-		WHERE 
-			estate_id=#{estate.estateId}
-	
-	
-	</select>
 	
 	
 </mapper>

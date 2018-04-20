@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
 import com.real.fudousan.room.vo.Room;
@@ -51,7 +53,38 @@ public class RoomDAOOracle implements RoomDAO {
 		logger.info("RoomDAOOracle_allMyRoom_end");
 		return rlist;
 	}
-
+	
+	@Override
+	public List<Room> selectEstateRoom(Integer estateId, int startRecord, int coutPerPage){
+		logger.info("RoomDAOOracle_selectEstateRoom_start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		
+		RowBounds rb = new RowBounds(startRecord, coutPerPage);
+		
+		List<Room> rlist = null;
+		try{
+			rlist = mapper.selectEstateRoom(estateId, rb);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("RoomDAOOracle_selectEstateRoom_end");
+		return rlist;
+	}
+	
+	@Override
+	public int getTotal(Integer estateId){
+		logger.info("RoomDAOOracle_getTotal_start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		int result = 0; 
+		try{
+			result = mapper.getTotal(estateId);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("RoomDAOOracle_allMyRoom_end");
+		return result;
+	}
+	
 	@Override
 	public List<Room> select(Set<Integer> roomIds) {
 		logger.info("select("+roomIds+") Start");
