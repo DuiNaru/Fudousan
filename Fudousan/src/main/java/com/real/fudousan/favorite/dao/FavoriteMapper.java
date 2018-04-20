@@ -13,4 +13,7 @@ public interface FavoriteMapper {
 	public boolean add(Favorite favorite);
 	
 	public Favorite selectFavorite(Favorite favorite);
+	
+
+	public boolean deleteFavorite(Favorite favorite);
 }

@@ -9,259 +9,63 @@
     <title>boot</title>
 
     <!-- 부트스트랩 -->
-    <link href="<c:url value="../resources/css/bootstrap.min.css"/>" rel="stylesheet">
-    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-<style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-    .row.content {height: 450px}
-    
-    /* Set gray background color and 100% height */
-    .sidenav {
-      padding-top: 20px;
-      background-color: #f1f1f1;
-      height: 100%;
-    }
-    
-    /* Set black background color, white text and some padding */
-    footer {
-      background-color: #555;
-      color: white;
-      padding: 15px;
-    }
-    
-    /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height:auto;} 
-      
-    }
-    /* map */
-    #map {
-        height: 500px;
-        width: 80%;
-        margin-top: 50px; 
-        margin-left: 10%;
-       }
-       
-    /* PRICE TABLE */
-.row-flex {
-    display: flex;
-    flex-wrap: wrap;
-    -webkit-flex-wrap: wrap;
-    -ms-flex-wrap: wrap;
-    -moz-flex-wrap: wrap;
-}
+   
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../resources/css/3dmodel.css" rel="stylesheet">
+    <link href="../resources/css/detailedinfomationpage.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
-.price-table {
-    max-width: 400px;
-    min-height: 320px;
-    background-color: #fff;
-    border-radius: 0 0 0 25px;
-    border: 1px solid #ccc;
-    box-shadow: 5px 5px 8px #ccc;
-    display: block;
-    margin: 10px auto;
-    padding: 0 0 8px 0;
-    text-align: center;
-}
-
-.price-table span {
-    display: block;
-}
-
-.price-table span:first-child {
-    padding: 16px 0 0 0;
-    font-size: 2em;
-    text-transform: uppercase;
-    font-weight: bold;
-}
-
-.price-table span:nth-child(2) {
-    padding: 0 0 16px 0;
-}
-
-.price-table span:nth-child(3) {
-    padding: 8px 0;
-    font-weight: bold;
-    font-size: 1.2em;
-}
-
-.price-table > ul {
-    list-style: none;
-    display: block;
-    padding: 0;
-    margin: 0;
-}
-
-.price-table > ul > li {
-    display: block;
-    padding: 8px 0;
-}
-
-.price-table > ul > li:first-child {
-    border-top: 1px solid #ccc;
-}
-
-.price-table > ul > li {
-    border-bottom: 1px solid #ccc;
-}
-
-.price-table a,
-.price-table a:active,
-.price-table a:focus,
-.price-table a:hover,
-.price-table a:visited {
-    text-transform: uppercase;
-    display: inline-block;
-    padding: 8px 16px;
-    text-decoration: none;
-    font-weight: bold;
-    transition-duration: .2s;
-}
-
-/* Colors */
-.pt-bg-black span:first-child {
-    background-color: #212121;
-    color: #fcfcfc;
-}
-
-.pt-bg-black span:nth-child(2) {
-    background-color: #212121;
-    color: #D5D8DC;
-}
-
-.pt-bg-black a {
-    border: 3px solid #212121;
-    color: #212121;
-    margin-top: 8px;
-}
-
-.pt-bg-black a:hover {
-    background-color: #212121;
-    color: #fff;
-} /* End Color Black */
-
-.pt-bg-green span:first-child {
-    background-color: #27AE60;
-    color: #fcfcfc;
-}
-
-.pt-bg-green span:nth-child(2) {
-    background-color: #27AE60;
-    color: #D5D8DC;
-}
-
-.pt-bg-green a {
-    border: 3px solid #27AE60;
-    color: #27AE60;
-    margin-top: 8px;
-}
-
-.pt-bg-green a:hover {
-    background-color: #27AE60;
-    color: #fff;
-} /* End Color Green */
-
-.pt-bg-red span:first-child {
-    background-color: #C0392B;
-    color: #fcfcfc;
-}
-
-.pt-bg-red span:nth-child(2) {
-    background-color: #C0392B;
-    color: #D5D8DC;
-}
-
-.pt-bg-red a {
-    border: 3px solid #C0392B;
-    color: #C0392B;
-    margin-top: 8px;
-}
-
-.pt-bg-red a:hover {
-    background-color: #C0392B;
-    color: #fff;
-} /* End Color Red */
-
-.pt-bg-blue span:first-child {
-    background-color: #2980B9;
-    color: #fcfcfc;
-}
-
-.pt-bg-blue span:nth-child(2) {
-    background-color: #2980B9;
-    color: #D5D8DC;
-}
-
-.pt-bg-blue a {
-    border: 3px solid #2980B9;
-    color: #2980B9;
-    margin-top: 8px;
-}
-
-.pt-bg-blue a:hover {
-    background-color: #2980B9;
-    color: #fff;
-} /* End Color Blue */
-/* END PRICE TABLE */   
-
-label {
-  /* Presentation */
-  font-size: 48px
-}
-
-/* Required Styling */
-
-label input[type="checkbox"] {
-  display: none;
-}
-
-.custom-checkbox {
-  margin-left: 2em;
-  position: relative;
-  cursor: pointer;
-}
-
-.custom-checkbox .glyphicon {
-  color: gold;
-  position: absolute;
-  top: 0.4em;
-  left: -1.25em;
-  font-size: 0.75em;
-}
-
-.custom-checkbox .glyphicon-star-empty {
-  color: gray;
-}
-
-.custom-checkbox .glyphicon-star {
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.custom-checkbox:hover .glyphicon-star{
-  opacity: 0.5;
-}
-
-.custom-checkbox input[type="checkbox"]:checked ~ .glyphicon-star {
-  opacity: 1;
-}       
-       
-       
-  </style>	
 
 </head>
-<body>
-
+<body >
+<div></div>
+<!-- 3D DESIGN MODAL START -->
+	<div class="modal fade" id="3dDesignModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">3D DESIGN</h4>
+				</div>
+				
+				
+				<div class="modal-body">
+					  <div class="gal-container">
+					  <div class="aritcleView">
+      
+      
+						    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+						      <div class="box">
+						        <a href="#" data-toggle="modal" data-target="#1">
+						          <img src="../resources/image/jedai0.jpg">
+						        </a>
+						      </div>
+						    </div>
+						    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+						      <div class="box">
+						        <a href="#" data-toggle="modal" data-target="#2">
+						         <img src="../resources/image/jedai1.jpg">
+						        </a>
+						      </div>
+						    </div>
+						    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+						      <div class="box">
+						        <a href="#" data-toggle="modal" data-target="#3">
+						         <img src="../resources/image/jedai2.jpg">
+						        </a>
+						      </div>
+						    </div>
+						 
+						 
+						 </div>
+					    <div style="clear: both;"></div>
+					  </div> 
+					  
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 3D DESIGN MODAL END -->
 
 	<!-- 로그인 모달 -->
 	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
@@ -284,6 +88,12 @@ label input[type="checkbox"] {
 		</div>
 	</div>
 	<!-- 로그인 모달 끝 -->
+	
+	
+	
+	
+	
+	
 	
 	<!-- Header -->
 	<nav class="navbar navbar-default" style="margin: auto 0"> 
@@ -351,9 +161,14 @@ label input[type="checkbox"] {
 <div class="container-fluid text-center">    
   <div class="row content">
     <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
+    	<!-- <a data-toggle="modal" href="#loginModal">Login</a> -->
+    
+    
+		    <a data-toggle="modal" href="#3dDesignModal" class="btn btn-success btn-lg">
+		      <span class="glyphicon glyphicon-print"></span>  3D DESIGN
+		    </a>
+<!--       <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p> -->
     </div>
     <div class="col-sm-8 text-left"> 
     
@@ -367,7 +182,8 @@ label input[type="checkbox"] {
 		</label>
       
       <div id="map"></div>
-    
+    	
+    	
       <hr>
 
       <div class="row row-flex" id="box">
@@ -605,18 +421,22 @@ label input[type="checkbox"] {
                 </ul>
             </div>
         </div>
-    
 </div>
      
 
     </div>
     <div class="col-sm-2 sidenav">
-      <div class="well">
-     
-      </div>
-      <div class="well">
+    
+      	 
+		
+      
+      
+    <!-- 	 <button><img alt="이미지 없음" src="../resources/image/Ripple-1s-58px.gif"></button> -->
+    
+      <br>	
+    <!--   <div class="well">
         <p>인테리어 업자에게 연락하기</p>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>
@@ -644,7 +464,7 @@ label input[type="checkbox"] {
                 mapTypeId: google.maps.MapTypeId.ROADMAP
 
             };
-       var map = new google.maps.Map(document.getElementById('map'),
+        var map = new google.maps.Map(document.getElementById('map'),
                     myOptions);
             
         var marker = new google.maps.Marker({
@@ -689,19 +509,10 @@ label input[type="checkbox"] {
 		      	  });
 	        }, 100);
 	    	
-	     
-	
-	        
+   
 	    });
+
 	    
-    
-    
-    
-    
-
-
-	
-		    
 		   $(function(){
 		    $( '#id-of-input' ).on('click', function(){
  		    	var check =$('#id-of-input').is(":checked");
@@ -724,10 +535,81 @@ label input[type="checkbox"] {
 		    		
 				}else{
 					
-		    		alert("fail");
+					$.ajax({
+						url : "../deleteFavorite",
+						type : "POST",
+						data :   { "estateId": $('#estateId').val(), "memberId": $('#memberId').val() } ,
+						 //서버로 부터 받아오는 타입
+						dataType : "text",
+						success : function(data){
+								
+						},
+						error : function(e){//에러 정보를 갖고 있는 
+							alert(JSON.stringify(e));
+						} 
+		    		});
 				}
+		    	
+		    	
 		    });
-			   
+			
+		    // infinite scrolling 
+			$(document).scroll(function(){
+				var maxHeight = $(document).height();
+				var currentScroll = $(window).scrollTop() + $(window).height();
+				
+				if (maxHeight <= currentScroll +100) {
+					$.ajax({
+						url : "../selectFavorite",
+						type : "POST",
+						data : { "estateId": $('#estateId').val(), "memberId": $('#memberId').val() },
+						 //서버로 부터 받아오는 타입
+						dataType : "json",
+						success : function(obj){
+						var oMemberId = obj.memberId
+						var memberId = $('#memberId').val();
+						var oEstateId = obj.estate.estateId
+						var estateId = $('#estateId').val();
+						console.log(oMemberId);
+						console.log(memberId);
+						console.log(oEstateId);
+						console.log(estateId);
+						
+						
+						
+					});
+					
+				}
+			});
+		    
+		    
+		    
+		    
+		    
+		    
+		  /*   $('#3dDesignModal').on('click', function(){
+		    	$.ajax({
+					url : "../insertFavorite",
+					type : "POST",
+					data :   { "estateId": $('#estateId').val(), "memberId": $('#memberId').val() } ,
+					 //서버로 부터 받아오는 타입
+					dataType : "text",
+					success : function(data){
+							
+					},
+					error : function(e){//에러 정보를 갖고 있는 
+						alert(JSON.stringify(e));
+					} 
+	    		});
+		    }); */
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
 		   });
     
 
