@@ -496,17 +496,19 @@ function drawFloor() {
 	shape.moveTo(con[startIndex].x, con[startIndex].y);
 	var count = 1;
 	while(count <= con.length) {
-		var minVector = con[startIndex];
-		var minIndex = startIndex;
+		var minAngle = -1000;
+		var minIndex;
 		for(var i=0; i < adjMatrix[startIndex].length; i++) {
 			if (adjMatrix[startIndex][i] == 1 && pastIndex != i) {
-				var dot = con[i].clone().sub(con[startIndex]).dot(minVector);
-				console.log(startIndex+" to " + i + " = " + dot);
-				if ( dot > 0 ) {
-					minVector = con[i].clone().sub(con[startIndex]);
+				console.log("i : " + i);
+				var pastAngle = con[pastIndex].clone().sub(con[startIndex]).angle();
+				var curAngle = con[i].clone().sub(con[startIndex]).angle();
+				curAngle = curAngle-pastAngle;
+				console.log(con[startIndex].x + ":" + con[startIndex].y + " to " + con[i].x + ":" + con[i].y + " = " + curAngle);
+				if ( curAngle > minAngle ) {
+					minAngle = curAngle;
 					minIndex = i;
 				}
-				
 			}
 		}
 		// 현재 점은 체크
@@ -526,8 +528,8 @@ function drawFloor() {
 	
 	
 	
-	//var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
-	var roomFloorGeometry = new THREE.ShapeGeometry( shape );
+	var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
+	//var roomFloorGeometry = new THREE.ShapeGeometry( shape );
 	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
 	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
 	
