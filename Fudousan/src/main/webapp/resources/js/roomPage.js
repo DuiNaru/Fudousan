@@ -12,10 +12,10 @@ var composer, outlinePass;
 var width = window.innerWidth;
 // 화면 세로 길이
 var height = window.innerHeight;
-// 지면
-var plane;
+// 방 바닥
+var roomFloor;
 // 지면(사이즈)
-var planeSize = 999999;
+var earthSize = 999999;
 // Raycaster
 var raycaster = new THREE.Raycaster();
 // 마우스
@@ -172,11 +172,11 @@ function init() {
 	
 	//camera.rotation.x = 90 * Math.PI / 180;
 
-	var planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
-	var planeMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
-	plane = new THREE.Mesh(planeGeometry, planeMaterial);
-	plane.rotateX(-90 * Math.PI / 180);
-	scene.add(plane);
+	//var roomFloorGeometry = new THREE.PlaneGeometry(roomFloorSize, roomFloorSize);
+	
+	roomFloor = drawFloor();
+	roomFloor.rotateX(-90 * Math.PI / 180);
+	scene.add(roomFloor);
 
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
 	renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, false);
@@ -212,7 +212,7 @@ function init() {
 	});
 }
 
-function animate() {
+function animate(time) {
 	//renderer.clear();
 	// 다음 프레임 지정
 	requestAnimationFrame( animate );
@@ -252,6 +252,8 @@ function animate() {
 		//s.userData.controls.update();
 		renderer.render( s, c );
 	} );*/
+	
+	TWEEN.update(time);
 }
 
 
@@ -338,7 +340,7 @@ function onDocumentMouseMove(event) {
 	if (curSelected != null && !isMouseUp && !controls.enabled) {
 		// 드래그 중인 아이템이 있으면 지면에 맞게 움직인다.
 		raycaster.setFromCamera(mouse, camera);
-		var intersects = raycaster.intersectObjects([plane]);
+		var intersects = raycaster.intersectObjects([roomFloor]);
 		if (intersects.length > 0) {
 			var x = curSelected.roomItem.item.itemX;
 			var y = curSelected.roomItem.item.itemY;
@@ -388,8 +390,8 @@ function drawWall() {
 	scene.remove(walls);
 	walls = new THREE.Group(); 
 	for(var i = 0; i < originalWalls.length; i++) {
-		var c1 = new THREE.Vector3(originalWalls[i].c1.x, originalWalls[i].c1.y, plane.z);
-		var c2 = new THREE.Vector3(originalWalls[i].c2.x, originalWalls[i].c2.y, plane.z);
+		var c1 = new THREE.Vector3(originalWalls[i].c1.x, originalWalls[i].c1.y, roomFloor.z);
+		var c2 = new THREE.Vector3(originalWalls[i].c2.x, originalWalls[i].c2.y, roomFloor.z);
 		// Cube
 		var geometry = new THREE.BoxGeometry(c1.clone().sub(c2).length(), wallThickness, room.height );
 		for ( var j = 0; j < geometry.faces.length; j += 2 ) {
@@ -415,6 +417,146 @@ function drawWall() {
 	walls.rotateX(-90*Math.PI/180);
 	walls.position.y += room.height/2;
 	scene.add(walls);
+}
+
+function drawFloor() {
+	
+	// 커넥터 추출
+	var con = [];
+	for(var i = 0; i < originalWalls.length; i++) {
+		var c1 = new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y);
+		var c2 = new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y);
+		
+		var flag1 = false;
+		var flag2 = false;
+		for(var j = 0; j < con.length; j++ ) {
+			if ( c1.equals( con[j] )) flag1 = true;
+			if ( c2.equals( con[j] )) flag2 = true;
+		}
+		
+		if(!flag1) con.push(c1);
+		if(!flag2) con.push(c2);
+	}
+	console.log(con);
+	
+	// 방문 기록
+	var visit = [];
+	// 인접 행렬 생성
+	var adjMatrix = new Array(con.length);
+	for(var i = 0; i < con.length; i++) {
+		adjMatrix[i] = new Array(con.length);
+		for(var j = 0; j < adjMatrix[i].length; j++) {
+			adjMatrix[i][j] = 0;
+		}
+	}
+	for(var i = 0; i < originalWalls.length; i++) {
+		var c1 = new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y);
+		var c2 = new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y);
+		
+		for(var j = 0; j < con.length; j++) {
+			if ( con[j].equals(c1) ) {
+				c1 = j;
+			}
+			if ( con[j].equals(c2) ) {
+				c2 = j;
+			}
+		}
+		// 대칭
+		adjMatrix[c1][c2] = 1;
+		adjMatrix[c2][c1] = 1;
+		
+	}
+	console.log(adjMatrix);
+	/*
+	var shape = new THREE.Shape();
+	// 탐색 시작
+	DFS(0, adjMatrix, visit, shape, con);
+	*/
+
+	var shape = new THREE.Shape();
+	//shape.autoClose = true;
+	// 벽 대로 선 긋기
+	/*for(var i = 0; i < originalWalls.length; i++) {
+		shape.moveTo(originalWalls[i].c1.x, originalWalls[i].c1.y);
+		shape.lineTo(originalWalls[i].c2.x, originalWalls[i].c2.y);
+	}*/
+	
+	// 가장 바깥쪽 선 으로 이어서 만들기
+	// 1. 시작점 (가장 왼쪽, 가장 아래)
+	var startIndex = 0;
+	for(var i = 1; i < con.length; i++) {
+		if(con[i].x < con[startIndex].x) {
+			startIndex = i;
+		}
+	}
+	console.log("start index : " + startIndex);
+	
+	var pastIndex = startIndex;
+	// 2. 시작점에서 연결된 지점에서 가장 왼쪽의 점으로 이동하기
+	shape.moveTo(con[startIndex].x, con[startIndex].y);
+	var count = 1;
+	while(count <= con.length) {
+		var minAngle = -1000;
+		var minIndex;
+		for(var i=0; i < adjMatrix[startIndex].length; i++) {
+			if (adjMatrix[startIndex][i] == 1 && pastIndex != i) {
+				console.log("i : " + i);
+				var pastAngle = con[pastIndex].clone().sub(con[startIndex]).angle();
+				var curAngle = con[i].clone().sub(con[startIndex]).angle();
+				curAngle = curAngle-pastAngle;
+				console.log(con[startIndex].x + ":" + con[startIndex].y + " to " + con[i].x + ":" + con[i].y + " = " + curAngle);
+				if ( curAngle > minAngle ) {
+					minAngle = curAngle;
+					minIndex = i;
+				}
+			}
+		}
+		// 현재 점은 체크
+		pastIndex = startIndex;
+		shape.lineTo(con[minIndex].x, con[minIndex].y);
+		if (minIndex != startIndex) {
+			// 다음 점이 있을 경우,
+			console.log("다음 점 으로 : " + minIndex);
+			startIndex = minIndex;
+			count++;
+		} else {
+			// 다음 점 없다.
+			console.log("끝 : " + minIndex);
+			break;
+		}
+	}
+	
+	
+	
+	var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
+	//var roomFloorGeometry = new THREE.ShapeGeometry( shape );
+	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
+	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
+	
+	return floor;
+}
+
+function DFS(v, map, visit, shape, con)
+{
+	visit[v] = 1; // 정점 v를 방문했다고 표시
+	shape.moveTo(con[v].x, con[v].y);
+	for (var i = 1; i <= map.length; i++)
+	{
+		// 정점 v와 정점 i가 연결되었고,
+		if (map[v][i] == 1)
+		{
+			shape.lineTo(con[i].x, con[i].y);
+			//  정점 i를 방문하지 않았다면
+			if (!visit[i]) {
+				console.log(v+"에서 "+i+"로 이동");
+				// 정점 i에서 다시 DFS를 시작한다
+				DFS(i, map, visit, shape, con);
+			}/* else {
+				console.log(v+"에서 "+i+"로 끝");
+				shape.moveTo(con[v].x, con[v].y);
+			}*/
+		}
+	}
 }
 
 function previewItem(itemId, fileName) {
@@ -480,31 +622,48 @@ function previewItem(itemId, fileName) {
 
 /**
  * 아이템을 DB에 추가하고 화면에 배치한다.
- * @param item VO
+ * @param item Item VO 또는 RoomItem VO
  * @param onCreate 성공시 호출
  * @returns
  */
 function createItem(item, onCreate) {
-	if(!(item instanceof Item)) {
+	var x;
+	var y;
+	var z;
+	var itemId;
+	if(item instanceof Item) {
+		// 화면 가운데
+		raycaster.setFromCamera( new THREE.Vector2(), camera ); 
+		//raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() );
+		
+		var intersects = raycaster.intersectObjects([roomFloor]);
+
+		if (intersects.length > 0) {
+			x = intersects[0].point.x;
+			y = intersects[0].point.y;
+			z = intersects[0].point.z;
+			itemId = item.itemId;
+		}
+	} else if(item instanceof RoomItem) {
+		x = item.x;
+		y = item.y;
+		z = item.z;
+		itemId = item.item.itemId;
+	} else {
 		throw "아이템이 아닙니다.";
 	}
 	
-	// 화면 가운데
-	raycaster.setFromCamera( new THREE.Vector2(), camera ); 
-	//raycaster.set( camera.getWorldPosition(), camera.getWorldDirection() );
-	
-	var intersects = raycaster.intersectObjects([plane]);
-	if (intersects.length > 0) {
+	if (x !== undefined && y !== undefined && z !== undefined) {
 		// 방 아이템 추가하고 그 아이템 가져오기
 		$.ajax({
 			url:"roomItem/create",
 			type:"GET",
 			data:{
 				roomId:room.roomId,
-				itemId:item.itemId,
-				x:intersects[0].point.x,
-				y:intersects[0].point.y,
-				z:intersects[0].point.z,
+				itemId:itemId,
+				x:x,
+				y:y,
+				z:z,
 			},
 			dataType:"json",
 			success:function(data) {
@@ -962,3 +1121,106 @@ function reset() {
 		}
 	});
 }
+
+//-------------
+// socket 통신
+//-------------
+let sendCreateItem = function(obj){
+	// 현재 방 번호와 만들 아이템 번호를 전송합니다.
+	socket.emit("create-item", {
+		roomId: room.roomId,
+		itemId: obj.itemId
+	});
+}
+
+let sendStartDrag = function(obj){
+	// 현재 방 번호와 이동할 아이템 이름을 전송합니다.
+	socket.emit("start-drag", {
+		roomId: room.roomId,
+		name: obj.name
+	});
+}
+
+let sendMoveItem = function(obj){
+	// 현재 방 번호와 아이템의 위치 정보를 전송합니다.
+	socket.emit("move-item", {
+		roomId: room.roomId,
+		name: obj.name,
+		x: obj.position.x,
+		y: obj.position.y,
+		z: obj.position.z,
+		rx: obj.rotation.x,
+		ry: obj.rotation.y,
+		rz: obj.rotation.z
+	});
+}
+
+let sendDeleteItem = function(obj){
+	// 현재 방 번호와 삭제할 아이템 이름을 전송합니다.
+	socket.emit("delete-item", {
+		roomId: room.roomId,
+		name: obj.name
+	});
+}
+
+socket.on("create-item", function(data){
+	// 다른 사람에게 아이템 생성 신호를 받는 부분입니다.
+	// 신호를 받으면 자신에게 전달 받은 아이템 번호를 이용하여
+	// 화면에 추가합니다.
+	
+});
+
+socket.on("start-drag", function(data){
+	// 이름을 이용하여 해당하는 아이템 찾습니다.
+	let object = scene.getObjectByName(data.itemId);
+
+	// 해당 아이템이 컨트롤 중이라는 것을 색깔로 표시합니다.
+	for (let i = 0; i < object.children.length; i++){
+		object.children[i].material.emissive.setHex(0x7a0000);
+	}
+});
+
+socket.on("move-item", function(data){
+	// 이름을 이용하여 해당하는 아이템을 찾습니다.
+	let object = scene.getObjectByName(data.itemId);
+
+	// 해당 아이템의 색깔을 원래 색으로 돌립니다.
+	for (let i = 0; i < object.children.length; i++){
+		object.children[i].material.emissive.setHex(0);
+	}
+
+	// 애니메이션 시작 위치
+	let start = {
+		x: object.position.x,
+		y: object.position.y,
+		z: object.position.z,
+		rx: object.rotation.x,
+		ry: object.rotation.y,
+		rz: object.rotation.z
+	};
+
+	// 애니메이션 끝 위치
+	let target = {
+		x: data.positionX,
+		y: data.positionY,
+		z: data.positionZ,
+		rx: data.rx,
+		ry: data.ry,
+		rz: data.rz
+	};
+	
+	// 애니메이션 설정
+	let tween = new TWEEN.Tween(position).to(target, 1000);
+	tween.onUpdate(function(){
+		object.position.x = start.x;
+		object.position.y = start.y;
+		object.position.z = start.z;
+		object.rotation.x = start.rx;
+		object.rotation.y = start.ry;
+		object.rotation.z = start.rz;
+	});
+	tween.easing(TWEEN.Easing.Exponential.Out);
+	
+	// 애니메이션 적용
+	tween.start();
+});

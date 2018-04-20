@@ -63,6 +63,7 @@
 			,Renovation
 			,Remarks
 			,ROOM_PUBLIC
+			,ROOM_TITLE
 			,estate.DEL_DATE estate_DEL_DATE
 			,estate.MunicipalityCode_ID MunicipalityCode_ID
 			,estate.TRANS_TYPE_ID TRANS_TYPE_ID

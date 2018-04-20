@@ -70,4 +70,12 @@ public class FavoriteService {
 		return result; 
 	}
 	
+	public boolean deleteFavorite(Favorite favorite){
+		logger.info("찜하기 삭제 서비스 시작");
+		boolean result = dao.deleteFavorite(favorite);
+		logger.info("찜하기 삭제 서비스 종료");
+		
+		return result; 
+	}
+	
 }

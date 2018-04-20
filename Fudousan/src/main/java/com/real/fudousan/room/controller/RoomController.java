@@ -136,6 +136,7 @@ public class RoomController {
 		return "room/room";
 	}
 	
+
 	/*방높이*/
 	@ResponseBody
 	@RequestMapping(value="wallheightchange", method=RequestMethod.POST)
@@ -150,6 +151,16 @@ public class RoomController {
 	
 
 		
+
+	@ResponseBody
+	@RequestMapping(value="selectRoomEstate", method=RequestMethod.POST)
+	public String selecteRoomEstate(String estateId){
+		logger.info("estate id에 해당하는 3d디자인 방 가져오기 시작");
+		
+		
+		
+		logger.info("estate id에 해당하는 3d디자인 방 가져오기 종료");
+
 		return "";
 	}
 	
