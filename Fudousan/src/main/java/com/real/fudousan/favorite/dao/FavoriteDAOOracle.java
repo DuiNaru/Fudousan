@@ -78,4 +78,19 @@ public class FavoriteDAOOracle implements FavoriteDAO {
 		
 		return result; 
 	}
+	
+	public boolean deleteFavorite(Favorite favorite){
+		FavoriteMapper mapper = sqlsession.getMapper(FavoriteMapper.class);
+		boolean result = false; 
+		try{
+			result = mapper.deleteFavorite(favorite);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("찜 목록 등록 dao oracle - end");
+		return result;
+		
+		
+	}
+	
 }

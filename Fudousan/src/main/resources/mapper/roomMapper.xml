@@ -199,4 +199,20 @@
 		</selectKey>
 	</insert>
 	
+	
+	<select id="selectRoomEstate" resultMap="roomResultMap">
+		SELECT 
+			room_id,
+			room_title,
+			cre_date,
+			snapshot
+		FROM 
+		
+		WHERE 
+			estate_id=#{estate.estateId}
+	
+	
+	</select>
+	
+	
 </mapper>
