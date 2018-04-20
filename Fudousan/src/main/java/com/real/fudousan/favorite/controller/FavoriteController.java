@@ -52,7 +52,7 @@ public class FavoriteController {
 	@ResponseBody
 	@RequestMapping(value="insertFavorite", method=RequestMethod.POST)
 	public String insertFavorite(String estateId, String memberId ){
-			logger.info("찜하기 시작");
+			logger.info("찜하기 등록 시작");
 			Favorite favorite = new Favorite();
 			Estate estate = new Estate();
 			int estateIdResult = Integer.parseInt(estateId);
@@ -66,7 +66,7 @@ public class FavoriteController {
 			favorite.setEstate(estate);
 			
 			service.add(favorite);
-			logger.info("찜하기 종료");
+			logger.info("찜하기 등록 종료");
 			
 		return "";
 	}
@@ -94,6 +94,31 @@ public class FavoriteController {
 			
 		return result;
 	}
+
+	@ResponseBody
+	@RequestMapping(value="deleteFavorite", method=RequestMethod.POST)
+	public String deleteFavorite(String estateId, String memberId ){
+		logger.info("찜하기 삭제 시작");
+		Favorite favorite = new Favorite();
+		Estate estate = new Estate();
+		int estateIdResult = Integer.parseInt(estateId);
+		int memberIdResult = Integer.parseInt(memberId);
+		
+		//estate setting 
+		estate.setEstateId(estateIdResult);
+		
+		// favorite setting 
+		favorite.setMemberId(memberIdResult);
+		favorite.setEstate(estate);
+		
+		service.deleteFavorite(favorite);
+		logger.info("찜하기 삭제 종료");
+		return "";
+	}
+	
+	
+	
+	
 	
 	
 }

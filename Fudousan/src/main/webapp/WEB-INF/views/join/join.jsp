@@ -99,10 +99,10 @@
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span data-lang="join"></span><span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="join/join"><span data-lang="customerjoin"></span></a></li>
+							<li><a href="/fudousan/join/join"><span data-lang="customerjoin"></span></a></li>
 							<li class="divider"></li>
 							
-							<li><a href="join/agencyjoin"><span data-lang="agencyjoin"></span></a></li>
+							<li><a href="/fudousan/join/agencyjoin"><span data-lang="agencyjoin"></span></a></li>
 						</ul>
 					</li>
 					

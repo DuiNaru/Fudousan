@@ -143,8 +143,13 @@
 			member_id=#{memberId} AND estate_id = #{estate.estateId}
 	</select>
 	
-	
-	
+	<delete id="deleteFavorite" parameterType="favorite">
+		DELETE 
+		FROM 
+			favorite
+		WHERE 
+			estate_id = #{estate.estateId} AND member_id=#{memberId}
+	</delete>
 	<resultMap type="favorite" id="FavoriteAll">
 		<result 		 property="memberId" column="MEMBER_ID"/>
 		<result 	 property="creDate"  column="CRE_DATE"/>
