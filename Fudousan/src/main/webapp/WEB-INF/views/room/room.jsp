@@ -29,6 +29,8 @@
 
 <script type="text/javascript">
 
+	
+
 	var room = {
 		roomId:${room.roomId}
 		,roomPublic:${room.roomPublic}
@@ -104,6 +106,11 @@
 			})
 	</c:forEach>
 	];
+	
+
+	
+
+	
 </script>
 <script src="<c:url value="/resources/js/node_communication.js"/>"></script>
 <script> </script>
@@ -297,7 +304,67 @@ canvas {
 						<li><button onclick="esc()">종료</button>
 						<br><br><br>
 						<li><button onclick="checkArray()">Array 보기</button>
+						<br><br><br><br>
+						
+						
+						
+						<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
+						
+						
+						
+						<!-- 높이 변경 부분 -->
+					<%-- 	<form action="wallheightchange" method="post" id="myForm">
+							<input type="hidden" value="${Room.roomId}" name="roomId">
+						높이 <input type="text" name="height" > 
+						<input type="submit" value="높이 변경 ">
+						</form> --%>
 			</ul>
+			
+			
+			
+			
+			
+			  <script type="text/javascript">
+			/* $("#myForm").submit(function(){
+				var roomId=$("update[roomId=roomId]").val();
+				var height=$("update[height=height]").val();
+				$.post("wallheightchange",{"height":height}),function(data){
+					alert(data);
+				};
+				
+				return false;
+				});
+				
+			}); */
+			
+			function changeheight() {
+				var height=$("#height").val();
+				var roomId = room.roomId;
+				
+				$.ajax({
+					url:"wallheightchange",
+					type:"post",
+					data:{
+						roomId:roomId,
+						height:height
+					},
+					success: function(){
+						
+						
+					}
+						
+					
+					
+				});
+			}
+			
+			
+			
+			
+			</script> 
+			
+			
+			
 		</div>
 	</div>
 	<menu>

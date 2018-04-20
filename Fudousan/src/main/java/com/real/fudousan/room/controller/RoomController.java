@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,7 @@ public class RoomController {
 	private ItemService itemService;
 	@Autowired
 	private RoomItemService roomItemService;
+	
 	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
 	public String searchMyRoom(Model model,String roomSearch,int memberId){
@@ -133,6 +136,22 @@ public class RoomController {
 		return "room/room";
 	}
 	
+
+	/*방높이*/
+	@ResponseBody
+	@RequestMapping(value="wallheightchange", method=RequestMethod.POST)
+	public String wallheightchange(int roomId, int height){
+		logger.info("방높이 변경 시작 컨트롤러 ");
+		System.out.println("넘어오낭");
+		Room room = new Room();
+		room.setRoomId(roomId);
+		room.setHeight(height);
+		System.out.println("room: " + room);
+		Rservice.wallheightchange(room);
+	
+		return "";
+	}
+
 	@ResponseBody
 	@RequestMapping(value="selectRoomEstate", method=RequestMethod.POST)
 	public String selecteRoomEstate(String estateId){
@@ -141,6 +160,7 @@ public class RoomController {
 		
 		
 		logger.info("estate id에 해당하는 3d디자인 방 가져오기 종료");
+
 		return "";
 	}
 	

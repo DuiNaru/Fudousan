@@ -152,4 +152,24 @@ public class RoomDAOOracle implements RoomDAO {
 		logger.info("select("+roomId+") End");
 		return result;
 	}
+	
+	/*방높이 변경*/
+	@Override
+	public int wallheightchange(Room room){
+		
+		logger.info("방 높이변경 시작");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		int result = 0;
+		
+		try{
+			result = mapper.wallheightchange(room);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("방 높이 변경 종료");
+		return result;
+	}
+	
+	
 }

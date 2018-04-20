@@ -179,4 +179,16 @@ public class RoomService {
 		logger.info("showRoom("+roomId+") End");
 		return result;
 	}
-}
+	
+	//백 높이 수정 
+	public int wallheightchange(Room room){
+		
+		int result = 0;
+		result = dao.wallheightchange(room);
+		
+		return  result;
+	}
+	
+	}
+	
+
