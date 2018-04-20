@@ -863,7 +863,7 @@ function placeRoomItem(roomItem, onLoad, onError) {
 
 		curRoomItems.push(object);
 		
-		console.log("배치 성공");
+		console.log(roomItem.roomItemId + " 배치 성공");
 
 		if ( onLoad !== undefined ) {
 			onLoad();
