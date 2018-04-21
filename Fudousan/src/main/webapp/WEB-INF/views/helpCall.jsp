@@ -54,10 +54,6 @@
 </tr>
 	</c:forEach>
 
-
-
-
-
 </table>
 
 
