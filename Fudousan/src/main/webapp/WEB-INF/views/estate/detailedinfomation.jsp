@@ -447,6 +447,7 @@
 <input type="hidden" value="${resultEstate.estateY}" id="lng">
 <input type="hidden" value="${estateId}" id="estateId">
 <input type="hidden" value="${sessionScope.memberId }" id="memberId">
+
 <script src="../resources/js/jquery-3.3.1.js"></script>
 <script src="../resources/js/login.js"></script>
 <script src="../resources/js/bootstrap.min.js"></script>
@@ -475,41 +476,63 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&callback=initMap">
     </script>
     <script type="text/javascript">
-    	
+    	// infinite scroll paging ajax
+    	var page = 1; 
     	var result = true;	
-    	
-    	var count = 0; // 페이지가 몇 번 째인가 알려주는 변수  
+    	var count = 1; // 페이지가 몇 번 째인가 알려주는 변수  
     	$(function(){
- 				
+    		// down scroll 
  			$('.modal-body').on("scroll", function(){
  				
  				var max = $('.modal-body').height();
- 				var current = $('.modal-body').scrollTop()+ $('.modal-body').height();
+ 				var currentHeight = $('#aritcleView').height();
+ 				var current = $('.modal-body').scrollTop()+ $('#aritcleView').height()+ $('.modal-body').height();
  				
- 				if ($('.modal-body').scrollTop()/ $('.modal-body').height()>1) {	
-	 				if (result == true ) {
+ 				console.log(max);
+ 				console.log(current%max > max* 0.8);
+ 				console.log(current%max);
+ 				/* if ($('.modal-body').scrollTop()/ $('.modal-body').height()>) { */	
+	 				if(currentHeight-current<max){
+	 						
+ 					if (result == true ) {
+	 					
+	 					
 	 					$.ajax({
 	 						url : "../selectRoomEstate",
 							type : "POST",
-							data : { "estateId": $('#estateId').val()},
+							data : { "estateId": $('#estateId').val(), "page": page},
 							
 							//서버로 부터 받아오는 타입
 							dataType : "json",
-							success : function(obj){
-								/* console.dir(obj); */
-								
-								for (var i = 0; i < obj.length; i++) {
-									console.log(obj.roomId);
+							success : function(data){
+									console.dir(data);
+									// 마지막 페이지를 가져온다. 
+									var endPage = data.totalPage;
+									
+									// 내용을 변경해줄 것을 가져온다. 
+									var str = "";
+									
+			 					// 가져온 데이터가 마지막이면 마지막이라고 표시 해준다. 
+								if (page < endPage ) {
+									count++;
+									page = count;
+									console.log(count);
+									$(data.list).each(
+										function(){
+											str += "<div class="+ "'col-md-4 col-sm-6 co-xs-12 gal-item'" +">"
+												+     "<div class="+"'box'"+">"
+												+		"<a herg="+"'#'"+"data-toggle="+"'modal'"+">"
+												+         "<img src="+"'../resources/image/jedai0.jpg'"+">"
+												+	  	"</a>"
+												+     "</div>"
+												+	"</div>";
+									result = true;
+									}); //each end
+									$("#aritcleView").append(str);
 
+								}else{
+									console.log("page End");
 								}
-								
-								
-								
-								
-								
-								count++;
-								result = true; 
-								
 							},
 							error : function(e){//에러 정보를 갖고 있는 
 								alert(JSON.stringify(e));
@@ -524,18 +547,7 @@
  			
 
  			
- 	/* 		$('#aritcleView').scroll(function() {
- 			    var maxHeight = $('#aritcleView').height();
- 			    var currentScroll = $('window').scrollTop() + $(window).height();
-				var test = "test";							
- 			    if (maxHight <= currentScroll + 100) {
-		    		  $.ajax({
- 			        // Append next contents
- 			    	
- 			      }) 
- 			       alert(test)
- 			    }
- 			  }) */
+ 
  		});
     
     </script>
