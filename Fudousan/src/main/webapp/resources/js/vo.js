@@ -113,7 +113,10 @@ function RoomItem() {
  * @returns roomItem VO
  */
 function objToRoomItem(roomitemObj) {
-
+	
+	console.log("다음의 오브젝트를 roomitem으로 변환 하려합니다.");
+	console.dir(roomitemObj);
+	
 	var roomItem = new RoomItem();
 	roomItem.color = roomitemObj.color;
 	roomItem.roomId = roomitemObj.roomId;
@@ -135,6 +138,10 @@ function objToRoomItem(roomitemObj) {
  * @returns item VO
  */
 function objToItem(itemObj) {
+	
+	console.log("다음의 오브젝트를 item으로 변환 하려합니다.");
+	console.dir(itemObj);
+	
 	var item = new Item();
 	item.fileDirectory = itemObj.fileDirectory;
 	item.itemId = itemObj.itemId;
