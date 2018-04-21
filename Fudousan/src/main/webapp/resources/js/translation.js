@@ -1,6 +1,4 @@
 $(function(){
-	//$("style").append("* {font-family: 'Yu Gothic';}");
-	
 	let lang = getCookie("lang");
 	let url = "";
 	

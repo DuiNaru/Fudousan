@@ -16,9 +16,9 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 	
 	<!-- font awesome -->
-    <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css"/>" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css"/>" media="screen" title="no title">
     <!-- Custom style -->
-    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>" media="screen" title="no title">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
