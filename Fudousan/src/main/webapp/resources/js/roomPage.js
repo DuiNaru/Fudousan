@@ -420,6 +420,14 @@ function drawWall() {
 }
 
 function drawFloor(side) {
+	if ( originalWalls.length == 0 ) {
+		// 벽이 없으면 그냥 매우 큰 땅 생성
+		var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
+		var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, side:((side===undefined||side)?THREE.FrontSide:THREE.BackSide)});
+		floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
+		
+		return floor;
+	}
 	
 	// 커넥터 추출
 	var con = [];
@@ -560,13 +568,14 @@ function drawFloor(side) {
 	
 	// 최종 외곽선 배열
 	var outline = [];
+	
 	// 최상/최하/최우/최좌
 	var top = sortY[sortY.length-1];
 	var bottom = sortY[0];
 	var left = sortX[0];
 	var right = sortX[sortX.length-1];
 	console.log("top("+top+"), bottom("+bottom+"), left("+left+"), right("+right+")");
-	var edge = [top, bottom, left, right];
+	//var edge = [top, bottom, left, right];
 	
 	// 1사분면(top to right)
 	/*var possible = [top];
@@ -775,7 +784,7 @@ function searchOutline(startPoint, points, connectMap) {
 			pastIndex = curIndex;
 			curIndex = moveIndex;
 			if ( curIndex == startPoint ) {
-				console.log("reach to end(" + curIndex + ")");
+				console.log("END : reach to start index(" + curIndex + ")");
 				break;
 			}
 			console.log("move to " + curIndex);
