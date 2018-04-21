@@ -1,11 +1,14 @@
 package com.real.fudousan.room.controller;
 
+import java.io.IOException;
 import java.security.Provider.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,11 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
@@ -189,7 +195,36 @@ public class RoomController {
 
 	}
 	
+
+	@ResponseBody
+	@RequestMapping(value="snapshot", method=RequestMethod.POST)
+	public String snapshot(MultipartHttpServletRequest request){
+		logger.info("snapshot() Start");
+		
+		String result = null;
+
+        Iterator<String> itr =  request.getFileNames();
+        if(itr.hasNext()) {
+            MultipartFile mpf = request.getFile(itr.next());
+            
+            result = Rservice.saveSnapShot(Integer.parseInt(mpf.getOriginalFilename()), mpf);
+        }
+        return result;
+	}
 	
-	
+	@RequestMapping(value = "/snapshot/{file_name}", method = RequestMethod.GET)
+	public void getSnapShotFile(
+			@PathVariable("file_name") String fileName, 
+			HttpServletResponse response) {
+		
+		logger.info("getSnapShotFile({}) Start", fileName);
+		try {
+			Rservice.downloadSnapShotFile(fileName, response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		logger.info("getSnapShotFile({}) end", fileName);
+		
+	}
 	
 }

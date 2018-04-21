@@ -192,6 +192,10 @@ canvas {
 	text-align: center;
 	cursor: pointer;
 }
+.snapshot {
+	width: 100px;
+	height: 100px;
+}
 </style>
 </head>
 <body>
@@ -302,6 +306,12 @@ canvas {
 						<li><button onclick="save()">저장하기</button></li><br>
 						<li><button onclick="reset()">초기화</button></li><br>
 						<li><button onclick="esc()">종료</button>
+						<li><button onclick="takeSnapShot()">스냅샷 </button>
+						<li id="snapshot">
+							<c:if test="${!empty room.snapshot }">
+								<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
+							</c:if>
+						</li>
 						<br><br><br>
 						<li><button onclick="checkArray()">Array 보기</button>
 						<br><br><br><br>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,11 +13,14 @@
 <title>메일 보내기</title>
 </head>
 <body>
-<div class="container">
+<%-- <div class="container">
   <h4>메일 보내기</h4>
   <form action="helpCall" method="post">
     <div align="center"><!-- 받는 사람 이메일 -->
+<<<<<<< HEAD
    
+=======
+>>>>>>> 7b3ad67b3b8ea3ad7ec3fd7592413ddd26f56b62
       <input type="text" name="tomail" size="120" style="width:100%" placeholder="상대의 이메일" class="form-control" >
     </div>     
     <div align="center"><!-- 제목 -->
@@ -33,7 +36,32 @@
       <input type="submit" value="메일 보내기" class="btn btn-warning">
     </div>
   </form>
-</div>
+</div> --%>
+
+
+<table border="1">
+<tr>
+ 	<th>인테리어업체 이메일</th>
+ 	<th>업체 번호</th>
+ 	<th>업체 소개 </th>
+ 	<th>메시지 보내기</th>
+</tr>
+
+
+
+<c:forEach var="item" items="${interior}">
+<tr>
+	<td>${item.email}</td>
+	<td>${item.phone}</td>
+	<td>${item.text}</td>
+	<td> <a href="helpCall?tomail=${item.email}" class="btn btn-warning">요청</a> </td>
+</tr>
+	</c:forEach>
+
+</table>
+
+
+
 </body>
 </html> 
 		

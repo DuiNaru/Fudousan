@@ -1,5 +1,7 @@
 package com.real.fudousan.member.dao;
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.real.fudousan.agency.vo.Agency;
-import com.real.fudousan.item.dao.ItemDAOOracle;
 import com.real.fudousan.member.vo.Member;
 
 @Repository
@@ -153,13 +154,19 @@ public class MemberDAOOracle implements MemberDAO {
 		return result; 
 	}
 	
-	/*public int interior(Member member){
-		
-		
-		
-	
-		return  "";
-	}*/
+	public ArrayList<Member> interior(){
+		ArrayList<Member> result = null;
+		try {
+			
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.interior();
+		} catch(Exception e){
+		  
+		  e.printStackTrace();
+			
+		}
+		return  result;
+	}
 	
 	
 }
