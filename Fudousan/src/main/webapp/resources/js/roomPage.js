@@ -858,6 +858,8 @@ function previewItem(itemId, fileName) {
 
 /**
  * 아이템을 DB에 추가하고 화면에 배치한다.
+ * Item VO 의 경우에는 화면 정 중앙에 배치,
+ * RoomItem VO 의 경우에는 해당 VO의 x,y,z에 배치
  * @param item Item VO 또는 RoomItem VO
  * @param onCreate 성공시 호출
  * @returns
@@ -1086,6 +1088,22 @@ function move(object, x, y, z) {
 }
 
 /**
+ * 해당 룸 아이템을 해당 x,y,z 로 이동
+ * @param roomItem
+ * @returns
+ */
+function moveRoomItem(roomItem) {
+	for(var i = 0; i < curRoomItems.length; i++) {
+		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z);
+			return true;
+		}
+	}
+	console.log(roomItem.roomItemId + " 가 없어서 이동 실패");
+	return false;
+}
+
+/**
  * 화면에 배치된 object을 각 축을 기준으로 회전
  * @param object
  * @param rx 도
@@ -1113,6 +1131,22 @@ function rotate(object, rx, ry, rz) {
 		
 	}
 	
+}
+
+/**
+ * 해당 룸 아이템을 해당 rx,ry,rz 로 회전
+ * @param roomItem
+ * @returns
+ */
+function rotateRoomItem(roomItem) {
+	for(var i = 0; i < curRoomItems.length; i++) {
+		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+			rotate(curRoomItems[i], roomItem.rotateX, roomItem.rotateY, roomItem.rotateZ);
+			return true;
+		}
+	}
+	console.log(roomItem.roomItemId + " 가 없어서 회전 실패");
+	return false;
 }
 
 function select(group) {
@@ -1299,8 +1333,9 @@ function resetInfo() {
 	$("#itemInfo").hide( "slide" );
 }
 
-function itemApplyListener() {
-	applyItemChange(curSelected.roomItem);
+function itemApplyListener(onApply) {
+	applyItemChange(curSelected.roomItem, onApply);
+	
 }
 
 /**
@@ -1308,7 +1343,7 @@ function itemApplyListener() {
  * @param roomItem 
  * @returns
  */
-function applyItemChange(roomItem) {
+function applyItemChange(roomItem, onApply) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
@@ -1325,6 +1360,10 @@ function applyItemChange(roomItem) {
 			if(data != null && data != false && data != "false") {
 				
 				infoDataChange = false;
+				
+				if (onApply !== undefined) {
+					onApply(roomItem);
+				}
 				
 			} else {
 				
