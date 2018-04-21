@@ -269,6 +269,20 @@ canvas {
 		<input type="button" value="적용" onclick="itemApplyListener()">
 	</div>
 	<div class="bottom-menu">
+	
+	
+	
+	
+	
+	<!----------------------->
+	
+	
+	
+	
+	
+	
+	
+	<%-- 
 		<div>
 			<label>아이템 생성</label>
 			<ul>
@@ -295,7 +309,23 @@ canvas {
 					</li>
 				</c:forEach>
 			</ul>
-		</div>
+		</div> --%>
+		
+		
+
+		
+		
+<!----------------------->
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	</div>
 	<div class="right-menu">
 		<div>
@@ -318,17 +348,11 @@ canvas {
 						<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
 						
 			</ul>
-			
-			
-			
-			
-			
+
 			  <script type="text/javascript">
-		
 			function changeheight() {
 				var height=$("#height").val();
-				var roomId = room.roomId;
-				
+				var roomId = room.roomId;	
 				$.ajax({
 					url:"wallheightchange",
 					type:"post",
@@ -337,19 +361,19 @@ canvas {
 						height:height
 					},
 					success: function(){
-						
-						
+	
 					}
-						
-					
-					
+
 				});
 			}
-			
-			
-			
-			
 			</script> 
+			
+			
+			
+			
+			
+			
+			
 			
 			
 			
