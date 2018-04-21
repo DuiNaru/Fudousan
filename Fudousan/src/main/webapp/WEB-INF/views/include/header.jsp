@@ -13,7 +13,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				
-				<a class="navbar-brand" href="#" style="margin-bottom: 10px;">
+				<a class="navbar-brand" href="/fudousan" style="margin-bottom: 10px;">
 					<img alt="Fudousan" src="/fudousan/resources/image/logo2.png">
 				</a>
 				

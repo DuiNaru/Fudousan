@@ -23,13 +23,7 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 
-<<<<<<< HEAD
-=======
-	
 
-
-
->>>>>>> 7b3ad67b3b8ea3ad7ec3fd7592413ddd26f56b62
 	<!-- Map -->
 	<div class="form-group">
 		<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box" style="z-index: 1; margin: 100px 0 0 0">
@@ -53,7 +47,7 @@
 		<c:forEach items="${elocationList}" var="elocation" varStatus="status">
 			${elocation}<c:if test="${status.last eq false}">,</c:if>
 		</c:forEach>
-	];
+		];
 	</script>
 	<script src="resources/js/googlemaps-settings.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&libraries=places&callback=initialize" async defer></script>

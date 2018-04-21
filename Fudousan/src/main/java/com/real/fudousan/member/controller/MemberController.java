@@ -136,23 +136,15 @@ public class MemberController {
 
 	
 	
-	
-	@RequestMapping(value ="helpCallPage", method=RequestMethod.GET)
-	public String helpCallPage(Member member , Model model ,HttpSession session){
+	@ResponseBody
+	@RequestMapping(value ="helpCallPage", method=RequestMethod.POST)
+	public ArrayList<Member> helpCallPage(Member member , Model model ,HttpSession session){
 		logger.info("메일보내는 페이지로");
 		
 	
 		ArrayList<Member> interior = new ArrayList<>();
 		interior =(ArrayList<Member>) service.interior();
-		
-		model.addAttribute("interior", interior);
-		
-		System.out.println(interior);
-		
-		
-		
-		
-		return "helpCall";
+		return interior;
 	}
 	
 	//메일 보내기
