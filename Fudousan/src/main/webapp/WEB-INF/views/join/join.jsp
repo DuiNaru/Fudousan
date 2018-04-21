@@ -14,10 +14,10 @@
 	<link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
 	
 	<!-- font awesome -->
-	<link rel="stylesheet" href="../resources/css/font-awesome.min.css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="../resources/css/font-awesome.min.css" media="screen" title="no title">
 	
 	<!-- Custom style -->
-	<link rel="stylesheet" href="../resources/css/style.css" media="screen" title="no title" charset="utf-8">
+	<link rel="stylesheet" href="../resources/css/style.css" media="screen" title="no title">
     
 	<!-- style -->
 	<style type="text/css">
