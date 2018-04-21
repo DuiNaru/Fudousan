@@ -14,6 +14,8 @@ var width = window.innerWidth;
 var height = window.innerHeight;
 // 방 바닥
 var roomFloor;
+// 방 천장
+var roomCeil;
 // 지면(사이즈)
 var earthSize = 999999;
 // Raycaster
@@ -179,6 +181,11 @@ function init() {
 	roomFloor = drawFloor();
 	roomFloor.rotateX(-90 * Math.PI / 180);
 	scene.add(roomFloor);
+	
+	roomCeil = drawFloor(false);
+	roomCeil.rotateX(-90 * Math.PI / 180);
+	roomCeil.position.y += room.height;
+	scene.add(roomCeil);
 
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
 	renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, false);
