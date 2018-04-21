@@ -261,7 +261,7 @@ canvas {
 				<div id="pz"></div>
 			</div>
 		</div>
-		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem)">
+		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem, delItem)">
 		<input type="button" value="적용" onclick="itemApplyListener()">
 	</div>
 	<div class="bottom-menu">

@@ -8,7 +8,7 @@
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
     <title>boot</title>
 
-    <!-- 부트스트랩 -->
+    <!-- css -->
    
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="../resources/css/3dmodel.css" rel="stylesheet">
@@ -29,10 +29,8 @@
 				
 				
 				<div class="modal-body">
+				<div id="aritcleView">
 					  <div class="gal-container">
-					  <div class="aritcleView">
-      
-      
 						    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
 						      <div class="box">
 						        <a href="#" data-toggle="modal" data-target="#1">
@@ -54,9 +52,9 @@
 						        </a>
 						      </div>
 						    </div>
-						 
-						 
 						 </div>
+						 
+						<h1 id = "test"></h1>					
 					    <div style="clear: both;"></div>
 					  </div> 
 					  
@@ -449,6 +447,7 @@
 <input type="hidden" value="${resultEstate.estateY}" id="lng">
 <input type="hidden" value="${estateId}" id="estateId">
 <input type="hidden" value="${sessionScope.memberId }" id="memberId">
+
 <script src="../resources/js/jquery-3.3.1.js"></script>
 <script src="../resources/js/login.js"></script>
 <script src="../resources/js/bootstrap.min.js"></script>
@@ -476,9 +475,92 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&callback=initMap">
     </script>
+    <script type="text/javascript">
+    	// infinite scroll paging ajax
+    	var page = 1; 
+    	var result = true;	
+    	var count = 1; // 페이지가 몇 번 째인가 알려주는 변수  
+    	$(function(){
+    		// down scroll 
+ 			$('.modal-body').on("scroll", function(){
+ 				
+ 				var max = $('.modal-body').height();
+ 				var currentHeight = $('#aritcleView').height();
+ 				var current = $('.modal-body').scrollTop()+ $('#aritcleView').height()+ $('.modal-body').height();
+ 				
+ 				console.log(max);
+ 				console.log(current%max > max* 0.8);
+ 				console.log(current%max);
+ 				/* if ($('.modal-body').scrollTop()/ $('.modal-body').height()>) { */	
+	 				if(currentHeight-current<max){
+	 						
+ 					if (result == true ) {
+	 					
+	 					
+	 					$.ajax({
+	 						url : "../selectRoomEstate",
+							type : "POST",
+							data : { "estateId": $('#estateId').val(), "page": page},
+							
+							//서버로 부터 받아오는 타입
+							dataType : "json",
+							success : function(data){
+									console.dir(data);
+									// 마지막 페이지를 가져온다. 
+									var endPage = data.totalPage;
+									
+									// 내용을 변경해줄 것을 가져온다. 
+									var str = "";
+									
+			 					// 가져온 데이터가 마지막이면 마지막이라고 표시 해준다. 
+								if (page < endPage ) {
+									count++;
+									page = count;
+									console.log(count);
+									$(data.list).each(
+										function(){
+											str += "<div class="+ "'col-md-4 col-sm-6 co-xs-12 gal-item'" +">"
+												+     "<div class="+"'box'"+">"
+												+		"<a herg="+"'#'"+"data-toggle="+"'modal'"+">"
+												+         "<img src="+"'../resources/image/jedai0.jpg'"+">"
+												+	  	"</a>"
+												+     "</div>"
+												+	"</div>";
+									result = true;
+									}); //each end
+									$("#aritcleView").append(str);
+
+								}else{
+									console.log("page End");
+								}
+							},
+							error : function(e){//에러 정보를 갖고 있는 
+								alert(JSON.stringify(e));
+								result = true;
+							} 
+						});
+	 					
+	 					result = false; 
+ 					};
+				};
+ 			}); 
+ 			
+
+ 			
+ 
+ 		});
+    
+    </script>
+    
+    
     
     <script type="text/javascript">
 	    $(function() {
+
+	    	
+	    	
+	    	
+	    	// select favorite
 	    	setTimeout(function(){
 			      	$.ajax({
 						url : "../selectFavorite",
@@ -508,11 +590,8 @@
 						
 		      	  });
 	        }, 100);
-	    	
-   
 	    });
 
-	    
 		   $(function(){
 		    $( '#id-of-input' ).on('click', function(){
  		    	var check =$('#id-of-input').is(":checked");
@@ -549,72 +628,11 @@
 						} 
 		    		});
 				}
-		    	
-		    	
 		    });
-			
-		    // infinite scrolling 
-			$(document).scroll(function(){
-				var maxHeight = $(document).height();
-				var currentScroll = $(window).scrollTop() + $(window).height();
-				
-				if (maxHeight <= currentScroll +100) {
-					$.ajax({
-						url : "../selectFavorite",
-						type : "POST",
-						data : { "estateId": $('#estateId').val(), "memberId": $('#memberId').val() },
-						 //서버로 부터 받아오는 타입
-						dataType : "json",
-						success : function(obj){
-						var oMemberId = obj.memberId
-						var memberId = $('#memberId').val();
-						var oEstateId = obj.estate.estateId
-						var estateId = $('#estateId').val();
-						console.log(oMemberId);
-						console.log(memberId);
-						console.log(oEstateId);
-						console.log(estateId);
-						
-						
-						
-					});
-					
-				}
-			});
-		    
-		    
-		    
-		    
-		    
-		    
-		  /*   $('#3dDesignModal').on('click', function(){
-		    	$.ajax({
-					url : "../insertFavorite",
-					type : "POST",
-					data :   { "estateId": $('#estateId').val(), "memberId": $('#memberId').val() } ,
-					 //서버로 부터 받아오는 타입
-					dataType : "text",
-					success : function(data){
-							
-					},
-					error : function(e){//에러 정보를 갖고 있는 
-						alert(JSON.stringify(e));
-					} 
-	    		});
-		    }); */
-		    
-		    
-		    
-		    
-		    
-		    
-		    
-		    
 		   });
-    
 
-    
     </script>
+
 
 </body>
 </html>

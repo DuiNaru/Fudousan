@@ -53,22 +53,50 @@ socket.on('commandPass',function(data){
 				cTarget.addForward = true;
 				cTarget.isForawrd = 'notFirst';
 				
+				
 				AddItemForward(cTarget); // 1배열에 주는것
 				
 				whoAmI = 'x';
 				
-				socket.emit('forXman',JSON.stringify(cTarget));
+				socket.emit('othersideAdd',JSON.stringify(cTarget));
 			});
-	}// else if 끝
+	}
+	if(cName=='delete' && direc=='back'){
+		//뒤로가기로 삭제되었던걸 다시 만들어야한다. 
+		createItem(cTarget,function(){
+
+		});
+	}
+	if(cName=='delete' && direc=='forward'){
+		//앞으로가기하면 다시 삭제되고 사라져야한다. 
+			deleteItem(cTarget.item,function(roomitem){
+				
+				DeleteItemForward(cTarget); //1배열에 주는것 - 삭제버전
+				socket.emit('othersideDel',JSON.stringify(cTarget));
+			});
+	}
 }); //commandPass의 끝
  
-socket.on('forXman2',function(data){
-	var xMan = objToRoomItem(JSON.parse(data));
+socket.on('othersideDel2',function(data){
+	var otherDel = objToRoomItem(JSON.parse(data));
 	console.log('넘겨준 최후의 것');
-	console.log(xMan);
+	console.log(otherDel);
 	console.log('넘겨준 최후의 것');
 	
-	placeRoomItem(xMan);
+	console.log('화면 생성술');
+	placeRoomItem(otherDel);
+	console.log('화면 생성술');
+});
+
+socket.on('othersideAdd2',function(data){
+	var otherAdd = objToRoomItem(JSON.parse(data));
+	console.log('넘겨준 최후의 것');
+	console.log(otherAdd);
+	console.log('넘겨준 최후의 것');
+
+	console.log('화면 생성술');
+	placeRoomItem(otherAdd);
+	console.log('화면 생성술');
 });
 
 //AddItem에서는 객체정보가 파라메터로 넘어가서 커맨더 만들어서 이름으로 커맨더 타입 지정하고 객체정보도 같이 보내서 서버가 밭게함
@@ -85,10 +113,22 @@ function AddItemForward(roomitem){
 	var a = new Command();
 	a.name ="add";
 	a.roomItem = roomitem;
-	socket.emit('addItemForward',JSON.stringify(a));
+	socket.emit('Array1Push',JSON.stringify(a));
 }
 
+function DeleteItemForward(roomitem){
+	var a = new Command();
+	a.name = "delete";
+	a.roomItem = roomitem;
+	socket.emit('Array1Push',JSON.stringify(a));
+}
 
+function delItem(roomitem){
+	var a = new Command();
+	a.name = "delete";
+	a.roomItem = roomitem;
+	socket.emit('delItem',JSON.stringify(a));
+}
 
 socket.on('youto',function(data){
 	console.log(data);
@@ -98,13 +138,24 @@ socket.on('youto',function(data){
 	
 	if(cName=='add'){
 		placeRoomItem(cTarget, function() {
-			console.log('상대방이 정보를 변경함');
+			console.log('상대방이 생성함');
 			socket.emit('youtoWhat','success');
 		}, function(){
-			console.log('상대방이 정보를 변경실패');
+			console.log('상대방이 생성 실패');
 			socket.emit('youtoWhat','fail');
 		}); 
 	}
+	
+	if(cName=='delete'){
+		deplaceRoomItem(cTarget, function() {
+			console.log('상대방이 삭제함');
+			socket.emit('youtoWhat','success');
+		}, function(){
+			console.log('상대방이 삭제 실패');
+			socket.emit('youtoWhat','fail');
+		});
+	}
+	
 });
  
  socket.on('commandSuccess',function(data){

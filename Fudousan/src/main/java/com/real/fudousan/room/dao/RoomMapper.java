@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.ibatis.session.RowBounds;
+
 import com.real.fudousan.room.vo.Room;
 
 public interface RoomMapper {
@@ -13,6 +15,11 @@ public interface RoomMapper {
 	public List<Room> allMyRoom(Integer memberId);
 	
 	public List<Room> selectByIds(Set<Integer> roomIds);
+	
+
+	public List<Room> selectEstateRoom(Integer estateId, RowBounds rb);
+	
+	public int getTotal(Integer estateId);
 	
 	public Room selectById(int roomId);
 	
@@ -50,10 +57,10 @@ public interface RoomMapper {
 	 */
 	public int insert(Room room);
 	
+
 	/*벽높이*/
 	public int wallheightchange(Room room);
-	
-	
+
 	
 	
 }
