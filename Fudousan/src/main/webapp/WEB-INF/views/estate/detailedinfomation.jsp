@@ -31,7 +31,7 @@
 				<div class="modal-body">
 				<div id="aritcleView">
 					  <div class="gal-container">
-						    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
+						 <!--    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
 						      <div class="box">
 						        <a href="#" data-toggle="modal" data-target="#1">
 						          <img src="../resources/image/jedai0.jpg">
@@ -51,7 +51,7 @@
 						         <img src="../resources/image/jedai2.jpg">
 						        </a>
 						      </div>
-						    </div>
+						    </div> -->
 						 </div>
 						 
 						<h1 id = "test"></h1>					
@@ -481,64 +481,25 @@
     	var result = true;	
     	var count = 1; // 페이지가 몇 번 째인가 알려주는 변수  
     	$(function(){
+    		
+    		getRoomSnapShot();
+    		
     		// down scroll 
  			$('.modal-body').on("scroll", function(){
  				
- 				var max = $('.modal-body').height();
- 				var currentHeight = $('#aritcleView').height();
- 				var current = $('.modal-body').scrollTop()+ $('#aritcleView').height()+ $('.modal-body').height();
+ 				var modalHeight = $('.modal-body').height();
+ 				var contentHeight = $('#aritcleView').height();
+ 				var scrollBottom = $('.modal-body').scrollTop()+$('.modal-body').height();
  				
- 				console.log(max);
- 				console.log(current%max > max* 0.8);
- 				console.log(current%max);
- 				/* if ($('.modal-body').scrollTop()/ $('.modal-body').height()>) { */	
-	 				if(currentHeight-current<max){
+ 				console.log("modalHeight   " + modalHeight);
+ 				console.log("contentHeight " + contentHeight);
+ 				console.log("scrollBottom  " + scrollBottom);
+ 				
+	 				if(scrollBottom>contentHeight-modalHeight){
 	 						
  					if (result == true ) {
 	 					
-	 					
-	 					$.ajax({
-	 						url : "../selectRoomEstate",
-							type : "POST",
-							data : { "estateId": $('#estateId').val(), "page": page},
-							
-							//서버로 부터 받아오는 타입
-							dataType : "json",
-							success : function(data){
-									console.dir(data);
-									// 마지막 페이지를 가져온다. 
-									var endPage = data.totalPage;
-									
-									// 내용을 변경해줄 것을 가져온다. 
-									var str = "";
-									
-			 					// 가져온 데이터가 마지막이면 마지막이라고 표시 해준다. 
-								if (page < endPage ) {
-									count++;
-									page = count;
-									console.log(count);
-									$(data.list).each(
-										function(){
-											str += "<div class="+ "'col-md-4 col-sm-6 co-xs-12 gal-item'" +">"
-												+     "<div class="+"'box'"+">"
-												+		"<a herg="+"'#'"+"data-toggle="+"'modal'"+">"
-												+         "<img src="+"'../resources/image/jedai0.jpg'"+">"
-												+	  	"</a>"
-												+     "</div>"
-												+	"</div>";
-									result = true;
-									}); //each end
-									$("#aritcleView").append(str);
-
-								}else{
-									console.log("page End");
-								}
-							},
-							error : function(e){//에러 정보를 갖고 있는 
-								alert(JSON.stringify(e));
-								result = true;
-							} 
-						});
+						getRoomSnapShot();
 	 					
 	 					result = false; 
  					};
@@ -550,6 +511,51 @@
  
  		});
     
+    function getRoomSnapShot() {
+    	$.ajax({
+			url : "../selectRoomEstate",
+			type : "POST",
+			data : { "estateId": $('#estateId').val(), "page": page},
+			
+			//서버로 부터 받아오는 타입
+			dataType : "json",
+			success : function(data){
+					console.dir(data);
+					// 마지막 페이지를 가져온다. 
+					var endPage = data.totalPage;
+					
+					// 내용을 변경해줄 것을 가져온다. 
+					var str = "";
+					
+					// 가져온 데이터가 마지막이면 마지막이라고 표시 해준다. 
+				if (page < endPage ) {
+					count++;
+					page = count;
+					console.log(count);
+					$(data.list).each(
+						function(index, room){
+							str += "<div class="+ "'col-md-4 col-sm-6 co-xs-12 gal-item'" +">"
+								+     "<div class="+"'box'"+">"
+								+		"<a herg="+"'#'"+"data-toggle="+"'modal'"+">"
+								+         "<img src="+"'"+room.snapshot+"'"+">"
+								+	  	"</a>"
+								+     "</div>"
+								+	"</div>";
+					result = true;
+					}); //each end
+					$(".gal-container").append(str);
+
+				}else{
+					console.log("page End");
+				}
+			},
+			error : function(e){//에러 정보를 갖고 있는 
+				alert(JSON.stringify(e));
+				result = true;
+			} 
+		});
+    }
+    	
     </script>
     
     
