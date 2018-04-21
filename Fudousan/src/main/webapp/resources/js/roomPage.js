@@ -1346,7 +1346,7 @@ function applyItemChange(roomItem) {
 	});
 }
 
-function reset() {
+function roomReset(onReset) {
 	$( "#blocker" ).show();
 	$.ajax({
 		url:"roomItem/reset",
@@ -1364,6 +1364,10 @@ function reset() {
 				curRoomItems = [];
 				curSelected = null;
 				curSelectedOriginal = null;
+				
+				if (onReset !== undefined) {
+					onReset();
+				}
 				
 			} else {
 				
