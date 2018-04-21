@@ -1,6 +1,8 @@
 package com.real.fudousan.room.controller;
 
+import java.security.Provider.Service;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,11 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
+import com.real.fudousan.common.util.PageNavigator;
 import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.item.service.ItemService;
@@ -154,14 +158,29 @@ public class RoomController {
 
 	@ResponseBody
 	@RequestMapping(value="selectRoomEstate", method=RequestMethod.POST)
-	public String selecteRoomEstate(String estateId){
+	public List<Room> selecteRoomEstate(String estateId
+			, @RequestParam(value="page", defaultValue="1")int page
+			){
 		logger.info("estate id에 해당하는 3d디자인 방 가져오기 시작");
+		final int countPerPage = 10;
+		final int pagePerGroup = 5; 
+		
+		HashMap<String, Object> searchMap = new HashMap<>();
+	
+		// estateId(String) --> int 
+		int estateIdresult = Integer.parseInt(estateId);
+		
+		int total = Rservice.getTotal(estateIdresult);
+		
+		PageNavigator navi = new PageNavigator (countPerPage, pagePerGroup, page, total);
 		
 		
+		List<Room> result= Rservice.selectEstateRoom(estateIdresult, navi.getStartRecord(), navi.getCountPerPage());
 		
 		logger.info("estate id에 해당하는 3d디자인 방 가져오기 종료");
 
-		return "";
+		return result;
+
 	}
 	
 	

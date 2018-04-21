@@ -8,7 +8,12 @@ import com.real.fudousan.room.vo.Room;
 
 public interface RoomDAO {
 	public List<Room> searchRoomInfo(String roomSearch,int memberId);
-	
+	public List<Room> selectEstateRoom(Integer estateId, int startRecord, int coutPerPage);
+	/**
+	 * estateId 가 일치하는 데이터를 Room에서 찾아온다.
+	 * @param estateId
+	 * @return
+	 */
 	public List<Room> allMyRoom(Integer memberId);
 	
 	/**
@@ -57,9 +62,13 @@ public interface RoomDAO {
 	 * @return room_id
 	 */
 	public int insert(Room room);
+
+	public int getTotal(Integer estateId);
+
 	
 	//벽높이 
 	public int wallheightchange(Room room);
+
 }
 
 

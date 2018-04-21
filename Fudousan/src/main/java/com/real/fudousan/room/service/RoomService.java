@@ -61,6 +61,20 @@ public class RoomService {
 	 * @param isRealRoom 실제로 존재하는 방인가 아닌가
 	 * @return 사용자가 작성한  매물들의 리스트
 	 */
+	
+	public List<Room> selectEstateRoom(Integer estateId, int startRecord, int coutPerPage ) {
+		List<Room> rlist = null;
+		rlist = dao.selectEstateRoom(estateId, startRecord, coutPerPage);
+		return rlist;
+	}
+	/**
+	 * 메물 상세보기 페이지에서 매물 이름에 해당하는 3d 방 리스트 보기
+	 * @param estateId
+	 * @param startRecord
+	 * @param coutPerPage
+	 * @return 3d 방 리스트 보기 리스트
+	 */
+	
 	public List<Room> showAllRoom(Integer memberId, boolean isRealRoom) {
 		logger.info("showAllRoom("+memberId+", "+isRealRoom+") Start");
 		List<Room> result = null;
@@ -180,6 +194,16 @@ public class RoomService {
 		return result;
 	}
 	
+
+	public int getTotal(Integer estateId){
+		logger.info("getTotal_Service_Start");
+		int result = 0; 
+		result = dao.getTotal(estateId);
+		logger.info("getTotal_Service_End");
+		return result; 
+	}
+
+
 	//백 높이 수정 
 	public int wallheightchange(Room room){
 		
