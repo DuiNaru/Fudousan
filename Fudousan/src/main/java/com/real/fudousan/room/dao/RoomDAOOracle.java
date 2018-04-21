@@ -203,6 +203,23 @@ public class RoomDAOOracle implements RoomDAO {
 		logger.info("방 높이 변경 종료");
 		return result;
 	}
+
+	@Override
+	public int updateRoomSanpShot(Room room) {
+		logger.info("updateRoomSanpShot("+room+") Start");
+		
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		int result = 0;
+		
+		try{
+			result = mapper.updateRoomSanpShot(room);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		logger.info("updateRoomSanpShot("+room+") End");
+		return result;
+	}
 	
 	
 }

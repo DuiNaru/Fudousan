@@ -230,6 +230,7 @@
 	
 	</update>
 	
+
 	<select id="">
 	select
 	*
@@ -240,6 +241,16 @@
 	
 	
 	</select>
+
+	<update id="updateRoomSanpShot" parameterType="room">
+		UPDATE
+			room
+		SET
+			snapshot = #{snapshot}
+		WHERE
+			room_id = #{roomId}
+	</update>
+>>>>>>> 7b3ad67b3b8ea3ad7ec3fd7592413ddd26f56b62
 
 	
 	
