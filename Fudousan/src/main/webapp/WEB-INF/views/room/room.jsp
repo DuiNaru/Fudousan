@@ -266,7 +266,7 @@ canvas {
 			</div>
 		</div>
 		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem, delItem)">
-		<input type="button" value="적용" onclick="itemApplyListener()">
+		<input type="button" value="적용" onclick="itemApplyListener(rorotate)">
 	</div>
 	<div class="bottom-menu">
 	
@@ -274,7 +274,6 @@ canvas {
 	
 	
 	
-	<!----------------------->
 	
 	
 	
@@ -282,7 +281,6 @@ canvas {
 	
 	
 	
-	<%-- 
 		<div>
 			<label>아이템 생성</label>
 			<ul>
@@ -309,13 +307,12 @@ canvas {
 					</li>
 				</c:forEach>
 			</ul>
-		</div> --%>
+		</div> 
 		
 		
 
 		
 		
-<!----------------------->
 		
 		
 		
@@ -334,9 +331,9 @@ canvas {
 						<li><button onclick="goback()">뒤로가기</button></li><br>
 						<li><button onclick="gofront()">앞으로가기</button></li><br>
 						<li><button onclick="save()">저장하기</button></li><br>
-						<li><button onclick="reset()">초기화</button></li><br>
+						<li><button onclick="roomReset(reset)">초기화</button></li><br>
 						<li><button onclick="esc()">종료</button>
-						<li><button onclick="takeSnapShot()">스냅샷 </button>
+						<li><button onclick="takeSnapShot(twinSnap)">스냅샷 </button>
 						<li id="snapshot">
 							<c:if test="${!empty room.snapshot }">
 								<img class="snapshot" src="<c:url value="${room.snapshot}"/>">

@@ -1,6 +1,10 @@
 var socket = io('http://localhost:8000');
 var justOne = 0;
 var whoAmI = 'x';
+var Array1 = [];
+var Array2 = [];
+var gangsin = null;
+
 function Command(){
 	this.name = "";
 	this.roomItem = null;
@@ -43,12 +47,13 @@ socket.on('commandPass',function(data){
 	if(cName=='add' && direc=='back'){
 		//추가된 아이템을 back해서 삭제됨
 		deleteItem(cTarget,function(){
+			socket.emit('othersideDel',JSON.stringify(cTarget));
 			/*deplaceRoomItem(cTarget); // 파라메터 받은 대상의 것을 삭제시킨다.
 */		});
 	}
 	if(cName=='add' && direc=='forward'){
 		//삭제되었던 아이템을 forward해서 추가됨
-			createItem(cTarget.item,function(roomitem){ // 2배열에서 보관해던거 꺼내서 생성함 (데이터베이스상)
+			createItem(cTarget,function(roomitem){ // 2배열에서 보관해던거 꺼내서 생성함 (데이터베이스상)
 				cTarget.roomItemId = roomitem.roomItemId;
 				cTarget.addForward = true;
 				cTarget.isForawrd = 'notFirst';
@@ -63,40 +68,53 @@ socket.on('commandPass',function(data){
 	}
 	if(cName=='delete' && direc=='back'){
 		//뒤로가기로 삭제되었던걸 다시 만들어야한다. 
-		createItem(cTarget,function(){
-
+		console.log(cTarget.roomItemId); //35
+		createItem(cTarget,function(roomitem){ 
+			cTarget.roomItemId = roomitem.roomItemId; //36
+			console.log(cTarget.roomItemId + '와 와 와'); //1788
+			socket.emit('othersideAdd',JSON.stringify(cTarget));
+			
+			var k0 = JSON.stringify(roomitem)
+			Array1.push(k0);
 		});
 	}
+	
 	if(cName=='delete' && direc=='forward'){
 		//앞으로가기하면 다시 삭제되고 사라져야한다. 
-			deleteItem(cTarget.item,function(roomitem){
-				
-				DeleteItemForward(cTarget); //1배열에 주는것 - 삭제버전
-				socket.emit('othersideDel',JSON.stringify(cTarget));
+		// 69라인에 있는거 가져와라 
+	
+		console.log('★★★★★★★★★★★★★'); 
+		console.log(gangsin);
+		console.log('★★★★★★★★★★★★★'); 
+		
+		
+		var dragon = objToRoomItem(gangsin);
+			deleteItem(dragon,function(roomitem){
+				dragon.roomItemId = roomitem.roomItemId;
+				console.log(dragon.roomItemId); 
+				DeleteItemForward(dragon); //1배열에 주는것 - 삭제버전
+				socket.emit('othersideDel',JSON.stringify(dragon));
 			});
 	}
 }); //commandPass의 끝
- 
+
+socket.on('gangsin',function(data){
+	var a = JSON.parse(data)
+	gangsin = a;
+});
+
+
 socket.on('othersideDel2',function(data){
 	var otherDel = objToRoomItem(JSON.parse(data));
-	console.log('넘겨준 최후의 것');
 	console.log(otherDel);
-	console.log('넘겨준 최후의 것');
-	
-	console.log('화면 생성술');
-	placeRoomItem(otherDel);
-	console.log('화면 생성술');
+	deplaceRoomItem(otherDel);
 });
 
 socket.on('othersideAdd2',function(data){
 	var otherAdd = objToRoomItem(JSON.parse(data));
-	console.log('넘겨준 최후의 것');
 	console.log(otherAdd);
-	console.log('넘겨준 최후의 것');
 
-	console.log('화면 생성술');
 	placeRoomItem(otherAdd);
-	console.log('화면 생성술');
 });
 
 //AddItem에서는 객체정보가 파라메터로 넘어가서 커맨더 만들어서 이름으로 커맨더 타입 지정하고 객체정보도 같이 보내서 서버가 밭게함
@@ -105,8 +123,8 @@ function AddItem(roomitem){
 	a.name = "add";
 	a.roomItem = roomitem;
 	a.isForward = 'first';
-	console.dir(a);
-	 socket.emit('addItem',JSON.stringify(a));
+	Array1.push(JSON.stringify(a));
+	socket.emit('addItem',JSON.stringify(a));
 }
 
 function AddItemForward(roomitem){
@@ -127,6 +145,7 @@ function delItem(roomitem){
 	var a = new Command();
 	a.name = "delete";
 	a.roomItem = roomitem;
+	Array1.push(JSON.stringify(a));
 	socket.emit('delItem',JSON.stringify(a));
 }
 
@@ -162,9 +181,31 @@ socket.on('youto',function(data){
 	console.log('상대방도 적용 되었습니다');
  });
  
+ socket.on('clearOther',function(){
+	clearRoom(); 
+ });
+ 
+ socket.on('urlOther',function(data){
+	 var url = data;
+	 refreshSnapshot(url);
+ })
+ 
+ 
+ function twinSnap(url){
+	 socket.emit('urlPass',url);
+ }
  
  function goback(){
 	console.log('뒤로가기'); 
+		if(Array1.length != 0){
+			var a0 = Array1.pop();
+			var a1 = JSON.parse(a0);
+			a1.direction = 'back';
+			var a2 = JSON.stringify(a1);
+			Array2.push(a2);
+		}else{
+			console.log('Array1 비어있습니다.');
+		}
 	socket.emit('array_back', {
 		roomId: room.roomId
 	});
@@ -172,6 +213,17 @@ socket.on('youto',function(data){
  
  function gofront(){
 	 console.log('앞으로가기');
+	 
+	 if(Array2.length != 0){
+			var a0 = Array2.pop();
+			var a1 = JSON.parse(a0);
+			a1.direction = 'forward';
+			var a2 = JSON.stringify(a1);
+			Array1.push(a2)
+		}else{
+			console.log('roomArray2 비어있습니다.');
+		}
+	 
 	 socket.emit('arrayBackCancel',{
 			roomId: room.roomId
 		});
@@ -190,9 +242,24 @@ socket.on('youto',function(data){
 	  };
  }
  function esc(){
+	 var escYes = confirm("정말로 종료하시겠습니까?");
+	 if(escYes){
+		 socket.emit('getoutOfRoom');
+		 location.href="/fudousan/";
+	 }
 	 console.log('종료하기');
  }
+ 
+ socket.on('imOut',function(){
+	alert('상대방이 접속을 종료하였습니다.'); 
+ });
+ 
+ 
  function checkArray(){
+	 console.dir(Array1);
+	 console.log(Array1.length);
+	 console.dir(Array2);
+	 console.log(Array2.length);
 	 socket.emit('showmethe');
  }
  
@@ -232,6 +299,14 @@ socket.on('lookSamePage',function(data){
 	/*console.log(abc);*/
 });
 
+function rorotate(roomitem){
+	console.log('111');
+	socket.emit('rotateItem',roomitem);
+}
 
+socket.on('rotateOther',function(data){
+	console.log('333');
+	rotateRoomItem(data);
+});
 
 
