@@ -17,404 +17,275 @@
 
 
 </head>
-<body >
-<div></div>
-<!-- 3D DESIGN MODAL START -->
-	<div class="modal fade" id="3dDesignModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">3D DESIGN</h4>
-				</div>
-				
-				
-				<div class="modal-body">
-				<div id="aritcleView">
-					  <div class="gal-container">
-						 <!--    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
-						      <div class="box">
-						        <a href="#" data-toggle="modal" data-target="#1">
-						          <img src="../resources/image/jedai0.jpg">
-						        </a>
-						      </div>
-						    </div>
-						    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
-						      <div class="box">
-						        <a href="#" data-toggle="modal" data-target="#2">
-						         <img src="../resources/image/jedai1.jpg">
-						        </a>
-						      </div>
-						    </div>
-						    <div class="col-md-4 col-sm-6 co-xs-12 gal-item">
-						      <div class="box">
-						        <a href="#" data-toggle="modal" data-target="#3">
-						         <img src="../resources/image/jedai2.jpg">
-						        </a>
-						      </div>
-						    </div> -->
-						 </div>
-						 
-						<h1 id = "test"></h1>					
-					    <div style="clear: both;"></div>
-					  </div> 
-					  
-				</div>
-			</div>
-		</div>
-	</div>
+<body>
+	<!-- 3d design modal  -->
+ 	<%@include file="/WEB-INF/views/include/3ddesignmodal.jsp" %>
+ 	
+ 	<!-- login modal  -->
+ 	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
 	
-	<!-- 3D DESIGN MODAL END -->
+	<!-- header -->
+	<%@include file="/WEB-INF/views/include/header.jsp" %>
 
-	<!-- 로그인 모달 -->
-	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Login</h4>
-				</div>
-				
-				<div class="modal-body">
-					Email <input type="text" id="memberEmail" name="memberID">
-					Password <input type="password" id="password" name="password">
-					<button type="button" id="loginBtn">Login</button>
-				</div>
-				
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 로그인 모달 끝 -->
-	
-	
-	
-	
-	
-	
-	
-	<!-- Header -->
-	<nav class="navbar navbar-default" style="margin: auto 0"> 
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				
-				<a class="navbar-brand" href="#" style="margin-bottom: 10px;">
-					<img alt="Fudousan" src="../resources/image/logo2.png">
-				</a>
-			</div>
-			
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
-				<c:if test="${sessionScope.loginEmail == null}">
-					<li id="loginNameTag"></li>
-					<li id="loginAtag"><a data-toggle="modal" href="#loginModal">Login</a></li>
-				</c:if>
-				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
-					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout">Logout</a></li>
-					<li><a href="memberupdate/memberupdate">update member</a>
-				</c:if>
-				<c:if test="${sessionScope.permissionId == 3 }">
-					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout">Logout</a></li>
-					<li><a href="memberupdate/agencyupdate">update member</a>
-				</c:if>
-				<c:if test="${sessionScope.permissionId == 99 }">
-					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout">Logout</a></li>
-				</c:if>
-				
-				
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Join <span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="/fudousan/join/join">Customer Join</a></li>
-							<li class="divider"></li>
-							
-							<li><a href="../join/agencyjoin">Agency Join</a></li>
-						</ul>
-					</li>
-					
-					
-					<c:if test="${sessionScope.loginId != null && sessionScope.isNormal == normal}">
-						<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>
-					</c:if>
-					
-					
-				</ul>
-			</div><!-- /.navbar-collapse -->
-		</div><!-- /.container-fluid -->
-	</nav>
-   
- 
-<!-- agency Location List -->
+
+<!-- main layout -->
 <div class="container-fluid text-center">    
   <div class="row content">
+    
+    <!-- side nav(left) -->
     <div class="col-sm-2 sidenav">
-    	<!-- <a data-toggle="modal" href="#loginModal">Login</a> -->
-    
-    
-		    <a data-toggle="modal" href="#3dDesignModal" class="btn btn-success btn-lg">
-		      <span class="glyphicon glyphicon-print"></span>  3D DESIGN
-		    </a>
-<!--       <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p> -->
+		<a data-toggle="modal" href="#3dDesignModal" class="btn btn-success btn-lg">
+			<span class="glyphicon glyphicon-print"></span> 3D DESIGN
+		</a>
     </div>
-    <div class="col-sm-8 text-left"> 
     
-      <h1>Details</h1>
-      	<p>${resultEstate.address},  ${resultEstate.region }</p>
-      <hr>
-         <label for="id-of-input" class="custom-checkbox">
-		  <input type="checkbox" id="id-of-input"/>
-		  <i class="glyphicon glyphicon-star-empty" id="empty"></i>
-		  <i class="glyphicon glyphicon-star" id="full"></i>
+    <!-- text main -->
+	<div class="col-sm-8 text-left"> 
+		<h1>Details</h1>
+		<p>${resultEstate.address},  ${resultEstate.region }</p>
+    	
+    	<hr>
+		
+		<!-- Favorite Button -->
+		<label for="id-of-input" class="custom-checkbox">
+  			<input type="checkbox" id="id-of-input"/>
+  			<i class="glyphicon glyphicon-star-empty" id="empty"></i>
+  			<i class="glyphicon glyphicon-star" id="full"></i>
 		</label>
-      
-      <div id="map"></div>
+    
+    	<!-- map  -->
+    	<div id="map"></div>
     	
-    	
-      <hr>
+    	<hr>
 
-      <div class="row row-flex" id="box">
-        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-            <div class="price-table pt-bg-black">
-                <div>
-                    <span>PRICE</span>
-                    <span>Price ${resultEstate.tradeprice}¥</span>
-                </div>
-                <ul>
-                    <li>
-                    	<h6>Trade Price</h6>
-                    	${resultEstate.tradeprice}¥
-                    </li>
-                    <li>
-                    	<h5>Unit Price</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.priceperunit != null}">
-                   	   	 	 <h6>${resultEstate.unitprice}¥</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>
-                   	   </c:choose>
-                    </li>
-                    <li>
-                       <h5>Price Per Unit</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.priceperunit != null}">
-                   	   	 	 <h6>${resultEstate.priceperunit}¥</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-            <div class="price-table pt-bg-green">
-                <div>
-                    <span>Over view</span>
-                    <span>About Estate</span>
-                    
-                </div>
-                <ul>
-                    <li>
-						<h5>Area</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.area != null}">
-                   	   	 	 <h6>${resultEstate.area}㎥</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>
-                    </li>
-                    <li>
-					   <h5>LandShape</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.landshape != null}">
-                   	   	 	 <h6>${resultEstate.area}㎥</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>
-                    
-                    </li>
-                    <li>
-					   <h5>Frontage</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.frontage != null}">
-                   	   	 	 <h6>${resultEstate.frontage}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>                    	
-                    </li>
-                    <li>
-					   <h5>Total Floor Area</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.totalfloorarea != null}">
-                   	   	 	 <h6>${resultEstate.totalfloorarea}㎥</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>       
-                    </li>
-
+    <div class="row row-flex" id="box">
+      	<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+          	<div class="price-table pt-bg-black">
+	            <div>
+					<span>PRICE</span>
+	                <span>Price ${resultEstate.tradeprice}¥</span>
+				</div>
+				<ul>
+    				<li>
+				    	<h6>Trade Price</h6>
+				    	${resultEstate.tradeprice}¥
+					</li>
 					<li>
-                    <h5>Breadth</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.breadth != null}">
-                   	   	 	 <h6>${resultEstate.breadth}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>    
-                    </li>
+						<h5>Unit Price</h5>
+   						<c:choose>
+							<c:when test="${resultEstate.priceperunit != null}">
+								<h6>${resultEstate.unitprice}¥</h6>
+							</c:when>	
+							<c:otherwise>
+								<h6>Nothing</h6>
+							</c:otherwise>
+						</c:choose>
+					</li>
 					<li>
-                    <h5>Coverage Ratio</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.coverageratio != null}">
-                   	   	 	 <h6>${resultEstate.coverageratio}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>    
-                    </li>
-                    <li>
-                    <h5>Floor Area Ratio</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.floorarearatio != null}">
-                   	   	 	 <h6>${resultEstate.floorarearatio}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>    
-                    </li>
-                </ul>
-            </div>
+   						<h5>Price Per Unit</h5>
+   						<c:choose>
+							<c:when test="${resultEstate.priceperunit != null}">
+								<h6>${resultEstate.priceperunit}¥</h6>
+							</c:when>	
+							<c:otherwise>
+								<h6>Nothing</h6>
+							</c:otherwise>                    	
+						</c:choose>
+             		</li>
+          		</ul>
+			</div>
+		</div>
+	<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+		<div class="price-table pt-bg-green">
+			<div>
+				<span>Over view</span>
+				<span>About Estate</span>  
+			</div>
+            <ul>
+            	<li>
+					<h5>Area</h5>
+                    <c:choose>
+						<c:when test="${resultEstate.area != null}">
+							<h6>${resultEstate.area}㎥</h6>
+						</c:when>	
+						<c:otherwise>
+							<h6>Nothing</h6>
+						</c:otherwise>                    	
+					</c:choose>
+            	</li>
+            	<li>
+					<h5>LandShape</h5>
+           	   		<c:choose>
+						<c:when test="${resultEstate.landshape != null}">
+							<h6>${resultEstate.area}㎥</h6>
+						</c:when>	
+						<c:otherwise>
+							<h6>Nothing</h6>
+						</c:otherwise>                    	
+					</c:choose>
+				</li>
+            	<li>
+					<h5>Frontage</h5>
+           	   		<c:choose>
+						<c:when test="${resultEstate.frontage != null}">
+							<h6>${resultEstate.frontage}</h6>
+						</c:when>	
+						<c:otherwise>
+							<h6>Nothing</h6>
+						</c:otherwise>                    	
+					</c:choose>                    	
+            	</li>
+            	<li>
+					<h5>Total Floor Area</h5>
+           	   		<c:choose>
+						<c:when test="${resultEstate.totalfloorarea != null}">
+							<h6>${resultEstate.totalfloorarea}㎥</h6>
+						</c:when>	
+						<c:otherwise>
+							<h6>Nothing</h6>
+						</c:otherwise>                    	
+					</c:choose>       
+               </li>
+				<li>
+               		<h5>Breadth</h5>
+              	   		<c:choose>
+							<c:when test="${resultEstate.breadth != null}">
+								<h6>${resultEstate.breadth}</h6>
+							</c:when>	
+							<c:otherwise>
+								<h6>Nothing</h6>
+							</c:otherwise>                    	
+						</c:choose>    
+               </li>
+<li>
+               <h5>Coverage Ratio</h5>
+              	   <c:choose>
+<c:when test="${resultEstate.coverageratio != null}">
+<h6>${resultEstate.coverageratio}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>    
+</li>
+<li>
+<h5>Floor Area Ratio</h5>
+   <c:choose>
+<c:when test="${resultEstate.floorarearatio != null}">
+<h6>${resultEstate.floorarearatio}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>    
+            </li>
+        </ul>
+    </div>
+</div>
+      <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+    <div class="price-table pt-bg-blue">
+        <div>
+            <span>OVER VIEW</span>
+            <span>About Estate</span>        
         </div>
-              <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-            <div class="price-table pt-bg-blue">
-                <div>
-                    <span>OVER VIEW</span>
-                    <span>About Estate</span>        
-                </div>
-                <ul>
-                     <li>
-                    	<h5>BuildingYear</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.buildingyear != null}">
-                   	   	 	 <h6>${resultEstate.buildingyear}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>       
-                    </li>
-                    <li>
-                    	<h5>Structure</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.structure != null}">
-                   	   	 	 <h6>${resultEstate.structure}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>    
-                    </li>
-                    <li>
-                    <h5>Direction</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.direction != null}">
-                   	   	 	 <h6>${resultEstate.direction}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>    
-                    </li>
-                </ul>
-            </div>
+        <ul>
+             <li>
+            	<h5>BuildingYear</h5>
+           	   <c:choose>
+<c:when test="${resultEstate.buildingyear != null}">
+<h6>${resultEstate.buildingyear}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>       
+</li>
+<li>
+	<h5>Structure</h5>
+   <c:choose>
+<c:when test="${resultEstate.structure != null}">
+<h6>${resultEstate.structure}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>    
+</li>
+<li>
+<h5>Direction</h5>
+   <c:choose>
+<c:when test="${resultEstate.direction != null}">
+<h6>${resultEstate.direction}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>    
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
+    <div class="price-table pt-bg-red">
+        <div>
+            <span>ETC</span>
+            <span>About estate</span>
         </div>
-        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-            <div class="price-table pt-bg-red">
-                <div>
-                    <span>ETC</span>
-                    <span>About estate</span>
-                </div>
-                <ul>
-                    <li>
-                    <h5>Use</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.use != null}">
-                   	   	 	 <h6>${resultEstate.use}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>                        
-                    </li>
-                    <li>
-                    <h5>Renovation</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.renovation != null}">
-                   	   	 	 <h6>${resultEstate.renovation}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>                        
-                    </li>
-                    <li>
-					    <h5>Classification</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.classification != null}">
-                   	   	 	 <h6>${resultEstate.classification}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>   
-                    </li>
-                    <li>
-                    	<h5>City Planning</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.cityplanning != null}">
-                   	   	 	 <h6>${resultEstate.cityplanning}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>   
-                    </li>
-                    <li>
-                       <h5>Remarks</h5>
-                   	   <c:choose>
-                   	   	 <c:when test="${resultEstate.remarks != null}">
-                   	   	 	 <h6>${resultEstate.remarks}</h6>
-                   	   	 </c:when>	
-                   	   	 <c:otherwise>
-                   	   		 <h6>Nothing</h6>
-                   	   	 </c:otherwise>                    	
-                    	</c:choose>   
+        <ul>
+            <li>
+            <h5>Use</h5>
+           	   <c:choose>
+<c:when test="${resultEstate.use != null}">
+<h6>${resultEstate.use}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>                        
+</li>
+<li>
+<h5>Renovation</h5>
+   <c:choose>
+<c:when test="${resultEstate.renovation != null}">
+<h6>${resultEstate.renovation}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>                        
+           </li>
+           <li>
+<h5>Classification</h5>
+          	   <c:choose>
+<c:when test="${resultEstate.classification != null}">
+<h6>${resultEstate.classification}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>   
+</li>
+<li>
+	<h5>City Planning</h5>
+   <c:choose>
+<c:when test="${resultEstate.cityplanning != null}">
+<h6>${resultEstate.cityplanning}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>   
+</li>
+<li>
+   <h5>Remarks</h5>
+   <c:choose>
+<c:when test="${resultEstate.remarks != null}">
+<h6>${resultEstate.remarks}</h6>
+</c:when>	
+<c:otherwise>
+<h6>Nothing</h6>
+</c:otherwise>                    	
+</c:choose>   
                     </li>
                 </ul>
             </div>
@@ -429,12 +300,12 @@
 		
       
       
-    <!-- 	 <button><img alt="이미지 없음" src="../resources/image/Ripple-1s-58px.gif"></button> -->
+   
     
       <br>	
-    <!--   <div class="well">
+    <div class="well">
         <p>인테리어 업자에게 연락하기</p>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>
