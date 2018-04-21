@@ -152,4 +152,14 @@ public class MemberDAOOracle implements MemberDAO {
 		
 		return result; 
 	}
+	
+	/*public int interior(Member member){
+		
+		
+		
+	
+		return  "";
+	}*/
+	
+	
 }
