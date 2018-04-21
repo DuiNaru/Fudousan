@@ -151,7 +151,9 @@ function init() {
 	scene.add(directionalLight);
 
 	// 렌더러
-	renderer = new THREE.WebGLRenderer();
+	renderer = new THREE.WebGLRenderer({
+        preserveDrawingBuffer: true
+    });
 	//renderer = new THREE.WebGLRenderer( { canvas: canvas, antialias: true } );
 	renderer.shadowMap.enabled = true;
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -1345,6 +1347,7 @@ function applyItemChange(roomItem) {
 }
 
 function reset() {
+	$( "#blocker" ).show();
 	$.ajax({
 		url:"roomItem/reset",
 		type:"POST",
@@ -1380,6 +1383,74 @@ function reset() {
 			
 		}
 	});
+}
+
+/**
+ * 현재 화면을 촬영해서 서버에 저장한다.
+ * @returns
+ */
+function takeSnapShot() {
+	
+	var strMime = "image/jpeg";
+	var imgData = renderer.domElement.toDataURL(strMime);
+    
+    var blob = dataURItoBlob(imgData);
+
+    var formData = new FormData();
+    formData.append("file", blob, room.roomId);
+    
+	$( "#blocker" ).show();
+    $.ajax({
+    	
+		url:"snapshot",
+		type:"POST",				
+		data:formData,
+		processData: false,
+	    contentType: false,
+		dataType:"text",	
+		success:function(data) {
+			
+			if(data != null) {
+				
+				var snapshotURL = data;
+				$("#snapshot").html("<img class='snapshot' src='/fudousan"+data+"'>");
+				
+			} else {
+				
+				alert("스냅샷 저장에 실패하였습니다.");
+				
+			}
+
+			$( "#blocker" ).hide();
+			
+		},
+		error:function(e) {
+			
+			console.log(e);
+			alert("스냅샷 저장 중 오류가 발생하였습니다.");
+
+			$( "#blocker" ).hide();
+			
+		}
+	});
+}
+
+function dataURItoBlob(dataURI)
+{
+    var byteString = atob(dataURI.split(',')[1]);
+
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++)
+    {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    var bb = new Blob([ab], { "type": mimeString });
+    
+    return bb;
 }
 
 //-------------

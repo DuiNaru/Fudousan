@@ -135,6 +135,7 @@ public class ItemService {
 		logger.info("downloadFile({}, {}) Start", filePath, fileName);
 		boolean result = false;
 		FileService.writeFile(modelFileBaseDirectory + filePath + "/" + fileName, os);
+		result = true;
 		logger.info("downloadFile({}, {}) End", filePath, fileName);
 		return result;
 	}

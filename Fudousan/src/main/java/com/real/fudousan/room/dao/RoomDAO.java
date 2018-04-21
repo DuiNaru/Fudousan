@@ -69,6 +69,12 @@ public interface RoomDAO {
 	//벽높이 
 	public int wallheightchange(Room room);
 
+	/**
+	 * room 테이블에서 roomId에 해당하는 snapshot 데이터를 업데이트 한다.
+	 * @param room
+	 * @return
+	 */
+	public int updateRoomSanpShot(Room room);
 }
 
 
