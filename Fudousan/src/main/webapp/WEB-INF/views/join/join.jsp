@@ -118,7 +118,7 @@
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
 	</nav>
- 
+	
 	<!--  join form  -->
 	<article class="container">
         <div class="page-header">

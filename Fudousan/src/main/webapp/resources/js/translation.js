@@ -1,4 +1,6 @@
 $(function(){
+	//$("style").append("* {font-family: 'Yu Gothic';}");
+	
 	let lang = getCookie("lang");
 	let url = "";
 	
@@ -20,10 +22,6 @@ $(function(){
 	xhr.send();
 	
 	let changeLanguage = function(lang, json){
-		if (lang === "jp"){
-			$("style").append("* {font-family: 'Yu Gothic Medium'}");
-		}
-		
 		$("[data-lang]").each(function(){
 			let element = $(this);
 			

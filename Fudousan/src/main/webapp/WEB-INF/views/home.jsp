@@ -132,7 +132,7 @@
 				</button>
 				
 				<a class="navbar-brand" href="#" style="margin-bottom: 10px;">
-					<img alt="Fudousan" src="../resources/image/logo2.png">
+					<img alt="Fudousan" src="./resources/image/logo2.png">
 				</a>
 			</div>
 			
