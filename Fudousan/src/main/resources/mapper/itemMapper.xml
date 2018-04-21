@@ -159,4 +159,11 @@
 		DELETE FROM item
 		WHERE item_id = #{0}
 	</delete>
+	
+	<select id="selectAllItemType" resultMap="itemTypeResultMap">
+		SELECT
+			*
+		FROM
+			item_type
+	</select>
 </mapper>

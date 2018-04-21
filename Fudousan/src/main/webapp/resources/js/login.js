@@ -18,7 +18,7 @@ function formCheck(){
 	}
 	else {
 		$.ajax({
-			url: 'login',
+			url: '/fudousan/login',
 			type: 'post',
 			data: {email: memberEmail.val(), password: password.val()},
 			dataType: 'json',

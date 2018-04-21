@@ -19,7 +19,7 @@
 	<header>헤더</header>
 	<div class="col-sm-12">
 		<div class="col-sm-offset-3 col-sm-6">
-			<form id="itemform" action="moditem" method="post" onreset="formreset()" enctype="multipart/form-data">
+			<form id="itemform" action="moditem" method="post" onreset="formreset()">
 				<%@ include file="./itemForm.jsp" %>
 			</form>
 		</div>

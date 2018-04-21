@@ -14,7 +14,9 @@
 				<div class="form-group">
 					<label>アイテムタイプ</label>
 					<select id="type" name="itemTypeId" class="form-control" required="required">
-						<option value="1"<c:if test="${!empty item && item.itemType.itemTypeId == 1}"> selected="selected"</c:if>>test</option>
+						<c:forEach var="type" items="${itemTypeList}">
+							<option value="${type.itemTypeId}"<c:if test="${!empty item && item.itemType.itemTypeId == type.itemTypeId}"> selected="selected"</c:if>>${type.itemTypeName}</option>
+						</c:forEach>
 					</select>
 				</div>
 				<div class="form-group">

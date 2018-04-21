@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.item.dao.ItemDAO;
 import com.real.fudousan.item.vo.Item;
+import com.real.fudousan.item.vo.ItemType;
 
 @Service
 public class ItemService {
@@ -51,17 +52,11 @@ public class ItemService {
 	 * @param files 파일이 있으면 함께 수정한다.
 	 * @return
 	 */
-	public boolean modifyItem(Item item, List<MultipartFile> files) {
-		logger.info("modifyItem(" + item + ", " + files +  ") Start");
+	public boolean modifyItem(Item item) {
+		logger.info("modifyItem(" + item + ") Start");
 		boolean result = false;
-		if((result = itemDao.update(item)) && files != null) {
-			logger.info("DAO update -> " + result);
-			FileService.deleteDirectory(modelFileBaseDirectory + item.getItemId());
-			for(MultipartFile file : files) {
-				FileService.saveFile(file, modelFileBaseDirectory + item.getItemId(), true);
-			}
-		}
-		logger.info("modifyItem(" + item + ", " + files +  ") End");
+		result = itemDao.update(item);
+		logger.info("modifyItem(" + item + ") End");
 		return result;
 	}
 	
@@ -140,7 +135,13 @@ public class ItemService {
 		return result;
 	}
 	
-
+	public List<ItemType> getItemTypeList() {
+		logger.info("getItemTypeList() Start");
+		List<ItemType> result = null;
+		result = itemDao.selectAllItemType();
+		logger.info("getItemTypeList() End");
+		return result;
+	}
 	
 	
 }

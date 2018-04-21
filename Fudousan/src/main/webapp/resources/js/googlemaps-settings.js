@@ -93,8 +93,8 @@
 	        });
 	       /*  map.setCenter(marker.getPosition()) */
 			
-	       if (loan.includes="Agency") {
-	           var content =  '<div>'+'<h3>'+'Infomation'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'<a href="agency/detailedinfomation?id='+loan+'">'+'detailed infomation'+'</a>'+'</div>'		
+	       if (loan.includes="AgencyId") {
+	           var content =  '<div>'+'<h3>'+'Infomation'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'</div>'		
 		   }
 	       
 	       if (loan.includes="Estate"){

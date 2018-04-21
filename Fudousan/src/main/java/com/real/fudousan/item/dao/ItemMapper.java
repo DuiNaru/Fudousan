@@ -3,6 +3,7 @@ package com.real.fudousan.item.dao;
 import java.util.List;
 
 import com.real.fudousan.item.vo.Item;
+import com.real.fudousan.item.vo.ItemType;
 
 public interface ItemMapper {
 	public int insert(Item item);
@@ -13,5 +14,5 @@ public interface ItemMapper {
 	public boolean deleteAllRefSite(int itemId);
 	public boolean delete(int itemId);
 	public List<Item> selectByName(String itemName);
-	
+	public List<ItemType> selectAllItemType();
 }
