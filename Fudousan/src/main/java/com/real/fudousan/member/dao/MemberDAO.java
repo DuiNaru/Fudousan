@@ -24,6 +24,8 @@ public interface MemberDAO {
 	public int updateAgencyMember(Member member);
 	public int updateAgency(Agency agency);
 
-
+	//인테리어 업자만 뽑아옴
+	public int interior(Member member);
+	
 
 }

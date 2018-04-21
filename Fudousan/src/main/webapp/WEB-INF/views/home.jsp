@@ -145,12 +145,22 @@
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
+<<<<<<< HEAD
+					
+					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
+=======
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
+>>>>>>> 5e05779ea60a2b4a7a37a337728e9abda43e7c13
 					<li><a href="memberupdate/memberupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 3 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
+<<<<<<< HEAD
+					<li><a href="bm"> 매물 확인 </a></li>
+					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
+=======
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
+>>>>>>> 5e05779ea60a2b4a7a37a337728e9abda43e7c13
 					<li><a href="memberupdate/agencyupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
@@ -167,7 +177,11 @@
 						</ul>
 					</li>
 					
-					<li><a href="bm">[okh test]</a></li>
+					
+					
+					
+					
+					<li><a href="helpCallPage">메일 보내기</a></li>
 					
 					<li><a href="javascript:selectLanguage('ko')">한국어</a></li>
 					<li><a href="javascript:selectLanguage('jp')">日本語</a></li>
