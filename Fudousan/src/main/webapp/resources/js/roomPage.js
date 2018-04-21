@@ -419,7 +419,7 @@ function drawWall() {
 	scene.add(walls);
 }
 
-function drawFloor() {
+function drawFloor(side) {
 	
 	// 커넥터 추출
 	var con = [];
@@ -577,11 +577,11 @@ function drawFloor() {
 			curX = con[sortY[i]].x;
 		}
 	}*/
-	var possible = searchOutline( top, right, con, adjMatrix, 1, edge );
+	/*var possible = searchOutline( top, right, con, adjMatrix, 1, edge );
 
 	possible.forEach(function (item, index, array) {
 		outline.push(item);
-		});
+		});*/
 	
 	
 	// 2사분면(right to bottom)
@@ -593,11 +593,11 @@ function drawFloor() {
 			curY = con[sortX[i]].y;
 		}
 	}*/
-	var possible = searchOutline( right, bottom, con, adjMatrix, 2, edge );
+	/*var possible = searchOutline( right, bottom, con, adjMatrix, 2, edge );
 
 	possible.forEach(function (item, index, array) {
 		outline.push(item);
-		});
+		});*/
 	
 	// 3사분면(bottom to left)
 	/*var possible = [bottom];
@@ -609,11 +609,11 @@ function drawFloor() {
 		}
 	}*/
 
-	var possible = searchOutline( bottom, left, con, adjMatrix, 3, edge );
+	/*var possible = searchOutline( bottom, left, con, adjMatrix, 3, edge );
 	
 	possible.forEach(function (item, index, array) {
 		outline.push(item);
-		});
+		});*/
 
 	// 4사분면(left to top)
 	/*var possible = [left];
@@ -625,11 +625,13 @@ function drawFloor() {
 		}
 	}*/
 
-	var possible = searchOutline( left, top, con, adjMatrix, 4, edge );
+	/*var possible = searchOutline( left, top, con, adjMatrix, 4, edge );
 	
 	possible.forEach(function (item, index, array) {
 		outline.push(item);
-		});
+		});*/
+	
+	outline = searchOutline(top, con, adjMatrix);
 	
 	console.log("아웃라인?");
 	console.log(outline);
@@ -648,20 +650,20 @@ function drawFloor() {
 	
 	//var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
 	var roomFloorGeometry = new THREE.ShapeGeometry( shape );
-	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
+	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, side:((side===undefined||side)?THREE.FrontSide:THREE.BackSide)});
 	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
 	
 	return floor;
 }
 
-function searchOutline( startPoint, endPoint, points, connectMap, area, edge ) {
+/*function searchOutline( startPoint, endPoint, points, connectMap, area, edge ) {
 	var top = edge[0];
 	var bottom = edge[1];
 	var left = edge[2];
 	var right = edge[3];
 	var possible = [startPoint];
 	var curIndex = startPoint;
-	var pastIndex = -1;
+	var pastIndex = startPoint;
 	
 	// 시작 과 끝 점이 같으면 그 점만 반환
 	if ( startPoint != endPoint ) {
@@ -718,6 +720,7 @@ function searchOutline( startPoint, endPoint, points, connectMap, area, edge ) {
 					console.log(curIndex + " / " + moveIndex + " : " + points[curIndex].x + " / " + points[moveIndex].x);
 				}
 			}
+			console.log("moveIndex("+moveIndex+")");
 			// 4. 가장 오른쪽 점 선택
 			possible.push(moveIndex);
 			// 5. 이전 지점 저장해두기
@@ -734,6 +737,49 @@ function searchOutline( startPoint, endPoint, points, connectMap, area, edge ) {
 		
 	}
 	console.log("end area(" + area + ")");
+	console.log(possible);
+	return possible;
+}*/
+
+function searchOutline(startPoint, points, connectMap) {
+	var possible = [startPoint];
+	var curIndex = startPoint;
+	var pastIndex = startPoint;
+		for(var i = 0; i < points.length; i++) {
+			var moveIndex;
+			var minAngle = 1000;
+			for ( var j = 0; j < connectMap[curIndex].length; j++ ) {
+				if ( j != pastIndex && connectMap[curIndex][j] == 1 ) {
+					var pastVector = new THREE.Vector2(points[pastIndex].x, points[pastIndex].y).sub(new THREE.Vector2(points[curIndex].x, points[curIndex].y));
+					//var pastVector = new THREE.Vector2(points[curIndex].x, points[curIndex].y).sub(new THREE.Vector2(points[pastIndex].x, points[pastIndex].y));
+					var curVector = new THREE.Vector2(points[j].x, points[j].y).sub(new THREE.Vector2(points[curIndex].x, points[curIndex].y));
+					console.log(pastVector);
+					console.log(curVector);
+					var pastAngle = pastVector.angle()*180/Math.PI;
+					var curAngle = curVector.angle()*180/Math.PI;
+					console.log(pastAngle);
+					console.log(curAngle);
+					var p_c = pastAngle-curAngle;
+					if ( p_c < 0 ) p_c = 360+p_c;
+					console.log("check j : "+j+", p-c = " + p_c);
+					
+					if ( p_c < minAngle ) {
+						minAngle = p_c;
+						moveIndex = j;
+						console.log("possible select("+moveIndex+"), angle : "+minAngle);
+					}
+				}
+			}
+			console.log("moveIndex("+moveIndex+")");
+			possible.push(moveIndex);
+			pastIndex = curIndex;
+			curIndex = moveIndex;
+			if ( curIndex == startPoint ) {
+				console.log("reach to end(" + curIndex + ")");
+				break;
+			}
+			console.log("move to " + curIndex);
+		}
 	console.log(possible);
 	return possible;
 }
