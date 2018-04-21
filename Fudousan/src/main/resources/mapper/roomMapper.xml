@@ -135,7 +135,7 @@
 	<select id="selectEstateRoom" resultMap="roomResultMap" parameterType="int">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
-			estate.ESTATE_ID = #{ESTATE_ID}
+			estate.estate_id = #{estateId}
 	</select>
 	
 	<select id="getTotal" resultType="int" parameterType="int">
@@ -144,7 +144,7 @@
 		from 
 			room
 		where
-			estate.ESTATE_ID = #{ESTATE_ID}
+			room.estate_id = #{estateId}
 	</select>
 	
 	
@@ -230,19 +230,7 @@
 	
 	</update>
 	
-	<select id="selectRoomEstate" resultMap="roomResultMap">
-		SELECT 
-			room_id,
-			room_title,
-			cre_date,
-			snapshot
-		FROM 
-		
-		WHERE 
-			estate_id=#{estate.estateId}
-	
-	
-	</select>
+
 
 	
 	
