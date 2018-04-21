@@ -27,7 +27,7 @@
 	
 	
 	
-	<select id="interior" parameterType="member">
+	<select id="interior" resultType="member">
 	select
 	*
 	from
