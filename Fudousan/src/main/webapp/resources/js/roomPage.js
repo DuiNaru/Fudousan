@@ -1357,13 +1357,7 @@ function roomReset(onReset) {
 			
 			if(data != null && data != false && data != "false") {
 
-				for( var i = curRoomItems.length - 1; i >= 0; i--) {
-					scene.remove(curRoomItems[i]);
-				}
-				
-				curRoomItems = [];
-				curSelected = null;
-				curSelectedOriginal = null;
+				clearRoom();
 				
 				if (onReset !== undefined) {
 					onReset();
@@ -1387,6 +1381,16 @@ function roomReset(onReset) {
 			
 		}
 	});
+}
+
+function clearRoom() {
+	for( var i = curRoomItems.length - 1; i >= 0; i--) {
+		scene.remove(curRoomItems[i]);
+	}
+	
+	curRoomItems = [];
+	curSelected = null;
+	curSelectedOriginal = null;
 }
 
 /**
