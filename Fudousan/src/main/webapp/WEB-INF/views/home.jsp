@@ -102,17 +102,17 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title"><span data-lang="login"></span></h4>
+					<h4 class="modal-title" data-lang="0"></h4>
 				</div>
 				
 				<div class="modal-body">
-					<span data-lang="email"></span> <input type="text" id="memberEmail" name="memberID">
-					<span data-lang="password"></span> <input type="password" id="password" name="password">
-					<button type="button" id="loginBtn"><span data-lang="login"></span></button>
+					<span data-lang="2"></span> <input type="text" id="memberEmail" name="memberID">
+					<span data-lang="3"></span> <input type="password" id="password" name="password">
+					<button type="button" id="loginBtn" data-lang="0"></button>
 				</div>
 				
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal"><span data-lang="cancel"></span></button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal" data-lang="4"></button>
 				</div>
 			</div>
 		</div>
@@ -120,7 +120,7 @@
 	<!-- 로그인 모달 끝 -->
 	
 	<!-- Header -->
-	<nav class="navbar navbar-default" style="margin: auto 0"> 
+	<nav class="navbar navbar-default" style="margin: auto 0">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
@@ -132,7 +132,7 @@
 				</button>
 				
 				<a class="navbar-brand" href="#" style="margin-bottom: 10px;">
-					<img alt="Fudousan" src="resources/image/logo2.png">
+					<img alt="Fudousan" src="./resources/image/logo2.png">
 				</a>
 			</div>
 			
@@ -141,30 +141,29 @@
 				<ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
 				<c:if test="${sessionScope.loginEmail == null}">
 					<li id="loginNameTag"></li>
-					<li id="loginAtag"><a data-toggle="modal" href="#loginModal"><span data-lang="login"></span></a></li>
+					<li id="loginAtag"><a data-toggle="modal" href="#loginModal" data-lang="0"></a></li>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
+					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 					<li><a href="memberupdate/memberupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 3 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
+					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 					<li><a href="memberupdate/agencyupdate">update member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
+					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 				</c:if>
-				
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span data-lang="join"></span><span class="caret"></span></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span data-lang="5"></span><span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="join/join"><span data-lang="customerjoin"></span></a></li>
+							<li><a href="/fudousan/join/join" data-lang="6"></a></li>
 							<li class="divider"></li>
 							
-							<li><a href="join/agencyjoin"><span data-lang="agencyjoin"></span></a></li>
+							<li><a href="/fudousan/join/agencyjoin" data-lang="7"></a></li>
 						</ul>
 					</li>
 					
@@ -177,7 +176,6 @@
 					<c:if test="${sessionScope.loginId != null && sessionScope.isNormal == normal}">
 						<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>
 					</c:if>
-					
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->

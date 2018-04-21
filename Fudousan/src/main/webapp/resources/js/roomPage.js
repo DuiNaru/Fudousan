@@ -438,7 +438,7 @@ function drawFloor() {
 		if(!flag2) con.push(c2);
 	}
 	console.log(con);
-	/*
+	
 	// 방문 기록
 	var visit = [];
 	// 인접 행렬 생성
@@ -467,7 +467,7 @@ function drawFloor() {
 		
 	}
 	console.log(adjMatrix);
-	
+	/*
 	var shape = new THREE.Shape();
 	// 탐색 시작
 	DFS(0, adjMatrix, visit, shape, con);
@@ -566,58 +566,67 @@ function drawFloor() {
 	var left = sortX[0];
 	var right = sortX[sortX.length-1];
 	console.log("top("+top+"), bottom("+bottom+"), left("+left+"), right("+right+")");
+	var edge = [top, bottom, left, right];
 	
 	// 1사분면(top to right)
-	var possible = [top];
+	/*var possible = [top];
 	var curX = con[top].x;
 	for(var i = sortY.length-2; i >= 0 && con[sortY[i]].y >= con[right].y; i--) {
 		if ( con[sortY[i]].x >= curX ) {
 			possible.push(sortY[i]);
 			curX = con[sortY[i]].x;
 		}
-	}
-	/*
-	// 외곽선만 찾아서 남긴다.
-	removeRightVector(possible);*/
+	}*/
+	var possible = searchOutline( top, right, con, adjMatrix, 1, edge );
+
 	possible.forEach(function (item, index, array) {
 		outline.push(item);
 		});
 	
+	
 	// 2사분면(right to bottom)
-	var possible = [right];
+	/*var possible = [right];
 	var curY = con[right].y;
 	for( var i = sortX.length-2; i >= 0 && con[sortX[i]].x >= con[bottom].x; i--) {
 		if ( con[sortX[i]].y <= curY ) {
 			possible.push(sortX[i]);
 			curY = con[sortX[i]].y;
 		}
-	}
+	}*/
+	var possible = searchOutline( right, bottom, con, adjMatrix, 2, edge );
+
 	possible.forEach(function (item, index, array) {
 		outline.push(item);
 		});
 	
 	// 3사분면(bottom to left)
-	var possible = [bottom];
+	/*var possible = [bottom];
 	var curX = con[bottom].x;
 	for(var i = 1; i < sortY.length-1 && con[sortY[i]].y <= con[left].y; i++) {
 		if ( con[sortY[i]].x <= curX ) {
 			possible.push(sortY[i]);
 			curX = con[sortY[i]].x;
 		}
-	}
+	}*/
+
+	var possible = searchOutline( bottom, left, con, adjMatrix, 3, edge );
+	
 	possible.forEach(function (item, index, array) {
 		outline.push(item);
 		});
 
 	// 4사분면(left to top)
-	var possible = [left];
+	/*var possible = [left];
 	var curY = con[left].y;
 	for( var i = 1; i < sortX.length-1 && con[sortX[i]].x <= con[top].x; i++) {
 		if ( con[sortX[i]].y >= curY ) {
 			possible.push(sortX[i]);
 			curY = con[sortX[i]].y;
 		}
-	}
+	}*/
+
+	var possible = searchOutline( left, top, con, adjMatrix, 4, edge );
+	
 	possible.forEach(function (item, index, array) {
 		outline.push(item);
 		});
@@ -643,6 +652,90 @@ function drawFloor() {
 	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
 	
 	return floor;
+}
+
+function searchOutline( startPoint, endPoint, points, connectMap, area, edge ) {
+	var top = edge[0];
+	var bottom = edge[1];
+	var left = edge[2];
+	var right = edge[3];
+	var possible = [startPoint];
+	var curIndex = startPoint;
+	var pastIndex = -1;
+	
+	// 시작 과 끝 점이 같으면 그 점만 반환
+	if ( startPoint != endPoint ) {
+
+		for(var i = 0; i < points.length; i++) {
+			var moveIndex = -1;
+			// 1. 현재 연결 배열 검색하기
+			for ( var j = 0; j < connectMap[curIndex].length; j++ ) {
+				// 2. 연결 된 점 찾기
+				if ( j != pastIndex && connectMap[curIndex][j] == 1 ) {
+					// 2-1. 현재 사분면에 해당 하지 않는 점은 제외
+					switch ( area ) {
+					case 1:
+						if (!( (points[j].x >= points[top].x && points[j].x <= points[right].x) && (points[j].y <= points[top].y && points[j].y >= points[right].y) )) continue;
+						break;
+					case 2:
+						if (!( (points[j].x <= points[right].x && points[j].x >= points[bottom].x) && (points[j].y <= points[right].y && points[j].y >= points[bottom].y) )) continue;
+						break;
+					case 3:
+						if (!( (points[j].x <= points[bottom].x && points[j].x >= points[left].x) && (points[j].y >= points[bottom].y && points[j].y <= points[left].y) )) continue;
+						break;
+					case 4:
+						if (!( (points[j].x >= points[left].x && points[j].x <= points[top].x) && (points[j].y >= points[left].y && points[j].y <= points[top].y) )) continue;
+						break;
+					}
+					if (moveIndex == -1) {
+						// 3-0. 첫 번째 점은 무조건 이동하기
+						moveIndex = j;
+					} else {
+						// 3-1. 사분면에 따라 진행 경로 결정
+						switch ( area ) {
+						case 1:
+							if ( points[j].x > points[moveIndex].x ) {
+								moveIndex = j;
+							}
+							break;
+						case 2:
+							if ( points[j].y < points[moveIndex].y ) {
+								moveIndex = j;
+							}
+							break;
+						case 3:
+							if ( points[j].x < points[moveIndex].x ) {
+								moveIndex = j;
+							}
+							break;
+						case 4:
+							if ( points[j].y > points[moveIndex].y ) {
+								moveIndex = j;
+							}
+							break;
+						}
+					}
+					console.log(curIndex + " / " + moveIndex + " : " + points[curIndex].x + " / " + points[moveIndex].x);
+				}
+			}
+			// 4. 가장 오른쪽 점 선택
+			possible.push(moveIndex);
+			// 5. 이전 지점 저장해두기
+			pastIndex = curIndex;
+			// 6. 해당 인덱스로 이동
+			curIndex = moveIndex;
+			// 7. 현재 인덱스가 가장 오른쪽 인덱스이면 종료
+			if ( curIndex == endPoint ) {
+				console.log("reach to end(" + curIndex + ")");
+				break;
+			}
+			console.log("move to " + curIndex);
+		}
+		
+	}
+	console.log("end area(" + area + ")");
+	console.log(possible);
+	return possible;
 }
 
 function previewItem(itemId, fileName) {
