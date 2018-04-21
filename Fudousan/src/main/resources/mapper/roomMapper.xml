@@ -250,7 +250,7 @@
 		WHERE
 			room_id = #{roomId}
 	</update>
->>>>>>> 7b3ad67b3b8ea3ad7ec3fd7592413ddd26f56b62
+
 
 	
 	
