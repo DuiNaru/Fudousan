@@ -25,6 +25,14 @@
 				<c:if test="${sessionScope.loginEmail == null}">
 					<li id="loginNameTag"></li>
 					<li id="loginAtag"><a data-toggle="modal" href="#loginModal" data-lang="0"></a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span data-lang="5"></span><span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="/fudousan/join/join" data-lang="6"></a></li>
+							<li class="divider"></li>
+							<li><a href="/fudousan/join/agencyjoin" data-lang="7"></a></li>
+						</ul>
+					</li>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
@@ -34,7 +42,7 @@
 
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="memberupdate/memberupdate">update member</a>
+					<li><a href="/fudousan/memberupdate/memberupdate">Update Member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 3 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
@@ -44,24 +52,13 @@
 
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="memberupdate/agencyupdate">update member</a>
+					<li><a href="/fudousan/memberupdate/agencyupdate">Update Member</a>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 				</c:if>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span data-lang="5"></span><span class="caret"></span></a>
-						<ul class="dropdown-menu" role="menu">
-							<li><a href="/fudousan/join/join" data-lang="6"></a></li>
-							<li class="divider"></li>
-							
-							<li><a href="/fudousan/join/agencyjoin" data-lang="7"></a></li>
-						</ul>
-					</li>
-					
-					<li><a href="helpCallPage">메일 보내기</a></li>
-					
+				
 					<li><a href="javascript:selectLanguage('ko')">한국어</a></li>
 					<li><a href="javascript:selectLanguage('jp')">日本語</a></li>
 					<li><a href="javascript:selectLanguage('en')">English</a></li>
