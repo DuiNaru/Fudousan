@@ -36,8 +36,11 @@ public class ItemController {
 	private ItemService itemService;
 	
 	@RequestMapping(value="itemAddPage", method=RequestMethod.GET)
-	public String itemAddPage() {
+	public String itemAddPage(Model model) {
 		logger.info("itemAddPage Start");
+		
+		model.addAttribute("itemTypeList", itemService.getItemTypeList());
+		
 		logger.info("itemAddPage End");
 		return "/item/itemaddpage";
 	}
@@ -66,7 +69,7 @@ public class ItemController {
 		
 		
 		logger.info("addItem End");
-		return "redirect:/admin/";
+		return "redirect:/item/itemModifyPage?itemId="+item.getItemId();
 	}
 	
 	@RequestMapping(value="itemModifyPage", method=RequestMethod.GET)
@@ -75,12 +78,13 @@ public class ItemController {
 		Item item = itemService.viewItem(itemId);
 		model.addAttribute("item", item);
 		model.addAttribute("files", itemService.viewFilesInItem(itemId));
+		model.addAttribute("itemTypeList", itemService.getItemTypeList());
 		logger.info("itemModifyPage("+itemId+") End");
 		return "/item/itemModifyPage";
 	}
 
 	@RequestMapping(value="moditem", method=RequestMethod.POST)
-	public String modItem(Item item, int itemTypeId, MultipartHttpServletRequest files, String[] titles, String[] sites) {
+	public String modItem(Item item, int itemTypeId, String[] titles, String[] sites) {
 		logger.info("modItem Start");
 		
 		item.setItemType(new ItemType(itemTypeId, null));
@@ -96,7 +100,7 @@ public class ItemController {
 		
 		logger.debug("item : " + item);
 		
-		itemService.modifyItem(item, files.getFiles("files"));
+		itemService.modifyItem(item);
 		
 		
 		logger.info("modItem End");
