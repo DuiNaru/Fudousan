@@ -230,7 +230,16 @@
 	
 	</update>
 	
-
+	<select id="">
+	select
+	*
+	from
+		ITEM
+	
+	
+	
+	
+	</select>
 
 	
 	
