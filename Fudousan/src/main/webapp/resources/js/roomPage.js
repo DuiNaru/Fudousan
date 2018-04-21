@@ -81,8 +81,8 @@ $(function() {
 	});
 	$( "#px" ).slider({
 		value: 0,
-		min: -100,
-		max: 100,
+		min: -1000,
+		max: 1000,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -94,8 +94,8 @@ $(function() {
 	});
 	$( "#py" ).slider({
 		value: 0,
-		min: -100,
-		max: 100,
+		min: -1000,
+		max: 1000,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -107,8 +107,8 @@ $(function() {
 	});
 	$( "#pz" ).slider({
 		value: 0,
-		min: -100,
-		max: 100,
+		min: -1000,
+		max: 1000,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -1248,8 +1248,8 @@ function setInfoRZ(value) {
  */
 function setInfoX(value) {
 	$("input[name='itemX']").val(value);
-	$( "#px" ).slider("option", "min", value-100);
-	$( "#px" ).slider("option", "max", value+100);
+	$( "#px" ).slider("option", "min", value-1000);
+	$( "#px" ).slider("option", "max", value+1000);
 	$( "#px" ).slider("value", value);
 }
 
@@ -1260,8 +1260,8 @@ function setInfoX(value) {
  */
 function setInfoY(value) {
 	$("input[name='itemY']").val(value);
-	$( "#py" ).slider("option", "min", value-100);
-	$( "#py" ).slider("option", "max", value+100);
+	$( "#py" ).slider("option", "min", value-1000);
+	$( "#py" ).slider("option", "max", value+1000);
 	$( "#py" ).slider("value", value);
 }
 
@@ -1272,8 +1272,8 @@ function setInfoY(value) {
  */
 function setInfoZ(value) {
 	$("input[name='itemZ']").val(value);
-	$( "#pz" ).slider("option", "min", value-100);
-	$( "#pz" ).slider("option", "max", value+100);
+	$( "#pz" ).slider("option", "min", value-1000);
+	$( "#pz" ).slider("option", "max", value+1000);
 	$( "#pz" ).slider("value", value);
 }
 
