@@ -1,6 +1,8 @@
 package com.real.fudousan.member.dao;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +26,8 @@ public interface MemberDAO {
 	public int updateAgencyMember(Member member);
 	public int updateAgency(Agency agency);
 
-
+	//인테리어 업자만 뽑아옴
+	public ArrayList<Member> interior();
+	
 
 }

@@ -25,6 +25,18 @@
 		<result property="name" column="permission_name"/>
 	</resultMap>
 	
+	
+	
+	<select id="interior" resultType="member">
+	select
+	*
+	from
+		member
+	where
+		permission_id=2
+	</select>
+	
+	
 	<select id="selectMember" parameterType="member" resultMap="memberResultMap">
 		SELECT
 			member_id,
@@ -202,6 +214,9 @@
 			member_id=#{member.memberId}		
 				
 	</update>
+	
+	
+	
 	
 	
 </mapper>

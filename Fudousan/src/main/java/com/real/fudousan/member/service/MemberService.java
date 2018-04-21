@@ -1,5 +1,6 @@
 package com.real.fudousan.member.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.simple.JSONArray;
@@ -41,6 +42,22 @@ public class MemberService {
 		Member result = dao.select(member);
 		return result;
 	}
+	
+	
+	
+	
+	
+	//인테리어 목록만
+	public ArrayList<Member> interior(){
+		ArrayList<Member> result = dao.interior();
+		return result;
+	}
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * 사용자 회원 가입

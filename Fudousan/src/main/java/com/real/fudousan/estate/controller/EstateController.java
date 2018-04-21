@@ -215,8 +215,7 @@ public class EstateController {
 			Agency agency = new Agency();
 			agency.setAgencyId(agency_id);
 			entry.setAgency(agency);
-			//entry.setEstate_id(estate_id);
-			//entry.setAgency_id(agency_id);
+			
 			entryService.addEntry(entry);
 
 			logger.info("매물 수정 완료");
@@ -279,8 +278,6 @@ public class EstateController {
 		texture.setText(text);
 		
 		textureService.textureuproad(texture, file);
-		
-		
 			return "redirect:/textureuproadpage";
 		}
 
