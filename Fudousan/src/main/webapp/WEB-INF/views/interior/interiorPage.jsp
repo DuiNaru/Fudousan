@@ -101,7 +101,7 @@
 				<div id="virtual${virtual.roomId}" class="col-sm-12">
 					<label>${virtual.roomId} : ${virtual.snapshot}</label>
 					<div>
-						<img src="<c:url value="${virtual.snapshot}"/>">
+						<img style="height: 100px; width: auto;" src="<c:url value="${virtual.snapshot}"/>">
 					</div>
 					<div>
 						<div>
