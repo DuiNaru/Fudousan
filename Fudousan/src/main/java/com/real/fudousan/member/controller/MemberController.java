@@ -167,7 +167,8 @@ public class MemberController {
 		
 		  String setfrom = "2017scit@gmail.com";         
 		    String tomail  = request.getParameter("tomail");     // 받는 사람 이메일
-		    String title   = "요청 메시지가 왔습니다";     // 제목
+		    String title   = "요청 메시지가 왔습니다"
+		    		;     // 제목
 		    String content = request.getParameter("tomail") + "님이 요청을 보냈습니다.";     // 내용
 		    try {
 		      MimeMessage message = mailSender.createMimeMessage();
