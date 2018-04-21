@@ -17,14 +17,7 @@
   <h4>메일 보내기</h4>
   <form action="helpCall" method="post">
     <div align="center"><!-- 받는 사람 이메일 -->
-    
-    
-    
-
-    
-    
-    
-    
+   
       <input type="text" name="tomail" size="120" style="width:100%" placeholder="상대의 이메일" class="form-control" >
     </div>     
     <div align="center"><!-- 제목 -->
