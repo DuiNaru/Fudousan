@@ -1397,7 +1397,7 @@ function clearRoom() {
  * 현재 화면을 촬영해서 서버에 저장한다.
  * @returns
  */
-function takeSnapShot() {
+function takeSnapShot(onComplete) {
 	
 	var strMime = "image/jpeg";
 	var imgData = renderer.domElement.toDataURL(strMime);
@@ -1420,8 +1420,11 @@ function takeSnapShot() {
 			
 			if(data != null) {
 				
-				var snapshotURL = data;
-				$("#snapshot").html("<img class='snapshot' src='/fudousan"+data+"'>");
+				refreshSnapshot(data);
+				
+				if (onComplete !== undefined) {
+					onComplete(data);
+				}
 				
 			} else {
 				
@@ -1441,6 +1444,11 @@ function takeSnapShot() {
 			
 		}
 	});
+}
+
+function refreshSnapshot(url) {
+	var snapshotURL = url;
+	$("#snapshot").html("<img class='snapshot' src='/fudousan"+snapshotURL+"'>");
 }
 
 function dataURItoBlob(dataURI)
