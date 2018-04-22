@@ -59,7 +59,7 @@ function sayonara(){
 				<div class="col-sm-12 form-group">
 					<label><a href="/">${room.estate.estateName}</a><c:out value="${room.map} "/></label>
 			 		<input type="button" value="꾸미기" onclick="ggumigi(${room.estate.estateId})">
-			 		<a class="btn btn-default" href="../newRoom?estateId=${room.estate.estateId}&roomPublic=0">새로 꾸미기</a>
+			 		<a class="btn btn-default" href="/newRoom?estateId=${room.estate.estateId}&roomPublic=0">새로 꾸미기</a>
 				</div>
 			</c:forEach>
 		</div>
