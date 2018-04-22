@@ -11,9 +11,10 @@
 				</div>
 				
 				<div class="modal-body">
-					<span data-lang="2"></span> <input type="text" id="memberEmail" name="memberID">
-					<span data-lang="3"></span> <input type="password" id="password" name="password">
-					
+					<label><span data-lang="2"></span></label>
+					<input type="text" id="memberEmail" name="memberID"  class="form-control">
+					<label><span data-lang="3"></span></label>
+					<input type="password" id="password" name="password" class="form-control">
 				</div>
 				
 				<div class="modal-footer">
