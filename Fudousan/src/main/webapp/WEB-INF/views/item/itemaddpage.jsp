@@ -32,10 +32,7 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 	
-	
-	
-	
-	
+
 	<div  class="container">
 	<div class="col-sm-12">
 		<div class="col-sm-offset-3 col-sm-6">
@@ -46,9 +43,7 @@
 	</div>
 	
 	</div> 
-	
-	
-	
+
 	<!-- footer -->
 	<%@include file="/WEB-INF/views/include/footer.jsp" %>
 	
