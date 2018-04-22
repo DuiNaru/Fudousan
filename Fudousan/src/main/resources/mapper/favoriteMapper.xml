@@ -5,118 +5,88 @@
 
 <!-- 쿼리는 DB랑 맞추고  맵은 셀렉트한 쿼리문에 맞춘다. -->
 <mapper namespace="com.real.fudousan.favorite.dao.FavoriteMapper">
-	<select id="allFavorite" resultMap="FavoriteAll" parameterType="int">
-		select
-			MEMBER_ID
-			,CRE_DATE
-			,favorite.estate_id estate_id
-			,estate.MunicipalityCode_ID MunicipalityCode_ID
-			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
-			,Region
-			,Prefecture
-			,Municipality
-			,DistrictName
-			,NearestStation
-			,TimeToNearestStation
-			,TradePrice
-			,PricePerUnit
-			,FloorPlan
-			,Area
-			,UnitPrice
-			,LandShape
-			,Frontage
-			,TotalFloorArea
-			,BuildingYear
-			,Structure
-			,Use
-			,Purpose
-			,Direction
-			,Classification
-			,Breadth
-			,CityPlanning
-			,CoverageRatio
-			,FloorAreaRatio
-			,Period
-			,Renovation
-			,Remarks
-			,DEL_DATE
-			,TRANS_NAME
-			,CODE_NAME
-			,ESTATE_NAME
-			,ESTATE_X
-			,ESTATE_Y
-		from
+	<resultMap type="favorite" id="FavoriteAll">
+		<result 	 property="memberId" column="MEMBER_ID"/>
+		<result 	 property="creDate"  column="CRE_DATE"/>
+		<association property="estate"   column="EST_ESTATE_ID" javaType="com.real.fudousan.estate.vo.Estate" resultMap="com.real.fudousan.estate.dao.EstateMapper.estateResultMap" columnPrefix="EST_"/>
+	</resultMap>
+	<sql id="SELECT_FAVORITE_SQL">
+		SELECT
+			-- FAVORITE
+			favorite.MEMBER_ID						MEMBER_ID
+			,favorite.CRE_DATE						CRE_DATE
+			
+			-- ESTATE
+			,estate.ESTATE_ID 						EST_ESTATE_ID
+			,estate.Region							EST_Region		
+			,estate.Prefecture						EST_Prefecture
+			,estate.Municipality					EST_Municipality
+			,estate.DistrictName					EST_DistrictName
+			,estate.NearestStation					EST_NearestStation
+			,estate.TimeToNearestStation			EST_TimeToNearestStation
+			,estate.TradePrice						EST_TradePrice
+			,estate.PricePerUnit					EST_PricePerUnit
+			,estate.FloorPlan						EST_FloorPlan
+			,estate.Area							EST_Area
+			,estate.UnitPrice						EST_UnitPrice
+			,estate.LandShape						EST_LandShape
+			,estate.Frontage						EST_Frontage
+			,estate.TotalFloorArea					EST_TotalFloorArea
+			,estate.BuildingYear					EST_BuildingYear
+			,estate.Structure						EST_Structure
+			,estate.Use								EST_Use
+			,estate.Purpose							EST_Purpose
+			,estate.Direction						EST_Direction
+			,estate.Classification					EST_Classification
+			,estate.Breadth							EST_Breadth
+			,estate.CityPlanning					EST_CityPlanning
+			,estate.CoverageRatio					EST_CoverageRatio
+			,estate.FloorAreaRatio					EST_FloorAreaRatio
+			,estate.Period							EST_Period
+			,estate.Renovation						EST_Renovation
+			,estate.Remarks							EST_Remarks
+			,estate.DEL_DATE 						EST_estate_DEL_DATE
+			,estate.ESTATE_NAME						EST_ESTATE_NAME
+			,estate.ADDRESS							EST_ADDRESS
+			,estate.ESTATE_X						EST_ESTATE_X
+			,estate.ESTATE_Y						EST_ESTATE_Y
+			,estate.CRE_DATE						EST_CRE_DATE					
+			,estate.BASE_ROOM_ID					EST_BASE_ROOM_ID
+			
+			-- municipalitycode
+			,municipalitycode.municipalitycode_id 	EST_MunicipalityCode_ID
+			,municipalitycode.code_name				EST_CODE_NAME
+			
+			-- trans_type
+			,trans_type.TRANS_TYPE_ID 				EST_TRANS_TYPE_ID
+			,trans_type.TRANS_NAME					EST_TRANS_NAME
+		FROM
 			favorite
-		join
+		JOIN
 			estate
-		on
+		ON
 			favorite.ESTATE_ID = estate.ESTATE_ID
-		join
+		JOIN
 			municipalitycode
-		on
+		ON
 			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
-		join
+		JOIN
 			trans_type
-		on
+		ON
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
+	</sql>
+
+	<select id="allFavorite" resultMap="FavoriteAll" parameterType="int">
+ 		<include refid="SELECT_FAVORITE_SQL"></include>
 		where
+			
 			MEMBER_ID = #{MEMBER_ID}
 	</select>
 	
 	
 	
  	<select id="searchFavorite" resultMap="FavoriteAll" >
-		select
-			MEMBER_ID
-			,CRE_DATE
-			,favorite.estate_id estate_id
-			,estate.MunicipalityCode_ID MunicipalityCode_ID
-			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
-			,Region
-			,Prefecture
-			,Municipality
-			,DistrictName
-			,NearestStation
-			,TimeToNearestStation
-			,TradePrice
-			,PricePerUnit
-			,FloorPlan
-			,Area
-			,UnitPrice
-			,LandShape
-			,Frontage
-			,TotalFloorArea
-			,BuildingYear
-			,Structure
-			,Use
-			,Purpose
-			,Direction
-			,Classification
-			,Breadth
-			,CityPlanning
-			,CoverageRatio
-			,FloorAreaRatio
-			,Period
-			,Renovation
-			,Remarks
-			,DEL_DATE
-			,TRANS_NAME
-			,CODE_NAME
-			,ESTATE_NAME
-		from
-			favorite
-		join
-			estate
-		on
-			favorite.ESTATE_ID = estate.ESTATE_ID
-		join
-			municipalitycode
-		on
-			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
-		join
-			trans_type
-		on
-			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
+ 		<include refid="SELECT_FAVORITE_SQL"></include>
 		where
 			favorite.MEMBER_ID = #{0} and estate.ESTATE_NAME = #{1}
 	</select>
@@ -134,13 +104,9 @@
 	 )
 	</insert>
 	<select id="selectFavorite" resultMap="FavoriteAll">
-		SELECT 
-			member_id, 
-			estate_id
-		FROM 
-			favorite
+ 		<include refid="SELECT_FAVORITE_SQL"></include>
 		WHERE 
-			member_id=#{memberId} AND estate_id = #{estate.estateId}
+			member_id=#{memberId} AND EST_ESTATE_ID = #{estate.estateId}
 	</select>
 	
 	<delete id="deleteFavorite" parameterType="favorite">
@@ -150,57 +116,4 @@
 		WHERE 
 			estate_id = #{estate.estateId} AND member_id=#{memberId}
 	</delete>
-	<resultMap type="favorite" id="FavoriteAll">
-		<result 		 property="memberId" column="MEMBER_ID"/>
-		<result 	 property="creDate"  column="CRE_DATE"/>
-		<association property="estate"   column="estate_id" javaType="com.real.fudousan.estate.vo.Estate" resultMap="estateResultMap"/>
-	</resultMap>
-	<!-- 객체 별칭이 type  property가 vo 필드명   column이 DB이름-->
-	<resultMap type="estate" id="estateResultMap">
-		<id 	property="estateId" 				column="ESTATE_ID"/>
-		<result property="region" 					column="Region"/>
-		<result property="prefecture" 				column="Prefecture"/>
-		<result property="municipality" 			column="Municipality"/>
-		<result property="districtname" 			column="DistrictName"/>
-		<result property="neareststation" 			column="NearestStation"/>
-		<result property="timetoneareststation"		column="TimeToNearestStation"/>
-		<result property="tradeprice" 				column="TradePrice"/>
-		<result property="priceperunit" 			column="PricePerUnit"/>
-		<result property="floorplan" 				column="FloorPlan"/>
-		<result property="area" 					column="Area"/>
-		<result property="unitprice" 				column="UnitPrice"/>
-		<result property="landshape" 				column="LandShape"/>
-		<result property="frontage" 				column="Frontage"/>
-		<result property="totalfloorarea" 			column="TotalFloorArea"/>
-		<result property="buildingyear" 			column="BuildingYear"/>
-		<result property="structure" 				column="Structure"/>
-		<result property="use" 						column="Use"/>
-		<result property="purpose" 					column="Purpose"/>
-		<result property="direction" 				column="Direction"/>
-		<result property="classification" 			column="Classification"/>
-		<result property="breadth" 					column="Breadth"/>
-		<result property="cityplanning" 			column="CityPlanning"/>
-		<result property="coverageratio" 			column="CoverageRatio"/>
-		<result property="floorarearatio" 			column="FloorAreaRatio"/>
-		<result property="period" 					column="Period"/>
-		<result property="renovation" 				column="Renovation"/>
-		<result property="remarks" 					column="Remarks"/>
-		<result property="delDate" 					column="DEL_DATE"/>
-		<result property="estateName" 				column="ESTATE_NAME"/>
-		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
-		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
-	</resultMap>
-	
-		<!-- associationdml property는 속하는 객체의 vo변수명이다. -->
-	
-	<resultMap type="transtype" id="transTypeResultMap">
-		<id 	property="transTypeId" column="TRANS_TYPE_ID"/>
-		<result property="transName"   column="TRANS_NAME"/>
-	</resultMap>
-
-	<resultMap type="municipalitycode" id="MunicipalityCodeResultMap">
-		<id 	property="municipalitycodeId" column="MunicipalityCode_ID"/>
-		<result property="codeName" 		  column="CODE_NAME"/>
-	</resultMap>
-	
 </mapper>

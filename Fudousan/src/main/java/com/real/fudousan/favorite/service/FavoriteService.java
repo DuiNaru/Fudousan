@@ -27,7 +27,7 @@ public class FavoriteService {
 	public List<Favorite> showAllFavorite(Integer memberId){
 		logger.info("FS 사용자의 찜목록을 소환합니다 Start");
 		List<Favorite> flist = null; //담을그릇
-		flist = dao.allFavorite(memberId); //그릇에 담기
+		flist = dao.allMyfavorite(memberId); //그릇에 담기
 		logger.info("FS 사용자의 찜목록을 소환합니다 End");
 		return flist;
 	}
