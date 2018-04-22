@@ -14,6 +14,8 @@ var width = window.innerWidth;
 var height = window.innerHeight;
 // 방 바닥
 var roomFloor;
+// 방 천장
+var roomCeil;
 // 지면(사이즈)
 var earthSize = 999999;
 // Raycaster
@@ -81,8 +83,8 @@ $(function() {
 	});
 	$( "#px" ).slider({
 		value: 0,
-		min: -100,
-		max: 100,
+		min: -1000,
+		max: 1000,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -94,8 +96,8 @@ $(function() {
 	});
 	$( "#py" ).slider({
 		value: 0,
-		min: -100,
-		max: 100,
+		min: -1000,
+		max: 1000,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -107,8 +109,8 @@ $(function() {
 	});
 	$( "#pz" ).slider({
 		value: 0,
-		min: -100,
-		max: 100,
+		min: -1000,
+		max: 1000,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -151,7 +153,9 @@ function init() {
 	scene.add(directionalLight);
 
 	// 렌더러
-	renderer = new THREE.WebGLRenderer();
+	renderer = new THREE.WebGLRenderer({
+        preserveDrawingBuffer: true
+    });
 	//renderer = new THREE.WebGLRenderer( { canvas: canvas, antialias: true } );
 	renderer.shadowMap.enabled = true;
 	renderer.setPixelRatio( window.devicePixelRatio );
@@ -177,6 +181,11 @@ function init() {
 	roomFloor = drawFloor();
 	roomFloor.rotateX(-90 * Math.PI / 180);
 	scene.add(roomFloor);
+	
+	roomCeil = drawFloor(false);
+	roomCeil.rotateX(-90 * Math.PI / 180);
+	roomCeil.position.y += room.height;
+	scene.add(roomCeil);
 
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
 	renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, false);
@@ -856,6 +865,8 @@ function previewItem(itemId, fileName) {
 
 /**
  * 아이템을 DB에 추가하고 화면에 배치한다.
+ * Item VO 의 경우에는 화면 정 중앙에 배치,
+ * RoomItem VO 의 경우에는 해당 VO의 x,y,z에 배치
  * @param item Item VO 또는 RoomItem VO
  * @param onCreate 성공시 호출
  * @returns
@@ -1084,6 +1095,22 @@ function move(object, x, y, z) {
 }
 
 /**
+ * 해당 룸 아이템을 해당 x,y,z 로 이동
+ * @param roomItem
+ * @returns
+ */
+function moveRoomItem(roomItem) {
+	for(var i = 0; i < curRoomItems.length; i++) {
+		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z);
+			return true;
+		}
+	}
+	console.log(roomItem.roomItemId + " 가 없어서 이동 실패");
+	return false;
+}
+
+/**
  * 화면에 배치된 object을 각 축을 기준으로 회전
  * @param object
  * @param rx 도
@@ -1111,6 +1138,22 @@ function rotate(object, rx, ry, rz) {
 		
 	}
 	
+}
+
+/**
+ * 해당 룸 아이템을 해당 rx,ry,rz 로 회전
+ * @param roomItem
+ * @returns
+ */
+function rotateRoomItem(roomItem) {
+	for(var i = 0; i < curRoomItems.length; i++) {
+		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+			rotate(curRoomItems[i], roomItem.rotateX, roomItem.rotateY, roomItem.rotateZ);
+			return true;
+		}
+	}
+	console.log(roomItem.roomItemId + " 가 없어서 회전 실패");
+	return false;
 }
 
 function select(group) {
@@ -1212,8 +1255,8 @@ function setInfoRZ(value) {
  */
 function setInfoX(value) {
 	$("input[name='itemX']").val(value);
-	$( "#px" ).slider("option", "min", value-100);
-	$( "#px" ).slider("option", "max", value+100);
+	$( "#px" ).slider("option", "min", value-1000);
+	$( "#px" ).slider("option", "max", value+1000);
 	$( "#px" ).slider("value", value);
 }
 
@@ -1224,8 +1267,8 @@ function setInfoX(value) {
  */
 function setInfoY(value) {
 	$("input[name='itemY']").val(value);
-	$( "#py" ).slider("option", "min", value-100);
-	$( "#py" ).slider("option", "max", value+100);
+	$( "#py" ).slider("option", "min", value-1000);
+	$( "#py" ).slider("option", "max", value+1000);
 	$( "#py" ).slider("value", value);
 }
 
@@ -1236,8 +1279,8 @@ function setInfoY(value) {
  */
 function setInfoZ(value) {
 	$("input[name='itemZ']").val(value);
-	$( "#pz" ).slider("option", "min", value-100);
-	$( "#pz" ).slider("option", "max", value+100);
+	$( "#pz" ).slider("option", "min", value-1000);
+	$( "#pz" ).slider("option", "max", value+1000);
 	$( "#pz" ).slider("value", value);
 }
 
@@ -1297,8 +1340,9 @@ function resetInfo() {
 	$("#itemInfo").hide( "slide" );
 }
 
-function itemApplyListener() {
-	applyItemChange(curSelected.roomItem);
+function itemApplyListener(onApply) {
+	applyItemChange(curSelected.roomItem, onApply);
+	
 }
 
 /**
@@ -1306,7 +1350,7 @@ function itemApplyListener() {
  * @param roomItem 
  * @returns
  */
-function applyItemChange(roomItem) {
+function applyItemChange(roomItem, onApply) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
@@ -1323,6 +1367,10 @@ function applyItemChange(roomItem) {
 			if(data != null && data != false && data != "false") {
 				
 				infoDataChange = false;
+				
+				if (onApply !== undefined) {
+					onApply(roomItem);
+				}
 				
 			} else {
 				
@@ -1344,7 +1392,8 @@ function applyItemChange(roomItem) {
 	});
 }
 
-function reset() {
+function roomReset(onReset) {
+	$( "#blocker" ).show();
 	$.ajax({
 		url:"roomItem/reset",
 		type:"POST",
@@ -1354,13 +1403,11 @@ function reset() {
 			
 			if(data != null && data != false && data != "false") {
 
-				for( var i = curRoomItems.length - 1; i >= 0; i--) {
-					scene.remove(curRoomItems[i]);
-				}
+				clearRoom();
 				
-				curRoomItems = [];
-				curSelected = null;
-				curSelectedOriginal = null;
+				if (onReset !== undefined) {
+					onReset();
+				}
 				
 			} else {
 				
@@ -1380,6 +1427,92 @@ function reset() {
 			
 		}
 	});
+}
+
+function clearRoom() {
+	for( var i = curRoomItems.length - 1; i >= 0; i--) {
+		scene.remove(curRoomItems[i]);
+	}
+	
+	curRoomItems = [];
+	curSelected = null;
+	curSelectedOriginal = null;
+}
+
+/**
+ * 현재 화면을 촬영해서 서버에 저장한다.
+ * @returns
+ */
+function takeSnapShot(onComplete) {
+	
+	var strMime = "image/jpeg";
+	var imgData = renderer.domElement.toDataURL(strMime);
+    
+    var blob = dataURItoBlob(imgData);
+
+    var formData = new FormData();
+    formData.append("file", blob, room.roomId);
+    
+	$( "#blocker" ).show();
+    $.ajax({
+    	
+		url:"snapshot",
+		type:"POST",				
+		data:formData,
+		processData: false,
+	    contentType: false,
+		dataType:"text",	
+		success:function(data) {
+			
+			if(data != null) {
+				
+				refreshSnapshot(data);
+				
+				if (onComplete !== undefined) {
+					onComplete(data);
+				}
+				
+			} else {
+				
+				alert("스냅샷 저장에 실패하였습니다.");
+				
+			}
+
+			$( "#blocker" ).hide();
+			
+		},
+		error:function(e) {
+			
+			console.log(e);
+			alert("스냅샷 저장 중 오류가 발생하였습니다.");
+
+			$( "#blocker" ).hide();
+			
+		}
+	});
+}
+
+function refreshSnapshot(url) {
+	var snapshotURL = url;
+	$("#snapshot").html("<img class='snapshot' src='/fudousan"+snapshotURL+"'>");
+}
+
+function dataURItoBlob(dataURI)
+{
+    var byteString = atob(dataURI.split(',')[1]);
+
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+    var ab = new ArrayBuffer(byteString.length);
+    var ia = new Uint8Array(ab);
+    for (var i = 0; i < byteString.length; i++)
+    {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    var bb = new Blob([ab], { "type": mimeString });
+    
+    return bb;
 }
 
 //-------------

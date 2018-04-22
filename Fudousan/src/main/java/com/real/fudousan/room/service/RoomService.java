@@ -1,5 +1,6 @@
 package com.real.fudousan.room.service;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.room.controller.RoomController;
 import com.real.fudousan.room.dao.RoomDAO;
 import com.real.fudousan.room.vo.Room;
@@ -30,6 +33,8 @@ public class RoomService {
 	
 	@Autowired
 	private RoomWallService wallService;
+	
+	private final String snapShotDir = "/snapshot/";
 	
 	/**
 	 * 자기 매물 정보 검색
@@ -213,6 +218,34 @@ public class RoomService {
 		return  result;
 	}
 	
+	public String saveSnapShot(int roomId, MultipartFile file) {
+		logger.info("saveSnapShot("+roomId+", "+file.getOriginalFilename()+") Start");
+		
+		String result = null;
+		FileService.deleteFile(snapShotDir + file.getOriginalFilename());
+		result = FileService.saveFile(file, snapShotDir, true);
+		result = snapShotDir+result;
+		
+		Room room = new Room();
+		room.setRoomId(roomId);
+		room.setSnapshot(result);
+		
+		// DB 저장
+		if ( dao.updateRoomSanpShot(room) != 1 ) {
+			FileService.deleteFile(snapShotDir+result);
+			result = null;
+		}
+
+		logger.info("saveSnapShot("+roomId+", "+file.getOriginalFilename()+") End");
+		return result;
 	}
 	
-
+	public boolean downloadSnapShotFile(String fileName, OutputStream os) {
+		logger.info("downloadSnapShotFile({}) Start", fileName);
+		boolean result = false;
+		FileService.writeFile(snapShotDir + fileName, os);
+		result = true;
+		logger.info("downloadSnapShotFile({}) End", fileName);
+		return result;
+	}
+}

@@ -101,6 +101,9 @@
 				<div id="virtual${virtual.roomId}" class="col-sm-12">
 					<label>${virtual.roomId} : ${virtual.snapshot}</label>
 					<div>
+						<img style="height: 100px; width: auto;" src="<c:url value="${virtual.snapshot}"/>">
+					</div>
+					<div>
 						<div>
 							<a class="btn btn-default" href="../wall/wallPage?roomId=${virtual.roomId}">벽 수정</a>
 							<a class="btn btn-default" href="../roomPage?roomId=${virtual.roomId}">수정</a>

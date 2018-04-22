@@ -192,6 +192,10 @@ canvas {
 	text-align: center;
 	cursor: pointer;
 }
+.snapshot {
+	width: 100px;
+	height: 100px;
+}
 </style>
 </head>
 <body>
@@ -262,9 +266,21 @@ canvas {
 			</div>
 		</div>
 		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem, delItem)">
-		<input type="button" value="적용" onclick="itemApplyListener()">
+		<input type="button" value="적용" onclick="itemApplyListener(rorotate)">
 	</div>
 	<div class="bottom-menu">
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 		<div>
 			<label>아이템 생성</label>
 			<ul>
@@ -291,7 +307,22 @@ canvas {
 					</li>
 				</c:forEach>
 			</ul>
-		</div>
+		</div> 
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	</div>
 	<div class="right-menu">
 		<div>
@@ -300,25 +331,25 @@ canvas {
 						<li><button onclick="goback()">뒤로가기</button></li><br>
 						<li><button onclick="gofront()">앞으로가기</button></li><br>
 						<li><button onclick="save()">저장하기</button></li><br>
-						<li><button onclick="reset()">초기화</button></li><br>
+						<li><button onclick="roomReset(reset)">초기화</button></li><br>
 						<li><button onclick="esc()">종료</button>
+						<li><button onclick="takeSnapShot(twinSnap)">스냅샷 </button>
+						<li id="snapshot">
+							<c:if test="${!empty room.snapshot }">
+								<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
+							</c:if>
+						</li>
 						<br><br><br>
 						<li><button onclick="checkArray()">Array 보기</button>
 						<br><br><br><br>
 						<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
 						
 			</ul>
-			
-			
-			
-			
-			
+
 			  <script type="text/javascript">
-		
 			function changeheight() {
 				var height=$("#height").val();
-				var roomId = room.roomId;
-				
+				var roomId = room.roomId;	
 				$.ajax({
 					url:"wallheightchange",
 					type:"post",
@@ -327,19 +358,19 @@ canvas {
 						height:height
 					},
 					success: function(){
-						
-						
+	
 					}
-						
-					
-					
+
 				});
 			}
-			
-			
-			
-			
 			</script> 
+			
+			
+			
+			
+			
+			
+			
 			
 			
 			

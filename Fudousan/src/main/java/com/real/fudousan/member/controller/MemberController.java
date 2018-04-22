@@ -1,5 +1,6 @@
 package com.real.fudousan.member.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -135,30 +136,31 @@ public class MemberController {
 
 	
 	
-	
-	@RequestMapping(value ="helpCallPage", method=RequestMethod.GET)
-	public String helpCallPage(){
+	@ResponseBody
+	@RequestMapping(value ="helpCallPage", method=RequestMethod.POST)
+	public ArrayList<Member> helpCallPage(Member member , Model model ,HttpSession session){
 		logger.info("메일보내는 페이지로");
 		
-		
-		
-		
-		
-		
-		
-		
-		return "helpCall";
+	
+		ArrayList<Member> interior = new ArrayList<>();
+		interior =(ArrayList<Member>) service.interior();
+		return interior;
 	}
 	
 	//메일 보내기
-	@RequestMapping(value = "helpCall", method = RequestMethod.POST)
+	@RequestMapping(value = "helpCall", method = RequestMethod.GET)
 	 public String mailSending(HttpServletRequest request, HttpSession session) {
 		   
-		    String setfrom = "2017scit@gmail.com";         
+		  /*  String setfrom = "2017scit@gmail.com";         
 		    String tomail  = request.getParameter("tomail");     // 받는 사람 이메일
 		    String title   = request.getParameter("title");      // 제목
 		    String content = request.getParameter("content");    // 내용
-		   
+*/		   
+		logger.info("메일 전송 시작");
+		  String setfrom = "2017scit@gmail.com";         
+		    String tomail  = request.getParameter("tomail");     // 받는 사람 이메일
+		    String title   = "fudousan에서 요청 메일이 왔습니다";     // 제목
+		    String content =  session.getAttribute("loginEmail") + "님이 요청을 보냈습니다."+ " 이동하기 > http://localhost:8888/fudousan/" ;     // 내용
 		    try {
 		      MimeMessage message = mailSender.createMimeMessage();
 		      MimeMessageHelper messageHelper 
@@ -173,8 +175,8 @@ public class MemberController {
 		    } catch(Exception e){
 		      System.out.println(e);
 		    }
-		    logger.info("메일 전송 선공");
-		    return "redirect:/mail/mailForm";
+		    logger.info("메일 전송 성공");
+		    return "redirect:/";
 	}
 }
 

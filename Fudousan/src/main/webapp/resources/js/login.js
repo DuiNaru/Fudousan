@@ -18,7 +18,7 @@ function formCheck(){
 	}
 	else {
 		$.ajax({
-			url: 'login',
+			url: '/fudousan/login',
 			type: 'post',
 			data: {email: memberEmail.val(), password: password.val()},
 			dataType: 'json',
@@ -34,7 +34,7 @@ function formCheck(){
 					$('#loginModal').modal('hide');
 					
 					$('#loginAtag').html('<a href="/fudousan/logout">Logout</a>');
-					
+		
 					var str = '<a>' + result.memberName + ', Welcome!</a>';
 					$('#loginNameTag').html(str);
 				}

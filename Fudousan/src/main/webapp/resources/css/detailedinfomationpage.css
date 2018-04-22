@@ -263,6 +263,6 @@ label input[type="checkbox"] {
       overflow-y: initial !important
 } */
 .modal-body{
-  height: 500px;
+  height: auto;
   overflow-y: auto;
 }

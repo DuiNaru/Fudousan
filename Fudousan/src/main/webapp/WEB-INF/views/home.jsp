@@ -18,10 +18,10 @@
  	<!-- login modal  -->
  	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
 	
-	<!-- header -->
-	<%@include file="/WEB-INF/views/include/header.jsp" %>
 
 	
+	<!-- header -->
+	<%@include file="/WEB-INF/views/include/header.jsp" %>
 
 
 	<!-- Map -->
@@ -47,7 +47,7 @@
 		<c:forEach items="${elocationList}" var="elocation" varStatus="status">
 			${elocation}<c:if test="${status.last eq false}">,</c:if>
 		</c:forEach>
-	];
+		];
 	</script>
 	<script src="resources/js/googlemaps-settings.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&libraries=places&callback=initialize" async defer></script>

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.real.fudousan.item.vo.Item;
+import com.real.fudousan.item.vo.ItemType;
 import com.real.fudousan.item.vo.RefSite;
 
 @Repository
@@ -125,6 +126,21 @@ public class ItemDAOOracle implements ItemDAO {
 			result = null;
 		}
 		logger.info("selectByName("+itemName+") End");
+		return result;
+	}
+
+	@Override
+	public List<ItemType> selectAllItemType() {
+		logger.info("sselectAllItemType() Start");
+		List<ItemType> result = null;
+		try {
+			ItemMapper mapper = session.getMapper(ItemMapper.class);
+			result = mapper.selectAllItemType();
+		} catch(Exception e) {
+			e.printStackTrace();
+			result = null;
+		}
+		logger.info("selectAllItemType() End");
 		return result;
 	}
 
