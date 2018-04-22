@@ -29,7 +29,7 @@
 		<c:forEach var="room" items="${rlist}">
 			<div class="col-sm-12 form-group">
 				<p><a href="/">${room.estate.estateName}</a><c:out value="${room.map} "/></p>
-		 		<a class="btn btn-default" href="<c:url value="../newRoom?roomPublic=0"/>">새로 꾸미기</a>
+		 		<a class="btn btn-default" href="<c:url value="/newRoom?estateId=${room.estate.estateId}&roomPublic=0"/>">새로 꾸미기</a>
 		 		
 			</div>
 		</c:forEach>
@@ -57,8 +57,12 @@
 		<h3>Test</h3>
 		<c:forEach var="favorite" items="${flist}">
 			<div class="col-sm-12 form-group">
-				<p><a href="/">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}${favorite.creDate}}"/></p>
-				<input type="button" value="팝업정보" onclick="popupInfoMaemul(${favorite.estate})">
+				<p><a href="/">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}estataId:${favorite.estate.estateId}"/></p>
+				<input type="hidden" value="${favorite.estate.estateId}" id='favo' name='favo' >
+				<input type="button" value="매물상세정보" onclick=goDetail()> 
+				<a href="<c:url value="detailedinfomation?id=EstateId:'+${favorite.estate.estateId}+'"/>">매물상세정보</a>
+				
+				
 			</div>
 		</c:forEach>
     </div>
