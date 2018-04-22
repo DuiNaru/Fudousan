@@ -76,7 +76,7 @@
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
-					<li><a href="/fudousan/admin">Admin page</a></li>
+					<li><a href="/fudousan/admin/">Admin page</a></li>
 				</c:if>
 				
 					<li><a href="javascript:selectLanguage('ko')">한국어</a></li>

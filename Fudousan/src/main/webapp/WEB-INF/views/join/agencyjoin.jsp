@@ -15,7 +15,7 @@
 	
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
-	
+	<link rel="stylesheet" href="<c:url value="/resources/css/detailedinfomationpage.css"/>" >
 	<!-- font awesome -->
     <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css"/>" media="screen" title="no title">
     <!-- Custom style -->
@@ -43,13 +43,11 @@
 	<%@include file="/WEB-INF/views/include/agencyjoinmain.jsp" %>
 	
 	<!-- script -->
-	<script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlZMVBrvQGWP2QTDvf5ur7HrtEC3xlOf0 &callback=initMap" async defer></script>
 	
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	
-	<!-- 모bootstrap -->
+	<!-- bootstrap -->
 	<script src="<c:url value="/resources/js/bootstrap.min.js"></c:url>"></script>
 	
 	<!-- join.js -->
@@ -57,12 +55,6 @@
 	
 	<!-- login.js -->
 	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
-	
-	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
-	
-	<!-- (Optional) Latest compiled and minified JavaScript translation files -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/i18n/defaults-*.min.js"></script>
 	
 	<!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>
