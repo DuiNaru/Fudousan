@@ -26,7 +26,7 @@
 
 	<!-- Map -->
 	<div class="form-group">
-		<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box" style="z-index: 1; margin: 100px 0 0 0">
+		<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box" style="z-index: 1; margin-top: 0.8%">
 	</div>
 	<div id="map" style="width:100%; height:100%"></div>
 	
