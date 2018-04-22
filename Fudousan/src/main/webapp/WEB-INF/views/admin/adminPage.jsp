@@ -26,7 +26,6 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 	
-	
 	<!-- Admin Main -->
 	<%@include file="/WEB-INF/views/include/adminmain.jsp" %> 
 	
