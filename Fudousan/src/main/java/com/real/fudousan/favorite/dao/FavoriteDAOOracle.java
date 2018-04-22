@@ -21,7 +21,7 @@ public class FavoriteDAOOracle implements FavoriteDAO {
 	SqlSession sqlsession;
 	
 	@Override
-	public List<Favorite> allFavorite(Integer memberId) {
+	public List<Favorite> allMyfavorite(Integer memberId) {
 		logger.info("사용자가 찜했던 모든 방 불러오기 - Start");
 		FavoriteMapper mapper = sqlsession.getMapper(FavoriteMapper.class);
 		List<Favorite> flist = null;

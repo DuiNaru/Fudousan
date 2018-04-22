@@ -79,6 +79,7 @@
 	<select id="allFavorite" resultMap="FavoriteAll" parameterType="int">
  		<include refid="SELECT_FAVORITE_SQL"></include>
 		where
+			
 			MEMBER_ID = #{MEMBER_ID}
 	</select>
 	
