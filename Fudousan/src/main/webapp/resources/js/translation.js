@@ -10,14 +10,17 @@ $(function(){
 		url = "/fudousan/resources/locale/" + lang + ".json";
 	}
 	
-	let xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function(){
-		if (xhr.readyState == 4 && xhr.status == 200){
-			changeLanguage(lang, JSON.parse(xhr.responseText));
+	$.ajax({
+		url: url,
+		type: "get",
+		dataType: "json",
+		success: function(res){
+			changeLanguage(lang, res);
+		},
+		error: function(err){
+			console.log(err);
 		}
-	}
-	xhr.open("GET", url, true);
-	xhr.send();
+	});
 	
 	let changeLanguage = function(lang, json){
 		$("[data-lang]").each(function(){
