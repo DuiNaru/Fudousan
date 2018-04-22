@@ -10,41 +10,39 @@
 			MEMBER_ID
 			,CRE_DATE
 			,favorite.estate_id estate_id
-			,estate.MunicipalityCode_ID MunicipalityCode_ID
-			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
-			,Region
-			,Prefecture
-			,Municipality
-			,DistrictName
-			,NearestStation
-			,TimeToNearestStation
-			,TradePrice
-			,PricePerUnit
-			,FloorPlan
-			,Area
-			,UnitPrice
-			,LandShape
-			,Frontage
-			,TotalFloorArea
-			,BuildingYear
-			,Structure
-			,Use
-			,Purpose
-			,Direction
-			,Classification
-			,Breadth
-			,CityPlanning
-			,CoverageRatio
-			,FloorAreaRatio
-			,Period
-			,Renovation
-			,Remarks
-			,DEL_DATE
-			,TRANS_NAME
-			,CODE_NAME
-			,ESTATE_NAME
-			,ESTATE_X
-			,ESTATE_Y
+			,municipalitycode.MunicipalityCode_ID MunicipalityCode_ID
+			,trans_type.TRANS_TYPE_ID TRANS_TYPE_ID
+			,estate.Region
+			,estate.Prefecture
+			,estate.Municipality
+			,estate.DistrictName
+			,estate.NearestStation
+			,estate.TimeToNearestStation
+			,estate.TradePrice
+			,estate.PricePerUnit
+			,estate.FloorPlan
+			,estate.Area
+			,estate.UnitPrice
+			,estate.LandShape
+			,estate.Frontage
+			,estate.TotalFloorArea
+			,estate.BuildingYear
+			,estate.Structure
+			,estate.Use
+			,estate.Purpose
+			,estate.Direction
+			,estate.Classification
+			,estate.Breadth
+			,estate.CityPlanning
+			,estate.CoverageRatio
+			,estate.FloorAreaRatio
+			,estate.Period
+			,estate.Renovation
+			,estate.Remarks
+			,estate.DEL_DATE
+			,trans_type.TRANS_NAME TRANS_NAME
+			,municipalitycode.CODE_NAME
+			,estate.ESTATE_NAME 
 		from
 			favorite
 		join
@@ -60,6 +58,7 @@
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
 		where
+			
 			MEMBER_ID = #{MEMBER_ID}
 	</select>
 	
@@ -96,13 +95,13 @@
 			,CityPlanning
 			,CoverageRatio
 			,FloorAreaRatio
-			,Period
-			,Renovation
-			,Remarks
-			,DEL_DATE
+			,estate.Period
+			,estate.Renovation
+			,estate.Remarks
+			,estate.DEL_DATE
 			,TRANS_NAME
 			,CODE_NAME
-			,ESTATE_NAME
+			,estate.ESTATE_NAME 
 		from
 			favorite
 		join

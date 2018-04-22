@@ -45,7 +45,6 @@ public class FavoriteController {
         model.addAttribute("rlist",allRooms);
         model.addAttribute("alist", alist);
         model.addAttribute("rclist", rclist);
-	
 		return "user/mypagecustomer";
 	}
 	
