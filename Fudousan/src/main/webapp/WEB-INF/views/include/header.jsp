@@ -34,7 +34,20 @@
 						</ul>
 					</li>
 				</c:if>
-				<c:if test="${sessionScope.permissionId == 1 || sessionScope.permissionId == 2 }">
+				<c:if test="${sessionScope.permissionId == 1}">
+					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
+
+					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
+
+					<li><a href="/fudousan/logout" data-lang="1"></a></li>
+
+					<li><a href="/fudousan/memberupdate/memberupdate">Update Member</a></li>
+					
+					<li><a href="/fudousan/mypageNormalUser">Member page</a></li>
+					
+										
+				</c:if>
+				<c:if test="${sessionScope.permissionId == 2}">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 
 					
@@ -43,8 +56,12 @@
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
 					<li><a href="/fudousan/memberupdate/memberupdate">Update Member</a>
+					
+					<li><a href="/fudousan/interior/">Interior page</a></li>
+					
 				</c:if>
-				<c:if test="${sessionScope.permissionId == 3 }">
+				 
+				<c:if test="${sessionScope.permissionId == 3}">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 
 					<li><a href="bm"> 매물 확인 </a></li>
@@ -52,11 +69,14 @@
 
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="/fudousan/memberupdate/agencyupdate">Update Member</a>
+					<li><a href="/fudousan/memberupdate/agencyupdate">Update Member</a></li>
+					
+					<li><a href="/fudousan/bm">Agency page</a></li>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
+					<li><a href="/fudousan/admin">Admin page</a></li>
 				</c:if>
 				
 					<li><a href="javascript:selectLanguage('ko')">한국어</a></li>
