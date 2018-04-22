@@ -140,6 +140,12 @@
 	}
 	
 	
+	function goDetail(){
+		var favo = document.getElementById("favo").value;
+		alert(favo);
+		location.href ="detailedinfomation?id=EstateId:"+favo;
+	}
+	
 	</script>
 	
 	
