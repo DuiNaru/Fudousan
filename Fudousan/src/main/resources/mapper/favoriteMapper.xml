@@ -106,7 +106,7 @@
 	<select id="selectFavorite" resultMap="FavoriteAll">
  		<include refid="SELECT_FAVORITE_SQL"></include>
 		WHERE 
-			member_id=#{memberId} AND EST_ESTATE_ID = #{estate.estateId}
+			member_id=#{memberId} AND estate.ESTATE_ID  = #{estate.estateId}
 	</select>
 	
 	<delete id="deleteFavorite" parameterType="favorite">

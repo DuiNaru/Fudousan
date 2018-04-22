@@ -43,7 +43,7 @@
 
 					<li><a href="/fudousan/memberupdate/memberupdate">Update Member</a></li>
 					
-					<li><a href="/fudousan/mypageNormalUser">Member page</a></li>
+					<li><a href="/fudousan/mypageNormalUser">Member Page</a></li>
 					
 										
 				</c:if>
@@ -57,7 +57,7 @@
 
 					<li><a href="/fudousan/memberupdate/memberupdate">Update Member</a>
 					
-					<li><a href="/fudousan/interior/">Interior page</a></li>
+					<li><a href="/fudousan/interior/">Interior Page</a></li>
 					
 				</c:if>
 				 
@@ -71,7 +71,7 @@
 
 					<li><a href="/fudousan/memberupdate/agencyupdate">Update Member</a></li>
 					
-					<li><a href="/fudousan/bm">Agency page</a></li>
+					<li><a href="/fudousan/bm">Agency Page</a></li>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
