@@ -30,6 +30,7 @@
 			<div class="col-sm-12 form-group">
 				<p><a href="/">${room.estate.estateName}</a><c:out value="${room.map} "/></p>
 		 		<a class="btn btn-default" href="../../newRoom?estateId=${room.estate.estateId}&roomPublic=0">새로 꾸미기</a>
+		 		<a class="btn btn-default" href="/newRoom?roomPublic=0">모델링 작성</a>
 			</div>
 		</c:forEach>
     </div> 
