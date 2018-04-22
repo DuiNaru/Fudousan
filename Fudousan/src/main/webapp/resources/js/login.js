@@ -34,7 +34,7 @@ function formCheck(){
 					$('#loginModal').modal('hide');
 					
 					$('#loginAtag').html('<a href="/fudousan/logout">Logout</a>');
-					
+		
 					var str = '<a>' + result.memberName + ', Welcome!</a>';
 					$('#loginNameTag').html(str);
 				}

@@ -13,10 +13,11 @@
 				<div class="modal-body">
 					<span data-lang="2"></span> <input type="text" id="memberEmail" name="memberID">
 					<span data-lang="3"></span> <input type="password" id="password" name="password">
-					<button type="button" id="loginBtn" data-lang="0"></button>
+					
 				</div>
 				
 				<div class="modal-footer">
+					<button type="button" class="btn btn-success" id="loginBtn" data-lang="0"></button>
 					<button type="button" class="btn btn-danger" data-dismiss="modal" data-lang="4"></button>
 				</div>
 			</div>
