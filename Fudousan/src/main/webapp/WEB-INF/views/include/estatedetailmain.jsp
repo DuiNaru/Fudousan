@@ -269,13 +269,10 @@
 				</a>
 				<br><br>
 				<a data-toggle="modal" href="#emailModal" class="btn btn-success btn-lg">
-					<span class="glyphicon glyphicon-phone"></span>   E - MAIL
+					<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
 				</a>
  			</div>
 		</div>
 	</div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>

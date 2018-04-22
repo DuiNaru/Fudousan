@@ -29,8 +29,11 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 
-	<!-- header -->
+	<!-- main -->
 	<%@include file="/WEB-INF/views/include/estatedetailmain.jsp" %>
+
+	<!-- footer  -->
+	<%@include file="/WEB-INF/views/include/footer.jsp" %>
 
 	<!-- hidden value -->
 	<input type="hidden" value="${resultEstate.estateX}" id="lat">
