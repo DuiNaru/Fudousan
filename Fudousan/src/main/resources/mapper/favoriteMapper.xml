@@ -17,7 +17,7 @@
 			,favorite.CRE_DATE						CRE_DATE
 			
 			-- ESTATE
-			estate.ESTATE_ID 						EST_ESTATE_ID
+			,estate.ESTATE_ID 						EST_ESTATE_ID
 			,estate.Region							EST_Region		
 			,estate.Prefecture						EST_Prefecture
 			,estate.Municipality					EST_Municipality
