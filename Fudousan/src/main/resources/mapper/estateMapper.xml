@@ -8,42 +8,50 @@
 
 <sql id="SELECT_ESTATE_SQL">
 	select
-			ESTATE_ID 
-			,Region
-			,Prefecture
-			,Municipality
-			,DistrictName
-			,NearestStation
-			,TimeToNearestStation
-			,TradePrice
-			,PricePerUnit
-			,FloorPlan
-			,Area
-			,UnitPrice
-			,LandShape
-			,Frontage
-			,TotalFloorArea
-			,BuildingYear
-			,Structure
-			,Use
-			,Purpose
-			,Direction
-			,Classification
-			,Breadth
-			,CityPlanning
-			,CoverageRatio
-			,FloorAreaRatio
-			,Period
-			,Renovation
-			,Remarks
-			,estate.DEL_DATE estate_DEL_DATE
-			,estate.MunicipalityCode_ID MunicipalityCode_ID
-			,estate.TRANS_TYPE_ID TRANS_TYPE_ID
-			,ESTATE_NAME
-			,ESTATE_X
-			,ESTATE_Y
-			,BASE_ROOM_ID
-			,ADDRESS
+			-- ESTATE
+			estate.ESTATE_ID 						ESTATE_ID
+			,estate.Region							Region		
+			,estate.Prefecture						Prefecture
+			,estate.Municipality					Municipality
+			,estate.DistrictName					DistrictName
+			,estate.NearestStation					NearestStation
+			,estate.TimeToNearestStation			TimeToNearestStation
+			,estate.TradePrice						TradePrice
+			,estate.PricePerUnit					PricePerUnit
+			,estate.FloorPlan						FloorPlan
+			,estate.Area							Area
+			,estate.UnitPrice						UnitPrice
+			,estate.LandShape						LandShape
+			,estate.Frontage						Frontage
+			,estate.TotalFloorArea					TotalFloorArea
+			,estate.BuildingYear					BuildingYear
+			,estate.Structure						Structure
+			,estate.Use								Use
+			,estate.Purpose							Purpose
+			,estate.Direction						Direction
+			,estate.Classification					Classification
+			,estate.Breadth							Breadth
+			,estate.CityPlanning					CityPlanning
+			,estate.CoverageRatio					CoverageRatio
+			,estate.FloorAreaRatio					FloorAreaRatio
+			,estate.Period							Period
+			,estate.Renovation						Renovation
+			,estate.Remarks							Remarks
+			,estate.DEL_DATE 						estate_DEL_DATE
+			,estate.ESTATE_NAME						ESTATE_NAME
+			,estate.ADDRESS							ADDRESS
+			,estate.ESTATE_X						ESTATE_X
+			,estate.ESTATE_Y						ESTATE_Y
+			,estate.CRE_DATE						CRE_DATE					
+			,estate.BASE_ROOM_ID					BASE_ROOM_ID
+			
+			-- municipalitycode
+			,municipalitycode.municipalitycode_id 	MunicipalityCode_ID
+			,municipalitycode.code_name				CODE_NAME
+			
+			-- trans_type
+			,trans_type.TRANS_TYPE_ID 				TRANS_TYPE_ID
+			,trans_type.TRANS_NAME					TRANS_NAME
 		from
 			ESTATE
 		join
@@ -282,10 +290,7 @@ SEQ_ESTATE_ID.nextval
 
 
 <select id="select" parameterType="string" resultMap="estateResultMap">
-	SELECT
-	    *
-	FROM
-	    estate
+	<include refid="SELECT_ESTATE_SQL"></include>
 	WHERE
 	    estate_id IN (
 	        SELECT estate_id FROM entry WHERE agency_id = (
@@ -538,10 +543,11 @@ VALUES
 		<result property="remarks" 					column="Remarks"/>
 		<result property="delDate" 					column="estate_DEL_DATE"/>
 		<result property="estateName" 				column="ESTATE_NAME"/>
+		<result property="address" 				    column="ADDRESS"/>
 		<result property="estateX" 					column="ESTATE_X"/>
 		<result property="estateY" 					column="ESTATE_Y"/>
+		<result property="creDate" 					column="CRE_DATE"/>
 		<result property="baseRoomId" 				column="BASE_ROOM_ID"/>
-		<result property="address" 				    column="ADDRESS"/>
 		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
 		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
 	</resultMap>

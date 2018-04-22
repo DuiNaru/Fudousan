@@ -116,7 +116,7 @@ public class Estate implements Serializable {
 	/** DEL_DATE. */
 	private Date delDate;
 	
-	
+	private Date creDate;
 	
 
 	private String address;
@@ -136,16 +136,24 @@ public class Estate implements Serializable {
 
 
 
-	public Estate(Integer estateId, TransType transType, String region, MunicipalityCode municipalitycode,
-			String prefecture, String municipality, String districtname, String neareststation,
-			Integer timetoneareststation, Integer tradeprice, Integer priceperunit, String floorplan, Integer area,
-			Integer unitprice, String landshape, Double frontage, Integer totalfloorarea, String buildingyear,
-			String structure, String use, String purpose, String direction, String classification, Double breadth,
-			String cityplanning, Integer coverageratio, Integer floorarearatio, String period, String renovation,
-			String remarks, Date delDate, String estateName, String address, double estateX, double estateY,
-			int baseRoomId) {
+	
+
+
+
+
+
+
+	public Estate(Integer estateId, String estateName, TransType transType, String region,
+			MunicipalityCode municipalitycode, String prefecture, String municipality, String districtname,
+			String neareststation, Integer timetoneareststation, Integer tradeprice, Integer priceperunit,
+			String floorplan, Integer area, Integer unitprice, String landshape, Double frontage,
+			Integer totalfloorarea, String buildingyear, String structure, String use, String purpose, String direction,
+			String classification, Double breadth, String cityplanning, Integer coverageratio, Integer floorarearatio,
+			String period, String renovation, String remarks, Date delDate, Date creDate, String address,
+			double estateX, double estateY, int baseRoomId) {
 		super();
 		this.estateId = estateId;
+		this.estateName = estateName;
 		this.transType = transType;
 		this.region = region;
 		this.municipalitycode = municipalitycode;
@@ -176,12 +184,19 @@ public class Estate implements Serializable {
 		this.renovation = renovation;
 		this.remarks = remarks;
 		this.delDate = delDate;
-		this.estateName = estateName;
+		this.creDate = creDate;
 		this.address = address;
 		this.estateX = estateX;
 		this.estateY = estateY;
 		this.baseRoomId = baseRoomId;
 	}
+
+
+
+
+
+
+
 
 
 
@@ -567,10 +582,31 @@ public class Estate implements Serializable {
 
 
 
+	public Date getCreDate() {
+		return creDate;
+	}
+
+
+	public void setCreDate(Date creDate) {
+		this.creDate = creDate;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	@Override
 	public String toString() {
-		return "Estate [estateId=" + estateId + ", transType=" + transType + ", region=" + region
-				+ ", municipalitycode=" + municipalitycode + ", prefecture=" + prefecture + ", municipality="
+		return "Estate [estateId=" + estateId + ", estateName=" + estateName + ", transType=" + transType + ", region="
+				+ region + ", municipalitycode=" + municipalitycode + ", prefecture=" + prefecture + ", municipality="
 				+ municipality + ", districtname=" + districtname + ", neareststation=" + neareststation
 				+ ", timetoneareststation=" + timetoneareststation + ", tradeprice=" + tradeprice + ", priceperunit="
 				+ priceperunit + ", floorplan=" + floorplan + ", area=" + area + ", unitprice=" + unitprice
@@ -579,13 +615,58 @@ public class Estate implements Serializable {
 				+ purpose + ", direction=" + direction + ", classification=" + classification + ", breadth=" + breadth
 				+ ", cityplanning=" + cityplanning + ", coverageratio=" + coverageratio + ", floorarearatio="
 				+ floorarearatio + ", period=" + period + ", renovation=" + renovation + ", remarks=" + remarks
-				+ ", delDate=" + delDate + ", estateName=" + estateName + ", address=" + address + ", estateX="
-				+ estateX + ", estateY=" + estateY + ", baseRoomId=" + baseRoomId + "]";
+				+ ", delDate=" + delDate + ", creDate=" + creDate + ", address=" + address + ", estateX=" + estateX
+				+ ", estateY=" + estateY + ", baseRoomId=" + baseRoomId + "]";
 	}
 
 
 
 
+
+
+
+
+
+
+
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((estateId == null) ? 0 : estateId.hashCode());
+		return result;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Estate other = (Estate) obj;
+		if (estateId == null) {
+			if (other.estateId != null)
+				return false;
+		} else if (!estateId.equals(other.estateId))
+			return false;
+		return true;
+	}
 
 	
 }
