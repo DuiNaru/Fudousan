@@ -5,7 +5,59 @@
 
 
 <mapper namespace="com.real.fudousan.estate.dao.EstateMapper">
+<!-- 객체 별칭이 type  property가 vo 필드명   column이 DB이름-->
+	<resultMap type="estate" id="estateResultMap">
+		<id 	property="estateId" 				column="ESTATE_ID"/>
+		<result property="region" 					column="Region"/>
+		<result property="prefecture" 				column="Prefecture"/>
+		<result property="municipality" 			column="Municipality"/>
+		<result property="districtname" 			column="DistrictName"/>
+		<result property="neareststation" 			column="NearestStation"/>
+		<result property="timetoneareststation"		column="TimeToNearestStation"/>
+		<result property="tradeprice" 				column="TradePrice"/>
+		<result property="priceperunit" 			column="PricePerUnit"/>
+		<result property="floorplan" 				column="FloorPlan"/>
+		<result property="area" 					column="Area"/>
+		<result property="unitprice" 				column="UnitPrice"/>
+		<result property="landshape" 				column="LandShape"/>
+		<result property="frontage" 				column="Frontage"/>
+		<result property="address" 					column="address"/>
+		<result property="totalfloorarea" 			column="TotalFloorArea"/>
+		<result property="buildingyear" 			column="BuildingYear"/>
+		<result property="structure" 				column="Structure"/>
+		<result property="use" 						column="Use"/>
+		<result property="purpose" 					column="Purpose"/>
+		<result property="direction" 				column="Direction"/>
+		<result property="classification" 			column="Classification"/>
+		<result property="breadth" 					column="Breadth"/>
+		<result property="cityplanning" 			column="CityPlanning"/>
+		<result property="coverageratio" 			column="CoverageRatio"/>
+		<result property="floorarearatio" 			column="FloorAreaRatio"/>
+		<result property="period" 					column="Period"/>
+		<result property="renovation" 				column="Renovation"/>
+		<result property="remarks" 					column="Remarks"/>
+		<result property="delDate" 					column="estate_DEL_DATE"/>
+		<result property="estateName" 				column="ESTATE_NAME"/>
+		<result property="address" 				    column="ADDRESS"/>
+		<result property="estateX" 					column="ESTATE_X"/>
+		<result property="estateY" 					column="ESTATE_Y"/>
+		<result property="creDate" 					column="CRE_DATE"/>
+		<result property="baseRoomId" 				column="BASE_ROOM_ID"/>
+		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
+		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
+	</resultMap>
+	
+		<!-- associationdml property는 속하는 객체의 vo변수명이다. -->
+	
+	<resultMap type="transtype" id="transTypeResultMap">
+		<id 	property="transTypeId" column="TRANS_TYPE_ID"/>
+		<result property="transName"   column="TRANS_NAME"/>
+	</resultMap>
 
+	<resultMap type="municipalitycode" id="MunicipalityCodeResultMap">
+		<id 	property="municipalitycodeId" column="MunicipalityCode_ID"/>
+		<result property="codeName" 		  column="CODE_NAME"/>
+	</resultMap>
 <sql id="SELECT_ESTATE_SQL">
 	select
 			-- ESTATE
@@ -510,57 +562,5 @@ VALUES
 	
 	
 	
-	<!-- 객체 별칭이 type  property가 vo 필드명   column이 DB이름-->
-	<resultMap type="estate" id="estateResultMap">
-		<id 	property="estateId" 				column="ESTATE_ID"/>
-		<result property="region" 					column="Region"/>
-		<result property="prefecture" 				column="Prefecture"/>
-		<result property="municipality" 			column="Municipality"/>
-		<result property="districtname" 			column="DistrictName"/>
-		<result property="neareststation" 			column="NearestStation"/>
-		<result property="timetoneareststation"		column="TimeToNearestStation"/>
-		<result property="tradeprice" 				column="TradePrice"/>
-		<result property="priceperunit" 			column="PricePerUnit"/>
-		<result property="floorplan" 				column="FloorPlan"/>
-		<result property="area" 					column="Area"/>
-		<result property="unitprice" 				column="UnitPrice"/>
-		<result property="landshape" 				column="LandShape"/>
-		<result property="frontage" 				column="Frontage"/>
-		<result property="address" 					column="address"/>
-		<result property="totalfloorarea" 			column="TotalFloorArea"/>
-		<result property="buildingyear" 			column="BuildingYear"/>
-		<result property="structure" 				column="Structure"/>
-		<result property="use" 						column="Use"/>
-		<result property="purpose" 					column="Purpose"/>
-		<result property="direction" 				column="Direction"/>
-		<result property="classification" 			column="Classification"/>
-		<result property="breadth" 					column="Breadth"/>
-		<result property="cityplanning" 			column="CityPlanning"/>
-		<result property="coverageratio" 			column="CoverageRatio"/>
-		<result property="floorarearatio" 			column="FloorAreaRatio"/>
-		<result property="period" 					column="Period"/>
-		<result property="renovation" 				column="Renovation"/>
-		<result property="remarks" 					column="Remarks"/>
-		<result property="delDate" 					column="estate_DEL_DATE"/>
-		<result property="estateName" 				column="ESTATE_NAME"/>
-		<result property="address" 				    column="ADDRESS"/>
-		<result property="estateX" 					column="ESTATE_X"/>
-		<result property="estateY" 					column="ESTATE_Y"/>
-		<result property="creDate" 					column="CRE_DATE"/>
-		<result property="baseRoomId" 				column="BASE_ROOM_ID"/>
-		<association property="municipalitycode"	column="MunicipalityCode_ID" javaType="com.real.fudousan.estate.vo.MunicipalityCode" resultMap="MunicipalityCodeResultMap"/>
-		<association property="transType" 			column="TRANS_TYPE_ID"       javaType="com.real.fudousan.estate.vo.TransType"        resultMap="transTypeResultMap"/>
-	</resultMap>
 	
-		<!-- associationdml property는 속하는 객체의 vo변수명이다. -->
-	
-	<resultMap type="transtype" id="transTypeResultMap">
-		<id 	property="transTypeId" column="TRANS_TYPE_ID"/>
-		<result property="transName"   column="TRANS_NAME"/>
-	</resultMap>
-
-	<resultMap type="municipalitycode" id="MunicipalityCodeResultMap">
-		<id 	property="municipalitycodeId" column="MunicipalityCode_ID"/>
-		<result property="codeName" 		  column="CODE_NAME"/>
-	</resultMap>
 </mapper>

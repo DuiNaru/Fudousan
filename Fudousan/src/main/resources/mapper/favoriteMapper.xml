@@ -8,7 +8,7 @@
 	<resultMap type="favorite" id="FavoriteAll">
 		<result 	 property="memberId" column="MEMBER_ID"/>
 		<result 	 property="creDate"  column="CRE_DATE"/>
-		<association property="estate"   column="EST_ESTATE_ID" javaType="com.real.fudousan.estate.vo.Estate" resultMap="com.real.fudousan.estate.dao.estateMapper.estateResultMap" columnPrefix="EST_"/>
+		<association property="estate"   column="EST_ESTATE_ID" javaType="com.real.fudousan.estate.vo.Estate" resultMap="com.real.fudousan.estate.dao.EstateMapper.estateResultMap" columnPrefix="EST_"/>
 	</resultMap>
 	<sql id="SELECT_FAVORITE_SQL">
 		SELECT
