@@ -21,7 +21,7 @@
 			
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav navbar-right" style="margin-top: 8px;">
+				<ul class="nav navbar-nav navbar-right" style="margin-top: 8px;" id="navbar-ul">
 				<c:if test="${sessionScope.loginEmail == null}">
 					<li id="loginNameTag"></li>
 					<li id="loginAtag"><a data-toggle="modal" href="#loginModal" data-lang="0"></a></li>
@@ -37,7 +37,6 @@
 				<c:if test="${sessionScope.permissionId == 1}">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 
-					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
 
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
@@ -51,11 +50,10 @@
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 
 					
-					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
 
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="/fudousan/memberupdate/memberupdate">Update Member</a>
+					<li><a href="/fudousan/memberupdate/memberupdate">Update Member</a></li>
 					
 					<li><a href="/fudousan/interior/">Interior Page</a></li>
 					
@@ -63,10 +61,7 @@
 				 
 				<c:if test="${sessionScope.permissionId == 3}">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-
-					<li><a href="bm"> 매물 확인 </a></li>
-					<li><a href="/fudousan/logout"><span data-lang="logout"></span></a></li>
-
+					
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
 					<li><a href="/fudousan/memberupdate/agencyupdate">Update Member</a></li>

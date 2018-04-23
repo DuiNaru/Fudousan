@@ -13,7 +13,7 @@
 	
     <!-- 부트스트랩 -->
     <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
-	<link href="/fudousan/resources/css/detailedinfomationpage.css" rel="stylesheet">
+	<link rel="stylesheet" href="<c:url value="/resources/css/templete.css"/>" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<%-- <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>"> --%>
 	<%-- <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script> --%>

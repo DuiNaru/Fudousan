@@ -108,6 +108,15 @@ public class RoomController {
 		return result;
 	}
 	
+	@RequestMapping(value="deletionLogical",method=RequestMethod.GET)
+	public String deletionLogical(@ModelAttribute("loginId") int memberId , int roomId){
+		logger.info("deletionLogical("+roomId+") Start");
+		boolean result = Rservice.deletionLogical(memberId, roomId);
+		logger.info("deletionLogical("+roomId+") End");
+		return "user/mypagecustomer";
+	}
+	
+	
 	@RequestMapping(value="newRoom", method=RequestMethod.GET)
 	public String newRoom(@ModelAttribute("loginId") int loginId, Room room, Model model) {
 		logger.info("newRoom("+loginId+", "+room+") Start");
@@ -150,16 +159,16 @@ public class RoomController {
 	/*방높이*/
 	@ResponseBody
 	@RequestMapping(value="wallheightchange", method=RequestMethod.POST)
-	public String wallheightchange(int roomId, int height){
+	public boolean wallheightchange(int roomId, int height){
 		logger.info("방높이 변경 시작 컨트롤러 ");
 		System.out.println("넘어오낭");
 		Room room = new Room();
 		room.setRoomId(roomId);
 		room.setHeight(height);
 		System.out.println("room: " + room);
-		Rservice.wallheightchange(room);
+		boolean result = Rservice.wallheightchange(room) == 1;
 	
-		return "";
+		return result;
 	}
 
 	@ResponseBody

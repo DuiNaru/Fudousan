@@ -14,7 +14,7 @@
 	
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
-	<link rel="stylesheet" href="<c:url value="/resources/css/detailedinfomationpage.css"/>" >
+	<link rel="stylesheet" href="<c:url value="/resources/css/templete.css"/>" >
 	<!-- font awesome -->
     <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css"/>" media="screen" title="no title">
     <!-- Custom style -->
@@ -32,17 +32,29 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 	
-
-	<div  class="container">
-	<div class="col-sm-12">
-		<div class="col-sm-offset-3 col-sm-6">
-			<form id="itemform" action="additem" method="post" onreset="formreset()" onsubmit="return formsubmit()" enctype="multipart/form-data">
-				<%@ include file="./itemForm.jsp" %>
-			</form>
-		</div>
-	</div>
+	<div class="container-fluid text-center">
+		<div class="row content">
+			<div class="col-sm-2 sidenav"></div>
+			<div class="col-sm-8 text-left">
+				<h1 >
+					<span>Item Add Form</span>
+					<small>basic</small>
+				</h1>
+				<hr>
+				<div class="col-sm-3"></div>
+				<div class="col-sm-6 text-left">
+					<form id="itemform" action="additem" method="post" onreset="formreset()" onsubmit="return formsubmit()" enctype="multipart/form-data">
+						<%@ include file="./itemForm.jsp" %>
+					</form>
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
+			<div class="col-sm-2 sidenav"></div>
+		</div>		
+	</div>	
+	<br>		
+					
 	
-	</div> 
 
 	<!-- footer -->
 	<%@include file="/WEB-INF/views/include/footer.jsp" %>

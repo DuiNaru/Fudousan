@@ -16,7 +16,7 @@
 
     <!-- 부트스트랩 -->
 	<link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
-	<link href="/fudousan/resources/css/detailedinfomationpage.css" rel="stylesheet">
+	<link rel="stylesheet" href="<c:url value="/resources/css/templete.css"/>" >
 	
 
 <body>

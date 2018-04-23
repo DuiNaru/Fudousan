@@ -136,17 +136,31 @@ public class RoomDAOOracle implements RoomDAO {
 	}
 
 	@Override
+	public boolean deletionLogical(int memberId, int roomId) {
+		logger.info("deletionLogical("+memberId+","+roomId+") Start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		boolean result = false;
+		try{
+			result = mapper.deletionLogical(memberId, roomId);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("deletionLogical("+memberId+","+roomId+") End");
+		return result;
+	}
+	
+	@Override
 	public boolean deleteRoom(int memberId, int roomId) {
 		logger.info("deleteRoom("+memberId+", "+roomId+") Start");
-		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		/*RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
 		boolean result = false;
 
 		try{
 			result = mapper.deleteRoom(memberId, roomId);
 		}catch (Exception e) {
 			e.printStackTrace();
-		}
-		
+		}*/
+		boolean result = deletionLogical(memberId, roomId);
 		logger.info("deleteRoom("+memberId+", "+roomId+") End");
 		return result;
 	}
@@ -220,6 +234,8 @@ public class RoomDAOOracle implements RoomDAO {
 		logger.info("updateRoomSanpShot("+room+") End");
 		return result;
 	}
+
+	
 	
 	
 }

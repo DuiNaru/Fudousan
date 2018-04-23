@@ -32,7 +32,6 @@
 	
 	<!-- include js List -->
 	<script src="resources/js/jquery-3.3.1.js"></script>
-	<script src="resources/js/login.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
 	
 	<!-- map js -->
@@ -55,5 +54,6 @@
 	<!-- 다국어 처리 -->
 	<script src="resources/js/cookie.js"></script>
 	<script src="resources/js/translation.js"></script>
+	<script src="resources/js/login.js"></script>
 </body>
 </html>

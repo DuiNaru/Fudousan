@@ -30,7 +30,7 @@
 			<div class="col-sm-12 form-group">
 				<p><a href="/">${room.estate.estateName}</a><c:out value="${room.map} "/></p>
 		 		<a class="btn btn-default" href="<c:url value="/newRoom?estateId=${room.estate.estateId}&roomPublic=0"/>">내집꾸미기</a>
-		 		
+		 		<a class="btn btn-default" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.estate.estateId}"/>">논리삭제</a>
 			</div>
 		</c:forEach>
     </div> 

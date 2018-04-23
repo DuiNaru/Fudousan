@@ -209,7 +209,9 @@
 	
 	<!-- 위쪽 메뉴 -->
 	<div class="top-menu">
-	
+		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button>
+		<video id="localCam" autoplay="autoplay" muted="muted"></video>
+		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
 	</div>
 	
 	<!-- 왼쪽 메뉴 -->

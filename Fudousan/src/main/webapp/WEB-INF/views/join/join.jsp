@@ -12,7 +12,7 @@
 	
 	<!-- 부트스트랩 -->
 	<link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
-	
+	<link rel="stylesheet" href="<c:url value="/resources/css/templete.css"/>" >
 	<!-- font awesome -->
 	<link rel="stylesheet" href="../resources/css/font-awesome.min.css" media="screen" title="no title">
 	
@@ -30,6 +30,8 @@
 	<!-- join main -->
 	<%@include file="/WEB-INF/views/include/joinmain.jsp" %>
 	
+	<!-- footer -->
+	<%@include file="/WEB-INF/views/include/footer.jsp" %>
 	
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
