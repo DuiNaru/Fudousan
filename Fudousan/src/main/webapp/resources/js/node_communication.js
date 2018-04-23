@@ -1,52 +1,75 @@
 var socket = io('http://localhost:8000');
 
+
+$(function(){
+	 var userId = document.getElementById('userId').value;
+	 var userName = document.getElementById('userName').value;
+	 var user = {
+			 userId : userId,
+			 userName : userName,
+			 roomId: room.roomId,
+	 }
+	 
+	 socket.emit('room_join', user);
+});
+
+
 //CommandCallBack 정의
 
 // 모든 onCreate하면 실행된다.
 CommandCallBack.onCreate = function(roomItem){
+	console.log('onCreate');
 	// 상대에게 create됐음을 알린다.
 	nodeCommand.transmitCreate(roomItem);
 }
 
 // 모든 onDelete하면 실행된다.
 CommandCallBack.onDelete = function(roomItem) {
+	console.log('onDelete');
 	// 상대에게 delete됬음을 알린다.
 	nodeCommand.transmitDelete(roomItem);
 }
 
 // 모든 onMove하면 실행된다.
-CommandCallback.onMove = function(roomItem){
+CommandCallBack.onMove = function(roomItem){
+	console.log('onMove');
 	//상대에게 Move 됬음을 알린다.
 	nodeCommand.transmitMove(roomItem);
 }
 
 // 모든 onItemChange하면 실행된다.
 CommandCallBack.onItemChange = function(roomItem){
+	console.log('onItemChange');
 	nodeCommand.transmitItemChange(roomItem);
 }
 
 // 모든 onModeLoad하면 실행된다
 CommandCallBack.onModeLoad = function(roomItem){
+	console.log('onModeLoad');
 	nodeCommand.transModeLoad(roomItem);
 }
 
 // 모든 onModeError하면 실행된다
 CommandCallBack.onModeError = function(roomItem){
+	console.log('onModeError');
 	nodeCommand.transModeError(roomItem);
 }
 
 // 모든 onSelect하면 실행된다.
 CommandCallBack.onSelect = function(roomItem){
+	console.log('onSelect');
 	nodeCommand.transmitSelect(roomItem);
 }
 
 //모든 OnDeselect하면 실행된다.
 CommandCallBack.onDeselect = function(roomItem){
+	console.log('onDeselect');
 	nodeCommand.transmitDeselect(roomItem);
 }
 
 //모든 onReset하면 실행된다.
 CommandCallBack.onReset = function(roomItem){
+	console.log('onReset');
 	nodeCommand.transmitReset(roomItem);
 }
 
@@ -67,7 +90,7 @@ var nodeCommand = {
 		socket.emit('addItem',roomItemObeject);
 	},
 	receiveCreate : function(roomItemObeject) {
-		var roomItem = JSON.parse(roomItemObeject);
+		var roomItem = objToRoomItem(JSON.parse(roomItemObeject));
 		NewCommand.place(roomItem);
 	},
 	
@@ -77,7 +100,7 @@ var nodeCommand = {
 		socket.emit('delItem',roomItemObeject);
 	},
 	receiveDelete : function(roomItemObeject){
-		var roomItem = JSON.parse(roomItemObeject);
+		var roomItem = objToRoomItem(JSON.parse(roomItemObeject));
 		NewCommand.deplace(roomItem);
 	},
 	
@@ -87,7 +110,7 @@ var nodeCommand = {
 		socket.emit('moveItem',roomItemObeject);
 	},
 	receiveMove : function(roomItemObeject){
-		var roomItem = JSON.parse(roomItemObeject);
+		var roomItem = objToRoomItem(JSON.parse(roomItemObeject));
 		NewCommand.moveLocal(roomItem);
 	},
 	
@@ -97,7 +120,7 @@ var nodeCommand = {
 		socket.emit('changeItem',roomItemObeject);
 	},
 	receiveChange :  function(roomItemObject){
-		var roomItem = JSON.parse(roomItemObject);
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
 		NewCommand.itemChangeLocal(roomItem);
 	},
 	
@@ -107,7 +130,7 @@ var nodeCommand = {
 		socket.emit('modeLoad',roomItemObject);
 	},
 	receiveModeLoad : function(roomItemObject){
-		var roomItem = JSON.parse(roomItemObject);
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
 		alert('상대방이 로드가 끝났습니다.');
 	},
 	
@@ -117,7 +140,7 @@ var nodeCommand = {
 		socket.emit('modeError',roomItemObject);
 	},
 	receiveModeError : function(roomItemObject){
-		var roomItem = JSON.parse(roomItemObject);
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
 		alert('상대방이 로드를 실패하였습니다.');
 	},
 	
@@ -127,7 +150,7 @@ var nodeCommand = {
 		socket.emit('selectItem',roomObject);
 	},
 	receiveSelectItem : function(roomItemObject){
-		var roomItem = JSON.parse(rooomItemObject);
+		var roomItem = objToRoomItem(JSON.parse(rooomItemObject));
 		NewCommand.selectLocal(roomItem);
 	},
 	 
@@ -137,7 +160,7 @@ var nodeCommand = {
 		socket.emit('deselectItem',roomObject);
 	},
 	receivceDeselectItem : function(roomItemObject){
-		var roomItem = JSON.parse(roomItemObject);
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
 		NewCommand.deselectLocal(roomItem);
 	},
 	
@@ -164,7 +187,7 @@ var nodeCommand = {
 
 //A가 변경을하면 서버가 받아서 그걸 B에게 전달해주는 것
 socket.on('othersideAdd',function(roomItemObeject){
-	nodeCommand.receivceCreate(roomItemObeject);
+	nodeCommand.receiveCreate(roomItemObeject);
 });
 
 socket.on('othersideDelete',function(roomItemObeject){
@@ -205,17 +228,7 @@ socket.on('othersideReset',function(){
 ////////////////////////////////////////////////////
 
 
- $(function(){
-	 var userId = document.getElementById('userId').value;
-	 var userName = document.getElementById('userName').value;
-	 var user = {
-			 userId : userId,
-			 userName : userName,
-			 roomId: room.roomId,
-	 }
-	 
-	 socket.emit('room_join', user);
- });
+
 
 socket.on('commandPass',function(data){
 	if(data != 'success'){
