@@ -442,6 +442,15 @@ function moveMouse(event) {
 }
 
 /**
+ * 천장 높이 변경을 반영한다.
+ * @returns
+ */
+function changeHeigth() {
+	drawWall();
+	roomCeil.position.y = room.height;
+}
+
+/**
  * DB대로 벽을 생성한다.
  * @returns
  */
@@ -1233,7 +1242,7 @@ function select(roomItem) {
 	for(var i = 0; i < curRoomItems.length; i++ ) {
 		if (curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId) {
 			curSelected = curRoomItems[i];
-			curSelectedOriginal = roomItem;
+			curSelectedOriginal = roomItem.clone();
 			
 			// 선택 상태 아웃 라인 표시
 			outlinePass.selectedObjects = curSelected.children;

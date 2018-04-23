@@ -357,8 +357,17 @@ canvas {
 						roomId:roomId,
 						height:height
 					},
-					success: function(){
-	
+					success: function(data){
+						if(data != null || data == true || data == "true") {
+							room.height = height;
+							changeHeigth();
+						} else {
+							alert("방 높이 변경에 실패하였습니다.");
+						}
+					},
+					error:function(e) {
+						console.dir(e);
+						alert("방 높이 변경 중 에러가 발생하였습니다.");
 					}
 
 				});
