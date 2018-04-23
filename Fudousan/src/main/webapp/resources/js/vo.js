@@ -9,7 +9,7 @@ var CommandCallBack = {
 	onSelect : undefined,		// 아이템 선택
 	onDeselect : undefined,		// 아이템 선택 해제
 	onReset : undefined,		// 룸 리셋
-	onSnapShot : undefined,		// 룸 스냅샷 성공
+	onSnapShot : undefined,		// 룸 스냅샷 성공, 1번째 파라미터 해당 스냅샷 url
 	onForward: undefined,		// 앞으로가기
 	onBack : undefined			// 뒤로가기
 }

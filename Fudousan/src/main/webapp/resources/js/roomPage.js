@@ -7,7 +7,7 @@ var cameraLookAngle = 0;
 // 카메라, 씬, 렌더러, 카메라 컨트롤
 var camera, scene, renderer, controls;
 var scenes = [];
-var composer, outlinePass;
+var composer, outlinePass, otherOutlinePass;
 // 화면 가로 길이
 var width = window.innerWidth;
 // 화면 세로 길이
@@ -213,6 +213,12 @@ function init() {
 	outlinePass.visibleEdgeColor.set( 0xFFFFFF );
 	composer.addPass( outlinePass );
 	
+	otherOutlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
+	otherOutlinePass.edgeStrength = 3;
+	otherOutlinePass.edgeThickness = 1;
+	otherOutlinePass.visibleEdgeColor.set( 0xFF0000 );
+	composer.addPass( otherOutlinePass );
+	
 	effectFXAA = new THREE.ShaderPass( THREE.FXAAShader );
 	console.dir(effectFXAA);
 	effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
@@ -269,7 +275,10 @@ function animate(time) {
 	TWEEN.update(time);
 }
 
-
+/**
+ * 화면 크기 조정
+ * @returns
+ */
 function onResize() {
 	// 화면 가로 길이
 	width = window.innerWidth;
@@ -325,17 +334,23 @@ function onKeydown(event) {
 	console.log(camera);*/
 }
 
+/**
+ * 마우스 누름
+ * @param event
+ * @returns
+ */
 function onDocumentMouseDown(event) {
 	
 	isMouseUp = false;
-	deSelect();
+	deSelect(true);
 	
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(curRoomItems, true);
 	if (intersects.length > 0) {
 		
 		// 현재 배치된 모든 아이템의 매시에 클릭이 되니까, 그 메시 그룹을 가져온다.
-		select(intersects[0].object.parent);
+		//select(intersects[0].object.parent);
+		NewCommand.select(intersects[0].object.parent.roomItem);
 		
 		// 화면 돌리기 불가
 		controls.enabled = false;
@@ -343,6 +358,11 @@ function onDocumentMouseDown(event) {
 	
 }
 
+/**
+ * 마우스 이동
+ * @param event
+ * @returns
+ */
 function onDocumentMouseMove(event) {
 	// 마우스 이동 저장
 	if ( !moveMouse(event) ) {
@@ -358,8 +378,13 @@ function onDocumentMouseMove(event) {
 			var x = curSelected.roomItem.item.itemX;
 			var y = curSelected.roomItem.item.itemY;
 			var z = curSelected.roomItem.item.itemZ;
+			
 			// 원점 보정해서 움직임
 			move(curSelected, intersects[0].point.x+x, intersects[0].point.y+y, intersects[0].point.z+z);
+			
+			
+			
+			
 			// 움직이고 나서 움직였음을 표시한다.
 			curMoving = true;
 		}
@@ -367,20 +392,36 @@ function onDocumentMouseMove(event) {
 	
 }
 
+/**
+ * 마우스 누름 해제
+ * @param event
+ * @returns
+ */
 function onDocumentMouseUp(event) {
 	isMouseUp = true;
 	if(curSelected != null) {
 		// 움직였으면 DB 저장
 		if(curMoving) {
+			var param = curSelected.roomItem.clone();
+			param.x = curSelected.position.x;
+			param.y = curSelected.position.y;
+			param.z = curSelected.position.z;
+			NewCommand.move(param);
+			
 			curMoving = false;
 			saveRoomItem(curSelected.roomItem);
-			deSelect();
+			deSelect(true);
 		}
 	}
 	// 컨트롤 활성화
 	controls.enabled = true;
 }
 
+/**
+ * 마우스 이동
+ * @param event
+ * @returns
+ */
 function moveMouse(event) {
 	// Get mouse position
 	var mouseX = (event.clientX / window.innerWidth) * 2 - 1;
@@ -432,6 +473,11 @@ function drawWall() {
 	scene.add(walls);
 }
 
+/**
+ * 바닥 그리기
+ * @param side true : 앞면 / false : 뒷면
+ * @returns
+ */
 function drawFloor(side) {
 	if ( originalWalls.length == 0 ) {
 		// 벽이 없으면 그냥 매우 큰 땅 생성
@@ -458,7 +504,6 @@ function drawFloor(side) {
 		if(!flag1) con.push(c1);
 		if(!flag2) con.push(c2);
 	}
-	console.log(con);
 	
 	// 방문 기록
 	var visit = [];
@@ -487,7 +532,7 @@ function drawFloor(side) {
 		adjMatrix[c2][c1] = 1;
 		
 	}
-	console.log(adjMatrix);
+
 	/*
 	var shape = new THREE.Shape();
 	// 탐색 시작
@@ -562,7 +607,7 @@ function drawFloor(side) {
 			}
 		}
 	}
-	console.dir(sortX);
+	
 	// y 정렬(오름차순)
 	var sortY = [];
 	for(var i = 0; i < con.length; i++) {
@@ -577,7 +622,6 @@ function drawFloor(side) {
 			}
 		}
 	}
-	console.dir(sortY);
 	
 	// 최종 외곽선 배열
 	var outline = [];
@@ -655,20 +699,11 @@ function drawFloor(side) {
 	
 	outline = searchOutline(top, con, adjMatrix);
 	
-	console.log("아웃라인?");
-	console.log(outline);
-	
 	var shape = new THREE.Shape();
 	shape.moveTo(con[outline[0]].x, con[outline[0]].y);
 	for (var i = 1; i < outline.length; i++) {
 		shape.lineTo(con[outline[i]].x, con[outline[i]].y);
 	}
-	console.dir(shape);
-	
-	
-	
-	
-	
 	
 	//var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
 	var roomFloorGeometry = new THREE.ShapeGeometry( shape );
@@ -763,6 +798,13 @@ function drawFloor(side) {
 	return possible;
 }*/
 
+/**
+ * 연결 맵에서 인덱스의 점 부터 외곽선을 찾아서 배열로 반환
+ * @param startPoint
+ * @param points
+ * @param connectMap
+ * @returns
+ */
 function searchOutline(startPoint, points, connectMap) {
 	var possible = [startPoint];
 	var curIndex = startPoint;
@@ -874,7 +916,7 @@ function previewItem(itemId, fileName) {
  * @param item Item VO 또는 RoomItem VO
  * @returns
  */
-function createItem(item) {
+function createItem(item, onCreate) {
 	var x;
 	var y;
 	var z;
@@ -902,7 +944,6 @@ function createItem(item) {
 	}
 	
 	if (x !== undefined && y !== undefined && z !== undefined) {
-		create
 		
 		// 방 아이템 추가하고 그 아이템 가져오기
 		$.ajax({
@@ -927,6 +968,10 @@ function createItem(item) {
 					
 					// roomitem을 화면에 배치
 					placeRoomItem(roomItem);
+					
+					if ( onCreate !== undefined ) {
+						onCreate(roomItem);
+					}
 					
 					if ( CommandCallBack.onCreate !== undefined ) {
 						CommandCallBack.onCreate(roomItem);
@@ -957,16 +1002,6 @@ function deleteItem(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
-
-	// 명령 추가
-	var command = new Command();
-	command.name = "deleteItem";
-	command.roomItem = item;
-	command.onDo = deleteItem;
-	command.onDoCallBack = CommandCallBack.onDelete;
-	command.onRedo = createItem;
-	command.onRedoCallBack = CommandCallBack.onCreate;
-	addCommand(command);
 	
 	$.ajax({
 		url:"roomItem/delete",
@@ -1061,7 +1096,7 @@ function deplaceRoomItem(roomItem) {
 	console.dir(roomItem);
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
-			if ( curSelected == curRoomItems[i] ) deSelect();
+			if ( curSelected == curRoomItems[i] ) deSelect(false);
 			console.log("배치 해제 대상");
 			console.dir(curRoomItems[i].roomItem);
 			scene.remove(curRoomItems[i]);
@@ -1089,44 +1124,49 @@ function move(object, x, y, z) {
 	
 	if ( x != null ) {
 
-		object.roomItem.x = object.position.x = x;
+		object.position.x = x;
 		
 	}
 	
 	if ( y != null ) {
 
-		object.roomItem.y = object.position.y = y;
+		object.position.y = y;
 		
 	}
 	
 	if ( z != null ) {
 
-		object.roomItem.z = object.position.z = z;
+		object.position.z = z;
 		
 	}
-	
-	return object.roomItem;
 	
 }
 
 /**
  * 해당 룸 아이템을 해당 x,y,z 로 이동
  * @param roomItem
+ * @param excuteCallBack 콜백 실행 여부
  * @returns
  */
-function moveRoomItem(roomItem) {
+function moveRoomItem(roomItem, excuteCallBack) {
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+			var result = curRoomItems[i].roomItem.clone();
+
 			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z);
 			
-			if(CommandCallBack.onMove !== undefined) {
+			curRoomItems[i].roomItem.x = roomItem.x;
+			curRoomItems[i].roomItem.y = roomItem.y;
+			curRoomItems[i].roomItem.z = roomItem.z;
+			
+			if(excuteCallBack !== undefined && excuteCallBack == true && CommandCallBack.onMove !== undefined) {
 				CommandCallBack.onMove(roomItem);
 			}
-			return true;
+			return result;
 		}
 	}
 	console.log(roomItem.roomItemId + " 가 없어서 이동 실패");
-	return false;
+	return null;
 }
 
 /**
@@ -1178,27 +1218,58 @@ function rotateRoomItem(roomItem) {
 	return false;
 }
 
-function select(group) {
-	curSelected = group;
-	
-	curSelectedOriginal = group.roomItem.clone();
-	
-	// 선택 상태 아웃 라인 표시
-	outlinePass.selectedObjects = curSelected.children;
+/**
+ * 내가 아이템을 선택
+ * @param roomItem
+ * @returns
+ */
+function select(roomItem) {
+	for(var i = 0; i < curRoomItems.length; i++ ) {
+		if (curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId) {
+			curSelected = curRoomItems[i];
+			curSelectedOriginal = roomItem;
+			
+			// 선택 상태 아웃 라인 표시
+			outlinePass.selectedObjects = curSelected.children;
 
-	initInfo();
-	
-	if(CommandCallBack.onSelect !== undefined) {
-		CommandCallBack.onSelect(curSelectedOriginal);
+			initInfo();
+			
+			return;
+		}
 	}
+	alert('해당 아이템이 존재하지 않습니다.');
 }
 
-function deSelect() {
+/**
+ * 다른 사람이 해당 아이템을 선택
+ * @param roomItem
+ * @returns
+ */
+function selectByOther(roomItem) {
+	for(var i = 0; i < curRoomItems.length; i++ ) {
+		if (curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId) {
+			
+			// 선택 상태 아웃 라인 표시
+			otherOutlinePass.selectedObjects = curRoomItems[i].children;
+			
+			return;
+		}
+	}
+	alert('상대방이 선택한 해당 아이템이 존재하지 않습니다.');
+}
+
+
+/**
+ * 내가 아이템을 선택 해제
+ * @param executeCallBack
+ * @returns
+ */
+function deSelect(executeCallBack) {
 	if ( infoDataChange ) {
 		curSelected.roomItem = curSelectedOriginal;
 		applyRoomItem(curSelected);
 		
-		if(CommandCallBack.onDeselect !== undefined) {
+		if(executeCallBack == true && CommandCallBack.onDeselect !== undefined) {
 			CommandCallBack.onDeselect(curSelectedOriginal);
 		}
 		curSelectedOriginal = null;
@@ -1209,6 +1280,14 @@ function deSelect() {
 	outlinePass.selectedObjects = [];
 	
 	resetInfo();
+}
+
+/**
+ * 다른 사람이 선택 해제
+ * @returns
+ */
+function deSelectByOther() {
+	otherOutlinePass.selectedObjects = [];
 }
 
 /**
@@ -1369,8 +1448,9 @@ function resetInfo() {
 	$("#itemInfo").hide( "slide" );
 }
 
-function itemApplyListener(onApply) {
-	applyItemChange(curSelected.roomItem, onApply);
+function itemApplyListener() {
+	//applyItemChange(curSelected.roomItem);
+	NewCommand.itemChange(curSelected.roomItem);
 	
 }
 
@@ -1421,6 +1501,20 @@ function applyItemChange(roomItem) {
 	});
 }
 
+function applyItemChangeLocal(roomItem) {
+	var result;
+	for(var i = 0; i < curRoomItems.length; i++) {
+		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+			result = curRoomItems[i].roomItem.clone();
+			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z);
+			rotate(curRoomItems[i], roomItem.rotateX, roomItem.rotateY, roomItem.rotateZ);
+			return result;
+		}
+	}
+	console.log(roomItem.roomItemId + " 가 없어서 아이템 속성 변경 실패");
+	return null;
+}
+
 function roomReset() {
 	$( "#blocker" ).show();
 	$.ajax({
@@ -1432,7 +1526,7 @@ function roomReset() {
 			
 			if(data != null && data != false && data != "false") {
 
-				clearRoom();
+				roomResetLocal();
 				
 				if (CommandCallBack.onReset !== undefined) {
 					CommandCallBack.onReset();
@@ -1458,7 +1552,7 @@ function roomReset() {
 	});
 }
 
-function clearRoom() {
+function roomResetLocal() {
 	for( var i = curRoomItems.length - 1; i >= 0; i--) {
 		scene.remove(curRoomItems[i]);
 	}
@@ -1466,6 +1560,8 @@ function clearRoom() {
 	curRoomItems = [];
 	curSelected = null;
 	curSelectedOriginal = null;
+	commandIndex = 0;
+	commands = [];
 }
 
 /**
@@ -1544,65 +1640,222 @@ function dataURItoBlob(dataURI)
     return bb;
 }
 
+function createItemListener(item) {
+	NewCommand.create(item);
+}
+
+/**
+ * 사용자 명령어 정의
+ * 각각에 따라 명령을 수행한다.
+ * Local 로 끝나는 것은 해당 결과만 화면에 반영한다.(DB X), 주로 상대가 내린 명령에 대한 짝이다.
+ */
 var NewCommand = {
+		// 생성 커맨드
 		create : function(roomItem) {
 			var command = new Command();
 			command.name = "create";
-			command.onDo = createItem;
+			command.onDo = function() {
+				createItem(command.onDoRoomItem, function(roomItem) {
+					renewCommandRoomItemId(command.onDoRoomItem.roomItemId, roomItem.roomItemId);
+					command.onRedoRoomItem = roomItem;
+					command.onDoRoomItem = roomItem;
+					
+				});
+			};
 			command.onDoRoomItem = roomItem;
-			command.onRedo = deleteItem;
-			command.onRedoRoomItem = roomItem;
+			command.onRedo = function() {
+				deleteItem(command.onRedoRoomItem);
+			};
+			command.onRedoRoomItem = undefined;
 			addCommand(command);
-			
-			createItem(item);
+
+			createItem(roomItem, function(roomItem) {
+				command.onRedoRoomItem = roomItem;
+				command.onDoRoomItem = roomItem;
+			});
 		},
+		// 삭제 커맨드
 		delete : function(roomItem) {
 			var command = new Command();
 			command.name = "delete";
-			command.onDo = deleteItem;
+			command.onDo = function() {
+				deleteItem(command.onDoRoomItem);
+			};
 			command.onDoRoomItem = roomItem;
-			command.onRedo = createItem;
+			command.onRedo = function() {
+				createItem(command.onRedoRoomItem, function(roomItem) {
+					renewCommandRoomItemId(command.onRedoRoomItem.roomItemId, roomItem.roomItemId);
+					command.onDoRoomItem = roomItem;
+					command.onRedoRoomItem = roomItem;
+				});
+			};
 			command.onRedoRoomItem = roomItem;
 			addCommand(command);
 			
-			createItem(item);
+			deleteItem(roomItem);
 		},
+		// 단순 배치 커맨드
+		place : function(roomItem) {
+			var command = new Command();
+			command.name = "place";
+			command.onDo = function() {
+				create(command.onDoRoomItem, function(roomItem) {
+					renewCommandRoomItemId(command.onDoRoomItem.roomItemId, roomItem.roomItemId);
+					command.onDoRoomItem = roomItem;
+					command.onRedoRoomItem = roomItem;
+				});
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				deleteItem(command.onRedoRoomItem);
+			};
+			command.onRedoRoomItem = undefined;
+			addCommand(command);
+			
+			placeRoomItem(roomItem);
+			
+		},
+		// 단순 배치 해제 커맨드
+		deplace : function(roomItem) {
+			var command = new Command();
+			command.name = "deplace";
+			command.onDo = function() {
+				deleteItem(command.onDoRoomItem);
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				create(command.onRedoRoomItem, function(roomItem) {
+					renewCommandRoomItemId(command.onRedoRoomItem.roomItemId, roomItem.roomItemId);
+					command.onDoRoomItem = roomItem.clone();
+					command.onRedoRoomItem = roomItem.clone();
+				});
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			deplaceRoomItem(roomItem);
+		},
+		// 이동 커맨드
 		move : function(roomItem) {
 			var command = new Command();
 			command.name = "move";
 			command.onDo = function() {
-				move(this.onDoRoomItem.clone());
+				command.onRedoRoomItem = moveRoomItem(command.onDoRoomItem.clone(), true);
 			};
 			command.onDoRoomItem = roomItem;
 			command.onRedo = function() {
-				move(this.onRedoRoomItem.clone());
+				command.onDoRoomItem = moveRoomItem(command.onRedoRoomItem.clone(), true);
 			};
 			command.onRedoRoomItem = roomItem;
 			addCommand(command);
 			
-			createItem(item);
+			command.onRedoRoomItem = moveRoomItem(roomItem, true);
 		},
+		// 단순 이동 커맨드
+		moveLocal : function(roomItem) {
+			var command = new Command();
+			command.name = "moveLocal";
+			command.onDo = function() {
+				command.onRedoRoomItem = moveRoomItem(command.onDoRoomItem.clone(), true);
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				command.onDoRoomItem = moveRoomItem(command.onRedoRoomItem.clone(), true);
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			command.onRedoRoomItem = moveRoomItem(roomItem, false);
+		},
+		// 아이템 속성 변경 커맨드
 		itemChange : function(roomItem) {
+			var command = new Command();
+			command.name = "itemChange";
+			command.onDo = function() {
+				applyItemChange(command.onDoRoomItem.clone());
+				command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				applyItemChange(command.onRedoRoomItem.clone());
+				command.onDoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
 			
+			applyItemChange(roomItem);
+			command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
 		},
+		// 단순 아이템 속성 변경 커맨드
+		itemChangeLocal : function(roomItem) {
+			var command = new Command();
+			command.name = "itemChangeLocal";
+			command.onDo = function() {
+				command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				command.onDoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+
+			command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+		},
+		// 선택 커맨드
 		select : function(roomItem) {
-			
+			for(var i = 0; i < curRoomItems.length; i++) {
+				if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+					select(roomItem, true);
+					
+					if(CommandCallBack.onSelect !== undefined) {
+						CommandCallBack.onSelect(curSelectedOriginal);
+					}
+				}
+			}
 		},
+		// 상대의 선택 커맨드
+		selectLocal : function(roomItem) {
+			for(var i = 0; i < curRoomItems.length; i++) {
+				if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+					selectByOther(roomItem);
+				}
+			}
+		},
+		// 선택 해제 커맨드
 		deselect : function(roomItem) {
-			
+			deSelect(true);
 		},
-		reset : function(roomItem) {
-			
-		},
-		snapshot : function(roomItem) {
-			
+		// 상대의 선택 해제 커맨드
+		deselectLocal : function(roomItem) {
+			deSelectByOther();
 		}
+}
+
+/**
+ * 커맨드 배열에서 기존의 RoomItemId를 새로운 RoomItemId로 변경한다.
+ * @param beforeId
+ * @param afterId
+ * @returns
+ */
+function renewCommandRoomItemId(beforeId, afterId) {
+	for(var i = 0; i < commands.length; i++) {
+		if(commands[i].onDoRoomItem.roomItemId == beforeId) {
+			commands[i].onDoRoomItem.roomItemId = afterId;
+		}
+		if(commands[i].onRedoRoomItem.roomItemId == beforeId) {
+			commands[i].onRedoRoomItem.roomItemId = afterId;
+		}
+	}
 }
 
 
 function addCommand(command) {
-	commands.push(command);
+	commands[commandIndex] = command;
 	commandIndex += 1;
+	commands.splice(commandIndex);
+	console.log("--addCommand 현재 명령 상황--" + commandIndex);
+	console.dir(commands);
 }
 
 /**
@@ -1616,19 +1869,23 @@ function forward() {
 	commands[commandIndex].onDo();
 	// 3. 현재 위치 1 증가
 	commandIndex += 1;
+	console.log("--forward 현재 명령 상황--" + commandIndex);
+	console.dir(commands);
 }
 
 /**
  * 뒤로가기
  * @returns
  */
-function backward() {
+function back() {
 	// 1. 현재 위치가 0이면 무시
 	if (commandIndex == 0) return;
 	// 2. 현재 위치 -1의 명령어의 onRedo 실행
 	commands[commandIndex-1].onRedo();
 	// 3. 현재 위치 1 감소
 	commandIndex -= 1;
+	console.log("--back 현재 명령 상황--" + commandIndex);
+	console.dir(commands);
 }
 
 //-------------
