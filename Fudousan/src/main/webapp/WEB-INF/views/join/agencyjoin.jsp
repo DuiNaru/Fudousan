@@ -10,9 +10,9 @@
 	
     <title>Agency Join</title>
 
-  <!-- 부트스트랩 -->
+  	<!-- 부트스트랩 -->
     <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
-	
+	<link rel="stylesheet" href="<c:url value="/resources/css/templete.css"/>" >
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
 	
@@ -40,7 +40,9 @@
 	<!-- agency join main -->
 	<%@include file="/WEB-INF/views/include/agencyjoinmain.jsp" %>
 	
-	<!-- script -->
+	<!-- footer -->
+	<%@include file="/WEB-INF/views/include/footer.jsp" %>
+	
 	
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>

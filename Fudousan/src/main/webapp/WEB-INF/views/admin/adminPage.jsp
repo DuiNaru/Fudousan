@@ -13,7 +13,7 @@
 	
     <!-- 부트스트랩 -->
     <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
-	<link href="/fudousan/resources/css/detailedinfomationpage.css" rel="stylesheet">
+	<link rel="stylesheet" href="<c:url value="/resources/css/templete.css"/>" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<%-- <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>"> --%>
 	<%-- <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script> --%>
@@ -125,17 +125,15 @@
 				type:"GET",
 				dataType:"JSON",
 				success:function(obj) {
+					
 					$("#itemList").empty();
 					$(obj).each(function(index, data) {
-						var html = "";
-						html += '<div id="item${item.itemId}" class="col-sm-offset-1 col-sm-10">';
-						html += '<div class="col-sm-12">';
-						html += '	<label class="col-sm-6">'+data.itemName+'</label>';
-						html += '	<div class="col-sm-6">';
-						html += '		<a class="btn btn-default" href="../item/itemModifyPage?itemId='+data.itemId+'">修正</a>';
-						html += '		<input class="btn btn-default" type="button" onclick="deleteItem('+data.itemId+')" value="削除">';
-						html += '	</div>';
-						html += '</div>';
+						var html = '<tr>'+
+						' <td><label class="col-sm-6">'+data.itemName+'</label></td>'+
+						' <td><a class="btn btn-success" href="../item/itemModifyPage?itemId='+data.itemId+'">수정</a></td>'+
+						' <td><input class="btn btn-warning" type="button" onclick="deleteItem('+data.itemId+')" value="삭제"></td>'+
+						'</tr>';
+						
 						$("#itemList").append(html);
 					});
 				},
