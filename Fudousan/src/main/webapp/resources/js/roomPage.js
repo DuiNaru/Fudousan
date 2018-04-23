@@ -38,6 +38,10 @@ var curMoving = false;
 var isMouseUp = false;
 // 정보 화면에서 아이템 정보를 변경하였는가?
 var infoDataChange = false;
+// 사용자가 시도한 명령들
+var commands = [];
+// 현재 커맨드 위치(해당 위치 직전까지가 지금까지 실행한 명령들)
+var commandIndex = 0;
 
 $(function() {
 	$("#itemInfo").hide();
@@ -868,10 +872,9 @@ function previewItem(itemId, fileName) {
  * Item VO 의 경우에는 화면 정 중앙에 배치,
  * RoomItem VO 의 경우에는 해당 VO의 x,y,z에 배치
  * @param item Item VO 또는 RoomItem VO
- * @param onCreate 성공시 호출
  * @returns
  */
-function createItem(item, onCreate) {
+function createItem(item) {
 	var x;
 	var y;
 	var z;
@@ -899,6 +902,8 @@ function createItem(item, onCreate) {
 	}
 	
 	if (x !== undefined && y !== undefined && z !== undefined) {
+		create
+		
 		// 방 아이템 추가하고 그 아이템 가져오기
 		$.ajax({
 			url:"roomItem/create",
@@ -923,8 +928,8 @@ function createItem(item, onCreate) {
 					// roomitem을 화면에 배치
 					placeRoomItem(roomItem);
 					
-					if ( onCreate !== undefined ) {
-						onCreate(roomItem);
+					if ( CommandCallBack.onCreate !== undefined ) {
+						CommandCallBack.onCreate(roomItem);
 					}
 				
 				} else {
@@ -948,10 +953,20 @@ function createItem(item, onCreate) {
  * @param onDelete 성공시 호출
  * @returns
  */
-function deleteItem(roomItem, onDelete) {
+function deleteItem(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
+
+	// 명령 추가
+	var command = new Command();
+	command.name = "deleteItem";
+	command.roomItem = item;
+	command.onDo = deleteItem;
+	command.onDoCallBack = CommandCallBack.onDelete;
+	command.onRedo = createItem;
+	command.onRedoCallBack = CommandCallBack.onCreate;
+	addCommand(command);
 	
 	$.ajax({
 		url:"roomItem/delete",
@@ -963,8 +978,8 @@ function deleteItem(roomItem, onDelete) {
 		success:function(data) {
 			if(data != null && data != "false") {
 				deplaceRoomItem(roomItem);
-				if ( onDelete !== undefined ) {
-					onDelete(roomItem);
+				if ( CommandCallBack.onDelete !== undefined ) {
+					CommandCallBack.onDelete(roomItem);
 				}
 			
 			} else {
@@ -983,11 +998,9 @@ function deleteItem(roomItem, onDelete) {
 /**
  * RoomItem VO 대로 화면에 Item 을 배치한다.
  * @param roomItem VO
- * @param onLoad 아이템 불러오기 성공시 호출되는 콜백함수
- * @param onError 아이템 불러오기 실패시 호출되는 콜백함수
  * @returns
  */
-function placeRoomItem(roomItem, onLoad, onError) {
+function placeRoomItem(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
@@ -1026,10 +1039,10 @@ function placeRoomItem(roomItem, onLoad, onError) {
 		
 		console.log(roomItem.roomItemId + " 배치 성공");
 
-		if ( onLoad !== undefined ) {
-			onLoad();
+		if ( CommandCallBack.onModelLoad !== undefined ) {
+			CommandCallBack.onModelLoad();
 		}
-	}, undefined, onError);
+	}, undefined, CommandCallBack.onModelError);
 }
 
 
@@ -1092,6 +1105,8 @@ function move(object, x, y, z) {
 		
 	}
 	
+	return object.roomItem;
+	
 }
 
 /**
@@ -1103,6 +1118,10 @@ function moveRoomItem(roomItem) {
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
 			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z);
+			
+			if(CommandCallBack.onMove !== undefined) {
+				CommandCallBack.onMove(roomItem);
+			}
 			return true;
 		}
 	}
@@ -1149,6 +1168,9 @@ function rotateRoomItem(roomItem) {
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
 			rotate(curRoomItems[i], roomItem.rotateX, roomItem.rotateY, roomItem.rotateZ);
+			if(CommandCallBack.onRotate !== undefined) {
+				CommandCallBack.onRotate(roomItem);
+			}
 			return true;
 		}
 	}
@@ -1165,12 +1187,20 @@ function select(group) {
 	outlinePass.selectedObjects = curSelected.children;
 
 	initInfo();
+	
+	if(CommandCallBack.onSelect !== undefined) {
+		CommandCallBack.onSelect(curSelectedOriginal);
+	}
 }
 
 function deSelect() {
 	if ( infoDataChange ) {
 		curSelected.roomItem = curSelectedOriginal;
 		applyRoomItem(curSelected);
+		
+		if(CommandCallBack.onDeselect !== undefined) {
+			CommandCallBack.onDeselect(curSelectedOriginal);
+		}
 		curSelectedOriginal = null;
 	}
 	
@@ -1201,7 +1231,6 @@ function saveRoomItem(roomItem) {
 		dataType:"json",
 		success:function(data) {
 			if(data != null && data != 0) {
-
 			} else {
 				console.dir(roomItem);
 				alert("아이템 저장에 실패하였습니다.");
@@ -1350,7 +1379,7 @@ function itemApplyListener(onApply) {
  * @param roomItem 
  * @returns
  */
-function applyItemChange(roomItem, onApply) {
+function applyItemChange(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
@@ -1367,9 +1396,9 @@ function applyItemChange(roomItem, onApply) {
 			if(data != null && data != false && data != "false") {
 				
 				infoDataChange = false;
-				
-				if (onApply !== undefined) {
-					onApply(roomItem);
+
+				if(CommandCallBack.onItemChange !== undefined) {
+					CommandCallBack.onItemChange(roomItem);
 				}
 				
 			} else {
@@ -1392,7 +1421,7 @@ function applyItemChange(roomItem, onApply) {
 	});
 }
 
-function roomReset(onReset) {
+function roomReset() {
 	$( "#blocker" ).show();
 	$.ajax({
 		url:"roomItem/reset",
@@ -1405,8 +1434,8 @@ function roomReset(onReset) {
 
 				clearRoom();
 				
-				if (onReset !== undefined) {
-					onReset();
+				if (CommandCallBack.onReset !== undefined) {
+					CommandCallBack.onReset();
 				}
 				
 			} else {
@@ -1443,7 +1472,7 @@ function clearRoom() {
  * 현재 화면을 촬영해서 서버에 저장한다.
  * @returns
  */
-function takeSnapShot(onComplete) {
+function takeSnapShot() {
 	
 	var strMime = "image/jpeg";
 	var imgData = renderer.domElement.toDataURL(strMime);
@@ -1468,8 +1497,8 @@ function takeSnapShot(onComplete) {
 				
 				refreshSnapshot(data);
 				
-				if (onComplete !== undefined) {
-					onComplete(data);
+				if (CommandCallBack.onSnapShot !== undefined) {
+					CommandCallBack.onSnapShot(data);
 				}
 				
 			} else {
@@ -1513,6 +1542,93 @@ function dataURItoBlob(dataURI)
     var bb = new Blob([ab], { "type": mimeString });
     
     return bb;
+}
+
+var NewCommand = {
+		create : function(roomItem) {
+			var command = new Command();
+			command.name = "create";
+			command.onDo = createItem;
+			command.onDoRoomItem = roomItem;
+			command.onRedo = deleteItem;
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			createItem(item);
+		},
+		delete : function(roomItem) {
+			var command = new Command();
+			command.name = "delete";
+			command.onDo = deleteItem;
+			command.onDoRoomItem = roomItem;
+			command.onRedo = createItem;
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			createItem(item);
+		},
+		move : function(roomItem) {
+			var command = new Command();
+			command.name = "move";
+			command.onDo = function() {
+				move(this.onDoRoomItem.clone());
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				move(this.onRedoRoomItem.clone());
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			createItem(item);
+		},
+		itemChange : function(roomItem) {
+			
+		},
+		select : function(roomItem) {
+			
+		},
+		deselect : function(roomItem) {
+			
+		},
+		reset : function(roomItem) {
+			
+		},
+		snapshot : function(roomItem) {
+			
+		}
+}
+
+
+function addCommand(command) {
+	commands.push(command);
+	commandIndex += 1;
+}
+
+/**
+ * 앞으로가기
+ * @returns
+ */
+function forward() {
+	// 1. 현재가 마지막 위치면 무시
+	if (commandIndex == commands.length) return;
+	// 2. 현재 위치의 명령의 do를 실행
+	commands[commandIndex].onDo();
+	// 3. 현재 위치 1 증가
+	commandIndex += 1;
+}
+
+/**
+ * 뒤로가기
+ * @returns
+ */
+function backward() {
+	// 1. 현재 위치가 0이면 무시
+	if (commandIndex == 0) return;
+	// 2. 현재 위치 -1의 명령어의 onRedo 실행
+	commands[commandIndex-1].onRedo();
+	// 3. 현재 위치 1 감소
+	commandIndex -= 1;
 }
 
 //-------------

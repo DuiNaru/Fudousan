@@ -1,6 +1,21 @@
+// 모든 파라미터 1번째는 RoomItem
+var CommandCallBack = {
+	onCreate : undefined,		// 아이템 생성
+	onDelete : undefined,		// 아이템 삭제
+	onMove : undefined,			// 아이템 이동(드래그)
+	onItemChange : undefined,	// 아이템 변경(아이템 상세 변경 적용, 이동과 회전)
+	onModelLoad : undefined,	// 아이템 모델파일 로딩 완료
+	onModelError: undefined,	// 아이템 모델파일 로딩 에러
+	onSelect : undefined,		// 아이템 선택
+	onDeselect : undefined,		// 아이템 선택 해제
+	onReset : undefined,		// 룸 리셋
+	onSnapShot : undefined		// 룸 스냅샷 성공
+}
+
 function Command() {
 	this.name = "";
-	this.roomItem = null;
+	this.onDoRoomItem = null;
+	this.onRedoRoomItem = null;
 	this.onDo = null;
 	this.onRedo = null;
 }
