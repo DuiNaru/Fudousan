@@ -186,7 +186,7 @@
 	</update>
 	
 	<delete id="deleteRoom">
-		UPDATE
+		DELETE
 			room
 		SET
 			snapshot = #{snapshot}
