@@ -128,9 +128,9 @@ $(function() {
 	init();
 	//화면 그리기
 	animate();
-	
+	// 벽 그리기
 	drawWall();
-
+	// 로딩 끝
 	$( "#blocker" ).hide();
 });
 
@@ -182,10 +182,12 @@ function init() {
 
 	//var roomFloorGeometry = new THREE.PlaneGeometry(roomFloorSize, roomFloorSize);
 	
+	// 바닥
 	roomFloor = drawFloor();
 	roomFloor.rotateX(-90 * Math.PI / 180);
 	scene.add(roomFloor);
 	
+	// 천장
 	roomCeil = drawFloor(false);
 	roomCeil.rotateX(-90 * Math.PI / 180);
 	roomCeil.position.y += room.height;
@@ -207,12 +209,15 @@ function init() {
 	composer = new THREE.EffectComposer( renderer );
 	var renderPass = new THREE.RenderPass( scene, camera );
 	composer.addPass( renderPass );
+	
+	// 자신용 아웃라인
 	outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
 	outlinePass.edgeStrength = 3;
 	outlinePass.edgeThickness = 1;
 	outlinePass.visibleEdgeColor.set( 0xFFFFFF );
 	composer.addPass( outlinePass );
 	
+	// 상대방용 아웃라인
 	otherOutlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
 	otherOutlinePass.edgeStrength = 3;
 	otherOutlinePass.edgeThickness = 1;
@@ -713,7 +718,8 @@ function drawFloor(side) {
 	return floor;
 }
 
-/*function searchOutline( startPoint, endPoint, points, connectMap, area, edge ) {
+/*
+function searchOutline( startPoint, endPoint, points, connectMap, area, edge ) {
 	var top = edge[0];
 	var bottom = edge[1];
 	var left = edge[2];
@@ -817,34 +823,34 @@ function searchOutline(startPoint, points, connectMap) {
 					var pastVector = new THREE.Vector2(points[pastIndex].x, points[pastIndex].y).sub(new THREE.Vector2(points[curIndex].x, points[curIndex].y));
 					//var pastVector = new THREE.Vector2(points[curIndex].x, points[curIndex].y).sub(new THREE.Vector2(points[pastIndex].x, points[pastIndex].y));
 					var curVector = new THREE.Vector2(points[j].x, points[j].y).sub(new THREE.Vector2(points[curIndex].x, points[curIndex].y));
-					console.log(pastVector);
-					console.log(curVector);
+					//console.log(pastVector);
+					//console.log(curVector);
 					var pastAngle = pastVector.angle()*180/Math.PI;
 					var curAngle = curVector.angle()*180/Math.PI;
-					console.log(pastAngle);
-					console.log(curAngle);
+					//console.log(pastAngle);
+					//console.log(curAngle);
 					var p_c = pastAngle-curAngle;
 					if ( p_c < 0 ) p_c = 360+p_c;
-					console.log("check j : "+j+", p-c = " + p_c);
+					//console.log("check j : "+j+", p-c = " + p_c);
 					
 					if ( p_c < minAngle ) {
 						minAngle = p_c;
 						moveIndex = j;
-						console.log("possible select("+moveIndex+"), angle : "+minAngle);
+						//console.log("possible select("+moveIndex+"), angle : "+minAngle);
 					}
 				}
 			}
-			console.log("moveIndex("+moveIndex+")");
+			//console.log("moveIndex("+moveIndex+")");
 			possible.push(moveIndex);
 			pastIndex = curIndex;
 			curIndex = moveIndex;
 			if ( curIndex == startPoint ) {
-				console.log("END : reach to start index(" + curIndex + ")");
+				//console.log("END : reach to start index(" + curIndex + ")");
 				break;
 			}
-			console.log("move to " + curIndex);
+			//console.log("move to " + curIndex);
 		}
-	console.log(possible);
+	//console.log(possible);
 	return possible;
 }
 
@@ -1448,6 +1454,10 @@ function resetInfo() {
 	$("#itemInfo").hide( "slide" );
 }
 
+/**
+ * 아이템 정보창 변경 적용 버튼 리스너
+ * @returns
+ */
 function itemApplyListener() {
 	//applyItemChange(curSelected.roomItem);
 	NewCommand.itemChange(curSelected.roomItem);
@@ -1455,7 +1465,7 @@ function itemApplyListener() {
 }
 
 /**
- * 아이템 변경사항을 적용한다.
+ * 아이템 변경사항을 적용한다.(DB의 룸 아이템을 변경/이동 한다.)
  * @param roomItem 
  * @returns
  */
@@ -1501,6 +1511,11 @@ function applyItemChange(roomItem) {
 	});
 }
 
+/**
+ * 사용자 화면의 룸 아이템을 회전/이동 한다.
+ * @param roomItem
+ * @returns
+ */
 function applyItemChangeLocal(roomItem) {
 	var result;
 	for(var i = 0; i < curRoomItems.length; i++) {
@@ -1515,6 +1530,10 @@ function applyItemChangeLocal(roomItem) {
 	return null;
 }
 
+/**
+ * DB의 RoomItem을 리셋한다.
+ * @returns
+ */
 function roomReset() {
 	$( "#blocker" ).show();
 	$.ajax({
@@ -1552,6 +1571,10 @@ function roomReset() {
 	});
 }
 
+/**
+ * 사용자 화면을 리셋한다.
+ * @returns
+ */
 function roomResetLocal() {
 	for( var i = curRoomItems.length - 1; i >= 0; i--) {
 		scene.remove(curRoomItems[i]);
@@ -1617,11 +1640,21 @@ function takeSnapShot() {
 	});
 }
 
+/**
+ * 스냅샷을 갱신한다.
+ * @param url
+ * @returns
+ */
 function refreshSnapshot(url) {
 	var snapshotURL = url;
 	$("#snapshot").html("<img class='snapshot' src='/fudousan"+snapshotURL+"'>");
 }
 
+/**
+ * 화면 데이터를 Blob으로 변환
+ * @param dataURI
+ * @returns
+ */
 function dataURItoBlob(dataURI)
 {
     var byteString = atob(dataURI.split(',')[1]);
@@ -1640,6 +1673,11 @@ function dataURItoBlob(dataURI)
     return bb;
 }
 
+/**
+ * 아이템 리스트에서 아이템 클릭 했을 때,
+ * @param item
+ * @returns
+ */
 function createItemListener(item) {
 	NewCommand.create(item);
 }
