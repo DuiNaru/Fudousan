@@ -55,6 +55,8 @@ public interface RoomDAO {
 	 */
 	public boolean deleteRoom(int memberId, int roomId);
 	
+	public boolean deletionLogical(int memberId,int roomId);
+	
 	/**
 	 * 파라미터 형식으로 Room 데이터를 추가한다.
 	 * @param memberId member_id

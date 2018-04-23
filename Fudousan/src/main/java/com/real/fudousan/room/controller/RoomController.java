@@ -108,6 +108,15 @@ public class RoomController {
 		return result;
 	}
 	
+	@RequestMapping(value="deletionLogical",method=RequestMethod.GET)
+	public String deletionLogical(@ModelAttribute("loginId") int memberId , int roomId){
+		logger.info("deletionLogical("+roomId+") Start");
+		boolean result = Rservice.deletionLogical(memberId, roomId);
+		logger.info("deletionLogical("+roomId+") End");
+		return "user/mypagecustomer";
+	}
+	
+	
 	@RequestMapping(value="newRoom", method=RequestMethod.GET)
 	public String newRoom(@ModelAttribute("loginId") int loginId, Room room, Model model) {
 		logger.info("newRoom("+loginId+", "+room+") Start");
