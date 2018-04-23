@@ -29,8 +29,13 @@
 		<c:forEach var="room" items="${rlist}">
 			<div class="col-sm-12 form-group">
 				<p><a href="/">${room.estate.estateName}</a><c:out value="${room.map} "/></p>
+<<<<<<< HEAD
 		 		<a class="btn btn-default" href="<c:url value="/newRoom?estateId=${room.estate.estateId}&roomPublic=0"/>">새로 꾸미기</a>
 		 		
+=======
+		 		<input type="button" value="꾸미기" onclick="ggumigi(${room.estate.estateId})">
+		 		<a class="btn btn-default" href="../newRoom?estateId=${room.estate.estateId}&roomPublic=0">새로 꾸미기</a>
+>>>>>>> parent of c9c4edb... Merge branch 'master' of https://github.com/DuiNaru/Fudousan
 			</div>
 		</c:forEach>
     </div> 
@@ -39,7 +44,7 @@
     <div class="col-sm-5 text-center"> 
 		<h1>찜한 매물 보기</h1>
 		<!-- search button -->
-		<div id="custom-search-input">	
+		<div id="custom-search-input">
             <div class="input-group col-md-12">
                 <input type="text" class="  search-query form-control" placeholder="Search"  name="favoSearch" id="favoSearch" />
                 <span class="input-group-btn">
