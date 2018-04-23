@@ -185,6 +185,15 @@ public class RoomService {
 		return result;
 	}
 
+	public boolean deletionLogical(int memberId, int roomId){
+		logger.info("deletionLogical("+memberId+","+roomId+") Start");
+		boolean result = false;
+		result = dao.deletionLogical(memberId, roomId);
+		logger.info("deletionLogical("+memberId+","+roomId+") End");
+		return result;
+				
+	}
+	
 
 	/**
 	 * 방 보기
