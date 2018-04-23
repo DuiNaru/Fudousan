@@ -139,7 +139,7 @@
 			});
 		});
 		
-		function unConfirm(index, requestMemberId, roomId) {
+		function unConfirm(index, requestMemberId, roomId) {			
 			$.ajax({
 				url:"../unconfirm?requestMemberId="+requestMemberId+"&roomId="+roomId,
 				type:"GET",
