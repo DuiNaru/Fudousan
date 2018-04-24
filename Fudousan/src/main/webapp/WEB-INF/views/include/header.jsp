@@ -40,9 +40,9 @@
 
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="/fudousan/memberupdate/memberupdate">Update Member</a></li>
+					<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="84">Update Member</a></li>
 					
-					<li><a href="/fudousan/mypageNormalUser">Member Page</a></li>
+					<li><a href="/fudousan/mypageNormalUser" data-lang ="85">Member Page</a></li>
 					
 										
 				</c:if>
@@ -53,9 +53,9 @@
 
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="/fudousan/memberupdate/memberupdate">Update Member</a></li>
+					<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="84">Update Member</a></li>
 					
-					<li><a href="/fudousan/interior/">Interior Page</a></li>
+					<li><a href="/fudousan/interior/" data-lang ="87">Interior Page</a></li>
 					
 				</c:if>
 				 
@@ -64,14 +64,14 @@
 					
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="/fudousan/memberupdate/agencyupdate">Update Member</a></li>
+					<li><a href="/fudousan/memberupdate/agencyupdate" data-lang ="84">Update Member</a></li>
 					
-					<li><a href="/fudousan/bm">Agency Page</a></li>
+					<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
-					<li><a href="/fudousan/admin/">Admin page</a></li>
+					<li><a href="/fudousan/admin/" data-lang ="88">Admin page</a></li>
 				</c:if>
 				
 					<li><a href="javascript:selectLanguage('ko')">한국어</a></li>
