@@ -76,8 +76,6 @@
 	<!-- footer -->
 	<%@include file="/WEB-INF/views/include/footer.jsp" %>
 	
-	
-	
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     
@@ -86,7 +84,6 @@
 
 	<!-- login.js -->
 	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
-	
 	
 	<!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>
