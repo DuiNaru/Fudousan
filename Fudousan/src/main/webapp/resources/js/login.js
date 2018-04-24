@@ -57,9 +57,12 @@ function formCheck(){
 							
 						}
 						
-						str +=  '<li><a href="javascript:selectLanguage(\'ko\')">한국어</a></li>'+
-								'<li><a href="javascript:selectLanguage(\'jp\')">日本語</a></li>'+
-								'<li><a href="javascript:selectLanguage(\'en\')">English</a></li>';  
+						str +=  '<li><a href="javascript:selectLanguage(\'ko\')"><img  src="/fudousan/resources/image/if_South Korea_15986.png"></a></li>'+
+						'<li><a href="javascript:selectLanguage(\'jp\')"><img  src="/fudousan/resources/image/if_Japan_92149.png"></a></li>'+
+						'<li><a href="javascript:selectLanguage(\'en\')"><img  src="/fudousan/resources/image/if_United States of America(USA)_16036.png"></a></li>';
+							
+
+							  
 						
 						
 						$('#navbar-ul').html(str);
@@ -82,9 +85,10 @@ function formCheck(){
 							str += '<li><a href="/fudousan/admin/" data-lang ="88">Admin page</a></li>';
 									
 					}
-						str +=  '<li><a href="javascript:selectLanguage(\'ko\')">한국어</a></li>'+
-								'<li><a href="javascript:selectLanguage(\'jp\')">日本語</a></li>'+
-								'<li><a href="javascript:selectLanguage(\'en\')">English</a></li>';  
+						str +=  '<li><a href="javascript:selectLanguage(\'ko\')"><img  src="/fudousan/resources/image/if_South Korea_15986.png"></a></li>'+
+						'<li><a href="javascript:selectLanguage(\'jp\')"><img  src="/fudousan/resources/image/if_Japan_92149.png"></a></li>'+
+						'<li><a href="javascript:selectLanguage(\'en\')"><img  src="/fudousan/resources/image/if_United States of America(USA)_16036.png"></a></li>';
+
 						
 						$('#navbar-ul').html(str);
 							
@@ -108,10 +112,10 @@ function formCheck(){
 							
 						}
 						
-						str +=  '<li><a href="javascript:selectLanguage(\'ko\')">한국어</a></li>'+
-								'<li><a href="javascript:selectLanguage(\'jp\')">日本語</a></li>'+
-								'<li><a href="javascript:selectLanguage(\'en\')">English</a></li>';  
-						
+						str +=   '<li><a href="javascript:selectLanguage(\'ko\')"><img  src="/fudousan/resources/image/if_South Korea_15986.png"></a></li>'+
+						'<li><a href="javascript:selectLanguage(\'jp\')"><img  src="/fudousan/resources/image/if_Japan_92149.png"></a></li>'+
+						'<li><a href="javascript:selectLanguage(\'en\')"><img  src="/fudousan/resources/image/if_United States of America(USA)_16036.png"></a></li>';
+
 						$('#navbar-ul').html(str);							
 					}
 						

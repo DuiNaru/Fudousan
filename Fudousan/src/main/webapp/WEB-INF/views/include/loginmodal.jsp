@@ -19,8 +19,8 @@
 						<input type="password" id="password" name="password" class="form-control" data-lang="90"; placeholder="Input your Password">
 						<br>
 						<div class="text-center">
-							<button type="button" class=" glyphicon glyphicon-ok btn btn-info" id="loginBtn" data-lang="0"></button>
-							<button type="button" class="glyphicon-remove btn btn-danger glyphicon " data-dismiss="modal" data-lang="4"></button>
+							<button type="button" class="btn btn-info " id="loginBtn" data-lang="0"></button>
+							<button type="button" class="btn btn-danger " data-dismiss="modal" data-lang="4"></button>
 						</div>
 					</div>
 					<div class="col-sm-2"></div>
