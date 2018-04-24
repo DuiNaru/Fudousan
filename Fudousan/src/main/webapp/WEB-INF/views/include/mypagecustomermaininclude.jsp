@@ -16,7 +16,7 @@
                 <span class="input-group-btn">
                     <button class="btn btn-danger" type="button" onclick="roomSearch()" >
                         <span class=" glyphicon glyphicon-search"></span>
-                        <input type="hidden" id="memberId" name="memberId" value=1>
+                        <input type="hidden" id="memberId" name="memberId" value=${sessionScope.loginId }>
                     </button>
                 </span>
             </div>

@@ -61,6 +61,7 @@ public class RoomController {
 	public String searchMyRoom(Model model,String roomSearch,int memberId){
 		logger.info("RoomController-searchMyRoom_Start");
 		logger.info("매물 이름 검색한 결과 :  " + roomSearch);
+		logger.info("검색자ID :  " + memberId);
 		List<Room> srlist = Rservice.showMyRoom(roomSearch, memberId);
 		model.addAttribute("rlist",srlist);
 
@@ -113,7 +114,7 @@ public class RoomController {
 		logger.info("deletionLogical("+roomId+") Start");
 		boolean result = Rservice.deletionLogical(memberId, roomId);
 		logger.info("deletionLogical("+roomId+") End");
-		return "user/mypagecustomer";
+		return "redirect:mypageNormalUser";
 	}
 	
 	
