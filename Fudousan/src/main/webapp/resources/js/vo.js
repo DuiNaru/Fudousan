@@ -178,3 +178,19 @@ function objToItem(itemObj) {
 	});
 	return item;
 }
+
+function RoomWall(backTextureId, frontTextureId, roomWallId, roomId, c1Id, c1x, c1y, c2Id, c2x, c2y, type) {
+	this.backTextureId = backTextureId;
+	this.frontTextureId = frontTextureId;
+	this.roomWallId = roomWallId;
+	this.roomId = roomId;
+	this.roomWallConnector1 = new RoomWallConnector(c1Id, c1x, c1y);
+	this.roomWallConnector2 = new RoomWallConnector(c2Id, c2x, c2y);
+	this.type = type;
+}
+
+function RoomWallConnector(id, x, y) {
+	this.connectorId = id;
+	this.x = x;
+	this.y = y;
+}
