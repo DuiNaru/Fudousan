@@ -3,11 +3,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var cors = require('cors');
 var room = ""; //방번호
-var roomo = {};
-var queue = []; //서버는 각 방들의 array들을 담아줄것이다.
-var firstData = [];
-var t = "";
-var users = [];
+var users = []; //유저로그인
 app.use(cors());
 
 app.get('/', function(req, res) {
