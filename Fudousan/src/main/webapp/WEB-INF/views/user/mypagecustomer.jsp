@@ -31,7 +31,7 @@
 
 	<!-- main page  -->
 	<%@include file="/WEB-INF/views/include/mypagecustomermaininclude.jsp" %>
-	<div style="clear: both;"></div>
+
 
 <%-- 해민 상 코드 
 

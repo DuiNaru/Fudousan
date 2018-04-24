@@ -50,7 +50,7 @@
                 </span>
             </div>
         </div>
-		
+		<div style="clear: both;"></div>
 		<hr>
 		
 		<!-- result -->
@@ -88,8 +88,7 @@
 						<input type="hidden" value="${helpRes.requestedMemberId }" id="accepter" name="accepter">
 			 		</div>
 			</c:forEach>
-		<!-- Clear -->
-		<div style="clear: both;"></div>
+
 		</div>
 		
     </div>

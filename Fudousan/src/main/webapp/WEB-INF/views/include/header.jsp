@@ -78,9 +78,9 @@
 					<li><a href="javascript:selectLanguage('jp')">日本語</a></li>
 					<li><a href="javascript:selectLanguage('en')">English</a></li>
 					
-					<c:if test="${sessionScope.loginId != null && sessionScope.isNormal == normal}">
+					<%-- <c:if test="${sessionScope.loginId != null && sessionScope.isNormal == normal}">
 						<li><a href="mypageNormalUser" style="color: blue;">ahm test</a></li>
-					</c:if>
+					</c:if> --%>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
