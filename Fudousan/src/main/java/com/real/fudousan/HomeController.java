@@ -59,7 +59,7 @@ public class HomeController {
     	Eresult = eService.selectEsatesLocation();
     	
     	for (Estate estate : Eresult) {
-    		System.out.println(estate);
+    		//System.out.println(estate);
     		
     		Double estateX = estate.getEstateX();
 			Double estateY = estate.getEstateY();
@@ -69,9 +69,18 @@ public class HomeController {
 			String lat = estateX.toString();
 			String lng = estateY.toString(); 
 			
-			String estateLocation =  "["+"'"+estateId+"'"+","+lat +", "+lng+","+"'"+estateAddress+"'"+"]";
+			//String estateLocation =  "['"+estateId+"',"+lat +", "+lng+",'"+estateAddress+"']";
+			StringBuffer estateLocation = new StringBuffer("['");
+			estateLocation.append(estateId);
+			estateLocation.append("',");
+			estateLocation.append(lat);
+			estateLocation.append(",");
+			estateLocation.append(lng);
+			estateLocation.append(", '");
+			estateLocation.append(estateAddress);
+			estateLocation.append("']");
 			
-			ElocationList.add(estateLocation);
+			ElocationList.add(estateLocation.toString());
 		}
     	
     	model.addAttribute("locationList", locationList);

@@ -361,6 +361,10 @@ function onDocumentMouseDown(event) {
 		controls.enabled = false;
 	}
 	
+	raycaster.setFromCamera(mouse, camera);
+	var intersects = raycaster.intersectObjects(walls.children, true);
+	if (intersects.length > 0) {
+	}
 }
 
 /**
@@ -1756,7 +1760,7 @@ var NewCommand = {
 			command.onRedo = function() {
 				deleteItem(command.onRedoRoomItem);
 			};
-			command.onRedoRoomItem = undefined;
+			command.onRedoRoomItem = roomItem;
 			addCommand(command);
 			
 			placeRoomItem(roomItem);

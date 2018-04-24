@@ -8,13 +8,18 @@
     <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
     
     <title>boot</title>
-
+    
+	
+	
+	
+	
     <!-- css -->
     <link href="<c:url value="resources/css/bootstrap.min.css"/>" rel="stylesheet">
 	<link href="<c:url value="resources/css/home.css"/>" rel="stylesheet">
 </head>
 
 <body onload="initialize()">
+
  	<!-- login modal  -->
  	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
 	
