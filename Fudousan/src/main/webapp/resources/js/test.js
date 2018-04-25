@@ -27,10 +27,9 @@ io.on('connection', function(socket) {
 	});
 
 		socket.on('room_join',function(data){
-		roomo.roomNumber = rooma(data.roomId);
-		socket.join(roomo.roomNumber);
+			room = data.roomId;
+		socket.join(room);
 		
-		room = roomo.roomNumber;
 		
 		var user = {};
 		user.userName = data.userName;

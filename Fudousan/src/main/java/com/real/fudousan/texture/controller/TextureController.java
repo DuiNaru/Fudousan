@@ -42,7 +42,6 @@ public class TextureController {
 	public String textureuproad(String name, String text ,HttpSession session
 				,MultipartFile file ){
 		logger.info("텍스쳐 업로드 ");
-		String uploadPath = "/texture";
 
 		int memberId = (int)session.getAttribute("loginId");
 			
