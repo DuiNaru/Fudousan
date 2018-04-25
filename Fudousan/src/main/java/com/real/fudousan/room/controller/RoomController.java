@@ -1,7 +1,6 @@
 package com.real.fudousan.room.controller;
 
 import java.io.IOException;
-import java.security.Provider.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,11 +31,11 @@ import com.real.fudousan.common.util.PageNavigator;
 import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.item.service.ItemService;
+import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
 import com.real.fudousan.roomitem.service.RoomItemService;
 import com.real.fudousan.roomwall.service.RoomWallService;
-import com.real.fudousan.roomwall.vo.RoomWall;
 
 @SessionAttributes("loginId")
 @Controller
@@ -126,9 +125,13 @@ public class RoomController {
 		return returnedURL;
 	}
 	
+	
+	
+	//작업중
 	@RequestMapping(value="roomPage", method=RequestMethod.GET)
-	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model) {
+	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model,Integer itemTypeId ) {
 		logger.info("roomPage("+loginId+", "+roomId+") Start");
+		
 		
 		Room room = Rservice.showRoom(roomId);
 		if (room != null) {
@@ -141,9 +144,26 @@ public class RoomController {
 			
 			model.addAttribute("roomitemList", roomItemService.getRoomItemsInRoom(roomId));
 		}
-		
+		System.out.println("dd");
 		logger.info("roomPage("+loginId+", "+roomId+") End");
 		return "room/room";
+		//return "itemlist";
+	}
+	
+	
+	//룸에 아이템 만들기
+	@ResponseBody
+	@RequestMapping(value="itemlist", method=RequestMethod.GET)
+		public ArrayList<Item> itemlist(int itemTypeId, Model model, HttpSession session){
+		
+		logger.info("아이템 리스트 시작");
+	
+		ArrayList<Item> itemlist = new ArrayList<>();
+		itemlist= itemService.itemlist(itemTypeId);
+		
+		System.out.println(itemlist);
+		
+		return itemlist;
 	}
 	
 
@@ -173,7 +193,7 @@ public class RoomController {
 		final int countPerPage = 3;
 		final int pagePerGroup = 5; 
 		
-	
+		
 		// estateId(String) --> int 
 		int estateIdresult = Integer.parseInt(estateId);
 		
@@ -194,7 +214,7 @@ public class RoomController {
 		return map;
 
 	}
-	
+
 
 	@ResponseBody
 	@RequestMapping(value="snapshot", method=RequestMethod.POST)

@@ -2,6 +2,7 @@ package com.real.fudousan.item.service;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.item.dao.ItemDAO;
 import com.real.fudousan.item.vo.Item;
+import com.real.fudousan.item.vo.ItemType;
 
 @Service
 public class ItemService {
@@ -107,6 +109,8 @@ public class ItemService {
 		
 		logger.info("allList() end");
 		return result;
+		
+		
 	}
 	
 	/**
@@ -140,7 +144,9 @@ public class ItemService {
 		return result;
 	}
 	
-
-	
-	
+	//아이템 목록 가져오기
+	public ArrayList<Item> itemlist(int itemTypeId){
+		ArrayList<Item> result = itemDao.itemlist(itemTypeId);
+		return result;
+	}
 }

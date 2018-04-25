@@ -71,10 +71,19 @@
 			item.item_id = ref_site.item_id
 	
 	</sql>
-
 	<select id="selectAll" resultMap="itemResultMap">
 		<include refid="SELECT_ITEM_SQL"></include>
 	</select>
+	
+	
+<!-- 수정중 -->
+	<select id="itemlist" parameterType="int" resultMap="itemResultMap">
+		<include refid="SELECT_ITEM_SQL"></include>
+		where
+			item.item_type_id = #{itemTypeId}
+	</select>
+	
+	
 	
 	<select id="selectById" parameterType="int" resultMap="itemResultMap">
 		<include refid="SELECT_ITEM_SQL"></include>
@@ -159,4 +168,14 @@
 		DELETE FROM item
 		WHERE item_id = #{0}
 	</delete>
+	
+	
+	
+<select id="selectitem" parameterType="int" resultMap="itemResultMap">
+		<include refid="SELECT_ITEM_SQL"></include>
+		WHERE
+			ITEM_TYPE_ID=#{itemTypeId}
+	</select>
+	
+	
 </mapper>

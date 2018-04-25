@@ -159,11 +159,6 @@ public class MemberController {
 	@RequestMapping(value = "helpCall", method = RequestMethod.GET)
 	 public String mailSending(HttpServletRequest request, HttpSession session) {
 		   
-		  /*  String setfrom = "2017scit@gmail.com";         
-		    String tomail  = request.getParameter("tomail");     // 받는 사람 이메일
-		    String title   = request.getParameter("title");      // 제목
-		    String content = request.getParameter("content");    // 내용
-*/		   
 		logger.info("메일 전송 시작");
 		  String setfrom = "2017scit@gmail.com";         
 		    String tomail  = request.getParameter("tomail");     // 받는 사람 이메일

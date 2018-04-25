@@ -1,5 +1,6 @@
 package com.real.fudousan.item.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,7 +11,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.real.fudousan.item.vo.Item;
+import com.real.fudousan.item.vo.ItemType;
 import com.real.fudousan.item.vo.RefSite;
+import com.real.fudousan.member.dao.MemberMapper;
+import com.real.fudousan.member.vo.Member;
 
 @Repository
 public class ItemDAOOracle implements ItemDAO {
@@ -127,5 +131,15 @@ public class ItemDAOOracle implements ItemDAO {
 		logger.info("selectByName("+itemName+") End");
 		return result;
 	}
-
+	
+	public ArrayList<Item> itemlist(int itemTypeId){
+		ArrayList<Item> result = null;
+		try {
+			ItemMapper mapper = session.getMapper(ItemMapper.class);
+			result = mapper.itemlist(itemTypeId);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		return  result;
+	}
 }
