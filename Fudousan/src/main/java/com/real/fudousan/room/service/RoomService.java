@@ -128,8 +128,11 @@ public class RoomService {
 	 * @return
 	 */
 	public boolean changeCeilingTexture(int roomId, int textureId) {
-		
-		return false;
+		logger.info("changeCeilingTexture("+roomId+", "+textureId+") Start");
+		boolean result = false;
+		result = dao.updateCeilingTexture( roomId,  textureId);
+		logger.info("changeCeilingTexture("+roomId+", "+textureId+") End");
+		return result;
 	}
 	
 	/**
@@ -139,8 +142,11 @@ public class RoomService {
 	 * @return
 	 */
 	public boolean changeFloorTexture(int roomId, int textureId) {
-		
-		return false;
+		logger.info("changeCeilingTexture("+roomId+", "+textureId+") Start");
+		boolean result = false;
+		result = dao.updateFloorTexture( roomId,  textureId);
+		logger.info("changeCeilingTexture("+roomId+", "+textureId+") End");
+		return result;
 	}
 	
 	/**

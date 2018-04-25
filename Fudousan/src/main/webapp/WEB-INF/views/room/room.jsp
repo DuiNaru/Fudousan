@@ -36,10 +36,10 @@
 		,roomPublic:${room.roomPublic}
 		,height:${room.height}
 		<c:if test="${!empty room.ceilingTexture}">
-		,ceilingTexture:${room.ceilingTexture},
+		,ceilingTexture:'<c:url value='${room.ceilingTexture.file}'/>'
 		</c:if>
 		<c:if test="${!empty room.floorTexture}">
-		,floorTexture:${room.floorTexture},
+		,floorTexture:'<c:url value='${room.floorTexture.file}'/>'
 		</c:if>
 		<c:if test="${!empty room.snapshot}">
 		,snapshot:"${room.snapshot}"
@@ -50,9 +50,19 @@
 			<c:if test="${s.index != 0 }">
 				,
 			</c:if>
-				{	c1:{x:${wall.roomWallConnector1.x}, y:${wall.roomWallConnector1.y}},
-					c2:{x:${wall.roomWallConnector2.x}, y:${wall.roomWallConnector2.y}}
-				}
+					new RoomWall(
+							'<c:url value='${wall.backTexture.file==null?undefined:wall.backTexture.file}'/>', 
+							'<c:url value='${wall.frontTexture.file==null?undefined:wall.frontTexture.file}'/>',
+							${wall.roomWallId},
+							${wall.roomId},
+							${wall.roomWallConnector1.connectorId},
+							${wall.roomWallConnector1.x},
+							${wall.roomWallConnector1.y},
+							${wall.roomWallConnector2.connectorId},
+							${wall.roomWallConnector2.x},
+							${wall.roomWallConnector2.y},
+							'${wall.type}'
+					)
 		</c:forEach>
 	];
 	var items = [];
@@ -196,6 +206,11 @@ canvas {
 	width: 100px;
 	height: 100px;
 }
+
+.imgPreview {
+	width: 100px;
+	height: 100px;
+}
 </style>
 </head>
 <body>
@@ -215,6 +230,19 @@ canvas {
 <div class="dat">
 </div> 
 	<div class="top-menu">
+	</div>
+	<div id="textureInfo" class="left-menu">
+		<div class="form-group">
+			<label>텍스쳐 리스트</label>
+			<div>
+				<c:forEach var="texture" items="${textureList}">
+					<div id="texture${texture.textureId }" class="form-group btn btn-default" onclick="applyTexture(${texture.textureId})">
+						<label>${texture.text}</label>
+						<img id="img${texture.textureId }" class="imgPreview" alt="${texture.textureId}" src="<c:url value='${texture.file}'/>">
+					</div>
+				</c:forEach>
+			</div>
+		</div>
 	</div>
 	<div id="itemInfo" class="left-menu">
 		<div class="form-group">

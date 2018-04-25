@@ -77,6 +77,12 @@ public interface RoomDAO {
 	 * @return
 	 */
 	public int updateRoomSanpShot(Room room);
+	
+
+	
+	public boolean updateCeilingTexture(int roomId, int textureId);
+	
+	public boolean updateFloorTexture(int roomId, int textureId);
 }
 
 

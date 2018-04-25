@@ -66,5 +66,9 @@ public interface RoomMapper {
 	public int wallheightchange(Room room);
 
 	public int updateRoomSanpShot(Room room);
+
 	
+	public boolean updateCeilingTexture(int roomId, int textureId);
+	
+	public boolean updateFloorTexture(int roomId, int textureId);
 }

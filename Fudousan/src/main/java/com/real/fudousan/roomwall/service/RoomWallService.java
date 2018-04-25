@@ -84,4 +84,20 @@ public class RoomWallService {
 		logger.info("getWallAndConnector("+roomId+") End");
 		return result;
 	}
+	
+	public boolean changeFrontTexture(int roomWallId, int textureId) {
+		logger.info("changeFrontTexture("+roomWallId+", "+ textureId+") Start");
+		boolean result = false;
+		result = dao.updateFrontTexture(roomWallId, textureId);
+		logger.info("changeFrontTexture("+roomWallId+", "+ textureId+") End");
+		return result;
+	}
+	
+	public boolean changeBackTexture(int roomWallId, int textureId) {
+		logger.info("changeBackTexture("+roomWallId+", "+ textureId+") Start");
+		boolean result = false;
+		result = dao.updateBackTexture(roomWallId, textureId);
+		logger.info("changeBackTexture("+roomWallId+", "+ textureId+") End");
+		return result;
+	}
 }
