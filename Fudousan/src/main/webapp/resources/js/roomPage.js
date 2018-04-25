@@ -2132,7 +2132,7 @@ function applyTexture(textureId) {
 //-------------
 // socket 통신
 //-------------
-let sendCreateItem = function(obj){
+function sendCreateItem(obj){
 	// 현재 방 번호와 만들 아이템 번호를 전송합니다.
 	socket.emit("create-item", {
 		roomId: room.roomId,
@@ -2140,7 +2140,7 @@ let sendCreateItem = function(obj){
 	});
 }
 
-let sendStartDrag = function(obj){
+function sendStartDrag(obj){
 	// 현재 방 번호와 이동할 아이템 이름을 전송합니다.
 	socket.emit("start-drag", {
 		roomId: room.roomId,
@@ -2148,7 +2148,7 @@ let sendStartDrag = function(obj){
 	});
 }
 
-let sendMoveItem = function(obj){
+function sendMoveItem(obj){
 	// 현재 방 번호와 아이템의 위치 정보를 전송합니다.
 	socket.emit("move-item", {
 		roomId: room.roomId,
@@ -2162,7 +2162,7 @@ let sendMoveItem = function(obj){
 	});
 }
 
-let sendDeleteItem = function(obj){
+function sendDeleteItem(obj){
 	// 현재 방 번호와 삭제할 아이템 이름을 전송합니다.
 	socket.emit("delete-item", {
 		roomId: room.roomId,
