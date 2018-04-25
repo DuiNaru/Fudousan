@@ -33,10 +33,10 @@
 			,roomPublic:${room.roomPublic}
 			,height:${room.height}
 			<c:if test="${!empty room.ceilingTexture}">
-			,ceilingTexture:${room.ceilingTexture},
+			,ceilingTexture:'<c:url value='${room.ceilingTexture.file}'/>'
 			</c:if>
 			<c:if test="${!empty room.floorTexture}">
-			,floorTexture:${room.floorTexture},
+			,floorTexture:'<c:url value='${room.floorTexture.file}'/>'
 			</c:if>
 			<c:if test="${!empty room.snapshot}">
 			,snapshot:"${room.snapshot}"
@@ -47,9 +47,19 @@
 				<c:if test="${s.index != 0 }">
 					,
 				</c:if>
-					{	c1:{x:${wall.roomWallConnector1.x}, y:${wall.roomWallConnector1.y}},
-						c2:{x:${wall.roomWallConnector2.x}, y:${wall.roomWallConnector2.y}}
-					}
+						new RoomWall(
+								'<c:url value='${wall.backTexture.file==null?undefined:wall.backTexture.file}'/>', 
+								'<c:url value='${wall.frontTexture.file==null?undefined:wall.frontTexture.file}'/>',
+								${wall.roomWallId},
+								${wall.roomId},
+								${wall.roomWallConnector1.connectorId},
+								${wall.roomWallConnector1.x},
+								${wall.roomWallConnector1.y},
+								${wall.roomWallConnector2.connectorId},
+								${wall.roomWallConnector2.x},
+								${wall.roomWallConnector2.y},
+								'${wall.type}'
+						)
 			</c:forEach>
 		];
 		var items = [];
@@ -101,8 +111,6 @@
 						]
 					}
 				})
-		</c:forEach>
-		];
 	</script>
 	
 	<script src="<c:url value="/resources/js/node_communication.js"/>"></script>
@@ -189,6 +197,64 @@
 			width: 100px;
 			height: 100px;
 		}
+
+		.right-menu {
+			position: absolute;
+			top: 10%;
+			right: 0px;
+			z-index: 1;
+			background-color: rgba(255, 255, 255, 0.5);
+		}
+		
+		.preview {
+			width: 100px;
+			height: 100px;
+		}
+		
+		#blocker {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			z-index: 2;
+		}
+		#blocker > div {
+		  position:absolute;
+		  top:50%;
+		  left:50%;
+		  width:100px;
+		  height:100px;
+		  margin:-50px 0 0 -50px;
+		}
+		
+		#instructions {
+			width: 100%;
+			height: 100%;
+			display: -webkit-box;
+			display: -moz-box;
+			display: box;
+			-webkit-box-orient: horizontal;
+			-moz-box-orient: horizontal;
+			box-orient: horizontal;
+			-webkit-box-pack: center;
+			-moz-box-pack: center;
+			box-pack: center;
+			-webkit-box-align: center;
+			-moz-box-align: center;
+			box-align: center;
+			color: #ffffff;
+			text-align: center;
+			cursor: pointer;
+		}
+		.snapshot {
+			width: 100px;
+			height: 100px;
+		}
+		
+		.imgPreview {
+			width: 100px;
+			height: 100px;
+		}
 	</style>
 </head>
 
@@ -215,6 +281,20 @@
 	</div>
 	
 	<!-- 왼쪽 메뉴 -->
+	<div id="textureInfo" class="left-menu">
+		<div class="form-group">
+			<label>텍스쳐 리스트</label>
+			<div>
+				<c:forEach var="texture" items="${textureList}">
+					<div id="texture${texture.textureId }" class="form-group btn btn-default" onclick="applyTexture(${texture.textureId})">
+						<label>${texture.text}</label>
+						<img id="img${texture.textureId }" class="imgPreview" alt="${texture.textureId}" src="<c:url value='${texture.file}'/>">
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+	
 	<div id="itemInfo" class="left-menu">
 		<div class="form-group">
 			<label>아이템 이름</label>
