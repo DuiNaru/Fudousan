@@ -34,7 +34,7 @@ public class TextureService {
 		
 		String files = FileService.saveFile(file, modelFileBaseDirectory , true);
 
-			texture.setFile(files);
+			texture.setFile(modelFileBaseDirectory+files);
 			
 		 result = dao.textureuproad(texture);
 		 

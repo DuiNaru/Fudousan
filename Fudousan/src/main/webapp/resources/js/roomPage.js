@@ -978,6 +978,7 @@ function changeCeilTexture(textureId) {
 				} );
 				roomCeil.material.map = ceilTexture;
 				roomCeil.material.needsUpdate = true;
+				
 			} else {
 				alert("천장 텍스쳐 변경에 실패하였습니다.");
 			}
@@ -2107,12 +2108,21 @@ function applyTexture(textureId) {
 	console.log(curSelectedRoomObject);
 	switch(curSelectedRoomObject) {
 	case "roomFloor":
+		if( CommandCallBack.onFloorTexture !== undefined ) {
+			CommandCallBack.onFloorTexture(textureId);
+		}
 		changeFloorTexture(textureId);
 		break;
 	case "roomCeil":
+		if( CommandCallBack.onCeilTexture !== undefined ) {
+			CommandCallBack.onCeilTexture(textureId);
+		}
 		changeCeilTexture(textureId);
 		break;
 	default:
+		if( CommandCallBack.onWallTexture !== undefined ) {
+			CommandCallBack.onWallTexture(curSelectedRoomObject, textureId);
+		}
 		changeWallTexture(curSelectedRoomObject, textureId);
 		break;
 	}
