@@ -19,7 +19,7 @@
     <hr>
 		
 	<!-- Favorite Button -->
-	<label for="id-of-input" class="custom-checkbox">
+	<label id="star" for="id-of-input" class="custom-checkbox">
   		<input type="checkbox" id="id-of-input"/>
   		<i class="glyphicon glyphicon-star-empty" id="empty"></i>
   		<i class="glyphicon glyphicon-star" id="full"></i>
