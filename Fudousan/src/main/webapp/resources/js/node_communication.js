@@ -245,7 +245,7 @@ var nodeCommand = {
 	//CommandCallBack.onFloorTexture (바닥 텍스쳐)
 	transmitFloorTexture : function(roomItem){
 		var roomItemObject = JSON.stringify(roomItem);
-		socket.emit('texture',roomItemObject);
+		socket.emit('floor',roomItemObject);
 	},
 	receiveFloor : function(roomItemObject){
 		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
@@ -271,6 +271,9 @@ var nodeCommand = {
 		console.log('왈 왈 왈 ');
 	},
 	receiveWall : function(wallObject){
+		console.log('★');
+		console.log(wallObject);
+		console.log('★');
 		var wall = JSON.parse(wallObject);
 		var a = wall.roomwall;
 		var b = wall.textureid;
