@@ -272,3 +272,8 @@ socket.on('back',function(){
 });
 
 
+
+//종료하기 function esc 
+
+
+
