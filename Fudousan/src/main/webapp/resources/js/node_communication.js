@@ -1,5 +1,7 @@
-var socket = io('http://sunnyserver.dlinkddns.com');
+var socket = io('localhost:8000');
 
+/*var socket = io('http://sunnyserver.dlinkddns.com');
+*/
 
 $(function(){
 	 var userId = document.getElementById('userId').value;
@@ -245,7 +247,7 @@ var nodeCommand = {
 		var roomItemObject = JSON.stringify(roomItem);
 		socket.emit('texture',roomItemObject);
 	},
-	receiveTexture : function(roomItemObject){
+	receiveFloor : function(roomItemObject){
 		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
 		changeFloorTexture(roomItem);
 	},
@@ -266,6 +268,7 @@ var nodeCommand = {
 	transWall : function(wall){
 		var roomItemObject = JSON.stringify(wall);
 		socket.emit('wall',roomItemObject);
+		console.log('왈 왈 왈 ');
 	},
 	receiveWall : function(wallObject){
 		var wall = JSON.parse(wallObject);
