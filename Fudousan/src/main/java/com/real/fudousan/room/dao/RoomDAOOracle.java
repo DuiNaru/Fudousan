@@ -15,6 +15,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
 import com.real.fudousan.room.vo.Room;
+import com.real.fudousan.roomwall.dao.RoomWallMapper;
 
 @Repository
 public class RoomDAOOracle implements RoomDAO {
@@ -235,6 +236,40 @@ public class RoomDAOOracle implements RoomDAO {
 		return result;
 	}
 
+
+
+	@Override
+	public boolean updateCeilingTexture(int roomId, int textureId) {
+		logger.info("updateCeilingTexture("+roomId+", "+textureId+") Start");
+		boolean result = false;
+
+		try {
+			RoomMapper roomMapper = sqlsession.getMapper(RoomMapper.class);
+			
+			result = roomMapper.updateCeilingTexture(roomId, textureId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("updateCeilingTexture("+roomId+", "+textureId+") End");
+		return result;
+	}
+
+
+	@Override
+	public boolean updateFloorTexture(int roomId, int textureId) {
+		logger.info("updateFloorTexture("+roomId+", "+textureId+") Start");
+		boolean result = false;
+
+		try {
+			RoomMapper roomMapper = sqlsession.getMapper(RoomMapper.class);
+			
+			result = roomMapper.updateFloorTexture(roomId, textureId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("updateFloorTexture("+roomId+", "+textureId+") End");
+		return result;
+	}
 	
 	
 	

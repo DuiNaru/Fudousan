@@ -10,6 +10,7 @@
 		<id 											column="C1_CONNECTOR_ID"/>
 		<id 							 				column="C2_CONNECTOR_ID"/>
 		<result 		property="type" 				column="TYPE"/>
+		<result 		property="roomWallId" 			column="ROOM_WALL_ID"/>
 		<association 	property="backTexture" 			column="BACK_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" 			resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" 	columnPrefix="BACK_"/>
 		<association 	property="frontTexture" 		column="FRONT_TEXTURE_ID" 	javaType="com.real.fudousan.texture.vo.Texture" 			resultMap="com.real.fudousan.texture.dao.TextureMapper.textureResultMap" 	columnPrefix="FRONT_"/>
 		<association 	property="roomWallConnector1" 	column="C1_CONNECTOR_ID" 		javaType="com.real.fudousan.roomwall.vo.RoomWallConnector" 	resultMap="RoomWallConnectorResultMap" 										columnPrefix="C1_"/>
@@ -25,7 +26,8 @@
 	<sql id="SELECT_ROOM_WALL">
 		SELECT
 			-- ROOM_WALL
-			ROOM_WALL.ROOM_ID 					ROOM_ID
+			ROOM_WALL.ROOM_WALL_ID				ROOM_WALL_ID
+			,ROOM_WALL.ROOM_ID 					ROOM_ID
 			,ROOM_WALL.TYPE 					TYPE
 			
 			-- BACK_TEXUTRE
@@ -83,7 +85,7 @@
 		LEFT OUTER JOIN
 			TEXTURE 							FRONT_TEXTURE
 		ON
-			ROOM_WALL.BACK_TEXTURE_ID = FRONT_TEXTURE.TEXTURE_ID
+			ROOM_WALL.FRONT_TEXTURE_ID = FRONT_TEXTURE.TEXTURE_ID
 		LEFT OUTER JOIN
 			TEXTURE_TYPE 						FRONT_TEXTURE_TYPE
 		ON
@@ -158,4 +160,22 @@
 	DELETE FROM room_wall_connector
 	WHERE connector_id IN (SELECT DISTINCT connector_id1 FROM room_wall WHERE room_id = #{0} UNION SELECT DISTINCT connector_id2 FROM room_wall WHERE room_id = #{0})
 </delete>
+
+<update id="updateFrontTexture">
+	UPDATE
+		room_wall
+	SET
+		FRONT_TEXTURE_ID = #{1}
+	WHERE
+		room_wall_id = #{0}
+</update>
+
+<update id="updateBackTexture">
+	UPDATE
+		room_wall
+	SET
+		BACK_TEXTURE_ID = #{1}
+	WHERE
+		room_wall_id = #{0}
+</update>
 </mapper>

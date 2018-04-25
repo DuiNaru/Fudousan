@@ -1,5 +1,7 @@
 package com.real.fudousan.texture.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,21 @@ public class TextureDAOOracle implements TextureDAO{
 		try {
 			TextureMapper mapper = session.getMapper(TextureMapper.class);
 			result = mapper.textureuproad(texture);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+
+	@Override
+	public List<Texture> selectAllTexture() {
+		List<Texture> result = null;
+
+		try {
+			TextureMapper mapper = session.getMapper(TextureMapper.class);
+			result = mapper.selectAllTexture();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

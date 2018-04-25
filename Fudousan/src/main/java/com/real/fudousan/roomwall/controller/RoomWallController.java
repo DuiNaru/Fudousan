@@ -99,4 +99,24 @@ public class RoomWallController {
 		logger.info("save() End");
 		return result;
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="changeFrontTexture", method=RequestMethod.GET) 
+	public boolean changeFrontTexture(int roomWallId,  int textureId) {
+		logger.info("changeFrontTexture("+roomWallId+", "+textureId+") Start");
+		boolean result = false;
+		result = service.changeFrontTexture(roomWallId, textureId);
+		logger.info("changeFrontTexture("+roomWallId+", "+textureId+") End");
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="changeBackTexture", method=RequestMethod.GET) 
+	public boolean changeBackTexture(int roomWallId,  int textureId) {
+		logger.info("changeFrontTexture("+roomWallId+", "+textureId+") Start");
+		boolean result = false;
+		result = service.changeBackTexture(roomWallId, textureId);
+		logger.info("changeBackTexture("+roomWallId+", "+textureId+") End");
+		return result;
+	}
 }

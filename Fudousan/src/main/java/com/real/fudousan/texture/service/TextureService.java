@@ -43,4 +43,12 @@ public class TextureService {
 		
 		return result;
 	}
+	
+	public List<Texture> getTextureList() {
+		logger.info("getTextureList() Start");
+		List<Texture> result = null;
+		result = dao.selectAllTexture();
+		logger.info("getTextureList() End");
+		return result;
+	}
 }

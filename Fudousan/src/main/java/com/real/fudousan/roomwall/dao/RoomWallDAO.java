@@ -14,4 +14,8 @@ public interface RoomWallDAO {
 	public boolean insertWallAndConnector(int roomId, List<RoomWall> roomWall, Map<Integer, RoomWallConnector> roomConnector);
 	
 	public List<RoomWall> selectAllWallAndConnector(int roomId);
+	
+	public boolean updateFrontTexture(int roomWallId, int textureId);
+	
+	public boolean updateBackTexture(int roomWallId, int textureId);
 }

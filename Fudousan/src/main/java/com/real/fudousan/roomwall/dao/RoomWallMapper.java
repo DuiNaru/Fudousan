@@ -14,4 +14,7 @@ public interface RoomWallMapper {
 	public int deleteWallsByRoomId(int roomId);
 	
 	public List<RoomWall> selectAllRoomWallByRoomId(int roomId);
+	
+	public boolean updateFrontTexture(int roomWallId, int textureId);
+	public boolean updateBackTexture(int roomWallId, int textureId);
 }
