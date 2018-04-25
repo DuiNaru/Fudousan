@@ -1,4 +1,8 @@
 $(function(){
+	translation();
+})
+
+function translation(){
 	let lang = getCookie("lang");
 	let url = "";
 	
@@ -21,23 +25,23 @@ $(function(){
 			console.log(err);
 		}
 	});
-	
-	let changeLanguage = function(lang, json){
-		$("[data-lang]").each(function(){
-			let element = $(this);
-			
-			if (element[0].tagName === "INPUT" || element[0].tagName === "TEXTAREA"){
-				element.attr("placeholder", json[element.data("lang")]);
-			}
-			else {
-				element.html(json[element.data("lang")]);
-			}
-		});
-	};
-})
+}
 
-let selectLanguage = function(lang){
+function changeLanguage(lang, json){
+	$("[data-lang]").each(function(){
+		let element = $(this);
+		
+		if (element[0].tagName === "INPUT" || element[0].tagName === "TEXTAREA"){
+			element.attr("placeholder", json[element.data("lang")]);
+		}
+		else {
+			element.html(json[element.data("lang")]);
+		}
+	});
+};
+
+function selectLanguage(lang){
 	setCookie("lang", lang, 365);
 	
-	window.location.reload();
+	translation();
 };
