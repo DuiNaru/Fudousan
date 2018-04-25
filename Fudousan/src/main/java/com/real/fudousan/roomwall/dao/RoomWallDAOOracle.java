@@ -99,4 +99,38 @@ public class RoomWallDAOOracle implements RoomWallDAO {
 		logger.info("selectAllWallAndConnector("+roomId+") End");
 		return result;
 	}
+
+
+	@Override
+	public boolean updateFrontTexture(int roomWallId, int textureId) {
+		logger.info("updateFrontTexture("+roomWallId+", "+textureId+") Start");
+		boolean result = false;
+
+		try {
+			RoomWallMapper roomWallMapper = session.getMapper(RoomWallMapper.class);
+			
+			result = roomWallMapper.updateFrontTexture(roomWallId, textureId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("updateFrontTexture("+roomWallId+", "+textureId+"End");
+		return result;
+	}
+
+
+	@Override
+	public boolean updateBackTexture(int roomWallId, int textureId) {
+		logger.info("updateBackTexture("+roomWallId+", "+textureId+") Start");
+		boolean result = false;
+
+		try {
+			RoomWallMapper roomWallMapper = session.getMapper(RoomWallMapper.class);
+			
+			result = roomWallMapper.updateBackTexture(roomWallId, textureId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("updateBackTexture("+roomWallId+", "+textureId+"End");
+		return result;
+	}
 }

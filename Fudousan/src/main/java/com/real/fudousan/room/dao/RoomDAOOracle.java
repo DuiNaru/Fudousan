@@ -15,6 +15,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Repository;
 
 import com.real.fudousan.room.vo.Room;
+import com.real.fudousan.roomwall.dao.RoomWallMapper;
 
 @Repository
 public class RoomDAOOracle implements RoomDAO {
@@ -136,17 +137,31 @@ public class RoomDAOOracle implements RoomDAO {
 	}
 
 	@Override
+	public boolean deletionLogical(int memberId, int roomId) {
+		logger.info("deletionLogical("+memberId+","+roomId+") Start");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		boolean result = false;
+		try{
+			result = mapper.deletionLogical(memberId, roomId);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("deletionLogical("+memberId+","+roomId+") End");
+		return result;
+	}
+	
+	@Override
 	public boolean deleteRoom(int memberId, int roomId) {
 		logger.info("deleteRoom("+memberId+", "+roomId+") Start");
-		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		/*RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
 		boolean result = false;
 
 		try{
 			result = mapper.deleteRoom(memberId, roomId);
 		}catch (Exception e) {
 			e.printStackTrace();
-		}
-		
+		}*/
+		boolean result = deletionLogical(memberId, roomId);
 		logger.info("deleteRoom("+memberId+", "+roomId+") End");
 		return result;
 	}
@@ -220,6 +235,42 @@ public class RoomDAOOracle implements RoomDAO {
 		logger.info("updateRoomSanpShot("+room+") End");
 		return result;
 	}
+
+
+
+	@Override
+	public boolean updateCeilingTexture(int roomId, int textureId) {
+		logger.info("updateCeilingTexture("+roomId+", "+textureId+") Start");
+		boolean result = false;
+
+		try {
+			RoomMapper roomMapper = sqlsession.getMapper(RoomMapper.class);
+			
+			result = roomMapper.updateCeilingTexture(roomId, textureId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("updateCeilingTexture("+roomId+", "+textureId+") End");
+		return result;
+	}
+
+
+	@Override
+	public boolean updateFloorTexture(int roomId, int textureId) {
+		logger.info("updateFloorTexture("+roomId+", "+textureId+") Start");
+		boolean result = false;
+
+		try {
+			RoomMapper roomMapper = sqlsession.getMapper(RoomMapper.class);
+			
+			result = roomMapper.updateFloorTexture(roomId, textureId);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("updateFloorTexture("+roomId+", "+textureId+") End");
+		return result;
+	}
+	
 	
 	
 }

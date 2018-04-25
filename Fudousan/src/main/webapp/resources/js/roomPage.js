@@ -7,13 +7,15 @@ var cameraLookAngle = 0;
 // 카메라, 씬, 렌더러, 카메라 컨트롤
 var camera, scene, renderer, controls;
 var scenes = [];
-var composer, outlinePass;
+var composer, outlinePass, otherOutlinePass;
 // 화면 가로 길이
 var width = window.innerWidth;
 // 화면 세로 길이
 var height = window.innerHeight;
 // 방 바닥
 var roomFloor;
+// 방 천장
+var roomCeil;
 // 지면(사이즈)
 var earthSize = 999999;
 // Raycaster
@@ -36,6 +38,18 @@ var curMoving = false;
 var isMouseUp = false;
 // 정보 화면에서 아이템 정보를 변경하였는가?
 var infoDataChange = false;
+// 사용자가 시도한 명령들
+var commands = [];
+// 현재 커맨드 위치(해당 위치 직전까지가 지금까지 실행한 명령들)
+var commandIndex = 0;
+// 천장 텍스쳐
+var ceilTexture;
+// 바닥 텍스쳐
+var floorTexture;
+// 현재 선택한 방 물체
+var curSelectedRoomObject;
+// 텍스쳐 로더
+var textureLoader = new THREE.TextureLoader();
 
 $(function() {
 	$("#itemInfo").hide();
@@ -81,8 +95,8 @@ $(function() {
 	});
 	$( "#px" ).slider({
 		value: 0,
-		min: -100,
-		max: 100,
+		min: -1000,
+		max: 1000,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -94,8 +108,8 @@ $(function() {
 	});
 	$( "#py" ).slider({
 		value: 0,
-		min: -100,
-		max: 100,
+		min: -1000,
+		max: 1000,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -107,8 +121,8 @@ $(function() {
 	});
 	$( "#pz" ).slider({
 		value: 0,
-		min: -100,
-		max: 100,
+		min: -1000,
+		max: 1000,
 		step: 0.1,
 		orientation: "horizontal",
 		range: "min",
@@ -122,9 +136,9 @@ $(function() {
 	init();
 	//화면 그리기
 	animate();
-	
+	// 벽 그리기
 	drawWall();
-
+	// 로딩 끝
 	$( "#blocker" ).hide();
 });
 
@@ -176,10 +190,37 @@ function init() {
 
 	//var roomFloorGeometry = new THREE.PlaneGeometry(roomFloorSize, roomFloorSize);
 	
+	// 바닥
 	roomFloor = drawFloor();
 	roomFloor.rotateX(-90 * Math.PI / 180);
 	scene.add(roomFloor);
+	
+	floorTexture = textureLoader.load(room.floorTexture, function ( texture ) {
 
+	    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+	    texture.offset.set( 0, 0 );
+	    texture.repeat.set( 2, 2 );
+
+	} );
+	roomFloor.material.map = floorTexture;
+	roomFloor.material.needsUpdate = true;
+	
+	// 천장
+	roomCeil = drawFloor(false);
+	roomCeil.rotateX(-90 * Math.PI / 180);
+	roomCeil.position.y += room.height;
+	scene.add(roomCeil);
+	
+	ceilTexture = textureLoader.load(room.ceilingTexture, function ( texture ) {
+
+	    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+	    texture.offset.set( 0, 0 );
+	    texture.repeat.set( 2, 2 );
+
+	} );
+	roomCeil.material.map = ceilTexture;
+	roomCeil.material.needsUpdate = true;
+	
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
 	renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, false);
 	document.addEventListener('mouseup', this.onDocumentMouseUp, false);
@@ -196,11 +237,20 @@ function init() {
 	composer = new THREE.EffectComposer( renderer );
 	var renderPass = new THREE.RenderPass( scene, camera );
 	composer.addPass( renderPass );
+	
+	// 자신용 아웃라인
 	outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
 	outlinePass.edgeStrength = 3;
 	outlinePass.edgeThickness = 1;
 	outlinePass.visibleEdgeColor.set( 0xFFFFFF );
 	composer.addPass( outlinePass );
+	
+	// 상대방용 아웃라인
+	otherOutlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
+	otherOutlinePass.edgeStrength = 3;
+	otherOutlinePass.edgeThickness = 1;
+	otherOutlinePass.visibleEdgeColor.set( 0xFF0000 );
+	composer.addPass( otherOutlinePass );
 	
 	effectFXAA = new THREE.ShaderPass( THREE.FXAAShader );
 	console.dir(effectFXAA);
@@ -258,7 +308,10 @@ function animate(time) {
 	TWEEN.update(time);
 }
 
-
+/**
+ * 화면 크기 조정
+ * @returns
+ */
 function onResize() {
 	// 화면 가로 길이
 	width = window.innerWidth;
@@ -314,24 +367,50 @@ function onKeydown(event) {
 	console.log(camera);*/
 }
 
+/**
+ * 마우스 누름
+ * @param event
+ * @returns
+ */
 function onDocumentMouseDown(event) {
 	
 	isMouseUp = false;
-	deSelect();
+	deSelect(true);
 	
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(curRoomItems, true);
 	if (intersects.length > 0) {
 		
 		// 현재 배치된 모든 아이템의 매시에 클릭이 되니까, 그 메시 그룹을 가져온다.
-		select(intersects[0].object.parent);
+		//select(intersects[0].object.parent);
+		NewCommand.select(intersects[0].object.parent.roomItem);
 		
 		// 화면 돌리기 불가
 		controls.enabled = false;
 	}
 	
+	raycaster.setFromCamera(mouse, camera);
+	var intersects = raycaster.intersectObjects(walls.children, true);
+	if (intersects.length > 0) {
+		curSelectedRoomObject = intersects[0].object.roomWall;
+	}
+	
+	raycaster.setFromCamera(mouse, camera);
+	var intersects = raycaster.intersectObjects([roomFloor, roomCeil], true);
+	if (intersects.length > 0) {
+		if(intersects[0].object == roomFloor) {
+			curSelectedRoomObject = "roomFloor";
+		} else if (intersects[0].object == roomCeil) {
+			curSelectedRoomObject = "roomCeil";
+		}
+	}
 }
 
+/**
+ * 마우스 이동
+ * @param event
+ * @returns
+ */
 function onDocumentMouseMove(event) {
 	// 마우스 이동 저장
 	if ( !moveMouse(event) ) {
@@ -347,8 +426,13 @@ function onDocumentMouseMove(event) {
 			var x = curSelected.roomItem.item.itemX;
 			var y = curSelected.roomItem.item.itemY;
 			var z = curSelected.roomItem.item.itemZ;
+			
 			// 원점 보정해서 움직임
 			move(curSelected, intersects[0].point.x+x, intersects[0].point.y+y, intersects[0].point.z+z);
+			
+			
+			
+			
 			// 움직이고 나서 움직였음을 표시한다.
 			curMoving = true;
 		}
@@ -356,20 +440,36 @@ function onDocumentMouseMove(event) {
 	
 }
 
+/**
+ * 마우스 누름 해제
+ * @param event
+ * @returns
+ */
 function onDocumentMouseUp(event) {
 	isMouseUp = true;
 	if(curSelected != null) {
 		// 움직였으면 DB 저장
 		if(curMoving) {
+			var param = curSelected.roomItem.clone();
+			param.x = curSelected.position.x;
+			param.y = curSelected.position.y;
+			param.z = curSelected.position.z;
+			NewCommand.move(param);
+			
 			curMoving = false;
 			saveRoomItem(curSelected.roomItem);
-			deSelect();
+			deSelect(true);
 		}
 	}
 	// 컨트롤 활성화
 	controls.enabled = true;
 }
 
+/**
+ * 마우스 이동
+ * @param event
+ * @returns
+ */
 function moveMouse(event) {
 	// Get mouse position
 	var mouseX = (event.clientX / window.innerWidth) * 2 - 1;
@@ -385,6 +485,15 @@ function moveMouse(event) {
 }
 
 /**
+ * 천장 높이 변경을 반영한다.
+ * @returns
+ */
+function changeHeigth() {
+	drawWall();
+	roomCeil.position.y = room.height;
+}
+
+/**
  * DB대로 벽을 생성한다.
  * @returns
  */
@@ -392,17 +501,28 @@ function drawWall() {
 	scene.remove(walls);
 	walls = new THREE.Group(); 
 	for(var i = 0; i < originalWalls.length; i++) {
-		var c1 = new THREE.Vector3(originalWalls[i].c1.x, originalWalls[i].c1.y, roomFloor.z);
-		var c2 = new THREE.Vector3(originalWalls[i].c2.x, originalWalls[i].c2.y, roomFloor.z);
+		var c1 = new THREE.Vector3(originalWalls[i].roomWallConnector1.x, originalWalls[i].roomWallConnector1.y, roomFloor.z);
+		var c2 = new THREE.Vector3(originalWalls[i].roomWallConnector2.x, originalWalls[i].roomWallConnector2.y, roomFloor.z);
 		// Cube
 		var geometry = new THREE.BoxGeometry(c1.clone().sub(c2).length(), wallThickness, room.height );
-		for ( var j = 0; j < geometry.faces.length; j += 2 ) {
+		/*for ( var j = 0; j < geometry.faces.length; j += 2 ) {
 			var hex = Math.random() * 0xffffff;
 			geometry.faces[ j ].color.setHex( hex );
 			geometry.faces[ j + 1 ].color.setHex( hex );
-		}
+		}*/
 		
 		var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		console.log(originalWalls[i].frontTextureId);
+		var texture = textureLoader.load(originalWalls[i].frontTextureId, function ( texture ) {
+
+		    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		    texture.offset.set( 0, 0 );
+		    texture.repeat.set( 2, 2 );
+
+		} );
+		material.map = texture;
+		material.needsUpdate = true;
+		
 		cube = new THREE.Mesh( geometry, material );
 
 		var cubePosition= new THREE.Vector3().copy(c1).lerp(c2, 0.5);
@@ -413,6 +533,7 @@ function drawWall() {
 		var angle = Math.atan2(normal.y, normal.x);
 		cube.rotateZ(angle);
 		
+		cube.roomWall = originalWalls[i];
 		
 		walls.add( cube );
 	}
@@ -421,6 +542,11 @@ function drawWall() {
 	scene.add(walls);
 }
 
+/**
+ * 바닥 그리기
+ * @param side true : 앞면 / false : 뒷면
+ * @returns
+ */
 function drawFloor(side) {
 	if ( originalWalls.length == 0 ) {
 		// 벽이 없으면 그냥 매우 큰 땅 생성
@@ -434,8 +560,8 @@ function drawFloor(side) {
 	// 커넥터 추출
 	var con = [];
 	for(var i = 0; i < originalWalls.length; i++) {
-		var c1 = new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y);
-		var c2 = new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y);
+		var c1 = new THREE.Vector2(originalWalls[i].roomWallConnector1.x, originalWalls[i].roomWallConnector1.y);
+		var c2 = new THREE.Vector2(originalWalls[i].roomWallConnector2.x, originalWalls[i].roomWallConnector2.y);
 		
 		var flag1 = false;
 		var flag2 = false;
@@ -447,7 +573,6 @@ function drawFloor(side) {
 		if(!flag1) con.push(c1);
 		if(!flag2) con.push(c2);
 	}
-	console.log(con);
 	
 	// 방문 기록
 	var visit = [];
@@ -460,8 +585,8 @@ function drawFloor(side) {
 		}
 	}
 	for(var i = 0; i < originalWalls.length; i++) {
-		var c1 = new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y);
-		var c2 = new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y);
+		var c1 = new THREE.Vector2(originalWalls[i].roomWallConnector1.x, originalWalls[i].roomWallConnector1.y);
+		var c2 = new THREE.Vector2(originalWalls[i].roomWallConnector2.x, originalWalls[i].roomWallConnector2.y);
 		
 		for(var j = 0; j < con.length; j++) {
 			if ( con[j].equals(c1) ) {
@@ -476,7 +601,7 @@ function drawFloor(side) {
 		adjMatrix[c2][c1] = 1;
 		
 	}
-	console.log(adjMatrix);
+
 	/*
 	var shape = new THREE.Shape();
 	// 탐색 시작
@@ -551,7 +676,7 @@ function drawFloor(side) {
 			}
 		}
 	}
-	console.dir(sortX);
+	
 	// y 정렬(오름차순)
 	var sortY = [];
 	for(var i = 0; i < con.length; i++) {
@@ -566,7 +691,6 @@ function drawFloor(side) {
 			}
 		}
 	}
-	console.dir(sortY);
 	
 	// 최종 외곽선 배열
 	var outline = [];
@@ -644,30 +768,23 @@ function drawFloor(side) {
 	
 	outline = searchOutline(top, con, adjMatrix);
 	
-	console.log("아웃라인?");
-	console.log(outline);
-	
 	var shape = new THREE.Shape();
 	shape.moveTo(con[outline[0]].x, con[outline[0]].y);
 	for (var i = 1; i < outline.length; i++) {
 		shape.lineTo(con[outline[i]].x, con[outline[i]].y);
 	}
-	console.dir(shape);
-	
-	
-	
-	
-	
 	
 	//var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
 	var roomFloorGeometry = new THREE.ShapeGeometry( shape );
-	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, side:((side===undefined||side)?THREE.FrontSide:THREE.BackSide)});
+	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0xffffff, side:((side===undefined||side)?THREE.FrontSide:THREE.BackSide)});
+	
 	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
 	
 	return floor;
 }
 
-/*function searchOutline( startPoint, endPoint, points, connectMap, area, edge ) {
+/*
+function searchOutline( startPoint, endPoint, points, connectMap, area, edge ) {
 	var top = edge[0];
 	var bottom = edge[1];
 	var left = edge[2];
@@ -752,6 +869,13 @@ function drawFloor(side) {
 	return possible;
 }*/
 
+/**
+ * 연결 맵에서 인덱스의 점 부터 외곽선을 찾아서 배열로 반환
+ * @param startPoint
+ * @param points
+ * @param connectMap
+ * @returns
+ */
 function searchOutline(startPoint, points, connectMap) {
 	var possible = [startPoint];
 	var curIndex = startPoint;
@@ -764,35 +888,144 @@ function searchOutline(startPoint, points, connectMap) {
 					var pastVector = new THREE.Vector2(points[pastIndex].x, points[pastIndex].y).sub(new THREE.Vector2(points[curIndex].x, points[curIndex].y));
 					//var pastVector = new THREE.Vector2(points[curIndex].x, points[curIndex].y).sub(new THREE.Vector2(points[pastIndex].x, points[pastIndex].y));
 					var curVector = new THREE.Vector2(points[j].x, points[j].y).sub(new THREE.Vector2(points[curIndex].x, points[curIndex].y));
-					console.log(pastVector);
-					console.log(curVector);
+					//console.log(pastVector);
+					//console.log(curVector);
 					var pastAngle = pastVector.angle()*180/Math.PI;
 					var curAngle = curVector.angle()*180/Math.PI;
-					console.log(pastAngle);
-					console.log(curAngle);
+					//console.log(pastAngle);
+					//console.log(curAngle);
 					var p_c = pastAngle-curAngle;
 					if ( p_c < 0 ) p_c = 360+p_c;
-					console.log("check j : "+j+", p-c = " + p_c);
+					//console.log("check j : "+j+", p-c = " + p_c);
 					
 					if ( p_c < minAngle ) {
 						minAngle = p_c;
 						moveIndex = j;
-						console.log("possible select("+moveIndex+"), angle : "+minAngle);
+						//console.log("possible select("+moveIndex+"), angle : "+minAngle);
 					}
 				}
 			}
-			console.log("moveIndex("+moveIndex+")");
+			//console.log("moveIndex("+moveIndex+")");
 			possible.push(moveIndex);
 			pastIndex = curIndex;
 			curIndex = moveIndex;
 			if ( curIndex == startPoint ) {
-				console.log("END : reach to start index(" + curIndex + ")");
+				//console.log("END : reach to start index(" + curIndex + ")");
 				break;
 			}
-			console.log("move to " + curIndex);
+			//console.log("move to " + curIndex);
 		}
-	console.log(possible);
+	//console.log(possible);
 	return possible;
+}
+
+function changeFloorTexture(textureId) {
+	
+	$.ajax({
+		url:"changeFloorTexture",
+		type:"get",
+		data: {
+			roomId:room.roomId,
+			textureId:textureId
+		},
+		dataType:"json",
+		success:function(data) {
+			if(data != null && data != false && data != "false") {
+
+				var url = $("#img"+textureId).attr("src");
+				floorTexture = textureLoader.load(url, function ( texture ) {
+
+				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				    texture.offset.set( 0, 0 );
+				    texture.repeat.set( 2, 2 );
+
+				} );
+				roomFloor.material.map = floorTexture;
+				roomFloor.material.needsUpdate = true;
+				
+			} else {
+				alert("바닥 텍스쳐 변경에 실패하였습니다.");
+			}
+		},
+		error:function(e) {
+			console.log(e);
+			alert("바닥 텍스쳐 변경 중 오류가 발생하였습니다.");
+		}
+	});
+}
+
+function changeCeilTexture(textureId) {
+	$.ajax({
+		url:"changeCeilTexture",
+		type:"get",
+		data: {
+			roomId:room.roomId,
+			textureId:textureId
+		},
+		dataType:"json",
+		success:function(data) {
+			if(data != null && data != false && data != "false") {
+
+				var url = $("#img"+textureId).attr("src");
+				
+
+				ceilTexture = textureLoader.load(url, function ( texture ) {
+
+				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				    texture.offset.set( 0, 0 );
+				    texture.repeat.set( 2, 2 );
+
+				} );
+				roomCeil.material.map = ceilTexture;
+				roomCeil.material.needsUpdate = true;
+				
+			} else {
+				alert("천장 텍스쳐 변경에 실패하였습니다.");
+			}
+		},
+		error:function(e) {
+			console.log(e);
+			alert("천장 텍스쳐 변경 중 오류가 발생하였습니다.");
+		}
+	});
+}
+
+function changeWallTexture(roomWall, textureId) {
+	$.ajax({
+		url:"wall/changeFrontTexture",
+		type:"get",
+		data: {
+			roomWallId:roomWall.roomWallId,
+			textureId:textureId
+		},
+		dataType:"json",
+		success:function(data) {
+			if(data != null && data != false && data != "false") {
+				var url = $("#img"+textureId).attr("src");
+				var texture = textureLoader.load(url, function ( texture ) {
+
+				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				    texture.offset.set( 0, 0 );
+				    texture.repeat.set( 2, 2 );
+
+				} );
+				for(var i = 0; i < walls.children.length; i++) {
+					if(walls.children[i].roomWall.roomWallId == roomWall.roomWallId) {
+						walls.children[i].material.map = texture;
+						walls.children[i].material.needsUpdate = true;
+						return;
+					}
+				}
+				alert("바꾸려는 벽이 없어서 실패하였습니다.");
+			} else {
+				alert("벽 텍스쳐 변경에 실패하였습니다.");
+			}
+		},
+		error:function(e) {
+			console.log(e);
+			alert("벽 텍스쳐 변경 중 오류가 발생하였습니다.");
+		}
+	});
 }
 
 function previewItem(itemId, fileName) {
@@ -861,7 +1094,6 @@ function previewItem(itemId, fileName) {
  * Item VO 의 경우에는 화면 정 중앙에 배치,
  * RoomItem VO 의 경우에는 해당 VO의 x,y,z에 배치
  * @param item Item VO 또는 RoomItem VO
- * @param onCreate 성공시 호출
  * @returns
  */
 function createItem(item, onCreate) {
@@ -892,6 +1124,7 @@ function createItem(item, onCreate) {
 	}
 	
 	if (x !== undefined && y !== undefined && z !== undefined) {
+		
 		// 방 아이템 추가하고 그 아이템 가져오기
 		$.ajax({
 			url:"roomItem/create",
@@ -919,6 +1152,10 @@ function createItem(item, onCreate) {
 					if ( onCreate !== undefined ) {
 						onCreate(roomItem);
 					}
+					
+					if ( CommandCallBack.onCreate !== undefined ) {
+						CommandCallBack.onCreate(roomItem);
+					}
 				
 				} else {
 					console.dir(roomItem);
@@ -941,7 +1178,7 @@ function createItem(item, onCreate) {
  * @param onDelete 성공시 호출
  * @returns
  */
-function deleteItem(roomItem, onDelete) {
+function deleteItem(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
@@ -956,8 +1193,8 @@ function deleteItem(roomItem, onDelete) {
 		success:function(data) {
 			if(data != null && data != "false") {
 				deplaceRoomItem(roomItem);
-				if ( onDelete !== undefined ) {
-					onDelete(roomItem);
+				if ( CommandCallBack.onDelete !== undefined ) {
+					CommandCallBack.onDelete(roomItem);
 				}
 			
 			} else {
@@ -976,11 +1213,9 @@ function deleteItem(roomItem, onDelete) {
 /**
  * RoomItem VO 대로 화면에 Item 을 배치한다.
  * @param roomItem VO
- * @param onLoad 아이템 불러오기 성공시 호출되는 콜백함수
- * @param onError 아이템 불러오기 실패시 호출되는 콜백함수
  * @returns
  */
-function placeRoomItem(roomItem, onLoad, onError) {
+function placeRoomItem(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
@@ -1019,10 +1254,10 @@ function placeRoomItem(roomItem, onLoad, onError) {
 		
 		console.log(roomItem.roomItemId + " 배치 성공");
 
-		if ( onLoad !== undefined ) {
-			onLoad();
+		if ( CommandCallBack.onModelLoad !== undefined ) {
+			CommandCallBack.onModelLoad();
 		}
-	}, undefined, onError);
+	}, undefined, CommandCallBack.onModelError);
 }
 
 
@@ -1041,7 +1276,7 @@ function deplaceRoomItem(roomItem) {
 	console.dir(roomItem);
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
-			if ( curSelected == curRoomItems[i] ) deSelect();
+			if ( curSelected == curRoomItems[i] ) deSelect(false);
 			console.log("배치 해제 대상");
 			console.dir(curRoomItems[i].roomItem);
 			scene.remove(curRoomItems[i]);
@@ -1069,19 +1304,19 @@ function move(object, x, y, z) {
 	
 	if ( x != null ) {
 
-		object.roomItem.x = object.position.x = x;
+		object.position.x = x;
 		
 	}
 	
 	if ( y != null ) {
 
-		object.roomItem.y = object.position.y = y;
+		object.position.y = y;
 		
 	}
 	
 	if ( z != null ) {
 
-		object.roomItem.z = object.position.z = z;
+		object.position.z = z;
 		
 	}
 	
@@ -1090,17 +1325,28 @@ function move(object, x, y, z) {
 /**
  * 해당 룸 아이템을 해당 x,y,z 로 이동
  * @param roomItem
+ * @param excuteCallBack 콜백 실행 여부
  * @returns
  */
-function moveRoomItem(roomItem) {
+function moveRoomItem(roomItem, excuteCallBack) {
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+			var result = curRoomItems[i].roomItem.clone();
+
 			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z);
-			return true;
+			
+			curRoomItems[i].roomItem.x = roomItem.x;
+			curRoomItems[i].roomItem.y = roomItem.y;
+			curRoomItems[i].roomItem.z = roomItem.z;
+			
+			if(excuteCallBack !== undefined && excuteCallBack == true && CommandCallBack.onMove !== undefined) {
+				CommandCallBack.onMove(roomItem);
+			}
+			return result;
 		}
 	}
 	console.log(roomItem.roomItemId + " 가 없어서 이동 실패");
-	return false;
+	return null;
 }
 
 /**
@@ -1142,6 +1388,9 @@ function rotateRoomItem(roomItem) {
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
 			rotate(curRoomItems[i], roomItem.rotateX, roomItem.rotateY, roomItem.rotateZ);
+			if(CommandCallBack.onRotate !== undefined) {
+				CommandCallBack.onRotate(roomItem);
+			}
 			return true;
 		}
 	}
@@ -1149,21 +1398,60 @@ function rotateRoomItem(roomItem) {
 	return false;
 }
 
-function select(group) {
-	curSelected = group;
-	
-	curSelectedOriginal = group.roomItem.clone();
-	
-	// 선택 상태 아웃 라인 표시
-	outlinePass.selectedObjects = curSelected.children;
+/**
+ * 내가 아이템을 선택
+ * @param roomItem
+ * @returns
+ */
+function select(roomItem) {
+	for(var i = 0; i < curRoomItems.length; i++ ) {
+		if (curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId) {
+			curSelected = curRoomItems[i];
+			curSelectedOriginal = roomItem.clone();
+			
+			// 선택 상태 아웃 라인 표시
+			outlinePass.selectedObjects = curSelected.children;
 
-	initInfo();
+			initInfo();
+			
+			return;
+		}
+	}
+	alert('해당 아이템이 존재하지 않습니다.');
 }
 
-function deSelect() {
+/**
+ * 다른 사람이 해당 아이템을 선택
+ * @param roomItem
+ * @returns
+ */
+function selectByOther(roomItem) {
+	for(var i = 0; i < curRoomItems.length; i++ ) {
+		if (curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId) {
+			
+			// 선택 상태 아웃 라인 표시
+			otherOutlinePass.selectedObjects = curRoomItems[i].children;
+			
+			return;
+		}
+	}
+	alert('상대방이 선택한 해당 아이템이 존재하지 않습니다.');
+}
+
+
+/**
+ * 내가 아이템을 선택 해제
+ * @param executeCallBack
+ * @returns
+ */
+function deSelect(executeCallBack) {
 	if ( infoDataChange ) {
 		curSelected.roomItem = curSelectedOriginal;
 		applyRoomItem(curSelected);
+		
+		if(executeCallBack == true && CommandCallBack.onDeselect !== undefined) {
+			CommandCallBack.onDeselect(curSelectedOriginal);
+		}
 		curSelectedOriginal = null;
 	}
 	
@@ -1172,6 +1460,14 @@ function deSelect() {
 	outlinePass.selectedObjects = [];
 	
 	resetInfo();
+}
+
+/**
+ * 다른 사람이 선택 해제
+ * @returns
+ */
+function deSelectByOther() {
+	otherOutlinePass.selectedObjects = [];
 }
 
 /**
@@ -1194,7 +1490,6 @@ function saveRoomItem(roomItem) {
 		dataType:"json",
 		success:function(data) {
 			if(data != null && data != 0) {
-
 			} else {
 				console.dir(roomItem);
 				alert("아이템 저장에 실패하였습니다.");
@@ -1248,8 +1543,8 @@ function setInfoRZ(value) {
  */
 function setInfoX(value) {
 	$("input[name='itemX']").val(value);
-	$( "#px" ).slider("option", "min", value-100);
-	$( "#px" ).slider("option", "max", value+100);
+	$( "#px" ).slider("option", "min", value-1000);
+	$( "#px" ).slider("option", "max", value+1000);
 	$( "#px" ).slider("value", value);
 }
 
@@ -1260,8 +1555,8 @@ function setInfoX(value) {
  */
 function setInfoY(value) {
 	$("input[name='itemY']").val(value);
-	$( "#py" ).slider("option", "min", value-100);
-	$( "#py" ).slider("option", "max", value+100);
+	$( "#py" ).slider("option", "min", value-1000);
+	$( "#py" ).slider("option", "max", value+1000);
 	$( "#py" ).slider("value", value);
 }
 
@@ -1272,8 +1567,8 @@ function setInfoY(value) {
  */
 function setInfoZ(value) {
 	$("input[name='itemZ']").val(value);
-	$( "#pz" ).slider("option", "min", value-100);
-	$( "#pz" ).slider("option", "max", value+100);
+	$( "#pz" ).slider("option", "min", value-1000);
+	$( "#pz" ).slider("option", "max", value+1000);
 	$( "#pz" ).slider("value", value);
 }
 
@@ -1333,17 +1628,22 @@ function resetInfo() {
 	$("#itemInfo").hide( "slide" );
 }
 
-function itemApplyListener(onApply) {
-	applyItemChange(curSelected.roomItem, onApply);
+/**
+ * 아이템 정보창 변경 적용 버튼 리스너
+ * @returns
+ */
+function itemApplyListener() {
+	//applyItemChange(curSelected.roomItem);
+	NewCommand.itemChange(curSelected.roomItem);
 	
 }
 
 /**
- * 아이템 변경사항을 적용한다.
+ * 아이템 변경사항을 적용한다.(DB의 룸 아이템을 변경/이동 한다.)
  * @param roomItem 
  * @returns
  */
-function applyItemChange(roomItem, onApply) {
+function applyItemChange(roomItem) {
 	if(!(roomItem instanceof RoomItem)) {
 		throw new Error("룸 아이템이 아닙니다.");
 	}
@@ -1360,9 +1660,9 @@ function applyItemChange(roomItem, onApply) {
 			if(data != null && data != false && data != "false") {
 				
 				infoDataChange = false;
-				
-				if (onApply !== undefined) {
-					onApply(roomItem);
+
+				if(CommandCallBack.onItemChange !== undefined) {
+					CommandCallBack.onItemChange(roomItem);
 				}
 				
 			} else {
@@ -1385,7 +1685,30 @@ function applyItemChange(roomItem, onApply) {
 	});
 }
 
-function roomReset(onReset) {
+/**
+ * 사용자 화면의 룸 아이템을 회전/이동 한다.
+ * @param roomItem
+ * @returns
+ */
+function applyItemChangeLocal(roomItem) {
+	var result;
+	for(var i = 0; i < curRoomItems.length; i++) {
+		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+			result = curRoomItems[i].roomItem.clone();
+			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z);
+			rotate(curRoomItems[i], roomItem.rotateX, roomItem.rotateY, roomItem.rotateZ);
+			return result;
+		}
+	}
+	console.log(roomItem.roomItemId + " 가 없어서 아이템 속성 변경 실패");
+	return null;
+}
+
+/**
+ * DB의 RoomItem을 리셋한다.
+ * @returns
+ */
+function roomReset() {
 	$( "#blocker" ).show();
 	$.ajax({
 		url:"roomItem/reset",
@@ -1396,10 +1719,10 @@ function roomReset(onReset) {
 			
 			if(data != null && data != false && data != "false") {
 
-				clearRoom();
+				roomResetLocal();
 				
-				if (onReset !== undefined) {
-					onReset();
+				if (CommandCallBack.onReset !== undefined) {
+					CommandCallBack.onReset();
 				}
 				
 			} else {
@@ -1422,7 +1745,11 @@ function roomReset(onReset) {
 	});
 }
 
-function clearRoom() {
+/**
+ * 사용자 화면을 리셋한다.
+ * @returns
+ */
+function roomResetLocal() {
 	for( var i = curRoomItems.length - 1; i >= 0; i--) {
 		scene.remove(curRoomItems[i]);
 	}
@@ -1430,13 +1757,15 @@ function clearRoom() {
 	curRoomItems = [];
 	curSelected = null;
 	curSelectedOriginal = null;
+	commandIndex = 0;
+	commands = [];
 }
 
 /**
  * 현재 화면을 촬영해서 서버에 저장한다.
  * @returns
  */
-function takeSnapShot(onComplete) {
+function takeSnapShot() {
 	
 	var strMime = "image/jpeg";
 	var imgData = renderer.domElement.toDataURL(strMime);
@@ -1461,8 +1790,8 @@ function takeSnapShot(onComplete) {
 				
 				refreshSnapshot(data);
 				
-				if (onComplete !== undefined) {
-					onComplete(data);
+				if (CommandCallBack.onSnapShot !== undefined) {
+					CommandCallBack.onSnapShot(data);
 				}
 				
 			} else {
@@ -1485,11 +1814,21 @@ function takeSnapShot(onComplete) {
 	});
 }
 
+/**
+ * 스냅샷을 갱신한다.
+ * @param url
+ * @returns
+ */
 function refreshSnapshot(url) {
 	var snapshotURL = url;
 	$("#snapshot").html("<img class='snapshot' src='/fudousan"+snapshotURL+"'>");
 }
 
+/**
+ * 화면 데이터를 Blob으로 변환
+ * @param dataURI
+ * @returns
+ */
 function dataURItoBlob(dataURI)
 {
     var byteString = atob(dataURI.split(',')[1]);
@@ -1508,10 +1847,292 @@ function dataURItoBlob(dataURI)
     return bb;
 }
 
+/**
+ * 아이템 리스트에서 아이템 클릭 했을 때,
+ * @param item
+ * @returns
+ */
+function createItemListener(item) {
+	NewCommand.create(item);
+}
+
+/**
+ * 사용자 명령어 정의
+ * 각각에 따라 명령을 수행한다.
+ * Local 로 끝나는 것은 해당 결과만 화면에 반영한다.(DB X), 주로 상대가 내린 명령에 대한 짝이다.
+ */
+var NewCommand = {
+		// 생성 커맨드
+		create : function(roomItem) {
+			var command = new Command();
+			command.name = "create";
+			command.onDo = function() {
+				createItem(command.onDoRoomItem, function(roomItem) {
+					renewCommandRoomItemId(command.onDoRoomItem.roomItemId, roomItem.roomItemId);
+					command.onRedoRoomItem = roomItem;
+					command.onDoRoomItem = roomItem;
+					
+				});
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				deleteItem(command.onRedoRoomItem);
+			};
+			command.onRedoRoomItem = undefined;
+			addCommand(command);
+
+			createItem(roomItem, function(roomItem) {
+				command.onRedoRoomItem = roomItem;
+				command.onDoRoomItem = roomItem;
+			});
+		},
+		// 삭제 커맨드
+		delete : function(roomItem) {
+			var command = new Command();
+			command.name = "delete";
+			command.onDo = function() {
+				deleteItem(command.onDoRoomItem);
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				createItem(command.onRedoRoomItem, function(roomItem) {
+					renewCommandRoomItemId(command.onRedoRoomItem.roomItemId, roomItem.roomItemId);
+					command.onDoRoomItem = roomItem;
+					command.onRedoRoomItem = roomItem;
+				});
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			deleteItem(roomItem);
+		},
+		// 단순 배치 커맨드
+		place : function(roomItem) {
+			var command = new Command();
+			command.name = "place";
+			command.onDo = function() {
+				create(command.onDoRoomItem, function(roomItem) {
+					renewCommandRoomItemId(command.onDoRoomItem.roomItemId, roomItem.roomItemId);
+					command.onDoRoomItem = roomItem;
+					command.onRedoRoomItem = roomItem;
+				});
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				deleteItem(command.onRedoRoomItem);
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			placeRoomItem(roomItem);
+			
+		},
+		// 단순 배치 해제 커맨드
+		deplace : function(roomItem) {
+			var command = new Command();
+			command.name = "deplace";
+			command.onDo = function() {
+				deleteItem(command.onDoRoomItem);
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				create(command.onRedoRoomItem, function(roomItem) {
+					renewCommandRoomItemId(command.onRedoRoomItem.roomItemId, roomItem.roomItemId);
+					command.onDoRoomItem = roomItem.clone();
+					command.onRedoRoomItem = roomItem.clone();
+				});
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			deplaceRoomItem(roomItem);
+		},
+		// 이동 커맨드
+		move : function(roomItem) {
+			var command = new Command();
+			command.name = "move";
+			command.onDo = function() {
+				command.onRedoRoomItem = moveRoomItem(command.onDoRoomItem.clone(), true);
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				command.onDoRoomItem = moveRoomItem(command.onRedoRoomItem.clone(), true);
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			command.onRedoRoomItem = moveRoomItem(roomItem, true);
+		},
+		// 단순 이동 커맨드
+		moveLocal : function(roomItem) {
+			var command = new Command();
+			command.name = "moveLocal";
+			command.onDo = function() {
+				command.onRedoRoomItem = moveRoomItem(command.onDoRoomItem.clone(), true);
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				command.onDoRoomItem = moveRoomItem(command.onRedoRoomItem.clone(), true);
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			command.onRedoRoomItem = moveRoomItem(roomItem, false);
+		},
+		// 아이템 속성 변경 커맨드
+		itemChange : function(roomItem) {
+			var command = new Command();
+			command.name = "itemChange";
+			command.onDo = function() {
+				applyItemChange(command.onDoRoomItem.clone());
+				command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				applyItemChange(command.onRedoRoomItem.clone());
+				command.onDoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+			
+			applyItemChange(roomItem);
+			command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+		},
+		// 단순 아이템 속성 변경 커맨드
+		itemChangeLocal : function(roomItem) {
+			var command = new Command();
+			command.name = "itemChangeLocal";
+			command.onDo = function() {
+				command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+			};
+			command.onDoRoomItem = roomItem;
+			command.onRedo = function() {
+				command.onDoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+			};
+			command.onRedoRoomItem = roomItem;
+			addCommand(command);
+
+			command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+		},
+		// 선택 커맨드
+		select : function(roomItem) {
+			for(var i = 0; i < curRoomItems.length; i++) {
+				if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+					select(roomItem, true);
+					
+					if(CommandCallBack.onSelect !== undefined) {
+						CommandCallBack.onSelect(curSelectedOriginal);
+					}
+				}
+			}
+		},
+		// 상대의 선택 커맨드
+		selectLocal : function(roomItem) {
+			for(var i = 0; i < curRoomItems.length; i++) {
+				if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
+					selectByOther(roomItem);
+				}
+			}
+		},
+		// 선택 해제 커맨드
+		deselect : function(roomItem) {
+			deSelect(true);
+		},
+		// 상대의 선택 해제 커맨드
+		deselectLocal : function(roomItem) {
+			deSelectByOther();
+		}
+}
+
+/**
+ * 커맨드 배열에서 기존의 RoomItemId를 새로운 RoomItemId로 변경한다.
+ * @param beforeId
+ * @param afterId
+ * @returns
+ */
+function renewCommandRoomItemId(beforeId, afterId) {
+	for(var i = 0; i < commands.length; i++) {
+		if(commands[i].onDoRoomItem.roomItemId == beforeId) {
+			commands[i].onDoRoomItem.roomItemId = afterId;
+		}
+		if(commands[i].onRedoRoomItem.roomItemId == beforeId) {
+			commands[i].onRedoRoomItem.roomItemId = afterId;
+		}
+	}
+}
+
+
+function addCommand(command) {
+	commands[commandIndex] = command;
+	commandIndex += 1;
+	commands.splice(commandIndex);
+	console.log("--addCommand 현재 명령 상황--" + commandIndex);
+	console.dir(commands);
+}
+
+/**
+ * 앞으로가기
+ * @returns
+ */
+function forward() {
+	// 1. 현재가 마지막 위치면 무시
+	if (commandIndex == commands.length) return;
+	// 2. 현재 위치의 명령의 do를 실행
+	commands[commandIndex].onDo();
+	// 3. 현재 위치 1 증가
+	commandIndex += 1;
+	console.log("--forward 현재 명령 상황--" + commandIndex);
+	console.dir(commands);
+}
+
+/**
+ * 뒤로가기
+ * @returns
+ */
+function back() {
+	// 1. 현재 위치가 0이면 무시
+	if (commandIndex == 0) return;
+	// 2. 현재 위치 -1의 명령어의 onRedo 실행
+	commands[commandIndex-1].onRedo();
+	// 3. 현재 위치 1 감소
+	commandIndex -= 1;
+	console.log("--back 현재 명령 상황--" + commandIndex);
+	console.dir(commands);
+}
+
+function applyTexture(textureId) {
+	if(curSelectedRoomObject === undefined) {
+		return;
+	}
+	console.log("applyTexture"+textureId);
+	console.log(curSelectedRoomObject);
+	switch(curSelectedRoomObject) {
+	case "roomFloor":
+		if( CommandCallBack.onFloorTexture !== undefined ) {
+			CommandCallBack.onFloorTexture(textureId);
+		}
+		changeFloorTexture(textureId);
+		break;
+	case "roomCeil":
+		if( CommandCallBack.onCeilTexture !== undefined ) {
+			CommandCallBack.onCeilTexture(textureId);
+		}
+		changeCeilTexture(textureId);
+		break;
+	default:
+		if( CommandCallBack.onWallTexture !== undefined ) {
+			CommandCallBack.onWallTexture(curSelectedRoomObject, textureId);
+		}
+		changeWallTexture(curSelectedRoomObject, textureId);
+		break;
+	}
+	curSelectedRoomObject = undefined;
+}
+
 //-------------
 // socket 통신
 //-------------
-let sendCreateItem = function(obj){
+function sendCreateItem(obj){
 	// 현재 방 번호와 만들 아이템 번호를 전송합니다.
 	socket.emit("create-item", {
 		roomId: room.roomId,
@@ -1519,7 +2140,7 @@ let sendCreateItem = function(obj){
 	});
 }
 
-let sendStartDrag = function(obj){
+function sendStartDrag(obj){
 	// 현재 방 번호와 이동할 아이템 이름을 전송합니다.
 	socket.emit("start-drag", {
 		roomId: room.roomId,
@@ -1527,7 +2148,7 @@ let sendStartDrag = function(obj){
 	});
 }
 
-let sendMoveItem = function(obj){
+function sendMoveItem(obj){
 	// 현재 방 번호와 아이템의 위치 정보를 전송합니다.
 	socket.emit("move-item", {
 		roomId: room.roomId,
@@ -1541,7 +2162,7 @@ let sendMoveItem = function(obj){
 	});
 }
 
-let sendDeleteItem = function(obj){
+function sendDeleteItem(obj){
 	// 현재 방 번호와 삭제할 아이템 이름을 전송합니다.
 	socket.emit("delete-item", {
 		roomId: room.roomId,

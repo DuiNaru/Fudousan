@@ -2,106 +2,109 @@
  * 
  */
 $(function() {
-	var value = parseInt( $( "#ax" ).text(), 10 );
-	$( "#ax" ).empty().slider({
-		value: value,
-		min: 0,
-		max: 360,
-		step: 1,
-		orientation: "horizontal",
-		range: "min",
-		animate: true,
-		slide: function( event, ui ) {
-			curObject.rotation.x = ui.value*Math.PI/180;
-			$("input[name='itemRotateX']").val(ui.value);
-		}
-	});
-	var value = parseInt( $( "#ay" ).text(), 10 );
-	$( "#ay" ).empty().slider({
-		value: value,
-		min: 0,
-		max: 360,
-		step: 1,
-		orientation: "horizontal",
-		range: "min",
-		animate: true,
-		slide: function( event, ui ) {
-			curObject.rotation.y = ui.value*Math.PI/180;
-			$("input[name='itemRotateY']").val(ui.value);
-		}
-	});
-	var value = parseInt( $( "#az" ).text(), 10 );
-	$( "#az" ).empty().slider({
-		value: value,
-		min: 0,
-		max: 360,
-		step: 1,
-		orientation: "horizontal",
-		range: "min",
-		animate: true,
-		slide: function( event, ui ) {
-			curObject.rotation.z = ui.value*Math.PI/180;
-			$("input[name='itemRotateZ']").val(ui.value);
-		}
-	});
-	var value = parseInt( $( "#px" ).text(), 10 );
-	$( "#px" ).empty().slider({
-		value: value,
-		min: -100,
-		max: 100,
-		step: 0.1,
-		orientation: "horizontal",
-		range: "min",
-		animate: true,
-		slide: function( event, ui ) {
-			curObject.position.x = ui.value;
-			$("input[name='itemX']").val(ui.value);
-		}
-	});
-	var value = parseInt( $( "#py" ).text(), 10 );
-	$( "#py" ).empty().slider({
-		value: value,
-		min: -100,
-		max: 100,
-		step: 0.1,
-		orientation: "horizontal",
-		range: "min",
-		animate: true,
-		slide: function( event, ui ) {
-			curObject.position.y = ui.value;
-			$("input[name='itemY']").val(ui.value);
-		}
-	});
-	var value = parseInt( $( "#pz" ).text(), 10 );
-	$( "#pz" ).empty().slider({
-		value: value,
-		min: -100,
-		max: 100,
-		step: 0.1,
-		orientation: "horizontal",
-		range: "min",
-		animate: true,
-		slide: function( event, ui ) {
-			curObject.position.z = ui.value;
-			$("input[name='itemZ']").val(ui.value);
-		}
-	});
-	var value = parseInt( $( "#scale" ).text(), 10 );
-	$( "#scale" ).empty().slider({
-		value: value,
-		min: 0,
-		max: 10,
-		step: 0.1,
-		orientation: "horizontal",
-		range: "min",
-		animate: true,
-		slide: function( event, ui ) {
-			curObject.scale.x = ui.value;
-			curObject.scale.y = ui.value;
-			curObject.scale.z = ui.value;
-			$("input[name='itemScale']").val(ui.value);
-		}
-	});
+	if ( $( "#ax" ).length ) {
+
+		var value = parseInt( $( "#ax" ).text(), 10 );
+		$( "#ax" ).empty().slider({
+			value: value,
+			min: 0,
+			max: 360,
+			step: 1,
+			orientation: "horizontal",
+			range: "min",
+			animate: true,
+			slide: function( event, ui ) {
+				curObject.rotation.x = ui.value*Math.PI/180;
+				$("input[name='itemRotateX']").val(ui.value);
+			}
+		});
+		var value = parseInt( $( "#ay" ).text(), 10 );
+		$( "#ay" ).empty().slider({
+			value: value,
+			min: 0,
+			max: 360,
+			step: 1,
+			orientation: "horizontal",
+			range: "min",
+			animate: true,
+			slide: function( event, ui ) {
+				curObject.rotation.y = ui.value*Math.PI/180;
+				$("input[name='itemRotateY']").val(ui.value);
+			}
+		});
+		var value = parseInt( $( "#az" ).text(), 10 );
+		$( "#az" ).empty().slider({
+			value: value,
+			min: 0,
+			max: 360,
+			step: 1,
+			orientation: "horizontal",
+			range: "min",
+			animate: true,
+			slide: function( event, ui ) {
+				curObject.rotation.z = ui.value*Math.PI/180;
+				$("input[name='itemRotateZ']").val(ui.value);
+			}
+		});
+		var value = parseInt( $( "#px" ).text(), 10 );
+		$( "#px" ).empty().slider({
+			value: value,
+			min: -1000,
+			max: 1000,
+			step: 0.1,
+			orientation: "horizontal",
+			range: "min",
+			animate: true,
+			slide: function( event, ui ) {
+				curObject.position.x = ui.value;
+				$("input[name='itemX']").val(ui.value);
+			}
+		});
+		var value = parseInt( $( "#py" ).text(), 10 );
+		$( "#py" ).empty().slider({
+			value: value,
+			min: -1000,
+			max: 1000,
+			step: 0.1,
+			orientation: "horizontal",
+			range: "min",
+			animate: true,
+			slide: function( event, ui ) {
+				curObject.position.y = ui.value;
+				$("input[name='itemY']").val(ui.value);
+			}
+		});
+		var value = parseInt( $( "#pz" ).text(), 10 );
+		$( "#pz" ).empty().slider({
+			value: value,
+			min: -1000,
+			max: 1000,
+			step: 0.1,
+			orientation: "horizontal",
+			range: "min",
+			animate: true,
+			slide: function( event, ui ) {
+				curObject.position.z = ui.value;
+				$("input[name='itemZ']").val(ui.value);
+			}
+		});
+		var value = parseInt( $( "#scale" ).text(), 10 );
+		$( "#scale" ).empty().slider({
+			value: value,
+			min: 0,
+			max: 100,
+			step: 0.1,
+			orientation: "horizontal",
+			range: "min",
+			animate: true,
+			slide: function( event, ui ) {
+				curObject.scale.x = ui.value;
+				curObject.scale.y = ui.value;
+				curObject.scale.z = ui.value;
+				$("input[name='itemScale']").val(ui.value);
+			}
+		});
+	}
 });
 
 // 카메라, 씬, 렌더러, 카메라 컨트롤

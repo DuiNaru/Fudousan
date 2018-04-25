@@ -15,6 +15,10 @@ public interface ItemMapper {
 	public boolean deleteAllRefSite(int itemId);
 	public boolean delete(int itemId);
 	public List<Item> selectByName(String itemName);
+
 	public ArrayList<Item> itemlist(int itemTypeId);
 	public ArrayList<Item> selectitem(ItemType itemTypeId);
+
+	public List<ItemType> selectAllItemType();
+
 }

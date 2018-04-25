@@ -44,8 +44,6 @@ public class EstateController {
 	@Autowired
 	private AgencyService agencyService;
 	
-	@Autowired
-	private TextureService textureService;
 	
 	
 	
@@ -252,34 +250,7 @@ public class EstateController {
 	    return "/brokers/bm";
 	 }
 	 
-	 	//업로드 페이지로 넘어왓을때 
-		@RequestMapping(value="textureuproadpage", method=RequestMethod.GET)
-		public String  textureuproadpage(Model model, HttpSession session , Agency agency){
-		logger.info("텍스쳐 업로드 페이지로 이동");
-		
-		return "/textureuproadpage";
-		}
-	 
-
-		
-		// 업로드 버튼 눌렀을때 
-		@RequestMapping(value="textureuproad", method=RequestMethod.POST)
-		public String textureuproad(String name, String text ,HttpSession session
-				,MultipartFile file ){
-			logger.info("텍스쳐 업로드 ");
-			String uploadPath = "/texture";
-
-		int memberId = (int)session.getAttribute("loginId");
-		
-		Texture texture = new Texture();
-		
-		texture.setMemberId(memberId);
-		texture.setName(name);
-		texture.setText(text);
-		
-		textureService.textureuproad(texture, file);
-			return "redirect:/textureuproadpage";
-		}
+	 	
 
 	/*메물 상세 페이지 이동*/
 	 

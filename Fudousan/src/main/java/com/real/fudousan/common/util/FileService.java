@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -183,6 +184,10 @@ public class FileService {
 
 	public static void writeFile(String fullPath, OutputStream os) {
 		File file = new File(fullPath);
+		if (!file.exists()) {
+			logger.warn(fullPath+"가 없습니다.");
+			return;
+		}
 		FileInputStream is = null;
 		try {
 			// get your file as InputStream

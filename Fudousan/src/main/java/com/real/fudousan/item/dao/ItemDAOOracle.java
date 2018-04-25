@@ -131,6 +131,7 @@ public class ItemDAOOracle implements ItemDAO {
 		logger.info("selectByName("+itemName+") End");
 		return result;
 	}
+
 	
 	public ArrayList<Item> itemlist(int itemTypeId){
 		ArrayList<Item> result = null;
@@ -142,4 +143,22 @@ public class ItemDAOOracle implements ItemDAO {
 		}
 		return  result;
 	}
+
+
+	@Override
+	public List<ItemType> selectAllItemType() {
+		logger.info("sselectAllItemType() Start");
+		List<ItemType> result = null;
+		try {
+			ItemMapper mapper = session.getMapper(ItemMapper.class);
+			result = mapper.selectAllItemType();
+		} catch(Exception e) {
+			e.printStackTrace();
+			result = null;
+		}
+		logger.info("selectAllItemType() End");
+		return result;
+	}
+
+
 }

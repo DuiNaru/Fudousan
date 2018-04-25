@@ -1,18 +1,9 @@
-var socket = io('http://localhost:8000');
-var justOne = 0;
-var whoAmI = 'x';
-function Command(){
-	this.name = "";
-	this.roomItem = null;
-	this.onDo = null;
-	this.onRedo = null;
-}
+var socket = io('localhost:8000');
 
+/*var socket = io('http://sunnyserver.dlinkddns.com');
+*/
 
-
-
-
- $(function(){
+$(function(){
 	 var userId = document.getElementById('userId').value;
 	 var userName = document.getElementById('userName').value;
 	 var user = {
@@ -22,216 +13,354 @@ function Command(){
 	 }
 	 
 	 socket.emit('room_join', user);
- });
-
-socket.on('commandPass',function(data){
-	if(data != 'success'){
-	var catch_command = JSON.parse(data);
-	var cName = catch_command.name;
-	var cTarget = objToRoomItem(catch_command.roomItem);
-	console.log(cTarget);
-	var direc = catch_command.direction;
-	var youtoWhat = catch_command.youtoWhat;
-	}
-	if(data == 'success'){  //상대방 추가 성공했으면
-		console.log('상대방도 성공적으로 추가되었습니다.');
-	}
-	if(cName =='add' && youtoWhat=='fail'){  //추가된거 상대방 실패하면 본인도 삭제한다.
-		deplaceRoomItem(cTarget);
-	}
-	
-	if(cName=='add' && direc=='back'){
-		//추가된 아이템을 back해서 삭제됨
-		deleteItem(cTarget,function(){
-			/*deplaceRoomItem(cTarget); // 파라메터 받은 대상의 것을 삭제시킨다.
-*/		});
-	}
-	if(cName=='add' && direc=='forward'){
-		//삭제되었던 아이템을 forward해서 추가됨
-			createItem(cTarget.item,function(roomitem){ // 2배열에서 보관해던거 꺼내서 생성함 (데이터베이스상)
-				cTarget.roomItemId = roomitem.roomItemId;
-				cTarget.addForward = true;
-				cTarget.isForawrd = 'notFirst';
-				
-				
-				AddItemForward(cTarget); // 1배열에 주는것
-				
-				whoAmI = 'x';
-				
-				socket.emit('othersideAdd',JSON.stringify(cTarget));
-			});
-	}
-	if(cName=='delete' && direc=='back'){
-		//뒤로가기로 삭제되었던걸 다시 만들어야한다. 
-		createItem(cTarget,function(){
-
-		});
-	}
-	if(cName=='delete' && direc=='forward'){
-		//앞으로가기하면 다시 삭제되고 사라져야한다. 
-			deleteItem(cTarget.item,function(roomitem){
-				
-				DeleteItemForward(cTarget); //1배열에 주는것 - 삭제버전
-				socket.emit('othersideDel',JSON.stringify(cTarget));
-			});
-	}
-}); //commandPass의 끝
- 
-socket.on('othersideDel2',function(data){
-	var otherDel = objToRoomItem(JSON.parse(data));
-	console.log('넘겨준 최후의 것');
-	console.log(otherDel);
-	console.log('넘겨준 최후의 것');
-	
-	console.log('화면 생성술');
-	placeRoomItem(otherDel);
-	console.log('화면 생성술');
 });
 
-socket.on('othersideAdd2',function(data){
-	var otherAdd = objToRoomItem(JSON.parse(data));
-	console.log('넘겨준 최후의 것');
-	console.log(otherAdd);
-	console.log('넘겨준 최후의 것');
 
-	console.log('화면 생성술');
-	placeRoomItem(otherAdd);
-	console.log('화면 생성술');
-});
+//CommandCallBack 정의
 
-//AddItem에서는 객체정보가 파라메터로 넘어가서 커맨더 만들어서 이름으로 커맨더 타입 지정하고 객체정보도 같이 보내서 서버가 밭게함
-function AddItem(roomitem){
-	var a = new Command();
-	a.name = "add";
-	a.roomItem = roomitem;
-	a.isForward = 'first';
-	console.dir(a);
-	 socket.emit('addItem',JSON.stringify(a));
+// 모든 onCreate하면 실행된다.
+CommandCallBack.onCreate = function(roomItem){
+	console.log('onCreate');
+	// 상대에게 create됐음을 알린다.
+	nodeCommand.transmitCreate(roomItem);
 }
 
-function AddItemForward(roomitem){
-	var a = new Command();
-	a.name ="add";
-	a.roomItem = roomitem;
-	socket.emit('Array1Push',JSON.stringify(a));
+// 모든 onDelete하면 실행된다.
+CommandCallBack.onDelete = function(roomItem) {
+	console.log('onDelete');
+	// 상대에게 delete됬음을 알린다.
+	nodeCommand.transmitDelete(roomItem);
 }
 
-function DeleteItemForward(roomitem){
-	var a = new Command();
-	a.name = "delete";
-	a.roomItem = roomitem;
-	socket.emit('Array1Push',JSON.stringify(a));
+// 모든 onMove하면 실행된다.
+CommandCallBack.onMove = function(roomItem){
+	console.log('onMove');
+	//상대에게 Move 됬음을 알린다.
+	nodeCommand.transmitMove(roomItem);
 }
 
-function delItem(roomitem){
-	var a = new Command();
-	a.name = "delete";
-	a.roomItem = roomitem;
-	socket.emit('delItem',JSON.stringify(a));
+// 모든 onItemChange하면 실행된다.
+CommandCallBack.onItemChange = function(roomItem){
+	console.log('onItemChange');
+	nodeCommand.transmitItemChange(roomItem);
 }
 
-socket.on('youto',function(data){
-	console.log(data);
-	var catch_command = JSON.parse(data);
-	var cName = catch_command.name;
-	var cTarget = objToRoomItem(catch_command.roomItem);
+// 모든 onModeLoad하면 실행된다
+CommandCallBack.onModeLoad = function(roomItem){
+	console.log('onModeLoad');
+	nodeCommand.transModeLoad(roomItem);
+}
+
+// 모든 onModeError하면 실행된다
+CommandCallBack.onModeError = function(roomItem){
+	console.log('onModeError');
+	nodeCommand.transModeError(roomItem);
+}
+
+// 모든 onSelect하면 실행된다.
+CommandCallBack.onSelect = function(roomItem){
+	console.log('onSelect');
+	nodeCommand.transmitSelect(roomItem);
+}
+
+//모든 OnDeselect하면 실행된다.
+CommandCallBack.onDeselect = function(roomItem){
+	console.log('onDeselect');
+	nodeCommand.transmitDeselect(roomItem);
+}
+
+//모든 onReset하면 실행된다.
+CommandCallBack.onReset = function(roomItem){
+	console.log('onReset');
+	nodeCommand.transmitReset(roomItem);
+}
+
+//모든 onReset하면 실행된다.
+CommandCallBack.onSnapShot = function(roomItem){
+	console.log('onSnapShot');
+	nodeCommand.transmitSnapShot(roomItem);
+}
+
+//모든 onForward하면 실행된다.
+CommandCallBack.onForward = function(roomItem){
+	console.log('onForward');
+	nodeCommand.transmitForward(roomItem);
+}
+
+//모든 onBack하면 실행된다.
+CommandCallBack.onBack = function(){
+	console.log('onBack');
+	nodeCommand.transmitBack();
+}
+
+//모든 onFloorTexture하면 실행된다.
+CommandCallBack.onFloorTexture = function(roomItem){
+	console.log('onFloorTexture');
+	nodeCommand.transmitFloorTexture(roomItem);
+}
+
+//모든 onCeilTexture하면 실행된다.
+CommandCallBack.onCeilTexture = function(roomItem){
+	console.log('onCeilTexture');
+	nodeCommand.transCeilTexture(roomItem);
+}
+
+
+//모든 onWallTexture하면 실행된다.
+CommandCallBack.onWallTexture = function(roomWall,TextureId){
+	console.log('onWallTexture');
+	var wall = {
+			roomwall : roomWall,
+			textureid : TextureId
+	};	
+	nodeCommand.transWall(wall);
+}
+
+
+
+
+
+
+
+
+
+
+
+var nodeCommand = {
+		
+	//CommandCallBack.onCreate (생성)
+	transmitCreate : function(roomItem) {
+		var roomItemObeject = JSON.stringify(roomItem);
+		socket.emit('addItem',roomItemObeject);
+	},
+	receiveCreate : function(roomItemObeject) {
+		var roomItem = objToRoomItem(JSON.parse(roomItemObeject));
+		NewCommand.place(roomItem);
+	},
 	
-	if(cName=='add'){
-		placeRoomItem(cTarget, function() {
-			console.log('상대방이 생성함');
-			socket.emit('youtoWhat','success');
-		}, function(){
-			console.log('상대방이 생성 실패');
-			socket.emit('youtoWhat','fail');
-		}); 
-	}
+	//CommandCallBack.onDelete (삭제)
+	transmitDelete : function(roomItem) {
+		var roomItemObeject = JSON.stringify(roomItem);
+		socket.emit('delItem',roomItemObeject);
+	},
+	receiveDelete : function(roomItemObeject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObeject));
+		NewCommand.deplace(roomItem);
+	},
 	
-	if(cName=='delete'){
-		deplaceRoomItem(cTarget, function() {
-			console.log('상대방이 삭제함');
-			socket.emit('youtoWhat','success');
-		}, function(){
-			console.log('상대방이 삭제 실패');
-			socket.emit('youtoWhat','fail');
-		});
-	}
+	//CommandCallback.onMove (이동)
+	transmitMove : function(roomItem){
+		var roomItemObeject = JSON.stringify(roomItem);
+		socket.emit('moveItem',roomItemObeject);
+	},
+	receiveMove : function(roomItemObeject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObeject));
+		NewCommand.moveLocal(roomItem);
+	},
 	
-});
- 
- socket.on('commandSuccess',function(data){
-	console.log('상대방도 적용 되었습니다');
- });
- 
- 
- function goback(){
-	console.log('뒤로가기'); 
-	socket.emit('array_back', {
-		roomId: room.roomId
-	});
- };
- 
- function gofront(){
-	 console.log('앞으로가기');
-	 socket.emit('arrayBackCancel',{
-			roomId: room.roomId
-		});
- }
- 
- 
- function save(){
-	 console.log('저장하기');
-	 console.log('저장하기 눌렀습니다.');
- }
- function reset(){
-	 console.log('초기화하기');
-	 var clearYes = confirm('진짜 초기화 하시겠습니까?');
-	  if(clearYes){
-		  socket.emit('clearArray');
-	  };
- }
- function esc(){
-	 console.log('종료하기');
- }
- function checkArray(){
-	 socket.emit('showmethe');
- }
- 
-
-
-function saveTimeChange(){
-		if(whoAmI == 'selecter'){
-			var sendSign = '클릭자';
-		}else{
-			var sendSign = '피클릭자';
-		}
-		console.log('sendSign : '+sendSign);
-		socket.emit('interaction', sendSign);
+	//CommandCallback.onItemChange (아이템변경)
+	transmitItemChange : function(roomItem){
+		var roomItemObeject = JSON.stringify(roomItem);
+		socket.emit('changeItem',roomItemObeject);
+	},
+	receiveChange :  function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		NewCommand.itemChangeLocal(roomItem);
+	},
+	
+	//CommandCallBack.onModeLoad (모델로드)
+	transModeLoad : function(roomItem){
+		var roomItemObject = JSON.stringify(roomItem);
+		socket.emit('modeLoad',roomItemObject);
+	},
+	receiveModeLoad : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		alert('상대방이 로드가 끝났습니다.');
+	},
+	
+	//CommandCallBack.onModeError (모델에러)
+	transModeError : function(roomItem){
+		var roomItemObject = JSON.stringify(roomItem);
+		socket.emit('modeError',roomItemObject);
+	},
+	receiveModeError : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		alert('상대방이 로드를 실패하였습니다.');
+	},
+	
+	//CommandCallback.onSelect (아이템 선택)
+	transmitSelect : function(rooomItem){
+		var roomObject = JSON.stringify(roomItem);
+		socket.emit('selectItem',roomObject);
+	},
+	receiveSelectItem : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(rooomItemObject));
+		NewCommand.selectLocal(roomItem);
+	},
+	 
+	//CommandCallBack.onDeselect (아이템 선택 해제)
+	transmitSelect : function(roomItem){
+		var roomObject = JSON.stringify(roomItem);
+		socket.emit('deselectItem',roomObject);
+	},
+	receiveDeselectItem : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		NewCommand.deselectLocal(roomItem);
+	},
+	
+	//CommandCallBack.onReset (룸 리셋)
+	transmitReset : function(){
+		socket.emit('roomReset');
+	},
+	receiveReset : function(){
+		//화면이 꺠끗해집니다.
+		roomResetLocal(); 
+	},
+	
+	//CommandCallBack.onSnapShot (스냅샷)
+	transmitSnapShot : function(url){
+		socket.emit('SnapShot',url);
+	},
+	receiveSnapShot : function(url){
+		refreshSnapshot(url);
+	},
+	
+	//CommandCallBack.onForward (앞으로)
+	transmitForward : function(roomItem){
+		var roomObject = JSON.stringify(roomItem);
+		socket.emit('forward',roomObject);
+	},
+	receiveForward : function(receiveForward){
+		forward();
+	},
+	
+	//CommandCallBack.onBack (뒤로)
+	transmitBack : function(){
+		socket.emit('back');
+	},
+	receiveBack : function(){
+		back();
+	},
+	
+	//CommandCallBack.onFloorTexture (바닥 텍스쳐)
+	transmitFloorTexture : function(roomItem){
+		var roomItemObject = JSON.stringify(roomItem);
+		socket.emit('texture',roomItemObject);
+	},
+	receiveFloor : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		changeFloorTexture(roomItem);
+	},
+	
+	
+	//CommandCallBack.onCeilTexture (천장 텍스쳐)
+	transCeilTexture : function(roomItem){
+		var roomItemObject = JSON.stringify(roomItem);
+		socket.emit('ceil',roomItemObject);
+	},
+	receiveCeil : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		changeCeilTexture(roomItem);
+	},
+	
+	
+	//CommandCallBack.onWallTexture (벽 텍스쳐)
+	transWall : function(wall){
+		var roomItemObject = JSON.stringify(wall);
+		socket.emit('wall',roomItemObject);
+		console.log('왈 왈 왈 ');
+	},
+	receiveWall : function(wallObject){
+		var wall = JSON.parse(wallObject);
+		var a = wall.roomwall;
+		var b = wall.textureid;
+		changeWallTexture(a,b);
 	}
 
+	
+}
 
-socket.on('whoAreYou',function(data){ //클릭한사람은 data로 'selecter'를 받음
-	whoAmI = data;
+
+
+
+
+
+
+
+//A가 변경을하면 서버가 받아서 그걸 B에게 전달해주는 것
+socket.on('othersideAdd',function(roomItemObeject){
+	nodeCommand.receiveCreate(roomItemObeject);
+});
+
+socket.on('othersideDelete',function(roomItemObeject){
+	nodeCommand.receiveDelete(roomItemObeject);
+});
+
+socket.on('othersideMove',function(roomItemObject){
+	nodeCommand.receiveMove(roomItemObject);
+})
+
+socket.on('othersideChange',function(roomItemObject){
+	nodeCommand.receiveChange(roomItemObject);
+});
+
+socket.on('othersideModeLoad',function(roomItemObject){
+	nodeCommand.receiveModeLoad(roomItemObject);
+});
+
+socket.on('othersideModeError',function(roomItemObject){
+	nodeCommand.receiveModeError(roomItemObject);
+});
+
+socket.on('othersideSelectItem',function(roomItemObject){
+	nodeCommand.receiveSelectItem(roomItemObject);
+});
+
+socket.on('othersideDeselectItem',function(roomItemObject){
+	nodeCommand.receiveDeselectItem(roomItemObject);
+});
+
+socket.on('othersideReset',function(){
+	nodeCommand.receiveReset();
+});
+
+socket.on('otherSnapShot',function(url){
+	nodeCommand.receiveSnapShot(url);
+});
+
+socket.on('otherForward',function(roomItemObject){
+	nodeCommand.receiveForward(roomItemObject);
+});
+
+socket.on('back',function(){
+	nodeCommand.receiveBack();
+});
+
+socket.on('othersideExit',function(){
+	alert('상대방이 접속을 종료하였습니다.');
+});
+
+socket.on('othersideTexture',function(roomItemObject){
+	nodeCommand.receiveFloor(roomItemObject);
+});
+
+socket.on('othersideCeil',function(roomItemObject){
+	nodeCommand.receiveCeil(roomItemObject);
+});
+
+socket.on('othersideWall',function(wallObject){
+	nodeCommand.receiveWall(wallObject);
 });
 
 
-socket.on('successChangeMessage', function(data){
-	console.log(whoAmI);
-	if(whoAmI == 'selecter'){
-		alert('상대방도 선택사항이 적용되었습니다.')
-		whoAmI = "";
-	}else{
-		alert('상대방이 무언가를 바꾸었습니다.');
-		whoAmI = "";
-	}
-});
-
-//크롬에서 개발자 도구로 콘솔에서 보기
-socket.on('lookSamePage',function(data){
-	var product = JSON.parse(data);
-	var abc = objToRoomItem(product.roomItem);
-	/*console.log(abc);*/
-});
 
 
+//종료하기 function esc 
+
+function esc(){
+	//session의 아이디의 분류를 받아서 일반사용자/중개업자/인테리어 분류해서
+	socket.emit('exit');
+	location.href = '/fudousan/';
+}
 
 

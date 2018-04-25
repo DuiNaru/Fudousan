@@ -12,6 +12,7 @@
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="../resources/css/3dmodel.css" rel="stylesheet">
     <link href="../resources/css/detailedinfomationpage.css" rel="stylesheet">
+    <link href="../resources/css/templete.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 
@@ -29,8 +30,11 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 
-	<!-- header -->
+	<!-- main -->
 	<%@include file="/WEB-INF/views/include/estatedetailmain.jsp" %>
+
+	<!-- footer  -->
+	<%@include file="/WEB-INF/views/include/footer.jsp" %>
 
 	<!-- hidden value -->
 	<input type="hidden" value="${resultEstate.estateX}" id="lat">
@@ -48,7 +52,7 @@
 	</script>
 	<script src="../resources/js/infiniteScrollPagingAjax.js"></script>    
     <script src="../resources/js/estateFavorite.js"></script>    
-    
+    <script src="../resources/js/emailmodal.js"></script>
     <!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>
 	<script src="../resources/js/translation.js"></script>

@@ -123,19 +123,19 @@
 	<select id="searchRoomInfo" resultMap="roomResultMap">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
-			estate.ESTATE_NAME = #{0} and room.MEMBER_ID = #{1}
+			estate.ESTATE_NAME Like '%'||#{0}||'%' and room.MEMBER_ID = #{1} and room.DEL_DATE IS NULL
 	</select>
 
 	<select id="allMyRoom" resultMap="roomResultMap" parameterType="int">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
-			room.MEMBER_ID = #{MEMBER_ID}
+			room.MEMBER_ID = #{MEMBER_ID} and room.DEL_DATE IS NULL
 	</select>
 	
 	<select id="selectEstateRoom" resultMap="roomResultMap" parameterType="int">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
-			estate.estate_id = #{estateId}
+			estate.estate_id = #{estateId} and room.DEL_DATE IS NULL
 	</select>
 	
 	<select id="getTotal" resultType="int" parameterType="int">
@@ -144,20 +144,20 @@
 		from 
 			room
 		where
-			room.estate_id = #{estateId}
+			room.estate_id = #{estateId} and room.DEL_DATE IS NULL
 	</select>
 	
 	
 	<select id="selectByIds" resultMap="roomResultMap" parameterType="java.util.Set">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
-			room.room_id IN <foreach collection="_parameter" item="roomId" open="(" separator=", " close=")">#{roomId}</foreach>
+			 room.DEL_DATE IS NULL and room.room_id IN <foreach collection="_parameter" item="roomId" open="(" separator=", " close=")">#{roomId}</foreach>
 	</select>
 	
 	<select id="selectByIdOnEsate" resultMap="roomResultMap" parameterType="map">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
-			room.MEMBER_ID = #{memberId}
+			room.MEMBER_ID = #{memberId} and room.DEL_DATE IS NULL
 		AND
 			<choose>
 				<when test="isRealRoom == true">
@@ -171,7 +171,7 @@
 	
 	<select id="selectById" resultMap="roomResultMap">
 		<include refid="SELECT_ROOM_SQL"></include>
-		WHERE room_id = #{0}
+		WHERE room_id = #{0} and room.DEL_DATE IS NULL
 	</select>
 	
 	<update id="updateRoomPublic">
@@ -186,12 +186,12 @@
 	</update>
 	
 	<delete id="deleteRoom">
-		DELETE FROM
+		DELETE
 			room
+		SET
+			snapshot = #{snapshot}
 		WHERE
-			MEMBER_ID = #{0}
-		AND
-			ROOM_ID = #{1}
+			room_id = #{roomId}
 	</delete>
 	
 	<insert id="insert" parameterType="room">
@@ -217,6 +217,14 @@
 		</selectKey>
 	</insert>
 	
+	<update id="deletionLogical" parameterType="Integer">
+	update
+		ROOM
+	SET
+		DEL_DATE = sysdate
+	WHERE
+		MEMBER_ID=#{0} and ROOM_ID=#{1}
+	</update>
 	
 
 	<update id="wallheightchange" parameterType="Integer">
@@ -229,18 +237,6 @@
 
 	
 	</update>
-	
-
-	<select id="">
-	select
-	*
-	from
-		ITEM
-	
-	
-	
-	
-	</select>
 
 	<update id="updateRoomSanpShot" parameterType="room">
 		UPDATE
@@ -251,7 +247,22 @@
 			room_id = #{roomId}
 	</update>
 
+	<update id="updateCeilingTexture">
+		UPDATE
+			room
+		SET
+			ceiling_texture_id = #{1}
+		WHERE
+			room_id = #{0}
+	</update>
 
-	
+	<update id="updateFloorTexture">
+		UPDATE
+			room
+		SET
+			floor_texture_id = #{1}
+		WHERE
+			room_id = #{0}
+	</update>
 	
 </mapper>

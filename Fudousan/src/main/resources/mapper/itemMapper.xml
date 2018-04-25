@@ -169,6 +169,7 @@
 		WHERE item_id = #{0}
 	</delete>
 	
+
 	
 	
 <select id="selectitem" parameterType="int" resultMap="itemResultMap">
@@ -177,5 +178,12 @@
 			ITEM_TYPE_ID=#{itemTypeId}
 	</select>
 	
-	
+
+	<select id="selectAllItemType" resultMap="itemTypeResultMap">
+		SELECT
+			*
+		FROM
+			item_type
+	</select>
+
 </mapper>

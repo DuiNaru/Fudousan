@@ -34,13 +34,21 @@ public class TextureService {
 		
 		String files = FileService.saveFile(file, modelFileBaseDirectory , true);
 
-			texture.setFile(files);
+			texture.setFile(modelFileBaseDirectory+files);
 			
 		 result = dao.textureuproad(texture);
 		 
 		 
 		
 		
+		return result;
+	}
+	
+	public List<Texture> getTextureList() {
+		logger.info("getTextureList() Start");
+		List<Texture> result = null;
+		result = dao.selectAllTexture();
+		logger.info("getTextureList() End");
 		return result;
 	}
 }

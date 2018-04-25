@@ -50,6 +50,10 @@ public interface RoomMapper {
 	 */
 	public boolean deleteRoom(int memberId, int roomId);
 	
+	
+	public boolean deletionLogical(int memberId,int roomId);
+	
+	
 	/**
 	 * MEMBER_ID(memberId), ROOM_PUBLIC(roomPublic)로 새로운 컬럼을 추가한다.
 	 * 
@@ -62,5 +66,9 @@ public interface RoomMapper {
 	public int wallheightchange(Room room);
 
 	public int updateRoomSanpShot(Room room);
+
 	
+	public boolean updateCeilingTexture(int roomId, int textureId);
+	
+	public boolean updateFloorTexture(int roomId, int textureId);
 }
