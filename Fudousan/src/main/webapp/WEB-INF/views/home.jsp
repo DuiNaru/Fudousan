@@ -28,7 +28,6 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 
-
 	<!-- Map -->
 	<div class="form-group">
 		<input id="pac-input" class="controls form-control" type="text" placeholder="Search Box" style="z-index: 1; margin-top: 0.8%">

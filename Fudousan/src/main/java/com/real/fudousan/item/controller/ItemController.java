@@ -2,13 +2,11 @@ package com.real.fudousan.item.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.item.service.ItemService;
 import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.item.vo.ItemType;
@@ -151,4 +148,53 @@ public class ItemController {
 		logger.info("getFile({}, {}) end", filePath, fileName+"."+fileExt);
 		
 	}
+	
+	
+
+	/*@RequestMapping(value="itemlist", method=RequestMethod.GET)
+	public String itemlist(Item item, Model model, HttpSession session){
+	logger.info("아이템 리스트 시작");
+
+	ArrayList<Item> itemlist = new ArrayList<>();
+	itemlist= (ArrayList<Item>) itemService.itemlist();
+	model.addAttribute("itemlist", itemlist);
+	
+	System.out.println(itemlist);
+	
+		return "";
+	}*/
+	
+	
+	/*@RequestMapping(value="itemlist", method=RequestMethod.GET)
+	public String itemlist(ItemType itemTypeId,Item item, Model model, HttpSession session){
+	logger.info("아이템 리스트 시작");
+	
+	ArrayList<Item> itemlist = new ArrayList<>();
+	itemlist= (ArrayList<Item>) itemService.itemlist();
+	model.addAttribute("itemlist", itemlist);
+	
+	System.out.println(itemlist);
+	
+		return "";
+	}*/
+	
+	
+	
+	//분류중
+	/*@RequestMapping(value="selectitem", method=RequestMethod.POST)
+	public String selectitem(ItemType itemTypeId,Model model){
+		
+		
+		ArrayList<Item> itemTypeId1 = new ArrayList<>();
+		itemTypeId1= (ArrayList<Item>) itemService.selectitem(itemTypeId);
+		model.addAttribute("itemTypeId", itemTypeId1);
+		logger.info("아이템 분류");
+		
+		
+		
+		return "";
+	}
+*/
+	
+	
 }
