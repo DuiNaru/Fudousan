@@ -11,7 +11,10 @@ var CommandCallBack = {
 	onReset : undefined,		// 룸 리셋
 	onSnapShot : undefined,		// 룸 스냅샷 성공, 1번째 파라미터 해당 스냅샷 url
 	onForward: undefined,		// 앞으로가기
-	onBack : undefined			// 뒤로가기
+	onBack : undefined,			// 뒤로가기
+	onFloorTexture : undefined,	// 천장 텍스쳐 변경, 1번째 파라미터로 TextureId
+	onCeilTexture : undefined,	// 바닥 텍스쳐 변경, 1번째 파라미터로 TextureId
+	onWallTexture : undefined	// 벽 텍스쳐 변경, 1번째 파라미터로 RoomWall, 2번째 파라미터로 TextureId
 }
 
 function Command() {
@@ -177,4 +180,20 @@ function objToItem(itemObj) {
 		item.refSiteSet.push(new RefSite(obj.creDate, obj.id, obj.itemId, obj.text, obj.url));
 	});
 	return item;
+}
+
+function RoomWall(backTextureId, frontTextureId, roomWallId, roomId, c1Id, c1x, c1y, c2Id, c2x, c2y, type) {
+	this.backTextureId = backTextureId;
+	this.frontTextureId = frontTextureId;
+	this.roomWallId = roomWallId;
+	this.roomId = roomId;
+	this.roomWallConnector1 = new RoomWallConnector(c1Id, c1x, c1y);
+	this.roomWallConnector2 = new RoomWallConnector(c2Id, c2x, c2y);
+	this.type = type;
+}
+
+function RoomWallConnector(id, x, y) {
+	this.connectorId = id;
+	this.x = x;
+	this.y = y;
 }

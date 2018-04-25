@@ -88,7 +88,7 @@
  	<select id="searchFavorite" resultMap="FavoriteAll" >
  		<include refid="SELECT_FAVORITE_SQL"></include>
 		where
-			favorite.MEMBER_ID = #{0} and estate.ESTATE_NAME = #{1}
+			favorite.MEMBER_ID = #{0} and estate.ESTATE_NAME Like '%'||#{1}||'%'
 	</select>
 	
 	<insert id="add" parameterType="favorite">

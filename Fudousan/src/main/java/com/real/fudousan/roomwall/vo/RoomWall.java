@@ -33,13 +33,17 @@ public class RoomWall implements Serializable {
 
 	/** 텍스쳐. */
 	private Texture backTexture;
+	
+	private int roomWallId;
 
 	public RoomWall() {
 		super();
 	}
 
+	
+
 	public RoomWall(int roomId, RoomWallConnector roomWallConnector1, RoomWallConnector roomWallConnector2, String type,
-			Texture frontTexture, Texture backTexture) {
+			Texture frontTexture, Texture backTexture, int roomWallId) {
 		super();
 		this.roomId = roomId;
 		this.roomWallConnector1 = roomWallConnector1;
@@ -47,7 +51,10 @@ public class RoomWall implements Serializable {
 		this.type = type;
 		this.frontTexture = frontTexture;
 		this.backTexture = backTexture;
+		this.roomWallId = roomWallId;
 	}
+
+
 
 	public int getRoomId() {
 		return roomId;
@@ -101,22 +108,36 @@ public class RoomWall implements Serializable {
 		return serialVersionUID;
 	}
 
+	public int getRoomWallId() {
+		return roomWallId;
+	}
+
+
+
+	public void setRoomWallId(int roomWallId) {
+		this.roomWallId = roomWallId;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "RoomWall [roomId=" + roomId + ", roomWallConnector1=" + roomWallConnector1 + ", roomWallConnector2="
 				+ roomWallConnector2 + ", type=" + type + ", frontTexture=" + frontTexture + ", backTexture="
-				+ backTexture + "]";
+				+ backTexture + ", roomWallId=" + roomWallId + "]";
 	}
+
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + roomId;
-		result = prime * result + ((roomWallConnector1 == null) ? 0 : roomWallConnector1.hashCode());
-		result = prime * result + ((roomWallConnector2 == null) ? 0 : roomWallConnector2.hashCode());
+		result = prime * result + roomWallId;
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -127,20 +148,13 @@ public class RoomWall implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		RoomWall other = (RoomWall) obj;
-		if (roomId != other.roomId)
-			return false;
-		if (roomWallConnector1 == null) {
-			if (other.roomWallConnector1 != null)
-				return false;
-		} else if (!roomWallConnector1.equals(other.roomWallConnector1))
-			return false;
-		if (roomWallConnector2 == null) {
-			if (other.roomWallConnector2 != null)
-				return false;
-		} else if (!roomWallConnector2.equals(other.roomWallConnector2))
+		if (roomWallId != other.roomWallId)
 			return false;
 		return true;
 	}
+
+
+
 	
 	
 }

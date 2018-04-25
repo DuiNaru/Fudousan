@@ -2,9 +2,8 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var cors = require('cors');
-
 var room = ""; //방번호
-var users = []; //유저들 접속목록
+var users = []; //유저로그인
 app.use(cors());
 
 app.get('/', function(req, res) {
@@ -28,10 +27,9 @@ io.on('connection', function(socket) {
 	});
 
 		socket.on('room_join',function(data){
-		roomo.roomNumber = rooma(data.roomId);
-		socket.join(roomo.roomNumber);
+			room = data.roomId;
+		socket.join(room);
 		
-		room = roomo.roomNumber;
 		
 		var user = {};
 		user.userName = data.userName;
@@ -97,6 +95,24 @@ io.on('connection', function(socket) {
 		console.log('누군가 리셋해서 너도 리셋하라고 요청합니다.') 
 		socket.broadcast.to(room).emit('othersideReset');
 	});
+	
+	
+	socket.on('SnapShot',function(data){
+		console.log('누군가 스냅샷을 찍었습니다.');
+		socket.broadcast.to(room).emit('otherSnapShot',data);
+	});
+	
+	socket.on('forward',function(data){
+		console.log('누군가 앞으로가기를 눌렀습니다,');
+		socket.broadcast.to(room).emit('otherForward',data);
+	});
+	
+	socket.on('back',function(){
+		console.log('누군가 뒤로가기를 눌렀습니다.');
+		socket.broadcast.to(room).emit('back');
+	})
+	
+	
 });
 	
 

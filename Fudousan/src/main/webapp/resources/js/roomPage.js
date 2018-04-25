@@ -42,6 +42,14 @@ var infoDataChange = false;
 var commands = [];
 // 현재 커맨드 위치(해당 위치 직전까지가 지금까지 실행한 명령들)
 var commandIndex = 0;
+// 천장 텍스쳐
+var ceilTexture;
+// 바닥 텍스쳐
+var floorTexture;
+// 현재 선택한 방 물체
+var curSelectedRoomObject;
+// 텍스쳐 로더
+var textureLoader = new THREE.TextureLoader();
 
 $(function() {
 	$("#itemInfo").hide();
@@ -187,12 +195,32 @@ function init() {
 	roomFloor.rotateX(-90 * Math.PI / 180);
 	scene.add(roomFloor);
 	
+	floorTexture = textureLoader.load(room.floorTexture, function ( texture ) {
+
+	    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+	    texture.offset.set( 0, 0 );
+	    texture.repeat.set( 2, 2 );
+
+	} );
+	roomFloor.material.map = floorTexture;
+	roomFloor.material.needsUpdate = true;
+	
 	// 천장
 	roomCeil = drawFloor(false);
 	roomCeil.rotateX(-90 * Math.PI / 180);
 	roomCeil.position.y += room.height;
 	scene.add(roomCeil);
+	
+	ceilTexture = textureLoader.load(room.ceilingTexture, function ( texture ) {
 
+	    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+	    texture.offset.set( 0, 0 );
+	    texture.repeat.set( 2, 2 );
+
+	} );
+	roomCeil.material.map = ceilTexture;
+	roomCeil.material.needsUpdate = true;
+	
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
 	renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, false);
 	document.addEventListener('mouseup', this.onDocumentMouseUp, false);
@@ -364,6 +392,17 @@ function onDocumentMouseDown(event) {
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(walls.children, true);
 	if (intersects.length > 0) {
+		curSelectedRoomObject = intersects[0].object.roomWall;
+	}
+	
+	raycaster.setFromCamera(mouse, camera);
+	var intersects = raycaster.intersectObjects([roomFloor, roomCeil], true);
+	if (intersects.length > 0) {
+		if(intersects[0].object == roomFloor) {
+			curSelectedRoomObject = "roomFloor";
+		} else if (intersects[0].object == roomCeil) {
+			curSelectedRoomObject = "roomCeil";
+		}
 	}
 }
 
@@ -462,17 +501,28 @@ function drawWall() {
 	scene.remove(walls);
 	walls = new THREE.Group(); 
 	for(var i = 0; i < originalWalls.length; i++) {
-		var c1 = new THREE.Vector3(originalWalls[i].c1.x, originalWalls[i].c1.y, roomFloor.z);
-		var c2 = new THREE.Vector3(originalWalls[i].c2.x, originalWalls[i].c2.y, roomFloor.z);
+		var c1 = new THREE.Vector3(originalWalls[i].roomWallConnector1.x, originalWalls[i].roomWallConnector1.y, roomFloor.z);
+		var c2 = new THREE.Vector3(originalWalls[i].roomWallConnector2.x, originalWalls[i].roomWallConnector2.y, roomFloor.z);
 		// Cube
 		var geometry = new THREE.BoxGeometry(c1.clone().sub(c2).length(), wallThickness, room.height );
-		for ( var j = 0; j < geometry.faces.length; j += 2 ) {
+		/*for ( var j = 0; j < geometry.faces.length; j += 2 ) {
 			var hex = Math.random() * 0xffffff;
 			geometry.faces[ j ].color.setHex( hex );
 			geometry.faces[ j + 1 ].color.setHex( hex );
-		}
+		}*/
 		
 		var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		console.log(originalWalls[i].frontTextureId);
+		var texture = textureLoader.load(originalWalls[i].frontTextureId, function ( texture ) {
+
+		    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+		    texture.offset.set( 0, 0 );
+		    texture.repeat.set( 2, 2 );
+
+		} );
+		material.map = texture;
+		material.needsUpdate = true;
+		
 		cube = new THREE.Mesh( geometry, material );
 
 		var cubePosition= new THREE.Vector3().copy(c1).lerp(c2, 0.5);
@@ -483,6 +533,7 @@ function drawWall() {
 		var angle = Math.atan2(normal.y, normal.x);
 		cube.rotateZ(angle);
 		
+		cube.roomWall = originalWalls[i];
 		
 		walls.add( cube );
 	}
@@ -509,8 +560,8 @@ function drawFloor(side) {
 	// 커넥터 추출
 	var con = [];
 	for(var i = 0; i < originalWalls.length; i++) {
-		var c1 = new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y);
-		var c2 = new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y);
+		var c1 = new THREE.Vector2(originalWalls[i].roomWallConnector1.x, originalWalls[i].roomWallConnector1.y);
+		var c2 = new THREE.Vector2(originalWalls[i].roomWallConnector2.x, originalWalls[i].roomWallConnector2.y);
 		
 		var flag1 = false;
 		var flag2 = false;
@@ -534,8 +585,8 @@ function drawFloor(side) {
 		}
 	}
 	for(var i = 0; i < originalWalls.length; i++) {
-		var c1 = new THREE.Vector2(originalWalls[i].c1.x, originalWalls[i].c1.y);
-		var c2 = new THREE.Vector2(originalWalls[i].c2.x, originalWalls[i].c2.y);
+		var c1 = new THREE.Vector2(originalWalls[i].roomWallConnector1.x, originalWalls[i].roomWallConnector1.y);
+		var c2 = new THREE.Vector2(originalWalls[i].roomWallConnector2.x, originalWalls[i].roomWallConnector2.y);
 		
 		for(var j = 0; j < con.length; j++) {
 			if ( con[j].equals(c1) ) {
@@ -725,7 +776,8 @@ function drawFloor(side) {
 	
 	//var roomFloorGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
 	var roomFloorGeometry = new THREE.ShapeGeometry( shape );
-	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0x002200, side:((side===undefined||side)?THREE.FrontSide:THREE.BackSide)});
+	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0xffffff, side:((side===undefined||side)?THREE.FrontSide:THREE.BackSide)});
+	
 	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
 	
 	return floor;
@@ -865,6 +917,115 @@ function searchOutline(startPoint, points, connectMap) {
 		}
 	//console.log(possible);
 	return possible;
+}
+
+function changeFloorTexture(textureId) {
+	
+	$.ajax({
+		url:"changeFloorTexture",
+		type:"get",
+		data: {
+			roomId:room.roomId,
+			textureId:textureId
+		},
+		dataType:"json",
+		success:function(data) {
+			if(data != null && data != false && data != "false") {
+
+				var url = $("#img"+textureId).attr("src");
+				floorTexture = textureLoader.load(url, function ( texture ) {
+
+				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				    texture.offset.set( 0, 0 );
+				    texture.repeat.set( 2, 2 );
+
+				} );
+				roomFloor.material.map = floorTexture;
+				roomFloor.material.needsUpdate = true;
+				
+			} else {
+				alert("바닥 텍스쳐 변경에 실패하였습니다.");
+			}
+		},
+		error:function(e) {
+			console.log(e);
+			alert("바닥 텍스쳐 변경 중 오류가 발생하였습니다.");
+		}
+	});
+}
+
+function changeCeilTexture(textureId) {
+	$.ajax({
+		url:"changeCeilTexture",
+		type:"get",
+		data: {
+			roomId:room.roomId,
+			textureId:textureId
+		},
+		dataType:"json",
+		success:function(data) {
+			if(data != null && data != false && data != "false") {
+
+				var url = $("#img"+textureId).attr("src");
+				
+
+				ceilTexture = textureLoader.load(url, function ( texture ) {
+
+				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				    texture.offset.set( 0, 0 );
+				    texture.repeat.set( 2, 2 );
+
+				} );
+				roomCeil.material.map = ceilTexture;
+				roomCeil.material.needsUpdate = true;
+				
+			} else {
+				alert("천장 텍스쳐 변경에 실패하였습니다.");
+			}
+		},
+		error:function(e) {
+			console.log(e);
+			alert("천장 텍스쳐 변경 중 오류가 발생하였습니다.");
+		}
+	});
+}
+
+function changeWallTexture(roomWall, textureId) {
+	$.ajax({
+		url:"wall/changeFrontTexture",
+		type:"get",
+		data: {
+			roomWallId:roomWall.roomWallId,
+			textureId:textureId
+		},
+		dataType:"json",
+		success:function(data) {
+			if(data != null && data != false && data != "false") {
+				var url = $("#img"+textureId).attr("src");
+				var texture = textureLoader.load(url, function ( texture ) {
+
+				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				    texture.offset.set( 0, 0 );
+				    texture.repeat.set( 2, 2 );
+
+				} );
+				for(var i = 0; i < walls.children.length; i++) {
+					if(walls.children[i].roomWall.roomWallId == roomWall.roomWallId) {
+						walls.children[i].material.map = texture;
+						walls.children[i].material.needsUpdate = true;
+						return;
+					}
+				}
+				alert("바꾸려는 벽이 없어서 실패하였습니다.");
+			} else {
+				alert("벽 텍스쳐 변경에 실패하였습니다.");
+			}
+		},
+		error:function(e) {
+			console.log(e);
+			alert("벽 텍스쳐 변경 중 오류가 발생하였습니다.");
+		}
+	});
 }
 
 function previewItem(itemId, fileName) {
@@ -1939,10 +2100,39 @@ function back() {
 	console.dir(commands);
 }
 
+function applyTexture(textureId) {
+	if(curSelectedRoomObject === undefined) {
+		return;
+	}
+	console.log("applyTexture"+textureId);
+	console.log(curSelectedRoomObject);
+	switch(curSelectedRoomObject) {
+	case "roomFloor":
+		if( CommandCallBack.onFloorTexture !== undefined ) {
+			CommandCallBack.onFloorTexture(textureId);
+		}
+		changeFloorTexture(textureId);
+		break;
+	case "roomCeil":
+		if( CommandCallBack.onCeilTexture !== undefined ) {
+			CommandCallBack.onCeilTexture(textureId);
+		}
+		changeCeilTexture(textureId);
+		break;
+	default:
+		if( CommandCallBack.onWallTexture !== undefined ) {
+			CommandCallBack.onWallTexture(curSelectedRoomObject, textureId);
+		}
+		changeWallTexture(curSelectedRoomObject, textureId);
+		break;
+	}
+	curSelectedRoomObject = undefined;
+}
+
 //-------------
 // socket 통신
 //-------------
-let sendCreateItem = function(obj){
+function sendCreateItem(obj){
 	// 현재 방 번호와 만들 아이템 번호를 전송합니다.
 	socket.emit("create-item", {
 		roomId: room.roomId,
@@ -1950,7 +2140,7 @@ let sendCreateItem = function(obj){
 	});
 }
 
-let sendStartDrag = function(obj){
+function sendStartDrag(obj){
 	// 현재 방 번호와 이동할 아이템 이름을 전송합니다.
 	socket.emit("start-drag", {
 		roomId: room.roomId,
@@ -1958,7 +2148,7 @@ let sendStartDrag = function(obj){
 	});
 }
 
-let sendMoveItem = function(obj){
+function sendMoveItem(obj){
 	// 현재 방 번호와 아이템의 위치 정보를 전송합니다.
 	socket.emit("move-item", {
 		roomId: room.roomId,
@@ -1972,7 +2162,7 @@ let sendMoveItem = function(obj){
 	});
 }
 
-let sendDeleteItem = function(obj){
+function sendDeleteItem(obj){
 	// 현재 방 번호와 삭제할 아이템 이름을 전송합니다.
 	socket.emit("delete-item", {
 		roomId: room.roomId,

@@ -37,6 +37,7 @@ import com.real.fudousan.room.vo.Room;
 import com.real.fudousan.roomitem.service.RoomItemService;
 import com.real.fudousan.roomwall.service.RoomWallService;
 import com.real.fudousan.roomwall.vo.RoomWall;
+import com.real.fudousan.texture.service.TextureService;
 
 @SessionAttributes("loginId")
 @Controller
@@ -44,29 +45,32 @@ public class RoomController {
 
 	private static final Logger logger = LoggerFactory.getLogger(RoomController.class);
 	@Autowired
-	private RoomService Rservice;
+	private RoomService roomService;
 	@Autowired
-	private FavoriteService Fservice;
+	private FavoriteService favService;
 	@Autowired
-	private AdviceService Aservice;
+	private AdviceService advService;
 	@Autowired
 	private RoomWallService roomWallService;
 	@Autowired
 	private ItemService itemService;
 	@Autowired
 	private RoomItemService roomItemService;
+	@Autowired
+	private TextureService textureService;
 	
 	
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
 	public String searchMyRoom(Model model,String roomSearch,int memberId){
 		logger.info("RoomController-searchMyRoom_Start");
 		logger.info("매물 이름 검색한 결과 :  " + roomSearch);
-		List<Room> srlist = Rservice.showMyRoom(roomSearch, memberId);
+		logger.info("검색자ID :  " + memberId);
+		List<Room> srlist = roomService.showMyRoom(roomSearch, memberId);
 		model.addAttribute("rlist",srlist);
 
-        List<Favorite> flist = Fservice.showAllFavorite(memberId);
-        List<Advice> alist = Aservice.getRequestList(memberId, Advice.REQUEST);
-        List<Advice> rclist = Aservice.getRequestList(memberId, Advice.CONFIRMED);
+        List<Favorite> flist = favService.showAllFavorite(memberId);
+        List<Advice> alist = advService.getRequestList(memberId, Advice.REQUEST);
+        List<Advice> rclist = advService.getRequestList(memberId, Advice.CONFIRMED);
         
         model.addAttribute("flist", flist);
         model.addAttribute("alist", alist);
@@ -79,7 +83,7 @@ public class RoomController {
 	@RequestMapping(value="allMyRooms" , method=RequestMethod.GET)
 	public String allMyRooms(Model model,int memberId){
 		logger.info("RoomController-searchMyRoom_Start");
-		List<Room> allRooms = Rservice.showAllRoom(memberId);
+		List<Room> allRooms = roomService.showAllRoom(memberId);
 		model.addAttribute("rlist",allRooms);
 		logger.info("RoomController-searchMyRoom_End");
 		return "user/mypagecustomer";
@@ -91,7 +95,7 @@ public class RoomController {
 		logger.info("changeRoomPublic("+roomId+", "+roomPublic+") Start");
 		
 		int result = -1;
-		if(Rservice.changeRoomPublic(memberId, roomId, roomPublic)) {
+		if(roomService.changeRoomPublic(memberId, roomId, roomPublic)) {
 			result = roomPublic;
 		}
 		logger.info("changeRoomPublic("+roomId+", "+roomPublic+") End");
@@ -103,7 +107,7 @@ public class RoomController {
 	public boolean deleteRoom(@ModelAttribute("loginId") int memberId, int roomId){
 		logger.info("deleteRoom("+roomId+") Start");
 		
-		boolean result = Rservice.deleteRoom(memberId, roomId);
+		boolean result = roomService.deleteRoom(memberId, roomId);
 		logger.info("deleteRoom("+roomId+") End");
 		return result;
 	}
@@ -111,9 +115,9 @@ public class RoomController {
 	@RequestMapping(value="deletionLogical",method=RequestMethod.GET)
 	public String deletionLogical(@ModelAttribute("loginId") int memberId , int roomId){
 		logger.info("deletionLogical("+roomId+") Start");
-		boolean result = Rservice.deletionLogical(memberId, roomId);
+		boolean result = roomService.deletionLogical(memberId, roomId);
 		logger.info("deletionLogical("+roomId+") End");
-		return "user/mypagecustomer";
+		return "redirect:mypageNormalUser";
 	}
 	
 	
@@ -123,7 +127,7 @@ public class RoomController {
 		String returnedURL = "redirect:roomPage";
 		
 		room.setMemberId(loginId);
-		int roomId = Rservice.createRoom(room);
+		int roomId = roomService.createRoom(room);
 		model.addAttribute("roomId", roomId);
 		// 만약, 실제 방이 존재하지 않는 방이면 벽 생성화면으로 이동한다.
 		if(room.getEstate() == null) {
@@ -139,7 +143,7 @@ public class RoomController {
 	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model) {
 		logger.info("roomPage("+loginId+", "+roomId+") Start");
 		
-		Room room = Rservice.showRoom(roomId);
+		Room room = roomService.showRoom(roomId);
 		if (room != null) {
 			model.addAttribute("room", room);
 			
@@ -149,6 +153,8 @@ public class RoomController {
 			model.addAttribute("itemList", itemService.allList());
 			
 			model.addAttribute("roomitemList", roomItemService.getRoomItemsInRoom(roomId));
+			
+			model.addAttribute("textureList", textureService.getTextureList());
 		}
 		
 		logger.info("roomPage("+loginId+", "+roomId+") End");
@@ -166,7 +172,7 @@ public class RoomController {
 		room.setRoomId(roomId);
 		room.setHeight(height);
 		System.out.println("room: " + room);
-		boolean result = Rservice.wallheightchange(room) == 1;
+		boolean result = roomService.wallheightchange(room) == 1;
 	
 		return result;
 	}
@@ -186,14 +192,14 @@ public class RoomController {
 		// estateId(String) --> int 
 		int estateIdresult = Integer.parseInt(estateId);
 		
-		int total = Rservice.getTotal(estateIdresult);
+		int total = roomService.getTotal(estateIdresult);
 		
 		PageNavigator navi = new PageNavigator (countPerPage, pagePerGroup, page, total);
 		
 		// 총 페이지  수 
 		
 		
-		List<Room> list= Rservice.selectEstateRoom(estateIdresult, navi.getStartRecord(), navi.getCountPerPage());
+		List<Room> list= roomService.selectEstateRoom(estateIdresult, navi.getStartRecord(), navi.getCountPerPage());
 		HashMap<String, Object> map = new HashMap<>(); 
 		map.put("list", list);
 		map.put("totalPage", navi.getTotalPageCount());
@@ -216,7 +222,7 @@ public class RoomController {
         if(itr.hasNext()) {
             MultipartFile mpf = request.getFile(itr.next());
             
-            result = Rservice.saveSnapShot(Integer.parseInt(mpf.getOriginalFilename()), mpf);
+            result = roomService.saveSnapShot(Integer.parseInt(mpf.getOriginalFilename()), mpf);
         }
         return result;
 	}
@@ -228,7 +234,7 @@ public class RoomController {
 		
 		logger.info("getSnapShotFile({}) Start", fileName);
 		try {
-			Rservice.downloadSnapShotFile(fileName, response.getOutputStream());
+			roomService.downloadSnapShotFile(fileName, response.getOutputStream());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -236,4 +242,23 @@ public class RoomController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="changeFloorTexture", method=RequestMethod.GET) 
+	public boolean changeFloorTexture(int roomId, int textureId) {
+		logger.info("changeFloorTexture("+roomId+", "+textureId+") Start");
+		boolean result = false;
+		result = roomService.changeFloorTexture(roomId, textureId);
+		logger.info("changeFloorTexture("+roomId+", "+textureId+") End");
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="changeCeilTexture", method=RequestMethod.GET) 
+	public boolean changeCeilTexture(int roomId, int textureId) {
+		logger.info("changeCeilTexture("+roomId+", "+textureId+") Start");
+		boolean result = false;
+		result = roomService.changeCeilingTexture(roomId, textureId);
+		logger.info("changeCeilTexture("+roomId+", "+textureId+") End");
+		return result;
+	}
 }
