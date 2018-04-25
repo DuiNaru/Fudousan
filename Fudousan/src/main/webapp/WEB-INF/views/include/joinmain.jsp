@@ -8,7 +8,7 @@
 		</div>
 		
 		<div class="col-md-6 col-md-offset-3">
-			<form role="form" action="insertMember" method="post" enctype="multipart/form-data">
+			<form role="form" action="insertMember" method="post" enctype="multipart/form-data" onsubmit="return formsubmit()">
 				<div class="form-group">
 					<label for="InputName" data-lang="8"></label>
 					<input type="text" class="form-control" id="InputName" name="memberName" data-lang="8">
@@ -70,7 +70,7 @@
 					<div data-toggle="buttons">
 						<label class="btn btn-primary active">
 							<span class="fa fa-check"></span>
-							<input id="agree" type="checkbox" autocomplete="off" name="checkbox" value="checked">
+							<input id="agree" type="checkbox" autocomplete="off" name="checkbox" >
 						</label>
 						<span data-lang="21"></span>&nbsp;<a href="#" data-lang="22"></a>
 					</div>
@@ -78,7 +78,6 @@
 	         
 				<div class="form-group text-center">
 					<button type="submit" class="btn btn-info"><span data-lang="5"></span><i class="fa fa-check spaceLeft"></i></button>
-					<button type="submit" class="btn btn-warning"><span data-lang="4"></span><i class="fa fa-times spaceLeft"></i></button>
 				</div>
 			</form>
 		</div>

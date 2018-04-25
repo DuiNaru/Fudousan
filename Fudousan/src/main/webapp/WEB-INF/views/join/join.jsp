@@ -45,6 +45,9 @@
 	<!-- login.js -->
 	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
 	
+	<!-- Form check.js -->
+	<script src="<c:url value="/resources/js/memberFormCheck.js"></c:url>"></script>
+		
 	
 	<!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>
