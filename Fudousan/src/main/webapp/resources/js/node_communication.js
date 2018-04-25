@@ -1,4 +1,4 @@
-var socket = io('http://localhost:8000');
+var socket = io('http://sunnyserver.dlinkddns.com');
 
 
 $(function(){
@@ -90,6 +90,35 @@ CommandCallBack.onBack = function(){
 	console.log('onBack');
 	nodeCommand.transmitBack();
 }
+
+//모든 onFloorTexture하면 실행된다.
+CommandCallBack.onFloorTexture = function(roomItem){
+	console.log('onFloorTexture');
+	nodeCommand.transmitFloorTexture(roomItem);
+}
+
+//모든 onCeilTexture하면 실행된다.
+CommandCallBack.onCeilTexture = function(roomItem){
+	console.log('onCeilTexture');
+	nodeCommand.transCeilTexture(roomItem);
+}
+
+
+//모든 onWallTexture하면 실행된다.
+CommandCallBack.onWallTexture = function(roomWall,TextureId){
+	console.log('onWallTexture');
+	var wall = {
+			roomwall : roomWall,
+			textureid : TextureId
+	};	
+	nodeCommand.transWall(wall);
+}
+
+
+
+
+
+
 
 
 
@@ -209,9 +238,42 @@ var nodeCommand = {
 	},
 	receiveBack : function(){
 		back();
+	},
+	
+	//CommandCallBack.onFloorTexture (바닥 텍스쳐)
+	transmitFloorTexture : function(roomItem){
+		var roomItemObject = JSON.stringify(roomItem);
+		socket.emit('texture',roomItemObject);
+	},
+	receiveTexture : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		changeFloorTexture(roomItem);
+	},
+	
+	
+	//CommandCallBack.onCeilTexture (천장 텍스쳐)
+	transCeilTexture : function(roomItem){
+		var roomItemObject = JSON.stringify(roomItem);
+		socket.emit('ceil',roomItemObject);
+	},
+	receiveCeil : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		changeCeilTexture(roomItem);
+	},
+	
+	
+	//CommandCallBack.onWallTexture (벽 텍스쳐)
+	transWall : function(wall){
+		var roomItemObject = JSON.stringify(wall);
+		socket.emit('wall',roomItemObject);
+	},
+	receiveWall : function(wallObject){
+		var wall = JSON.parse(wallObject);
+		var a = wall.roomwall;
+		var b = wall.textureid;
+		changeWallTexture(a,b);
 	}
-	
-	
+
 	
 }
 
@@ -271,9 +333,31 @@ socket.on('back',function(){
 	nodeCommand.receiveBack();
 });
 
+socket.on('othersideExit',function(){
+	alert('상대방이 접속을 종료하였습니다.');
+});
+
+socket.on('othersideTexture',function(roomItemObject){
+	nodeCommand.receiveFloor(roomItemObject);
+});
+
+socket.on('othersideCeil',function(roomItemObject){
+	nodeCommand.receiveCeil(roomItemObject);
+});
+
+socket.on('othersideWall',function(wallObject){
+	nodeCommand.receiveWall(wallObject);
+});
+
+
 
 
 //종료하기 function esc 
 
+function esc(){
+	//session의 아이디의 분류를 받아서 일반사용자/중개업자/인테리어 분류해서
+	socket.emit('exit');
+	location.href = '/fudousan/';
+}
 
 
