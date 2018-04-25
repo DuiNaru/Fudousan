@@ -279,7 +279,14 @@ canvas {
 	<script type="text/javascript"
 		src="<c:url value="/resources/js/roomPage.js"/>"></script>
 	<div class="dat"></div>
-	<div class="top-menu"></div>
+	
+	<!-- 위쪽 메뉴 -->
+	<div class="top-menu">
+		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button>
+		<video id="localCam" autoplay="autoplay" muted="muted"></video>
+		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
+	</div>
+	
 	<div id="itemInfo" class="left-menu">
 		<div class="form-group">
 			<label>아이템 이름</label>
