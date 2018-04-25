@@ -1,5 +1,6 @@
 package com.real.fudousan.texture.service;
 
+import java.io.OutputStream;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -17,7 +18,7 @@ import com.real.fudousan.texture.vo.Texture;
 public class TextureService {
 	private static final Logger logger = LoggerFactory.getLogger(TextureService.class);
 
-	private static final String modelFileBaseDirectory = "/texture/";
+	public static final String modelFileBaseDirectory = "/texture/";
 
 	@Autowired
 	private TextureDAO dao;
@@ -49,6 +50,15 @@ public class TextureService {
 		List<Texture> result = null;
 		result = dao.selectAllTexture();
 		logger.info("getTextureList() End");
+		return result;
+	}
+	
+	public boolean downloadFile( String fileName, OutputStream os) {
+		logger.info("downloadFile({}) Start", fileName);
+		boolean result = false;
+		FileService.writeFile(modelFileBaseDirectory + fileName, os);
+		result = true;
+		logger.info("downloadFile({}) End", fileName);
 		return result;
 	}
 }
