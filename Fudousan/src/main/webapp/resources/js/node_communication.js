@@ -1,6 +1,6 @@
-/*var socket = io('localhost:8000');*/
-
-var socket = io('http://sunnyserver.dlinkddns.com');
+var socket = io('localhost:8000');
+/*
+var socket = io('http://sunnyserver.dlinkddns.com');*/
 
 
 $(function(){
@@ -107,11 +107,12 @@ CommandCallBack.onCeilTexture = function(TextureId){
 
 
 //모든 onWallTexture하면 실행된다.
-CommandCallBack.onWallTexture = function(roomWall,TextureId){
+CommandCallBack.onWallTexture = function(roomWall,TextureId, Number){
 	console.log('onWallTexture');
 	var wall = {
 			roomwall : roomWall,
-			textureid : TextureId
+			textureid : TextureId,
+			direction : Number
 	};	
 	nodeCommand.transWall(wall);
 }
@@ -279,13 +280,14 @@ var nodeCommand = {
 		var wall = JSON.parse(wallObject);
 		var a = wall.roomwall;
 		var b = wall.textureid;
-		changeWallTexture(a,b);
+		var c = wall.direction;
+		changeWallTexture(a,b,c);
 	},
 	
 	//CommandCallBack.onHeightChange (벽 길이 변경)
 	transmitHeightChange : function(height){
 		socket.emit('wallHeight',height)
-		console.log('누른이의 벽길이 변경');
+		console.log(height+'의 길이로 변경');
 	},
 	receiveHeight : function(height){
 		console.log('반대편 사람 ');
