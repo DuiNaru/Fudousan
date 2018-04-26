@@ -22,10 +22,22 @@ let langSet = {
 		6: "상대방이 화상 채팅을 거절했습니다."
 	},
 	jp: {
-		
+		0: "画像チャット開始",
+		1: "画像チャット終了",
+		2: "相手の受諾を待っています。",
+		3: "キャンセル",
+		4: "相手が画像チャットを申請しました。",
+		5: "相手がありません。",
+		6: "相手が画像チャットを拒絶しました。"
 	},
 	en: {
-		
+		0: "Start Video Chat",
+		1: "Stop Video Chat",
+		2: "Waiting for acceptance.",
+		3: "Cancel",
+		4: "The other person has requested a video chat.",
+		5: "There is no other person.",
+		6: "The other person declined the video chat."
 	}
 };
 
@@ -52,6 +64,7 @@ function call(){
 	console.log("--> call");
 	
 	startBtn.innerHTML = "화상 채팅 종료";
+	startBtn.disabled = true;
 	
 	navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream){
 		localStream = stream;
@@ -89,6 +102,8 @@ function showCallWindow(){
     	removeDiv("callingDiv");
     	
     	socket.emit("cancel-call", {roomId: room.roomId});
+    	
+    	startBtn.disabled = false;
     };
     
     let btnDiv = document.getElementById("btnDiv");
@@ -108,7 +123,7 @@ socket.on("call", function(){
 
 socket.on("cancel-call", function(){
 	let receiveCallDiv = document.getElementById("receiveCallDiv");
-	while (receiveCallDiv.firstChild){
+	while (receiveCallDiv.hasChildNodes()){
 		receiveCallDiv.removeChild(receiveCallDiv.firstChild);
 	}
 	

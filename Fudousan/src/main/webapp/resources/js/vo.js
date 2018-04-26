@@ -14,8 +14,8 @@ var CommandCallBack = {
 	onBack : undefined,			// 뒤로가기
 	onFloorTexture : undefined,	// 천장 텍스쳐 변경, 1번째 파라미터로 TextureId
 	onCeilTexture : undefined,	// 바닥 텍스쳐 변경, 1번째 파라미터로 TextureId
-	onWallTexture : undefined,	// 벽 텍스쳐 변경, 1번째 파라미터로 RoomWall, 2번째 파라미터로 TextureId
-	onHeightChange : undefined
+	onWallTexture : undefined,	// 벽 텍스쳐 변경, 1번째 파라미터(RoomWall), 2번째 파라미터(TextureId), 3번째 파라미터(벽 인덱스, 2 또는 3)
+	onHeightChange : undefined	// 방 높이 변경, 1번째 파라미터(방 높이)
 }
 
 function Command() {
@@ -183,9 +183,9 @@ function objToItem(itemObj) {
 	return item;
 }
 
-function RoomWall(backTextureId, frontTextureId, roomWallId, roomId, c1Id, c1x, c1y, c2Id, c2x, c2y, type) {
-	this.backTextureId = backTextureId;
-	this.frontTextureId = frontTextureId;
+function RoomWall(backTextureURL, frontTextureURL, roomWallId, roomId, c1Id, c1x, c1y, c2Id, c2x, c2y, type) {
+	this.backTextureURL = backTextureURL;
+	this.frontTextureURL = frontTextureURL;
 	this.roomWallId = roomWallId;
 	this.roomId = roomId;
 	this.roomWallConnector1 = new RoomWallConnector(c1Id, c1x, c1y);

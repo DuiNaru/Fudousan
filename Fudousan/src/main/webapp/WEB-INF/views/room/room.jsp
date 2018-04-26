@@ -160,9 +160,6 @@
 		});
 	}
 </script>
-
-	
-</script>
 <script src="<c:url value="/resources/js/node_communication.js"/>"></script>
 <script> </script>
 <style type="text/css">
@@ -409,9 +406,8 @@ canvas {
 		<label>아이템 생성</label>
 		<ul style="overflow: scroll;" id="itemUl">
 			<c:forEach var="item" items="${itemList}">
-				<li class="btn btn_default" value="${item.itemId }"
-					onclick="createItem(item${item.itemId}, AddItem);"><script
-						type="text/javascript">
+				<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId});">
+					<script type="text/javascript">
 							var item${item.itemId} = new Item();
 							item${item.itemId}.fileDirectory = "${item.fileDirectory}";
 							item${item.itemId}.itemId = ${item.itemId};
@@ -424,13 +420,13 @@ canvas {
 								item${item.itemId}.refSiteSet.push(new RefSite("${site.creDate}", ${site.id}, ${site.itemId}, "${site.text}", "${site.url}"));
 							</c:forEach>
 							items.push(item${item.itemId});
-						</script> <label>${item.itemName}</label>
-					<div class="preview"></div> <script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
+					</script> 
+					<label>${item.itemName}</label>
+					<div class="preview"></div>
+					<script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
 				</li>
 			</c:forEach>
 		</ul>
-	</div>
-	
 	</div>
 	<div class="right-menu">
 		<div>
@@ -447,7 +443,6 @@ canvas {
 							<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
 						</c:if>
 					</li>
-					<li><button onclick="checkArray()">Array 보기</button>
 					<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
 				</ul>
 
@@ -464,7 +459,7 @@ canvas {
 						},
 						success: function(data){
 							if(data != null || data == true || data == "true") {
-								changeHeigth(height);
+								changeHeigthListener(height);
 							} else {
 								alert("방 높이 변경에 실패하였습니다.");
 							}
