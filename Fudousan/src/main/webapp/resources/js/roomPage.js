@@ -492,6 +492,13 @@ function moveMouse(event) {
 	return true;
 }
 
+function changeHeigthListener(height) {
+	changeHeigth(height);
+	if (onHeightChange !== undefined) {
+		onHeightChange(height);
+	}
+}
+
 /**
  * 천장 높이 변경을 반영한다.
  * @returns

@@ -459,7 +459,7 @@ canvas {
 						},
 						success: function(data){
 							if(data != null || data == true || data == "true") {
-								changeHeigth(height);
+								changeHeigthListener(height);
 							} else {
 								alert("방 높이 변경에 실패하였습니다.");
 							}
