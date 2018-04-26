@@ -230,7 +230,20 @@ function init() {
 	window.addEventListener('resize', this.onResize, false);
 	window.addEventListener('keydown', this.onKeydown, false);
 	
+	var imagePrefix = "http://stemkoski.github.io/images/dawnmountain-";
+	var directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
+	var imageSuffix = ".png";
+	var skyGeometry = new THREE.CubeGeometry( earthSize, earthSize, earthSize );	
 	
+	var materialArray = [];
+	for (var i = 0; i < 6; i++)
+		materialArray.push( new THREE.MeshBasicMaterial({
+			map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
+			side: THREE.BackSide
+		}));
+	var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
+	var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
+	scene.add( skyBox );
 	
 	var axesHelper = new THREE.AxesHelper( 1000 );
 	scene.add( axesHelper );
@@ -494,8 +507,8 @@ function moveMouse(event) {
 
 function changeHeigthListener(height) {
 	changeHeigth(height);
-	if (onHeightChange !== undefined) {
-		onHeightChange(height);
+	if (CommandCallBack.onHeightChange !== undefined) {
+		CommandCallBack.onHeightChange(height);
 	}
 }
 
@@ -1065,6 +1078,13 @@ function changeWallTexture(roomWall, textureId, wallIndex) {
 		success:function(data) {
 			if(data != null && data != false && data != "false") {
 				var url = $("#img"+textureId).attr("src");
+				
+				// 기존 벽 데이터 변경
+				for(var i = 0; i<originalWalls.length; i++) {
+					if(wallFace==2) originalWalls[i].frontTextureURL = url;
+					if(wallFace==3) originalWalls[i].backTextureURL = url;
+				}
+				
 				var texture = textureLoader.load(url, function ( texture ) {
 
 				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
@@ -1074,8 +1094,6 @@ function changeWallTexture(roomWall, textureId, wallIndex) {
 				} );
 				for(var i = 0; i < walls.children.length; i++) {
 					if(walls.children[i].roomWall.roomWallId == roomWall.roomWallId) {
-						console.log(wallFace);
-						console.log(walls.children[i]);
 						// 현재 클릭된 면의 텍스쳐만 바꾼다.
 						var material = walls.children[i].material[wallFace];
 						material.map = texture;

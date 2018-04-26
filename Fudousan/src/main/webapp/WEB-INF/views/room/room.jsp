@@ -28,9 +28,6 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <script type="text/javascript">
-
-	
-
 	var room = {
 		roomId:${room.roomId}
 		,roomPublic:${room.roomPublic}
