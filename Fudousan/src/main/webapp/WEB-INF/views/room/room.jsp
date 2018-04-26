@@ -36,10 +36,10 @@
 		,roomPublic:${room.roomPublic}
 		,height:${room.height}
 		<c:if test="${!empty room.ceilingTexture}">
-		,ceilingTexture:${room.ceilingTexture},
+		,ceilingTexture:'<c:url value='${room.ceilingTexture.file}'/>'
 		</c:if>
 		<c:if test="${!empty room.floorTexture}">
-		,floorTexture:${room.floorTexture},
+		,floorTexture:'<c:url value='${room.floorTexture.file}'/>'
 		</c:if>
 		<c:if test="${!empty room.snapshot}">
 		,snapshot:"${room.snapshot}"
@@ -50,9 +50,19 @@
 			<c:if test="${s.index != 0 }">
 				,
 			</c:if>
-				{	c1:{x:${wall.roomWallConnector1.x}, y:${wall.roomWallConnector1.y}},
-					c2:{x:${wall.roomWallConnector2.x}, y:${wall.roomWallConnector2.y}}
-				}
+					new RoomWall(
+							'<c:url value='${wall.backTexture.file==null?undefined:wall.backTexture.file}'/>', 
+							'<c:url value='${wall.frontTexture.file==null?undefined:wall.frontTexture.file}'/>',
+							${wall.roomWallId},
+							${wall.roomId},
+							${wall.roomWallConnector1.connectorId},
+							${wall.roomWallConnector1.x},
+							${wall.roomWallConnector1.y},
+							${wall.roomWallConnector2.connectorId},
+							${wall.roomWallConnector2.x},
+							${wall.roomWallConnector2.y},
+							'${wall.type}'
+					)
 		</c:forEach>
 	];
 	var items = [];
@@ -196,54 +206,59 @@ canvas {
 	width: 100px;
 	height: 100px;
 }
+
+.imgPreview {
+	width: 100px;
+	height: 100px;
+}
 </style>
 
 <script type="text/javascript">
-			function getItemList() {
-				var itemList=$("#itemList").val();
-				
-				$.ajax({
-					url:"itemlist",
-					type:"get",
-					data:{
-						itemTypeId:itemList
-					},
-					dataType: 'json',
-					success: function(itemlist){
-						console.dir(itemlist);
+	function getItemList() {
+		var itemList=$("#itemList").val();
+		
+		$.ajax({
+			url:"itemlist",
+			type:"get",
+			data:{
+				itemTypeId:itemList
+			},
+			dataType: 'json',
+			success: function(itemlist){
 						
-						var str = '';
+				var str = '';
 						
-						$.each(itemlist,function(index,item){
-						str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+', AddItem);">';
-						str += '<label>'+item.itemName+'<\/label>';
-						str += '<script type="text/javascript">';
-						str += 'var item'+item.itemId+' = new Item();';
-						str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
-						str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
-						str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
-						str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
-						str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
-						str += 'item'+item.itemId+'.text = "'+item.text+'";';
-						str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
-						
-						$.each(item.refSiteSet,function(index,site){
-							str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
-							str += 'items.push(item'+item.itemId+');';
-						})
-						
-							str += "<\/script><\/li>";
-						})
-						console.dir(str);
-						$("#itemUl").html(str);
-						
-				}
+				$.each(itemlist,function(index,item){
 					
+				str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+', AddItem);">';
+				str += '<label>'+item.itemName+'<\/label>';
+				str += '<script type="text/javascript">';
+				str += 'var item'+item.itemId+' = new Item();';
+				str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
+				str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
+				str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
+				str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
+				str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
+				str += 'item'+item.itemId+'.text = "'+item.text+'";';
+				str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
+						
+				$.each(item.refSiteSet,function(index,site){
+					str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
+					str += 'items.push(item'+item.itemId+');';
 				});
+				
+				str += "<\/script><\/li>";
+				
+				});
+				$("#itemUl").html(str);
+			},
+			error:function(e) {
+				console.log(e);
+				alert("아이템 불러오기 실패");
 			}
- </script>
-
-
+		});
+	}
+</script>
 </head>
 <body>
 <div id="blocker">
@@ -257,17 +272,13 @@ canvas {
 <script id="template" type="notjs">
 	<div class="scene"></div>
 	<div class="description">Scene $</div>
-<<<<<<< HEAD
 </script>	
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
 <div class="dat">
 </div> 
 	<div class="top-menu">
 	</div>
-=======
-</script>
-	<script type="text/javascript"
-		src="<c:url value="/resources/js/roomPage.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
 	<div class="dat"></div>
 	
 	<!-- 위쪽 메뉴 -->
@@ -276,8 +287,19 @@ canvas {
 		<video id="localCam" autoplay="autoplay" muted="muted"></video>
 		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
 	</div>
-	
->>>>>>> 8c390e7f32a8168945bd44225b004de3b9b13d38
+	<div id="textureInfo" class="left-menu">
+		<div class="form-group">
+			<label>텍스쳐 리스트</label>
+			<div>
+				<c:forEach var="texture" items="${textureList}">
+					<div id="texture${texture.textureId }" class="form-group btn btn-default" onclick="applyTexture(${texture.textureId})">
+						<label>${texture.text}</label>
+						<img id="img${texture.textureId }" class="imgPreview" alt="${texture.textureId}" src="<c:url value='${texture.file}'/>">
+					</div>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
 	<div id="itemInfo" class="left-menu">
 		<div class="form-group">
 			<label>아이템 이름</label>
@@ -331,27 +353,12 @@ canvas {
 		<input type="button" value="적용" onclick="itemApplyListener()">
 	</div>
 	<div class="bottom-menu">
-	
-
-
-<div class="bottom-menu">
-
-		<select id="itemList" name="itemList" onchange="getItemList()">
-
-			<option value="1">1</option>
-			<option value="24" selected>24</option>
-		</select>
-
-
-		
-		<label>${item.itemName}</label>
-	
-		<label>아이템 생성</label>
-		<ul style="overflow: scroll;" id="itemUl">
-			<c:forEach var="item" items="${itemList}">
-				<li class="btn btn_default" value="${item.itemId }"
-					onclick="createItem(item${item.itemId}, AddItem);"><script
-						type="text/javascript">
+		<div>
+			<label>아이템 생성</label>
+			<ul>
+				<c:forEach var="item" items="${itemList}">
+					<li class="btn btn_default" value="${item.itemId }" onclick="createItemListener(item${item.itemId});">
+						<script type="text/javascript">
 							var item${item.itemId} = new Item();
 							item${item.itemId}.fileDirectory = "${item.fileDirectory}";
 							item${item.itemId}.itemId = ${item.itemId};
@@ -364,56 +371,63 @@ canvas {
 								item${item.itemId}.refSiteSet.push(new RefSite("${site.creDate}", ${site.id}, ${site.itemId}, "${site.text}", "${site.url}"));
 							</c:forEach>
 							items.push(item${item.itemId});
-						</script> <label>${item.itemName}</label>
-					<div class="preview"></div> <script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
-				</li>
-			</c:forEach>
-		</ul>
-	</div>
-	
-		
+						</script> 
+						<label>${item.itemName}</label>
+						<div class="preview"></div> 
+						<script type="text/javascript">
+							previewItem(${item.itemId}, "${item.modelFileName}");
+						</script>
+					</li>
+				</c:forEach>
+			</ul>
+		</div>
 	</div>
 	<div class="right-menu">
 		<div>
 			<label>종합기능</label>
-			<ul>
-						<li><button onclick="goback()">뒤로가기</button></li><br>
-						<li><button onclick="gofront()">앞으로가기</button></li><br>
-						<li><button onclick="save()">저장하기</button></li><br>
-						<li><button onclick="reset()">초기화</button></li><br>
-						<li><button onclick="esc()">종료</button>
-						<li><button onclick="takeSnapShot()">스냅샷 </button>
-						<li id="snapshot">
-							<c:if test="${!empty room.snapshot }">
-								<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
-							</c:if>
-						</li>
-						<br><br><br>
-						<li><button onclick="checkArray()">Array 보기</button>
-						<br><br><br><br>
-						<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
-						</ul>
+				<ul>
+					<li><button onclick="back()">뒤로가기</button></li>
+					<li><button onclick="forward()">앞으로가기</button></li>
+					<li><button onclick="save()">저장하기</button></li>
+					<li><button onclick="roomReset()">초기화</button></li>
+					<li><button onclick="esc()">종료</button>
+					<li><button onclick="takeSnapShot()">스냅샷 </button>
+					<li id="snapshot">
+						<c:if test="${!empty room.snapshot }">
+							<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
+						</c:if>
+					</li>
+					<li><button onclick="checkArray()">Array 보기</button>
+					<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
+				</ul>
 
-			  <script type="text/javascript">
-			function changeheight() {
-				var height=$("#height").val();
-				var roomId = room.roomId;	
-				$.ajax({
-					url:"wallheightchange",
-					type:"post",
-					data:{
-						roomId:roomId,
-						height:height
-					},
-					success: function(){
+			<script type="text/javascript">
+				function changeheight() {
+					var height=$("#height").val();
+					var roomId = room.roomId;	
+					$.ajax({
+						url:"wallheightchange",
+						type:"post",
+						data:{
+							roomId:roomId,
+							height:height
+						},
+						success: function(data){
+							if(data != null || data == true || data == "true") {
+								room.height = height;
+								changeHeigth();
+							} else {
+								alert("방 높이 변경에 실패하였습니다.");
+							}
+						},
+						error:function(e) {
+							console.dir(e);
+							alert("방 높이 변경 중 에러가 발생하였습니다.");
+						}
 	
-					}
-
-				});
-			}
+					});
+				}
 			</script> 
-			
-	
 		</div>
 	</div>
 	<menu>
