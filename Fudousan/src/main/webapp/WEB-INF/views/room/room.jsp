@@ -116,9 +116,50 @@
 			})
 	</c:forEach>
 	];
-	
 
-	
+	function getItemList() {
+		var itemList=$("#itemList").val();
+		
+		$.ajax({
+			url:"itemlist",
+			type:"get",
+			data:{
+				itemTypeId:itemList
+			},
+			dataType: 'json',
+			success: function(itemlist){
+				console.dir(itemlist);
+				
+				var str = '';
+				
+				$.each(itemlist,function(index,item){
+				str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+', AddItem);">';
+				str += '<label>'+item.itemName+'<\/label>';
+				str += '<script type="text/javascript">';
+				str += 'var item'+item.itemId+' = new Item();';
+				str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
+				str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
+				str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
+				str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
+				str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
+				str += 'item'+item.itemId+'.text = "'+item.text+'";';
+				str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
+				
+				$.each(item.refSiteSet,function(index,site){
+					str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
+					str += 'items.push(item'+item.itemId+');';
+				})
+				
+					str += "<\/script><\/li>";
+				})
+				console.dir(str);
+				$("#itemUl").html(str);
+				
+		}
+			
+		});
+	}
+</script>
 
 	
 </script>
@@ -352,13 +393,25 @@ canvas {
 		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem, delItem)">
 		<input type="button" value="적용" onclick="itemApplyListener()">
 	</div>
-	<div class="bottom-menu">
-		<div>
-			<label>아이템 생성</label>
-			<ul>
-				<c:forEach var="item" items="${itemList}">
-					<li class="btn btn_default" value="${item.itemId }" onclick="createItemListener(item${item.itemId});">
-						<script type="text/javascript">
+	
+<div class="bottom-menu">
+
+		<select id="itemList" name="itemList" onchange="getItemList()">
+			<option selected>전체 </option>
+			<option value="1">1</option>
+			<option value="24" >24</option>
+		</select>
+
+
+		
+		<label>${item.itemName}</label>
+	
+		<label>아이템 생성</label>
+		<ul style="overflow: scroll;" id="itemUl">
+			<c:forEach var="item" items="${itemList}">
+				<li class="btn btn_default" value="${item.itemId }"
+					onclick="createItem(item${item.itemId}, AddItem);"><script
+						type="text/javascript">
 							var item${item.itemId} = new Item();
 							item${item.itemId}.fileDirectory = "${item.fileDirectory}";
 							item${item.itemId}.itemId = ${item.itemId};
@@ -371,16 +424,13 @@ canvas {
 								item${item.itemId}.refSiteSet.push(new RefSite("${site.creDate}", ${site.id}, ${site.itemId}, "${site.text}", "${site.url}"));
 							</c:forEach>
 							items.push(item${item.itemId});
-						</script> 
-						<label>${item.itemName}</label>
-						<div class="preview"></div> 
-						<script type="text/javascript">
-							previewItem(${item.itemId}, "${item.modelFileName}");
-						</script>
-					</li>
-				</c:forEach>
-			</ul>
-		</div>
+						</script> <label>${item.itemName}</label>
+					<div class="preview"></div> <script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
+				</li>
+			</c:forEach>
+		</ul>
+	</div>
+	
 	</div>
 	<div class="right-menu">
 		<div>
