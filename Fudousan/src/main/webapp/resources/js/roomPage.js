@@ -392,7 +392,18 @@ function onDocumentMouseDown(event) {
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(walls.children, true);
 	if (intersects.length > 0) {
+		console.log(intersects[0]);
 		curSelectedRoomObject = intersects[0].object.roomWall;
+		//curSelected
+		var index = Math.floor( intersects[0].faceIndex / 2 );
+	      switch (index) {
+	         case 0: 
+	         case 1: 
+	         case 2: // front
+	         case 3: // back
+	         case 4: 
+	         case 5: 
+	      }
 	}
 	
 	raycaster.setFromCamera(mouse, camera);
@@ -429,9 +440,6 @@ function onDocumentMouseMove(event) {
 			
 			// 원점 보정해서 움직임
 			move(curSelected, intersects[0].point.x+x, intersects[0].point.y+y, intersects[0].point.z+z);
-			
-			
-			
 			
 			// 움직이고 나서 움직였음을 표시한다.
 			curMoving = true;
@@ -488,8 +496,9 @@ function moveMouse(event) {
  * 천장 높이 변경을 반영한다.
  * @returns
  */
-function changeHeigth() {
+function changeHeigth(height) {
 	drawWall();
+	room.height = height;
 	roomCeil.position.y = room.height;
 }
 
@@ -511,7 +520,27 @@ function drawWall() {
 			geometry.faces[ j + 1 ].color.setHex( hex );
 		}*/
 		
-		var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		var material = new THREE.MeshFaceMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		/*var material = new THREE.MeshFaceMaterial([
+	        new THREE.MeshBasicMaterial({
+	        	color: 'red' //left
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color: 'orange' //right
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color: 'green' // top, 벽 앞
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color:'blue' // bottom, 벽 뒤
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color: 'pink' // front
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color: 'yellow' //back
+	        })
+	    ]);*/
 		console.log(originalWalls[i].frontTextureId);
 		var texture = textureLoader.load(originalWalls[i].frontTextureId, function ( texture ) {
 
@@ -1301,25 +1330,13 @@ function deplaceRoomItem(roomItem) {
  * @returns
  */
 function move(object, x, y, z) {
+	let targetX, targetY, targetZ;
 	
-	if ( x != null ) {
-
-		object.position.x = x;
-		
-	}
+	targetX = ( x != null ) ? x : object.position.x;
+	targetY = ( y != null ) ? y : object.position.y;
+	targetZ = ( z != null ) ? z : object.position.z;
 	
-	if ( y != null ) {
-
-		object.position.y = y;
-		
-	}
-	
-	if ( z != null ) {
-
-		object.position.z = z;
-		
-	}
-	
+	itemMoveAni(object, targetX, targetY, targetZ);
 }
 
 /**
@@ -1358,25 +1375,33 @@ function moveRoomItem(roomItem, excuteCallBack) {
  * @returns
  */
 function rotate(object, rx, ry, rz) {
+	let targetRX, targetRY, targetRZ;
 	
 	if ( rx != null ) {
-		object.rotation.x = rx * Math.PI / 180;
+		targetRX = rx * Math.PI / 180;
 		object.roomItem.rotateX = rx;
-		
+	}
+	else {
+		targetRX = object.rotation.x;
 	}
 	
 	if ( ry != null ) {
-		object.rotation.y = ry * Math.PI / 180;
+		targetRY = ry * Math.PI / 180;
 		object.roomItem.rotateY = ry;
-		
+	}
+	else {
+		targetRY = object.rotation.y;
 	}
 	
 	if ( rz != null ) {
-		object.rotation.z = rz * Math.PI / 180;
+		targetRZ = rz * Math.PI / 180;
 		object.roomItem.rotateZ = rz;
-		
+	}
+	else {
+		targetRZ = object.rotation.z;
 	}
 	
+	itemRotateAni(object, targetRX, targetRY, targetRZ);
 }
 
 /**
@@ -2130,90 +2155,21 @@ function applyTexture(textureId) {
 }
 
 //-------------
-// socket 통신
+// 애니메이션
 //-------------
-function sendCreateItem(obj){
-	// 현재 방 번호와 만들 아이템 번호를 전송합니다.
-	socket.emit("create-item", {
-		roomId: room.roomId,
-		itemId: obj.itemId
-	});
-}
-
-function sendStartDrag(obj){
-	// 현재 방 번호와 이동할 아이템 이름을 전송합니다.
-	socket.emit("start-drag", {
-		roomId: room.roomId,
-		name: obj.name
-	});
-}
-
-function sendMoveItem(obj){
-	// 현재 방 번호와 아이템의 위치 정보를 전송합니다.
-	socket.emit("move-item", {
-		roomId: room.roomId,
-		name: obj.name,
-		x: obj.position.x,
-		y: obj.position.y,
-		z: obj.position.z,
-		rx: obj.rotation.x,
-		ry: obj.rotation.y,
-		rz: obj.rotation.z
-	});
-}
-
-function sendDeleteItem(obj){
-	// 현재 방 번호와 삭제할 아이템 이름을 전송합니다.
-	socket.emit("delete-item", {
-		roomId: room.roomId,
-		name: obj.name
-	});
-}
-
-socket.on("create-item", function(data){
-	// 다른 사람에게 아이템 생성 신호를 받는 부분입니다.
-	// 신호를 받으면 자신에게 전달 받은 아이템 번호를 이용하여
-	// 화면에 추가합니다.
-	
-});
-
-socket.on("start-drag", function(data){
-	// 이름을 이용하여 해당하는 아이템 찾습니다.
-	let object = scene.getObjectByName(data.itemId);
-
-	// 해당 아이템이 컨트롤 중이라는 것을 색깔로 표시합니다.
-	for (let i = 0; i < object.children.length; i++){
-		object.children[i].material.emissive.setHex(0x7a0000);
-	}
-});
-
-socket.on("move-item", function(data){
-	// 이름을 이용하여 해당하는 아이템을 찾습니다.
-	let object = scene.getObjectByName(data.itemId);
-
-	// 해당 아이템의 색깔을 원래 색으로 돌립니다.
-	for (let i = 0; i < object.children.length; i++){
-		object.children[i].material.emissive.setHex(0);
-	}
-
+function itemMoveAni(object, targetX, targetY, targetZ){
 	// 애니메이션 시작 위치
 	let start = {
 		x: object.position.x,
 		y: object.position.y,
-		z: object.position.z,
-		rx: object.rotation.x,
-		ry: object.rotation.y,
-		rz: object.rotation.z
+		z: object.position.z
 	};
 
 	// 애니메이션 끝 위치
 	let target = {
-		x: data.positionX,
-		y: data.positionY,
-		z: data.positionZ,
-		rx: data.rx,
-		ry: data.ry,
-		rz: data.rz
+		x: targetX,
+		y: targetY,
+		z: targetZ
 	};
 	
 	// 애니메이션 설정
@@ -2222,12 +2178,37 @@ socket.on("move-item", function(data){
 		object.position.x = start.x;
 		object.position.y = start.y;
 		object.position.z = start.z;
-		object.rotation.x = start.rx;
-		object.rotation.y = start.ry;
-		object.rotation.z = start.rz;
 	});
 	tween.easing(TWEEN.Easing.Exponential.Out);
 	
 	// 애니메이션 적용
 	tween.start();
-});
+}
+
+function itemRotateAni(object, targetRX, targetRY, targetRZ){
+	// 애니메이션 시작 위치
+	let start = {
+		x: object.rotation.x,
+		y: object.rotation.y,
+		z: object.rotation.z
+	};
+
+	// 애니메이션 끝 위치
+	let target = {
+		x: targetRX,
+		y: targetRY,
+		z: targetRZ
+	};
+	
+	// 애니메이션 설정
+	let tween = new TWEEN.Tween(position).to(target, 1000);
+	tween.onUpdate(function(){
+		object.rotation.x = start.x;
+		object.rotation.y = start.y;
+		object.rotation.z = start.z;
+	});
+	tween.easing(TWEEN.Easing.Exponential.Out);
+	
+	// 애니메이션 적용
+	tween.start();
+}
