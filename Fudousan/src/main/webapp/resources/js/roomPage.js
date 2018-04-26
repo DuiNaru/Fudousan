@@ -494,8 +494,8 @@ function moveMouse(event) {
 
 function changeHeigthListener(height) {
 	changeHeigth(height);
-	if (onHeightChange !== undefined) {
-		onHeightChange(height);
+	if (CommandCallBack.onHeightChange !== undefined) {
+		CommandCallBack.onHeightChange(height);
 	}
 }
 
