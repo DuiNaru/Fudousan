@@ -392,7 +392,18 @@ function onDocumentMouseDown(event) {
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(walls.children, true);
 	if (intersects.length > 0) {
+		console.log(intersects[0]);
 		curSelectedRoomObject = intersects[0].object.roomWall;
+		//curSelected
+		var index = Math.floor( intersects[0].faceIndex / 2 );
+	      switch (index) {
+	         case 0: 
+	         case 1: 
+	         case 2: // front
+	         case 3: // back
+	         case 4: 
+	         case 5: 
+	      }
 	}
 	
 	raycaster.setFromCamera(mouse, camera);
@@ -429,9 +440,6 @@ function onDocumentMouseMove(event) {
 			
 			// 원점 보정해서 움직임
 			move(curSelected, intersects[0].point.x+x, intersects[0].point.y+y, intersects[0].point.z+z);
-			
-			
-			
 			
 			// 움직이고 나서 움직였음을 표시한다.
 			curMoving = true;
@@ -488,8 +496,9 @@ function moveMouse(event) {
  * 천장 높이 변경을 반영한다.
  * @returns
  */
-function changeHeigth() {
+function changeHeigth(height) {
 	drawWall();
+	room.height = height;
 	roomCeil.position.y = room.height;
 }
 
@@ -511,7 +520,27 @@ function drawWall() {
 			geometry.faces[ j + 1 ].color.setHex( hex );
 		}*/
 		
-		var material = new THREE.MeshBasicMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		var material = new THREE.MeshFaceMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		/*var material = new THREE.MeshFaceMaterial([
+	        new THREE.MeshBasicMaterial({
+	        	color: 'red' //left
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color: 'orange' //right
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color: 'green' // top, 벽 앞
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color:'blue' // bottom, 벽 뒤
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color: 'pink' // front
+	        }),
+	        new THREE.MeshBasicMaterial({
+	            color: 'yellow' //back
+	        })
+	    ]);*/
 		console.log(originalWalls[i].frontTextureId);
 		var texture = textureLoader.load(originalWalls[i].frontTextureId, function ( texture ) {
 
