@@ -1301,25 +1301,13 @@ function deplaceRoomItem(roomItem) {
  * @returns
  */
 function move(object, x, y, z) {
+	let targetX, targetY, targetZ;
 	
-	if ( x != null ) {
-
-		object.position.x = x;
-		
-	}
+	targetX = ( x != null ) ? x : object.position.x;
+	targetY = ( y != null ) ? y : object.position.y;
+	targetZ = ( z != null ) ? z : object.position.z;
 	
-	if ( y != null ) {
-
-		object.position.y = y;
-		
-	}
-	
-	if ( z != null ) {
-
-		object.position.z = z;
-		
-	}
-	
+	itemMoveAni(object, targetX, targetY, targetZ);
 }
 
 /**
@@ -1358,25 +1346,33 @@ function moveRoomItem(roomItem, excuteCallBack) {
  * @returns
  */
 function rotate(object, rx, ry, rz) {
+	let targetRX, targetRY, targetRZ;
 	
 	if ( rx != null ) {
-		object.rotation.x = rx * Math.PI / 180;
+		targetRX = rx * Math.PI / 180;
 		object.roomItem.rotateX = rx;
-		
+	}
+	else {
+		targetRX = object.rotation.x;
 	}
 	
 	if ( ry != null ) {
-		object.rotation.y = ry * Math.PI / 180;
+		targetRY = ry * Math.PI / 180;
 		object.roomItem.rotateY = ry;
-		
+	}
+	else {
+		targetRY = object.rotation.y;
 	}
 	
 	if ( rz != null ) {
-		object.rotation.z = rz * Math.PI / 180;
+		targetRZ = rz * Math.PI / 180;
 		object.roomItem.rotateZ = rz;
-		
+	}
+	else {
+		targetRZ = object.rotation.z;
 	}
 	
+	itemRotateAni(object, targetRX, targetRY, targetRZ);
 }
 
 /**
@@ -2186,6 +2182,62 @@ socket.on("start-drag", function(data){
 		object.children[i].material.emissive.setHex(0x7a0000);
 	}
 });
+
+function itemMoveAni(object, targetX, targetY, targetZ){
+	// 애니메이션 시작 위치
+	let start = {
+		x: object.position.x,
+		y: object.position.y,
+		z: object.position.z
+	};
+
+	// 애니메이션 끝 위치
+	let target = {
+		x: targetX,
+		y: targetY,
+		z: targetZ
+	};
+	
+	// 애니메이션 설정
+	let tween = new TWEEN.Tween(position).to(target, 1000);
+	tween.onUpdate(function(){
+		object.position.x = start.x;
+		object.position.y = start.y;
+		object.position.z = start.z;
+	});
+	tween.easing(TWEEN.Easing.Exponential.Out);
+	
+	// 애니메이션 적용
+	tween.start();
+}
+
+function itemRotateAni(object, targetRX, targetRY, targetRZ){
+	// 애니메이션 시작 위치
+	let start = {
+		x: object.rotation.x,
+		y: object.rotation.y,
+		z: object.rotation.z
+	};
+
+	// 애니메이션 끝 위치
+	let target = {
+		x: targetRX,
+		y: targetRY,
+		z: targetRZ
+	};
+	
+	// 애니메이션 설정
+	let tween = new TWEEN.Tween(position).to(target, 1000);
+	tween.onUpdate(function(){
+		object.rotation.x = start.x;
+		object.rotation.y = start.y;
+		object.rotation.z = start.z;
+	});
+	tween.easing(TWEEN.Easing.Exponential.Out);
+	
+	// 애니메이션 적용
+	tween.start();
+}
 
 socket.on("move-item", function(data){
 	// 이름을 이용하여 해당하는 아이템을 찾습니다.
