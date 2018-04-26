@@ -48,6 +48,8 @@ var ceilTexture;
 var floorTexture;
 // 현재 선택한 방 물체
 var curSelectedRoomObject;
+// 현재 선택된 것이 벽이면 앞/뒤면
+var curSelectedWallFace;
 // 텍스쳐 로더
 var textureLoader = new THREE.TextureLoader();
 
@@ -392,18 +394,16 @@ function onDocumentMouseDown(event) {
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects(walls.children, true);
 	if (intersects.length > 0) {
-		console.log(intersects[0]);
+		
 		curSelectedRoomObject = intersects[0].object.roomWall;
-		//curSelected
 		var index = Math.floor( intersects[0].faceIndex / 2 );
 	      switch (index) {
-	         case 0: 
-	         case 1: 
 	         case 2: // front
+	        	 curSelectedWallFace = index;
 	         case 3: // back
-	         case 4: 
-	         case 5: 
+	        	 curSelectedWallFace = index;
 	      }
+	      
 	}
 	
 	raycaster.setFromCamera(mouse, camera);
@@ -520,27 +520,23 @@ function drawWall() {
 			geometry.faces[ j + 1 ].color.setHex( hex );
 		}*/
 		
-		var material = new THREE.MeshFaceMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
-		/*var material = new THREE.MeshFaceMaterial([
+		//var material = new THREE.MeshFaceMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		var material = new THREE.MeshFaceMaterial([
 	        new THREE.MeshBasicMaterial({
-	        	color: 'red' //left
+	            color: 'black'
 	        }),
 	        new THREE.MeshBasicMaterial({
-	            color: 'orange' //right
+	            color: 'black'
+	        }),
+	        new THREE.MeshBasicMaterial(), // 벽 앞
+	        new THREE.MeshBasicMaterial(), // 벽 뒤
+	        new THREE.MeshBasicMaterial({
+	            color: 'black'
 	        }),
 	        new THREE.MeshBasicMaterial({
-	            color: 'green' // top, 벽 앞
-	        }),
-	        new THREE.MeshBasicMaterial({
-	            color:'blue' // bottom, 벽 뒤
-	        }),
-	        new THREE.MeshBasicMaterial({
-	            color: 'pink' // front
-	        }),
-	        new THREE.MeshBasicMaterial({
-	            color: 'yellow' //back
+	            color: 'black'
 	        })
-	    ]);*/
+	    ]);
 		console.log(originalWalls[i].frontTextureId);
 		var texture = textureLoader.load(originalWalls[i].frontTextureId, function ( texture ) {
 
@@ -1020,8 +1016,25 @@ function changeCeilTexture(textureId) {
 }
 
 function changeWallTexture(roomWall, textureId) {
+	var url;
+	var wallFace;
+	switch(curSelectedWallFace) {
+	case 2:
+		url = "wall/changeFrontTexture";
+		wallFace = curSelectedWallFace;
+		curSelectedWallFace = undefined;
+		break;
+	case 3:
+		url = "wall/changeBackTexture";
+		wallFace = curSelectedWallFace;
+		curSelectedWallFace = undefined;
+		break;
+	default:
+		alert("벽을 제대로 클릭해주세요.");
+		return;
+	}
 	$.ajax({
-		url:"wall/changeFrontTexture",
+		url:url,
 		type:"get",
 		data: {
 			roomWallId:roomWall.roomWallId,
@@ -1040,8 +1053,12 @@ function changeWallTexture(roomWall, textureId) {
 				} );
 				for(var i = 0; i < walls.children.length; i++) {
 					if(walls.children[i].roomWall.roomWallId == roomWall.roomWallId) {
-						walls.children[i].material.map = texture;
-						walls.children[i].material.needsUpdate = true;
+						console.log(wallFace);
+						console.log(walls.children[i]);
+						// 현재 클릭된 면의 텍스쳐만 바꾼다.
+						var material = walls.children[i].material[wallFace];
+						material.map = texture;
+						material.needsUpdate = true;
 						return;
 					}
 				}
