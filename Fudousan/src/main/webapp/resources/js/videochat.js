@@ -2,7 +2,7 @@ let script = document.createElement("script");
 script.src = "/fudousan/resources/js/cookie.js";
 document.body.appendChild(script);
 
-const startBtn = document.getElementById("startVideoChatBtn");
+let startBtn = document.getElementById("startVideoChatBtn");
 startBtn.onclick = pushStartBtn;
 
 let localCam = document.getElementById("localCam");
@@ -10,6 +10,8 @@ let remoteCam = document.getElementById("remoteCam");
 
 let localStream = null;
 let myPeerConnection;
+
+socket.emit("connect-server", {roomId: room.roomId});
 
 let langSet = {
 	ko: {
@@ -301,7 +303,7 @@ function closeCall(){
 		myPeerConnection = null;
 	}
 	
-	localStream.srcObject = null;
+	localCam.srcObject = null;
 };
 
 function createPeerConnection(){

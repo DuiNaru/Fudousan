@@ -473,5 +473,7 @@ canvas {
 	</div>
 	<menu>
 	</menu>
+	
+	<script src="<c:url value="/resources/js/videochat.js"/>"></script>
 </body>
 </html>
