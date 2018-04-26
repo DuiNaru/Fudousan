@@ -116,7 +116,11 @@ CommandCallBack.onWallTexture = function(roomWall,TextureId){
 	nodeCommand.transWall(wall);
 }
 
-
+//모든 onHeightChange하면 실행된다.
+CommandCallBack.onHeightChange = function(height){
+	console.log('onHeightChange');
+	nodeCommand.transmitHeightChange(height);
+}
 
 
 
@@ -276,6 +280,16 @@ var nodeCommand = {
 		var a = wall.roomwall;
 		var b = wall.textureid;
 		changeWallTexture(a,b);
+	},
+	
+	//CommandCallBack.onHeightChange (벽 길이 변경)
+	transmitHeightChange : function(height){
+		socket.emit('wallHeight',height)
+		console.log('누른이의 벽길이 변경');
+	},
+	receiveHeight : function(height){
+		console.log('반대편 사람 ');
+		changeHeigth(height);
 	}
 
 	
@@ -353,7 +367,9 @@ socket.on('othersideWall',function(wallObject){
 	nodeCommand.receiveWall(wallObject);
 });
 
-
+socket.on('otherheight',function(height){
+	nodeCommand.receiveHeight(height);
+});
 
 
 //종료하기 function esc 

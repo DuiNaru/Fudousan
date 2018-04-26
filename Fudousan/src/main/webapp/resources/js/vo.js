@@ -15,7 +15,7 @@ var CommandCallBack = {
 	onFloorTexture : undefined,	// 천장 텍스쳐 변경, 1번째 파라미터로 TextureId
 	onCeilTexture : undefined,	// 바닥 텍스쳐 변경, 1번째 파라미터로 TextureId
 	onWallTexture : undefined,	// 벽 텍스쳐 변경, 1번째 파라미터로 RoomWall, 2번째 파라미터로 TextureId
-	onHeightChange : undefined
+	onHeightChange : undefined  // 벽 길이 변경, 1번째 파라미터로 
 }
 
 function Command() {

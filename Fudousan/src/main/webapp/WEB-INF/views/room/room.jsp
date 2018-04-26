@@ -447,7 +447,6 @@ canvas {
 							<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
 						</c:if>
 					</li>
-					<li><button onclick="checkArray()">Array 보기</button>
 					<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
 				</ul>
 
