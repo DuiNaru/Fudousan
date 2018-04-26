@@ -257,12 +257,27 @@ canvas {
 <script id="template" type="notjs">
 	<div class="scene"></div>
 	<div class="description">Scene $</div>
+<<<<<<< HEAD
 </script>	
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
 <div class="dat">
 </div> 
 	<div class="top-menu">
 	</div>
+=======
+</script>
+	<script type="text/javascript"
+		src="<c:url value="/resources/js/roomPage.js"/>"></script>
+	<div class="dat"></div>
+	
+	<!-- 위쪽 메뉴 -->
+	<div class="top-menu">
+		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button>
+		<video id="localCam" autoplay="autoplay" muted="muted"></video>
+		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
+	</div>
+	
+>>>>>>> 8c390e7f32a8168945bd44225b004de3b9b13d38
 	<div id="itemInfo" class="left-menu">
 		<div class="form-group">
 			<label>아이템 이름</label>
@@ -395,7 +410,7 @@ canvas {
 					}
 
 				});
-			}
+			
 			</script> 
 			
 	

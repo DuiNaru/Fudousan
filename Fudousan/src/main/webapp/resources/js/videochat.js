@@ -41,6 +41,10 @@ function pushStartBtn(){
 	}
 	else {
 		hangup();
+		
+		socket.emit("hangup", {
+			roomId: room.roomId
+		});
 	}
 };
 
@@ -84,7 +88,7 @@ function showCallWindow(){
     cancelCallBtn.onclick = function(){
     	removeDiv("callingDiv");
     	
-    	socket.emit("cancelCall", {roomId: room.roomId});
+    	socket.emit("cancel-call", {roomId: room.roomId});
     };
     
     let btnDiv = document.getElementById("btnDiv");
@@ -97,7 +101,23 @@ function removeDiv(id){
 }
 
 socket.on("call", function(){
+	startBtn.disabled = true;
 	
+	receiveCallWindow();
+});
+
+socket.on("cancel-call", function(){
+	let receiveCallDiv = document.getElementById("receiveCallDiv");
+	while (receiveCallDiv.firstChild){
+		receiveCallDiv.removeChild(receiveCallDiv.firstChild);
+	}
+	
+	let html = "상대방이 화상 채팅 연결을 취소하였습니다.";
+	receiveCallDiv.innerHTML = html;
+	
+	setTimeOut(function(){
+		removeDiv("receiveCallDiv");
+	}, 3000);
 });
 
 socket.on("not-found-target", function(){
@@ -132,6 +152,9 @@ function receiveCallWindow(){
 			roomId: room.roomId,
 			answer: true
 		});
+		
+		startBtn.innerHTML = "화상 채팅 종료";
+		startBtn.disabled = false;
 	};
 	let refuseCallBtn = document.getElementById("refuseCallBtn");
 	refuseCallBtn.onclick = function(){
@@ -141,6 +164,8 @@ function receiveCallWindow(){
 			roomId: room.roomId,
 			answer: false
 		});
+		
+		startBtn.disabled = false;
 	};
 }
 
@@ -218,6 +243,25 @@ socket.on("video-offer", function(sdp){
 	}).catch(function(err){
 		console.log(err);
 	})
+});
+
+socket.on("video-answer", function(sdp){
+	console.log("--> receive video-answer");
+
+	let desc = new RTCSessionDescription(sdp);
+	myPeerConnection.setRemoteDescription(desc);
+});
+
+socket.on("new-ice-candidate", function(candidate){
+	console.log("--> receive new-ice-candidate");
+
+	myPeerConnection.addIceCandidate(new RTCIceCandidate(candidate));
+});
+
+socket.on("hangup", function(){
+	console.log("--> receive hang up");
+	
+	closeCall();
 });
 
 function hangup(){

@@ -170,7 +170,7 @@
 } /* End Color Blue */
 /* END PRICE TABLE */   
 
-label {
+#star {
   /* Presentation */
   font-size: 48px
 }
@@ -212,11 +212,7 @@ label input[type="checkbox"] {
   opacity: 1;
 }       
  
- 
-.modal-dialog{
-	width: 90%; 
-	
-}
+
 .boxclear{
 	clear: both;
 	
