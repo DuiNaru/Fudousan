@@ -183,9 +183,9 @@ function objToItem(itemObj) {
 	return item;
 }
 
-function RoomWall(backTextureId, frontTextureId, roomWallId, roomId, c1Id, c1x, c1y, c2Id, c2x, c2y, type) {
-	this.backTextureId = backTextureId;
-	this.frontTextureId = frontTextureId;
+function RoomWall(backTextureURL, frontTextureURL, roomWallId, roomId, c1Id, c1x, c1y, c2Id, c2x, c2y, type) {
+	this.backTextureURL = backTextureURL;
+	this.frontTextureURL = frontTextureURL;
 	this.roomWallId = roomWallId;
 	this.roomId = roomId;
 	this.roomWallConnector1 = new RoomWallConnector(c1Id, c1x, c1y);

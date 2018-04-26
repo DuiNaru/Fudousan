@@ -497,9 +497,9 @@ function moveMouse(event) {
  * @returns
  */
 function changeHeigth(height) {
-	drawWall();
 	room.height = height;
 	roomCeil.position.y = room.height;
+	drawWall();
 }
 
 /**
@@ -521,6 +521,32 @@ function drawWall() {
 		}*/
 		
 		//var material = new THREE.MeshFaceMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		
+		var frontMat = new THREE.MeshBasicMaterial();
+		if (originalWalls[i].frontTextureURL != "" ) {
+			var texture = textureLoader.load(originalWalls[i].frontTextureURL, function ( texture ) {
+
+			    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+			    texture.offset.set( 0, 0 );
+			    texture.repeat.set( 2, 2 );
+
+			} );
+			frontMat.map = texture;
+			frontMat.needsUpdate = true;
+		}
+		
+		var backMat = new THREE.MeshBasicMaterial();
+		if (originalWalls[i].backTextureURL != "" ) {
+			var texture = textureLoader.load(originalWalls[i].backTextureURL, function ( texture ) {
+
+			    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+			    texture.offset.set( 0, 0 );
+			    texture.repeat.set( 2, 2 );
+
+			} );
+			backMat.map = texture;
+			backMat.needsUpdate = true;
+		}
 		var material = new THREE.MeshFaceMaterial([
 	        new THREE.MeshBasicMaterial({
 	            color: 'black'
@@ -528,8 +554,8 @@ function drawWall() {
 	        new THREE.MeshBasicMaterial({
 	            color: 'black'
 	        }),
-	        new THREE.MeshBasicMaterial(), // 벽 앞
-	        new THREE.MeshBasicMaterial(), // 벽 뒤
+	        frontMat,
+	        backMat,
 	        new THREE.MeshBasicMaterial({
 	            color: 'black'
 	        }),
@@ -537,16 +563,6 @@ function drawWall() {
 	            color: 'black'
 	        })
 	    ]);
-		console.log(originalWalls[i].frontTextureId);
-		var texture = textureLoader.load(originalWalls[i].frontTextureId, function ( texture ) {
-
-		    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-		    texture.offset.set( 0, 0 );
-		    texture.repeat.set( 2, 2 );
-
-		} );
-		material.map = texture;
-		material.needsUpdate = true;
 		
 		cube = new THREE.Mesh( geometry, material );
 
