@@ -264,6 +264,9 @@
 		</div>
 		<div class="col-sm-2 sidenav">
 			<div class="col-sm-2 sidenav">
+				
+				<a class="btn btn-success" href="../newRoom?estateId=2&amp;roomPublic=0">NEW 3D MODEL</a>
+				<br><br>
 				<a data-toggle="modal" href="#3dDesignModal" class="btn btn-success btn-lg">
 					<span class="glyphicon glyphicon-print"></span> 3D DESIGN
 				</a>
