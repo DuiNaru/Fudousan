@@ -5,8 +5,95 @@
 
 <div class="container-fluid text-center">    
   <div class="row content">
-  	<!-- 3D 작성 매물 확인 Start -->
-    <div class="col-sm-5 text-center">
+  	<div class="col-sm-3 sidenav"></div>
+  
+  	<div class="col-sm-6">
+  		<br>
+  		<div class="col-sm-12 text-left" >
+  			<div role="tabpanel">
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">3D</a></li>
+    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Favorite</a></li>
+    	
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="home">
+    <h1>3D 작성 매물 확인</h1>
+		
+		<!-- search button -->
+		<div id="custom-search-input">
+            <div class="input-group col-md-12">
+                <input type="text" class="  search-query form-control" placeholder="Search" id ="roomSearch" name="roomSearch" />
+                <span class="input-group-btn">
+                    <button class="btn btn-danger" type="button" onclick="roomSearch()" >
+                        <span class=" glyphicon glyphicon-search"></span>
+                        <input type="hidden" id="memberId" name="memberId" value=${sessionScope.loginId }>
+                    </button>
+                </span>
+            </div>
+        </div>
+
+		<hr>
+		
+		<!-- result -->      
+		<h3>Test</h3>
+		<c:forEach var="room" items="${rlist}">
+			<div class="col-sm-12 form-group">
+				<p><a href="/">${room.estate.estateName}</a><c:out value="${room.map} "/></p>
+		 		<a class="btn btn-default" href="<c:url value="/newRoom?estateId=${room.estate.estateId}&roomPublic=0"/>">내집꾸미기</a>
+		 		<a class="btn btn-default" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.estate.estateId}"/>">논리삭제</a>
+			</div>
+		</c:forEach>
+    
+    </div>
+    <div role="tabpanel" class="tab-pane" id="profile">
+    <h1>찜한 매물 보기</h1>
+		<!-- search button -->
+		<div id="custom-search-input">
+            <div class="input-group col-md-12">
+                <input type="text" class="  search-query form-control" placeholder="Search"  name="favoSearch" id="favoSearch" />
+                <span class="input-group-btn">
+                    <button class="btn btn-danger" type="button" onclick="favoriteSearch()" >
+                        <span class=" glyphicon glyphicon-search"></span>
+                        <input type="hidden" id="memberId" name="memberId" value=1>
+                    </button>
+                </span>
+            </div>
+        </div>
+		<div style="clear: both;"></div>
+		<hr>
+		
+		<!-- result -->
+		<h3>Test</h3>
+		<c:forEach var="favorite" items="${flist}">
+			<div class="col-sm-12 form-group">
+				<p><a href="/">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}estataId:${favorite.estate.estateId}"/></p>
+				<input type="hidden" value="${favorite.estate.estateId}" id='favo' name='favo' >
+				<button><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}"/>">매물상세정보</a></button>
+				
+				
+			</div>
+		</c:forEach>
+    
+    </div>
+    
+  </div>
+
+</div>
+  			
+  			
+  		</div>
+  	
+  	
+  	</div>
+  	
+  	
+  	<%-- <!-- 3D 작성 매물 확인 Start -->
+    <div class="col-sm-3 text-center">
       <h1>3D 작성 매물 확인</h1>
 		
 		<!-- search button -->
@@ -36,7 +123,7 @@
     </div> 
     <!-- 3D 작성 매물 확인 End -->
     <!-- 찜한 매물 보기 Start -->
-    <div class="col-sm-5 text-center"> 
+    <div class="col-sm-3 text-center"> 
 		<h1>찜한 매물 보기</h1>
 		<!-- search button -->
 		<div id="custom-search-input">
@@ -64,10 +151,10 @@
 				
 			</div>
 		</c:forEach>
-    </div>
+    </div> --%>
     
     <!-- side nav button Start -->
-    <div class="col-sm-2 sidenav">
+    <div class="col-sm-3 sidenav">
 		
 		<div class="well">
 			<h6>인테리어 업자에게 도움 요청</h6>
