@@ -16,8 +16,10 @@ var height = window.innerHeight;
 var roomFloor;
 // 방 천장
 var roomCeil;
+// 지면
+var earth;
 // 지면(사이즈)
-var earthSize = 999999;
+var earthSize = 200000;
 // Raycaster
 var raycaster = new THREE.Raycaster();
 // 마우스
@@ -145,10 +147,11 @@ $(function() {
 });
 
 function init() {
+	THREE.ImageUtils.crossOrigin = '';
 	// Loader Cache Enabled
 	THREE.Cache.enabled = true;
 	// 카메라 생성 및 초기화
-	camera = new THREE.PerspectiveCamera(60, width / height, 10, 100000);
+	camera = new THREE.PerspectiveCamera(60, width / height, 10, earthSize);
 	camera.position.y = 10000;
 	camera.lookAt(0, 0, 0);
 	
@@ -192,6 +195,14 @@ function init() {
 
 	//var roomFloorGeometry = new THREE.PlaneGeometry(roomFloorSize, roomFloorSize);
 	
+	// 땅
+	var earthGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
+	var earthMaterial = new THREE.MeshBasicMaterial({color:0x002200});
+	earth = new THREE.Mesh(earthGeometry, earthMaterial);
+	earth.rotateX(-90 * Math.PI / 180);
+	
+	scene.add(earth);
+	
 	// 바닥
 	roomFloor = drawFloor();
 	roomFloor.rotateX(-90 * Math.PI / 180);
@@ -230,7 +241,7 @@ function init() {
 	window.addEventListener('resize', this.onResize, false);
 	window.addEventListener('keydown', this.onKeydown, false);
 	
-	var imagePrefix = "http://stemkoski.github.io/images/dawnmountain-";
+	var imagePrefix = "http://stemkoski.github.io/Three.js/images/dawnmountain-";
 	var directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
 	var imageSuffix = ".png";
 	var skyGeometry = new THREE.CubeGeometry( earthSize, earthSize, earthSize );	
@@ -238,7 +249,7 @@ function init() {
 	var materialArray = [];
 	for (var i = 0; i < 6; i++)
 		materialArray.push( new THREE.MeshBasicMaterial({
-			map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
+			map: textureLoader.load(imagePrefix + directions[i] + imageSuffix),
 			side: THREE.BackSide
 		}));
 	var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
