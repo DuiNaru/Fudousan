@@ -393,6 +393,8 @@ function onDocumentMouseDown(event) {
 	var intersects = raycaster.intersectObjects(walls.children, true);
 	if (intersects.length > 0) {
 		console.log(intersects[0]);
+		curSelectedRoomObject = intersects[0].object.roomWall;
+		//curSelected
 		var index = Math.floor( intersects[0].faceIndex / 2 );
 	      switch (index) {
 	         case 0: 
@@ -402,7 +404,6 @@ function onDocumentMouseDown(event) {
 	         case 4: 
 	         case 5: 
 	      }
-		curSelectedRoomObject = intersects[0].object.roomWall;
 	}
 	
 	raycaster.setFromCamera(mouse, camera);
@@ -495,8 +496,9 @@ function moveMouse(event) {
  * 천장 높이 변경을 반영한다.
  * @returns
  */
-function changeHeigth() {
+function changeHeigth(height) {
 	drawWall();
+	room.height = height;
 	roomCeil.position.y = room.height;
 }
 
@@ -518,8 +520,8 @@ function drawWall() {
 			geometry.faces[ j + 1 ].color.setHex( hex );
 		}*/
 		
-		//var material = new THREE.MeshFaceMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
-		var material = new THREE.MeshFaceMaterial([
+		var material = new THREE.MeshFaceMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
+		/*var material = new THREE.MeshFaceMaterial([
 	        new THREE.MeshBasicMaterial({
 	        	color: 'red' //left
 	        }),
@@ -538,7 +540,7 @@ function drawWall() {
 	        new THREE.MeshBasicMaterial({
 	            color: 'yellow' //back
 	        })
-	    ]);
+	    ]);*/
 		console.log(originalWalls[i].frontTextureId);
 		var texture = textureLoader.load(originalWalls[i].frontTextureId, function ( texture ) {
 

@@ -464,8 +464,7 @@ canvas {
 						},
 						success: function(data){
 							if(data != null || data == true || data == "true") {
-								room.height = height;
-								changeHeigth();
+								changeHeigth(height);
 							} else {
 								alert("방 높이 변경에 실패하였습니다.");
 							}
