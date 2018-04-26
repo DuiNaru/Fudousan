@@ -1,7 +1,7 @@
-/*var socket = io('localhost:8000');*/
+var socket = io('localhost:8000');
 
-var socket = io('http://sunnyserver.dlinkddns.com');
-
+/*var socket = io('http://sunnyserver.dlinkddns.com');
+*/
 
 $(function(){
 	 var userId = document.getElementById('userId').value;
@@ -94,15 +94,15 @@ CommandCallBack.onBack = function(){
 }
 
 //모든 onFloorTexture하면 실행된다.
-CommandCallBack.onFloorTexture = function(TextureId){
+CommandCallBack.onFloorTexture = function(roomItem){
 	console.log('onFloorTexture');
-	nodeCommand.transmitFloorTexture(TextureId);
+	nodeCommand.transmitFloorTexture(roomItem);
 }
 
 //모든 onCeilTexture하면 실행된다.
-CommandCallBack.onCeilTexture = function(TextureId){
+CommandCallBack.onCeilTexture = function(roomItem){
 	console.log('onCeilTexture');
-	nodeCommand.transCeilTexture(TextureId);
+	nodeCommand.transCeilTexture(roomItem);
 }
 
 
@@ -243,22 +243,24 @@ var nodeCommand = {
 	},
 	
 	//CommandCallBack.onFloorTexture (바닥 텍스쳐)
-	transmitFloorTexture : function(TextureId){
-		socket.emit('floor',TextureId);
-		console.log('바닥 바닥 바닥');
+	transmitFloorTexture : function(roomItem){
+		var roomItemObject = JSON.stringify(roomItem);
+		socket.emit('floor',roomItemObject);
 	},
-	receiveFloor : function(TextureId){
-		changeFloorTexture(TextureId);
+	receiveFloor : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		changeFloorTexture(roomItem);
 	},
 	
 	
 	//CommandCallBack.onCeilTexture (천장 텍스쳐)
-	transCeilTexture : function(TextureId){
-		socket.emit('ceil',TextureId);
-		console.log('천장 천장 천장 ');
+	transCeilTexture : function(roomItem){
+		var roomItemObject = JSON.stringify(roomItem);
+		socket.emit('ceil',roomItemObject);
 	},
-	receiveCeil : function(TextureId){
-		changeCeilTexture(TextureId);
+	receiveCeil : function(roomItemObject){
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
+		changeCeilTexture(roomItem);
 	},
 	
 	
@@ -266,7 +268,7 @@ var nodeCommand = {
 	transWall : function(wall){
 		var roomItemObject = JSON.stringify(wall);
 		socket.emit('wall',roomItemObject);
-		console.log('벽 벽 벽 ');
+		console.log('왈 왈 왈 ');
 	},
 	receiveWall : function(wallObject){
 		console.log('★');
@@ -341,12 +343,12 @@ socket.on('othersideExit',function(){
 	alert('상대방이 접속을 종료하였습니다.');
 });
 
-socket.on('othersideTexture',function(TextureId){
-	nodeCommand.receiveFloor(TextureId);
+socket.on('othersideTexture',function(roomItemObject){
+	nodeCommand.receiveFloor(roomItemObject);
 });
 
-socket.on('othersideCeil',function(TextureId){
-	nodeCommand.receiveCeil(TextureId);
+socket.on('othersideCeil',function(roomItemObject){
+	nodeCommand.receiveCeil(roomItemObject);
 });
 
 socket.on('othersideWall',function(wallObject){
