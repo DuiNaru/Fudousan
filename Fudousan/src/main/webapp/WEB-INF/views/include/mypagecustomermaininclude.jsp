@@ -34,18 +34,30 @@
                 			</span>
             			</div>
         			</div>
-        			<hr>
+        			<br>
         			<!-- result -->      
-					<h3>Test</h3>
-					<c:forEach var="room" items="${rlist}">
-						<div class="col-sm-12 form-group">
-							<p><a href="/">${room.estate.estateName}</a><c:out value="${room.map} "/></p>
-		 					<a class="btn btn-default" href="<c:url value="/newRoom?estateId=${room.estate.estateId}&roomPublic=0"/>">내집꾸미기</a>
-		 					<a class="btn btn-default" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.estate.estateId}"/>">논리삭제</a>
-						</div>	
-						<div style="clear: both;"></div>
-					</c:forEach>
-					<div style="clear: both;"></div>
+        			<table class="table">
+        				<tr>
+        					<th>Name</th>
+        					<th>Create</th>
+        					<th>Delete</th>
+        				</tr>
+        				<tbody>
+        					<c:forEach var="room" items="${rlist}">
+	        					<tr>
+	        						<td>
+	        							<p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">${room.estate.estateName}</a><c:out value="${room.map}"/></p>
+	        						</td>
+	        						<td>	
+	        							<a class="btn btn-info" href="<c:url value="/newRoom?estateId=${room.estate.estateId}&roomPublic=0"/>">내집꾸미기</a>
+	        						</td>
+	        						<td>
+	        							<a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.estate.estateId}"/>">논리삭제</a>
+	        						</td>
+	        					</tr>
+        					</c:forEach>
+        				</tbody>
+        			</table>
     			</div>
    				<div role="tabpanel" class="tab-pane" id="profile">
     				<h1>찜한 매물 보기</h1>
@@ -63,7 +75,6 @@
         			</div>
 					<hr>
 					<!-- result -->
-					<h3>Test</h3>
 					<c:forEach var="favorite" items="${flist}">
 						<div class="col-sm-12 form-group">
 							<p><a href="/">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}estataId:${favorite.estate.estateId}"/></p>
