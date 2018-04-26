@@ -1015,19 +1015,17 @@ function changeCeilTexture(textureId) {
 	});
 }
 
-function changeWallTexture(roomWall, textureId) {
+function changeWallTexture(roomWall, textureId, wallIndex) {
 	var url;
 	var wallFace;
-	switch(curSelectedWallFace) {
+	switch(wallIndex) {
 	case 2:
 		url = "wall/changeFrontTexture";
-		wallFace = curSelectedWallFace;
-		curSelectedWallFace = undefined;
+		wallFace = wallIndex;
 		break;
 	case 3:
 		url = "wall/changeBackTexture";
-		wallFace = curSelectedWallFace;
-		curSelectedWallFace = undefined;
+		wallFace = wallIndex;
 		break;
 	default:
 		alert("벽을 제대로 클릭해주세요.");
@@ -2146,8 +2144,6 @@ function applyTexture(textureId) {
 	if(curSelectedRoomObject === undefined) {
 		return;
 	}
-	console.log("applyTexture"+textureId);
-	console.log(curSelectedRoomObject);
 	switch(curSelectedRoomObject) {
 	case "roomFloor":
 		if( CommandCallBack.onFloorTexture !== undefined ) {
@@ -2163,12 +2159,13 @@ function applyTexture(textureId) {
 		break;
 	default:
 		if( CommandCallBack.onWallTexture !== undefined ) {
-			CommandCallBack.onWallTexture(curSelectedRoomObject, textureId);
+			CommandCallBack.onWallTexture(curSelectedRoomObject, textureId, curSelectedWallFace);
 		}
-		changeWallTexture(curSelectedRoomObject, textureId);
+		changeWallTexture(curSelectedRoomObject, textureId, curSelectedWallFace);
 		break;
 	}
 	curSelectedRoomObject = undefined;
+	curSelectedWallFace = undefined;
 }
 
 //-------------
