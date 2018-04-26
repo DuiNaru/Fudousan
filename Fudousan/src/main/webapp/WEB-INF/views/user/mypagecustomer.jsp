@@ -13,7 +13,6 @@
     <!-- css -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="resources/css/3dmodel.css" rel="stylesheet">
-  
     <link href="resources/css/mypagecustomer.css" rel="stylesheet">
     <link href="resources/css/templete.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -28,10 +27,9 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 
-
 	<!-- main page  -->
 	<%@include file="/WEB-INF/views/include/mypagecustomermaininclude.jsp" %>
-
+	
 	<!-- footer  -->
 	<%@include file="/WEB-INF/views/include/footer.jsp" %>
 	
