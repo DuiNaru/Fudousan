@@ -265,13 +265,15 @@
 		<div class="col-sm-2 sidenav">
 			<div class="col-sm-2 sidenav">
 				
-				<a class="btn btn-success" href="../newRoom?estateId=2&amp;roomPublic=0">NEW 3D MODEL</a>
-				<br><br>
-				<a data-toggle="modal" href="#3dDesignModal" class="btn btn-success btn-lg">
-					<span class="glyphicon glyphicon-print"></span> 3D DESIGN
+				<a class="btn btn-success btn-lg" href="../newRoom?estateId=2&amp;roomPublic=0">
+					<span class="glyphicon glyphicon-print"></span> NEW 3D MODEL
 				</a>
 				<br><br>
-				<a data-toggle="modal" href="#emailModal" class="btn btn-success btn-lg">
+				<a data-toggle="modal" href="#3dDesignModal" class="btn btn-info btn-lg">
+					<span class="glyphicon glyphicon-search"></span> 3D DESIGN
+				</a>
+				<br><br>
+				<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
 					<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
 				</a>
  			</div>
