@@ -21,6 +21,3 @@
         });
       }
  
-$('#3dModelButton').on('click', function(){
-	
-});
