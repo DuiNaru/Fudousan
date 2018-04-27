@@ -247,9 +247,9 @@ function init() {
 	window.addEventListener('resize', this.onResize, false);
 	window.addEventListener('keydown', this.onKeydown, false);
 	
-	var imagePrefix = "http://stemkoski.github.io/Three.js/images/dawnmountain-";
-	var directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
-	var imageSuffix = ".png";
+	var imagePrefix = "/fudousan/resources/image/skybox/Daylight_Box_";
+	var directions  = ["Right", "Left", "Top", "Bottom", "Front", "Back"];
+	var imageSuffix = ".bmp";
 	var skyGeometry = new THREE.CubeGeometry( earthSize, earthSize, earthSize );	
 	
 	var materialArray = [];
