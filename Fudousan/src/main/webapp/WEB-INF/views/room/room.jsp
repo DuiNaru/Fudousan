@@ -168,8 +168,7 @@ canvas {
 
 .top-menu {
 	position: absolute;
-	top: 20%;
-	margin-left: auto;
+	top: 0%;
 	z-index: 1;
 	background-color: rgba(255, 255, 255, 0.5);
 }
