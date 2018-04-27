@@ -1,6 +1,6 @@
-var socket = io('localhost:8000');
+/*var socket = io('localhost:8000');*/
 
-/*var socket = io('http://sunnyserver.dlinkddns.com');*/
+var socket = io('http://sunnyserver.dlinkddns.com');
 
 
 $(function(){
