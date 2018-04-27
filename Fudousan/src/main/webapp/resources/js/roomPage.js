@@ -206,6 +206,7 @@ function init() {
 	// 바닥
 	roomFloor = drawFloor();
 	roomFloor.rotateX(-90 * Math.PI / 180);
+	roomFloor.position.y += 10;
 	scene.add(roomFloor);
 	
 	floorTexture = textureLoader.load(room.floorTexture, function ( texture ) {
