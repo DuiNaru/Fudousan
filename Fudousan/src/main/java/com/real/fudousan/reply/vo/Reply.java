@@ -31,4 +31,56 @@ public class Reply implements Serializable {
 
 	/** DATE. */
 	private Date creDate;
+
+	public Integer getReplyId() {
+		return replyId;
+	}
+
+	public void setReplyId(Integer replyId) {
+		this.replyId = replyId;
+	}
+
+	public int getEstateId() {
+		return estateId;
+	}
+
+	public void setEstateId(int estateId) {
+		this.estateId = estateId;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+
+	public Date getCreDate() {
+		return creDate;
+	}
+
+	public void setCreDate(Date creDate) {
+		this.creDate = creDate;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "Reply [replyId=" + replyId + ", estateId=" + estateId + ", member=" + member + ", text=" + text
+				+ ", creDate=" + creDate + "]";
+	}
+	
+	
 }
