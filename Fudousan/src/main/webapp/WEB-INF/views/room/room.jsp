@@ -168,7 +168,7 @@ canvas {
 
 .top-menu {
 	position: absolute;
-	top: 0%;
+	top: 20%;
 	margin-left: auto;
 	z-index: 1;
 	background-color: rgba(255, 255, 255, 0.5);
@@ -474,6 +474,6 @@ canvas {
 	<menu>
 	</menu>
 	
-	<script src="<c:url value="/resources/js/videochat.js"/>"></script>
+	<script src="<c:url value="/resources/js/videochat.js"/>" id="videochatjs"></script>
 </body>
 </html>

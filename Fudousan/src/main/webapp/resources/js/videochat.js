@@ -1,6 +1,7 @@
+let videochatjs = document.getElementById("videochatjs");
 let script = document.createElement("script");
 script.src = "/fudousan/resources/js/cookie.js";
-document.body.appendChild(script);
+document.body.insertBefore(script, videochatjs);
 
 let startBtn = document.getElementById("startVideoChatBtn");
 startBtn.onclick = pushStartBtn;
@@ -50,7 +51,7 @@ if (lang === ""){
 }
 
 function pushStartBtn(){
-	if (startBtn.value === "화상 채팅 시작"){
+	if (startBtn.innerHTML === "화상 채팅 시작"){
 		call();
 	}
 	else {
@@ -73,13 +74,13 @@ function call(){
 		localCam.width = 400;
 		localCam.height = 300;
 		localCam.srcObject = localStream;
-	}).then(function(){
-		socket.emit("call", {roomId: room.roomId});
-		
-		showCallWindow();
 	}).catch(function(e){
 		alert("getUserMedia() error: " + e.name);
 	});
+	
+	showCallWindow();
+
+	socket.emit("call", {roomId: room.roomId});
 };
 
 function showCallWindow(){
@@ -93,7 +94,7 @@ function showCallWindow(){
     div.style.padding = "10px";
     div.style.background = "rgba(0, 0, 0, 0.5)";
     
-	let html = "상대방의 수락을 기다리고 있습니다.<br><button type='button' id='cancelCallBtn'>취소</button>";
+	let html = "상대방의 수락을 기다리고 있습니다.<br><div id='btnDiv'><button type='button' id='cancelCallBtn'>취소</button></div>";
 	div.innerHTML = html;
 	
 	document.body.appendChild(div);
@@ -138,6 +139,9 @@ socket.on("cancel-call", function(){
 });
 
 socket.on("not-found-target", function(){
+	console.log("--> not found target");
+	
+	closeCall();
 	removeDiv("callingDiv");
 	
 	alert("상대방이 없습니다.");
