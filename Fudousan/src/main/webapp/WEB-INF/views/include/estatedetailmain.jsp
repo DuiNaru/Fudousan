@@ -9,7 +9,19 @@
     
     <!-- side nav(left) -->
     <div class="col-sm-2 sidenav">
-		
+    	<c:if test="${sessionScope.memberId !=null }">
+			<a class="btn btn-success btn-lg" href="../newRoom?estateId=2&amp;roomPublic=0" id="3dModelButton">
+				<span class="glyphicon glyphicon-print"></span> NEW 3D MODEL
+			</a>
+			<br><br>
+			<a data-toggle="modal" href="#3dDesignModal" class="btn btn-info btn-lg">
+				<span class="glyphicon glyphicon-search"></span> 3D DESIGN
+			</a>
+			<br><br>
+			<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
+				<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
+			</a>
+		</c:if>
     </div>
     
 <!-- text main -->
@@ -19,12 +31,13 @@
     <hr>
 		
 	<!-- Favorite Button -->
-	<label id="star" for="id-of-input" class="custom-checkbox">
-  		<input type="checkbox" id="id-of-input"/>
-  		<i class="glyphicon glyphicon-star-empty" id="empty"></i>
-  		<i class="glyphicon glyphicon-star" id="full"></i>
-	</label>
-    
+	<c:if test="${sessionScope.memberId !=null }">
+		<label id="star" for="id-of-input" class="custom-checkbox">
+	  		<input type="checkbox" id="id-of-input"/>
+	  		<i class="glyphicon glyphicon-star-empty" id="empty"></i>
+	  		<i class="glyphicon glyphicon-star" id="full"></i>
+		</label>
+    </c:if>
     		<!-- map  -->
     		<div id="map"></div>
     		<hr>
@@ -261,22 +274,52 @@
 			</div>
 		</div>
 		</div>
+		<div>
+			<div class="row">
+				<div class="col-sm-12">
+					<h3>User Comment</h3>
+				</div><!-- /col-sm-12 -->
+			</div><!-- /row -->
+			<div class="row">
+				<div class="col-sm-1">
+					<div class="thumbnail">
+						<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+					</div><!-- /thumbnail -->
+				</div><!-- /col-sm-1 -->
+			<div class="col-sm-5">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>${reply.member.id}</strong> <span class="text-muted">${reply.text }</span>
+					</div>
+					<div class="panel-body">
+						<p>Panel content</p>
+						<c:if test="${sessionScope.memberId !=null }">
+							<hr>
+							<div>
+								<input type="button" class="btn btn-info" value="update">
+								<input type="button" class="btn btn-warning" value="delete">
+							</div>
+						</c:if>
+					</div><!-- /panel-body -->
+				</div><!-- /panel panel-default -->
+			</div><!-- /col-sm-5 -->
+			</div><!-- /row -->
+			</div><!-- /container -->		
+			<!-- input reply -->
+			<c:if test="${sessionScope.memberId !=null }">
+				<div>
+					<div>			
+						<input type="text" class="form-control" id="text">
+						<input type="hidden" value="${sessionScope.memberId}" id="memberId">
+						<input type="hidden" value=" ${estateId}" id="estateId">
+						<input type="button" class="btn btn-info" >
+					</div>
+				</div>
+			</c:if>
 		</div>
 		<div class="col-sm-2 sidenav">
 			<div class="col-sm-2 sidenav">
-				
-				<a class="btn btn-success btn-lg" href="../newRoom?estateId=2&amp;roomPublic=0" id="3dModelButton">
-					<span class="glyphicon glyphicon-print"></span> NEW 3D MODEL
-				</a>
-				<br><br>
-				<a data-toggle="modal" href="#3dDesignModal" class="btn btn-info btn-lg">
-					<span class="glyphicon glyphicon-search"></span> 3D DESIGN
-				</a>
-				<br><br>
-				<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
-					<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
-				</a>
- 			</div>
+			</div>
 		</div>
 	</div>
 </div>

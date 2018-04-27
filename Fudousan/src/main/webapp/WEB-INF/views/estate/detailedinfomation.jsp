@@ -13,6 +13,7 @@
     <link href="../resources/css/3dmodel.css" rel="stylesheet">
     <link href="../resources/css/templete.css" rel="stylesheet">
     <link href="../resources/css/detailedinfomationpage.css" rel="stylesheet">
+     <link href="../resources/css/comment.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 
@@ -36,6 +37,7 @@
 	<!-- footer  -->
 	<%@include file="/WEB-INF/views/include/footer.jsp" %>
 
+	
 	<!-- hidden value -->
 	<input type="hidden" value="${resultEstate.estateX}" id="lat">
 	<input type="hidden" value="${resultEstate.estateY}" id="lng">
