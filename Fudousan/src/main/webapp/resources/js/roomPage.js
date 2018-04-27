@@ -419,38 +419,40 @@ function onDocumentMouseDown(event) {
 		
 		// 화면 돌리기 불가
 		controls.enabled = false;
+	} else {
+		// 벽 선택
+		raycaster.setFromCamera(mouse, camera);
+		var intersects = raycaster.intersectObjects(walls.children, true);
+		if (intersects.length > 0) {
+			
+			curSelectedRoomObject = intersects[0].object.roomWall;
+			var index = Math.floor( intersects[0].faceIndex / 2 );
+		      switch (index) {
+		         case 2: // front
+		        	 curSelectedWallFace = index;
+		        	 $("#textureInfo").show('slice');
+		         case 3: // back
+		        	 curSelectedWallFace = index;
+		        	 $("#textureInfo").show('slice');
+		      }
+		      
+		} else {
+			// 바닥/ 천장 선택
+			raycaster.setFromCamera(mouse, camera);
+			var intersects = raycaster.intersectObjects([roomFloor, roomCeil], true);
+			if (intersects.length > 0) {
+				if(intersects[0].object == roomFloor) {
+					curSelectedRoomObject = "roomFloor";
+		        	 $("#textureInfo").show('slice');
+				} else if (intersects[0].object == roomCeil) {
+					curSelectedRoomObject = "roomCeil";
+		        	 $("#textureInfo").show('slice');
+				}
+			}
+			
+		}
 	}
 	
-	raycaster.setFromCamera(mouse, camera);
-	var intersects = raycaster.intersectObjects(walls.children, true);
-	if (intersects.length > 0) {
-		
-		curSelectedRoomObject = intersects[0].object.roomWall;
-		var index = Math.floor( intersects[0].faceIndex / 2 );
-	      switch (index) {
-	         case 2: // front
-	        	 curSelectedWallFace = index;
-	        	 $("#textureInfo").show('slice');
-	         case 3: // back
-	        	 curSelectedWallFace = index;
-	        	 $("#textureInfo").show('slice');
-	      }
-	      
-	} else {
-		
-		raycaster.setFromCamera(mouse, camera);
-		var intersects = raycaster.intersectObjects([roomFloor, roomCeil], true);
-		if (intersects.length > 0) {
-			if(intersects[0].object == roomFloor) {
-				curSelectedRoomObject = "roomFloor";
-	        	 $("#textureInfo").show('slice');
-			} else if (intersects[0].object == roomCeil) {
-				curSelectedRoomObject = "roomCeil";
-	        	 $("#textureInfo").show('slice');
-			}
-		}
-		
-	}
 }
 
 /**
@@ -573,15 +575,15 @@ function drawWall() {
 		if (originalWalls[i].frontTextureURL != "" ) {
 			frontTexture = textureLoader.load(originalWalls[i].frontTextureURL, function ( texture ) {
 
-				console.log(texture.image);
-				console.log(width/texture.image.width);
-
 			    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 			    texture.offset.set( 0, 0 );
 			    //texture.repeat.set( width/texture.width, width/texture.width );
 			    texture.repeat.set( width/texture.image.width, room.height/texture.image.height );
 
 			} );
+			if( frontTexture.image !== undefined ) {
+				frontTexture.repeat.set( width/frontTexture.image.width, room.height/frontTexture.image.height );
+			}
 			frontMat.map = frontTexture;
 			frontMat.needsUpdate = true;
 		}
@@ -596,6 +598,9 @@ function drawWall() {
 			    texture.repeat.set( width/texture.image.width, room.height/texture.image.height );
 
 			} );
+			if( backTexture.image !== undefined ) {
+				backTexture.repeat.set( width/backTexture.image.width, room.height/backTexture.image.height );
+			}
 			backMat.map = backTexture;
 			backMat.needsUpdate = true;
 		}
