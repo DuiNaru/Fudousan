@@ -2240,7 +2240,7 @@ function itemMoveAni(object, targetX, targetY, targetZ){
 	};
 	
 	// 애니메이션 설정
-	let tween = new TWEEN.Tween(position).to(target, 1000);
+	let tween = new TWEEN.Tween(start).to(target, 1000);
 	tween.onUpdate(function(){
 		object.position.x = start.x;
 		object.position.y = start.y;
@@ -2268,7 +2268,7 @@ function itemRotateAni(object, targetRX, targetRY, targetRZ){
 	};
 	
 	// 애니메이션 설정
-	let tween = new TWEEN.Tween(position).to(target, 1000);
+	let tween = new TWEEN.Tween(start).to(target, 1000);
 	tween.onUpdate(function(){
 		object.rotation.x = start.x;
 		object.rotation.y = start.y;

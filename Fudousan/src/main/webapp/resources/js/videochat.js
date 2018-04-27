@@ -93,6 +93,7 @@ function showCallWindow(){
 	div.style.color = "rgb(255, 255, 255)";
     div.style.padding = "10px";
     div.style.background = "rgba(0, 0, 0, 0.5)";
+    div.style.zIndex = "2";
     
 	let html = "상대방의 수락을 기다리고 있습니다.<br><div id='btnDiv'><button type='button' id='cancelCallBtn'>취소</button></div>";
 	div.innerHTML = html;
