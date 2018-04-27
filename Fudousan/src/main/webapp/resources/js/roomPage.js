@@ -1143,10 +1143,14 @@ function changeWallTexture(roomWall, textureId, wallIndex) {
 				}
 				
 				var texture = textureLoader.load(url, function ( texture ) {
+					var c1 = walls.children[i].roomWall.roomWallConnector1;
+					var c2 = walls.children[i].roomWall.roomWallConnector2;
+
+					var width = c1.manhattanDistanceTo(c2);
 
 				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 				    texture.offset.set( 0, 0 );
-				    texture.repeat.set( 2, 2 );
+				    texture.repeat.set( width/texture.image.width, room.height/texture.image.height );
 
 				} );
 				for(var i = 0; i < walls.children.length; i++) {
