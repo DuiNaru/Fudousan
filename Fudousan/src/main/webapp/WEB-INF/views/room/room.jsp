@@ -441,7 +441,6 @@ canvas {
 				<ul>
 					<li><button onclick="back()">뒤로가기</button></li>
 					<li><button onclick="forward()">앞으로가기</button></li>
-					<li><button onclick="save()">저장하기</button></li>
 					<li><button onclick="roomReset()">초기화</button></li>
 					<li><button onclick="esc()">종료</button>
 					<li><button onclick="takeSnapShot()">스냅샷 </button>
