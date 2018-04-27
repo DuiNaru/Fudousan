@@ -185,6 +185,16 @@ public class Room implements Serializable {
 	}
 
 
+	public String getRoomTitle() {
+		return roomTitle;
+	}
+
+
+	public void setRoomTitle(String roomTitle) {
+		this.roomTitle = roomTitle;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Room [roomId=" + roomId + ", estate=" + estate + ", snapshot=" + snapshot + ", map=" + map
