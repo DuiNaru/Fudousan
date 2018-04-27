@@ -20,3 +20,7 @@
           map: map
         });
       }
+ 
+$('#3dModelButton').on('click', function(){
+	
+});

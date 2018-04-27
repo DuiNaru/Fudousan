@@ -265,7 +265,7 @@
 		<div class="col-sm-2 sidenav">
 			<div class="col-sm-2 sidenav">
 				
-				<a class="btn btn-success btn-lg" href="../newRoom?estateId=2&amp;roomPublic=0">
+				<a class="btn btn-success btn-lg" href="../newRoom?estateId=2&amp;roomPublic=0" id="3dModelButton">
 					<span class="glyphicon glyphicon-print"></span> NEW 3D MODEL
 				</a>
 				<br><br>
