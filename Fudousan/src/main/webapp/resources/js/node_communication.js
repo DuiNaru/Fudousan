@@ -1,6 +1,6 @@
-/* var socket = io('localhost:8000');*/
+var socket = io('localhost:8000');
 
-var socket = io('http://sunnyserver.dlinkddns.com');
+/*var socket = io('http://sunnyserver.dlinkddns.com');*/
 
 
 $(function(){
@@ -220,12 +220,12 @@ var nodeCommand = {
 		});
 	},
 	receiveSelectItem : function(roomItemObject){
-		var roomItem = objToRoomItem(JSON.parse(rooomItemObject));
+		var roomItem = objToRoomItem(JSON.parse(roomItemObject));
 		NewCommand.selectLocal(roomItem);
 	},
 	 
 	//CommandCallBack.onDeselect (아이템 선택 해제)
-	transmitSelect : function(roomItem){
+	transmitDeselect : function(roomItem){
 		var roomObject = JSON.stringify(roomItem);
 		socket.emit('deselectItem', {
 			roomId: room.roomId,
