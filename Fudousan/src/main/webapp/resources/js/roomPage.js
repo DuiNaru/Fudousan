@@ -8,6 +8,8 @@ var cameraLookAngle = 0;
 var camera, scene, renderer, controls;
 var scenes = [];
 var composer, outlinePass, otherOutlinePass;
+// 화면 돌리는 컨트롤 기준 높이
+var controlHeight = 150;
 // 화면 가로 길이
 var width = window.innerWidth;
 // 화면 세로 길이
@@ -56,6 +58,7 @@ var curSelectedWallFace;
 var textureLoader = new THREE.TextureLoader();
 
 $(function() {
+	$("#textureInfo").hide();
 	$("#itemInfo").hide();
 
 	$( "#ax" ).slider({
@@ -189,6 +192,7 @@ function init() {
 	controls.panningMode = THREE.HorizontalPanning; // default is THREE.ScreenSpacePanning
 	controls.minDistance = 100;
 	controls.maxDistance = 50000;
+	controls.target.set(0, controlHeight, 0);
 	//controls.maxPolarAngle = Math.PI / 2;
 	
 	//camera.rotation.x = 90 * Math.PI / 180;
@@ -400,7 +404,8 @@ function onKeydown(event) {
  * @returns
  */
 function onDocumentMouseDown(event) {
-	
+
+	 $("#textureInfo").hide('slice');
 	isMouseUp = false;
 	deSelect(true);
 	
@@ -425,20 +430,26 @@ function onDocumentMouseDown(event) {
 	      switch (index) {
 	         case 2: // front
 	        	 curSelectedWallFace = index;
+	        	 $("#textureInfo").show('slice');
 	         case 3: // back
 	        	 curSelectedWallFace = index;
+	        	 $("#textureInfo").show('slice');
 	      }
 	      
-	}
-	
-	raycaster.setFromCamera(mouse, camera);
-	var intersects = raycaster.intersectObjects([roomFloor, roomCeil], true);
-	if (intersects.length > 0) {
-		if(intersects[0].object == roomFloor) {
-			curSelectedRoomObject = "roomFloor";
-		} else if (intersects[0].object == roomCeil) {
-			curSelectedRoomObject = "roomCeil";
+	} else {
+		
+		raycaster.setFromCamera(mouse, camera);
+		var intersects = raycaster.intersectObjects([roomFloor, roomCeil], true);
+		if (intersects.length > 0) {
+			if(intersects[0].object == roomFloor) {
+				curSelectedRoomObject = "roomFloor";
+	        	 $("#textureInfo").show('slice');
+			} else if (intersects[0].object == roomCeil) {
+				curSelectedRoomObject = "roomCeil";
+	        	 $("#textureInfo").show('slice');
+			}
 		}
+		
 	}
 }
 
@@ -544,8 +555,11 @@ function drawWall() {
 	for(var i = 0; i < originalWalls.length; i++) {
 		var c1 = new THREE.Vector3(originalWalls[i].roomWallConnector1.x, originalWalls[i].roomWallConnector1.y, roomFloor.z);
 		var c2 = new THREE.Vector3(originalWalls[i].roomWallConnector2.x, originalWalls[i].roomWallConnector2.y, roomFloor.z);
+		
+		var width = c1.manhattanDistanceTo(c2);
 		// Cube
 		var geometry = new THREE.BoxGeometry(c1.clone().sub(c2).length(), wallThickness, room.height );
+		
 		/*for ( var j = 0; j < geometry.faces.length; j += 2 ) {
 			var hex = Math.random() * 0xffffff;
 			geometry.faces[ j ].color.setHex( hex );
@@ -555,28 +569,34 @@ function drawWall() {
 		//var material = new THREE.MeshFaceMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
 		
 		var frontMat = new THREE.MeshBasicMaterial();
+		var frontTexture;
 		if (originalWalls[i].frontTextureURL != "" ) {
-			var texture = textureLoader.load(originalWalls[i].frontTextureURL, function ( texture ) {
+			frontTexture = textureLoader.load(originalWalls[i].frontTextureURL, function ( texture ) {
+
+				console.log(texture.image);
+				console.log(width/texture.image.width);
 
 			    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 			    texture.offset.set( 0, 0 );
-			    texture.repeat.set( 2, 2 );
+			    //texture.repeat.set( width/texture.width, width/texture.width );
+			    texture.repeat.set( 100, 100 );
 
 			} );
-			frontMat.map = texture;
+			frontMat.map = frontTexture;
 			frontMat.needsUpdate = true;
 		}
 		
 		var backMat = new THREE.MeshBasicMaterial();
+		var backTexture;
 		if (originalWalls[i].backTextureURL != "" ) {
-			var texture = textureLoader.load(originalWalls[i].backTextureURL, function ( texture ) {
-
+			backTexture = textureLoader.load(originalWalls[i].backTextureURL, function ( texture ) {
+				
 			    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 			    texture.offset.set( 0, 0 );
-			    texture.repeat.set( 2, 2 );
+			    texture.repeat.set( 100, 100 );
 
 			} );
-			backMat.map = texture;
+			backMat.map = backTexture;
 			backMat.needsUpdate = true;
 		}
 		var material = new THREE.MeshFaceMaterial([
@@ -597,7 +617,27 @@ function drawWall() {
 	    ]);
 		
 		cube = new THREE.Mesh( geometry, material );
+		
+		cube.geometry.computeBoundingBox();
+		
+		/*var TEXTURE_SIZE = 64;
 
+	    var max = cube.geometry.boundingBox.max;
+	    var min = cube.geometry.boundingBox.min;
+	    var height = max.y - min.y;
+	    var width = max.x - min.x;
+	    frontTexture.repeat.set(width / TEXTURE_SIZE , height / TEXTURE_SIZE);
+	    console.log("x :" + width + "y : " + width);
+	    frontTexture.needsUpdate = true;
+	    
+	    var max = cube.geometry.boundingBox.max;
+	    var min = cube.geometry.boundingBox.min;
+	    var height = max.y - min.y;
+	    var width = max.x - min.x;
+	    backTexture.repeat.set(width / TEXTURE_SIZE , height / TEXTURE_SIZE);
+	    backTexture.needsUpdate = true;*/
+	    
+	    
 		var cubePosition= new THREE.Vector3().copy(c1).lerp(c2, 0.5);
 		//cubePosition.y += room.height/2;
 		cube.position.copy(cubePosition);
@@ -1949,6 +1989,9 @@ function createItemListener(item) {
 	NewCommand.create(item);
 }
 
+function deleteItemButton() {
+	NewCommand.delete(curSelected.roomItem);
+}
 /**
  * 사용자 명령어 정의
  * 각각에 따라 명령을 수행한다.
@@ -2219,6 +2262,7 @@ function applyTexture(textureId) {
 	}
 	curSelectedRoomObject = undefined;
 	curSelectedWallFace = undefined;
+	 $("#textureInfo").hide('slice');
 }
 
 //-------------
