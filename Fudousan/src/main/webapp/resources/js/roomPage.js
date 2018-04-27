@@ -477,7 +477,7 @@ function onDocumentMouseMove(event) {
 			var z = curSelected.roomItem.item.itemZ;
 			
 			// 원점 보정해서 움직임
-			move(curSelected, intersects[0].point.x+x, intersects[0].point.y+y, intersects[0].point.z+z);
+			move(curSelected, intersects[0].point.x+x, intersects[0].point.y+y, intersects[0].point.z+z, false);
 			
 			// 움직이고 나서 움직였음을 표시한다.
 			curMoving = true;
@@ -1444,30 +1444,34 @@ function deplaceRoomItem(roomItem) {
  * @param x
  * @param y
  * @param z
+ * @param useAni
  * @returns
  */
-function move(object, x, y, z) {
+function move(object, x, y, z, useAni) {
 	let targetX, targetY, targetZ;
 	
 	targetX = ( x != null ) ? x : object.position.x;
 	targetY = ( y != null ) ? y : object.position.y;
 	targetZ = ( z != null ) ? z : object.position.z;
 	
-	itemMoveAni(object, targetX, targetY, targetZ);
+	if ( useAni === undefined || useAni == true ) {
+		itemMoveAni(object, targetX, targetY, targetZ);
+	}
 }
 
 /**
  * 해당 룸 아이템을 해당 x,y,z 로 이동
  * @param roomItem
  * @param excuteCallBack 콜백 실행 여부
+ * @param useAni 애니메이션 실행 여부
  * @returns
  */
-function moveRoomItem(roomItem, excuteCallBack) {
+function moveRoomItem(roomItem, excuteCallBack, useAni) {
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
 			var result = curRoomItems[i].roomItem.clone();
 
-			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z);
+			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z, useAni);
 			
 			curRoomItems[i].roomItem.x = roomItem.x;
 			curRoomItems[i].roomItem.y = roomItem.y;
@@ -2106,7 +2110,7 @@ var NewCommand = {
 			command.onRedoRoomItem = roomItem;
 			addCommand(command);
 			
-			command.onRedoRoomItem = moveRoomItem(roomItem, true);
+			command.onRedoRoomItem = moveRoomItem(roomItem, true, false);
 		},
 		// 단순 이동 커맨드
 		moveLocal : function(roomItem) {
