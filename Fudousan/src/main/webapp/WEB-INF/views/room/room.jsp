@@ -474,6 +474,7 @@ canvas {
 	<menu>
 	</menu>
 	
-	<script src="<c:url value="/resources/js/videochat.js"/>" id="videochatjs"></script>
+	<script src="<c:url value="/resources/js/cookie.js"/>"></script>
+	<script src="<c:url value="/resources/js/videochat.js"/>"></script>
 </body>
 </html>

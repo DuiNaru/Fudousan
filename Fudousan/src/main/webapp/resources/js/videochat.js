@@ -1,8 +1,3 @@
-let videochatjs = document.getElementById("videochatjs");
-let script = document.createElement("script");
-script.src = "/fudousan/resources/js/cookie.js";
-document.body.insertBefore(script, videochatjs);
-
 let startBtn = document.getElementById("startVideoChatBtn");
 startBtn.onclick = pushStartBtn;
 
@@ -44,7 +39,7 @@ let langSet = {
 	}
 };
 
-let lang = getCookie();
+let lang = getCookie("lang");
 
 if (lang === ""){
 	lang = "ko";
@@ -69,10 +64,8 @@ function call(){
 	startBtn.innerHTML = "화상 채팅 종료";
 	startBtn.disabled = true;
 	
-	navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream){
+	navigator.mediaDevices.getUserMedia({video: {width: 400, height: 300}, audio: true}).then(function(stream){
 		localStream = stream;
-		localCam.width = 400;
-		localCam.height = 300;
 		localCam.srcObject = localStream;
 	}).catch(function(e){
 		alert("getUserMedia() error: " + e.name);
@@ -307,6 +300,8 @@ function closeCall(){
 		myPeerConnection.close();
 		myPeerConnection = null;
 	}
+	
+	
 	
 	localCam.srcObject = null;
 };
