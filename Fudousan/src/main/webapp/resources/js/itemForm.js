@@ -113,8 +113,8 @@ var camera, scene, renderer, controls;
 var width = window.innerWidth;
 // 화면 세로 길이
 var height = window.innerHeight;
-// 지면
-var plane;
+// 지면들
+var plane = [];
 // 지면(사이즈)
 var planeSize = 100;
 // Raycaster
@@ -228,9 +228,37 @@ function init() {
 
 	var planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
 	var planeMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
-	plane = new THREE.Mesh(planeGeometry, planeMaterial);
-	plane.rotateX(-90 * Math.PI / 180);
-	scene.add(plane);
+	plane.push(new THREE.Mesh(planeGeometry, planeMaterial));
+	plane[0].rotateX(-90 * Math.PI / 180);
+	scene.add(plane[0]);
+	
+	var planeGeometry = new THREE.PlaneGeometry(planeSize*2, planeSize*2);
+	var planeMaterial = new THREE.MeshBasicMaterial({color:0x004400, sid:THREE.DoubleSice});
+	plane.push(new THREE.Mesh(planeGeometry, planeMaterial));
+	plane[1].rotateX(-90 * Math.PI / 180);
+	plane[1].position.y -= 0.5;
+	scene.add(plane[1]);
+	
+	var planeGeometry = new THREE.PlaneGeometry(planeSize*3, planeSize*3);
+	var planeMaterial = new THREE.MeshBasicMaterial({color:0x006600, sid:THREE.DoubleSice});
+	plane.push(new THREE.Mesh(planeGeometry, planeMaterial));
+	plane[2].rotateX(-90 * Math.PI / 180);
+	plane[2].position.y -= 1;
+	scene.add(plane[2]);
+	
+	var planeGeometry = new THREE.PlaneGeometry(planeSize*4, planeSize*4);
+	var planeMaterial = new THREE.MeshBasicMaterial({color:0x008800, sid:THREE.DoubleSice});
+	plane.push(new THREE.Mesh(planeGeometry, planeMaterial));
+	plane[3].rotateX(-90 * Math.PI / 180);
+	plane[3].position.y -= 1.5;
+	scene.add(plane[3]);
+	
+	var planeGeometry = new THREE.PlaneGeometry(planeSize*5, planeSize*5);
+	var planeMaterial = new THREE.MeshBasicMaterial({color:0x00AA00, sid:THREE.DoubleSice});
+	plane.push(new THREE.Mesh(planeGeometry, planeMaterial));
+	plane[4].rotateX(-90 * Math.PI / 180);
+	plane[4].position.y -= 2;
+	scene.add(plane[4]);
 	
 	window.addEventListener('resize', this.onResize, false);
 	
