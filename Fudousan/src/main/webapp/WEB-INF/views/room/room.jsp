@@ -323,7 +323,6 @@ canvas {
 </div> 
 	<div class="top-menu">
 	</div>
-	<script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
 	<div class="dat"></div>
 	
 	<!-- 위쪽 메뉴 -->

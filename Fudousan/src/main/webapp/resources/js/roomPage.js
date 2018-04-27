@@ -139,6 +139,7 @@ $(function() {
 			infoDataChange = true;
 		}
 	});
+	console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 	//초기화
 	init();
 	//화면 그리기
@@ -288,7 +289,7 @@ function init() {
 	effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
 	effectFXAA.renderToScreen = true;
 	composer.addPass( effectFXAA );
-	
+
 	// roomitems 의 배열의 Roomitem VO에 따라 오브젝트 추가
 	$.each(roomItems, function(index, obj) {
 		placeRoomItem(obj);
@@ -475,7 +476,7 @@ function onDocumentMouseMove(event) {
 			var x = curSelected.roomItem.item.itemX;
 			var y = curSelected.roomItem.item.itemY;
 			var z = curSelected.roomItem.item.itemZ;
-			
+
 			// 원점 보정해서 움직임
 			move(curSelected, intersects[0].point.x+x, intersects[0].point.y+y, intersects[0].point.z+z, false);
 			
@@ -1456,6 +1457,11 @@ function move(object, x, y, z, useAni) {
 	
 	if ( useAni === undefined || useAni == true ) {
 		itemMoveAni(object, targetX, targetY, targetZ);
+	} else {
+		console.log(useAni);
+		object.position.x = targetX;
+		object.position.y = targetY;
+		object.position.z = targetZ;
 	}
 }
 
@@ -1592,11 +1598,13 @@ function selectByOther(roomItem) {
  */
 function deSelect(executeCallBack) {
 	if ( infoDataChange ) {
-		curSelected.roomItem = curSelectedOriginal;
-		applyRoomItem(curSelected);
-		
-		if(executeCallBack == true && CommandCallBack.onDeselect !== undefined) {
-			CommandCallBack.onDeselect(curSelectedOriginal);
+		if(curSelected != null) {
+			curSelected.roomItem = curSelectedOriginal;
+			applyRoomItem(curSelected);
+			
+			if(executeCallBack == true && CommandCallBack.onDeselect !== undefined) {
+				CommandCallBack.onDeselect(curSelectedOriginal);
+			}
 		}
 		curSelectedOriginal = null;
 	}
