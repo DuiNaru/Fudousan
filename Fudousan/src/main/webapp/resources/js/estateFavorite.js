@@ -28,7 +28,7 @@
 							}
 						},
 						error : function(e){//에러 정보를 갖고 있는 
-							alert(JSON.stringify(e));
+							
 						} 
 						
 		      	  });
@@ -51,7 +51,7 @@
 								
 						},
 						error : function(e){//에러 정보를 갖고 있는 
-							alert(JSON.stringify(e));
+							
 						} 
 		    		});
 		    		
@@ -67,7 +67,7 @@
 								
 						},
 						error : function(e){//에러 정보를 갖고 있는 
-							alert(JSON.stringify(e));
+						
 						} 
 		    		});
 				}

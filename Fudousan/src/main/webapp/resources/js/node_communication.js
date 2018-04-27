@@ -420,7 +420,9 @@ socket.on('otherheight',function(height){
 
 function esc(){
 	//session의 아이디의 분류를 받아서 일반사용자/중개업자/인테리어 분류해서
-	socket.emit('exit');
+	socket.emit('exit',{
+		roomId: room.roomId
+	});
 	location.href = '/fudousan/';
 }
 

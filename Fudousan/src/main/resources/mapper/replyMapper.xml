@@ -5,7 +5,59 @@
 
 
 <mapper namespace="com.real.fudousan.reply.dao.ReplyMapper">
-
+	<resultMap type="reply" id="replyResultMap">
+		<id property="replyId" column="reply_id"/>
+		<result property="estateId" column="estate_id"/>
+		<result property="text" column="text"/>
+		<result property="creDate" column="cre_date"/>
+		<!-- Member -->
+		<association property="member" column="member_id" javaType="com.real.fudousan.member.vo.Member" resultMap="com.real.fudousan.member.dao.MemberMapper.memberResultMap"/>
+	</resultMap>
+	
+	<!-- insert -->
+	<insert id="insertReply" parameterType="reply">
+		INSERT INTO reply
+		(
+			estate_id,
+			member_id,
+			text	
+		)
+		VALUES
+		(
+			#{estateId},
+			#{member.memberId},
+			#{text}
+		)
+	</insert>
+	
+	<select id="selectResult" resultMap="replyResultMap">
+		SELECT
+			estate_id,
+			reply.text as text,	
+			reply.cre_date as cre_date,
+			member_id,
+			email,
+			password,
+			phone,
+			picture,
+			member.text as "member_text",
+			member.cre_date as "member_cre_date",
+			del_date as "member_del_date",
+			designer,
+			member_name,
+			permission.permission_id as "permission_id",
+			permission.name as "permission_name"
+		FROM
+			reply
+		JOIN
+			member
+		ON 
+			reply.member_id = member.member_id
+		JOIN 
+			permission
+		ON
+			member.permission_id = permission.permission_id
+	</select>
 
 	
 </mapper>

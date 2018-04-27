@@ -174,6 +174,16 @@ canvas {
 	background-color: rgba(255, 255, 255, 0.5);
 }
 
+.texture-menu {
+	position: absolute;
+	right: 0px;
+	z-index: 1;
+	width:30%;
+	height:100px;
+	overflow:scroll;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
 .left-menu {
 	position: absolute;
 	left: 0px;
@@ -238,13 +248,13 @@ canvas {
 	cursor: pointer;
 }
 .snapshot {
-	width: 100px;
-	height: 100px;
+	width: 160px;
+	height: 90px;
 }
 
 .imgPreview {
-	width: 100px;
-	height: 100px;
+	width: 30px;
+	height: 30px;
 }
 </style>
 
@@ -322,7 +332,7 @@ canvas {
 		<video id="localCam" autoplay="autoplay" muted="muted"></video>
 		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
 	</div>
-	<div id="textureInfo" class="left-menu">
+	<div id="textureInfo" class="texture-menu">
 		<div class="form-group">
 			<label>텍스쳐 리스트</label>
 			<div>
@@ -384,7 +394,7 @@ canvas {
 				<div id="pz"></div>
 			</div>
 		</div>
-		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem, delItem)">
+		<input type="button" value="삭제" onclick="deleteItemButton()">
 		<input type="button" value="적용" onclick="itemApplyListener()">
 	</div>
 	
@@ -431,7 +441,6 @@ canvas {
 				<ul>
 					<li><button onclick="back()">뒤로가기</button></li>
 					<li><button onclick="forward()">앞으로가기</button></li>
-					<li><button onclick="save()">저장하기</button></li>
 					<li><button onclick="roomReset()">초기화</button></li>
 					<li><button onclick="esc()">종료</button>
 					<li><button onclick="takeSnapShot()">스냅샷 </button>
