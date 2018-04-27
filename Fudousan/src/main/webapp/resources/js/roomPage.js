@@ -579,7 +579,7 @@ function drawWall() {
 			    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 			    texture.offset.set( 0, 0 );
 			    //texture.repeat.set( width/texture.width, width/texture.width );
-			    texture.repeat.set( 100, 100 );
+			    texture.repeat.set( width/texture.image.width, room.height/texture.image.height );
 
 			} );
 			frontMat.map = frontTexture;
@@ -593,7 +593,7 @@ function drawWall() {
 				
 			    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 			    texture.offset.set( 0, 0 );
-			    texture.repeat.set( 100, 100 );
+			    texture.repeat.set( width/texture.image.width, room.height/texture.image.height );
 
 			} );
 			backMat.map = backTexture;
