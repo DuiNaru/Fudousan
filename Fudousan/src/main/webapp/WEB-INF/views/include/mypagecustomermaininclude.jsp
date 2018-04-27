@@ -46,13 +46,13 @@
         					<c:forEach var="room" items="${rlist}">
 	        					<tr>
 	        						<td>
-	        							<p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">${room.estate.estateName}</a><c:out value="${room.map}"/></p>
+	        							<p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">${room.roomTitle}</a></p>
 	        						</td>
 	        						<td>	
 	        							<a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.estate.estateId}&roomPublic=0"/>">내집꾸미기</a>
 	        						</td>
 	        						<td>
-	        							<a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.estate.estateId}"/>">논리삭제</a>
+	        							<a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a>
 	        						</td>
 	        					</tr>
         					</c:forEach>
