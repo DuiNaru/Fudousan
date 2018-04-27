@@ -3,6 +3,7 @@
  */
 
 function formsubmit() {
+	
 	if ($("#InputName").val() == null || $("#InputName").val() == "") {
 		$("#InputName").focus();
 		return false;
@@ -11,7 +12,7 @@ function formsubmit() {
 		$("#InputPassword1").focus();
 		return false;
 	}
-	if ($("#InputPassword1").val() == $("#InputPassword2").val()) {
+	if ($("#InputPassword1").val() != $("#InputPassword2").val()) {
 		return false;
 	}
 	if ($("#InputPassword2").val() == null || $("#InputPassword2").val() == "") {
@@ -22,15 +23,10 @@ function formsubmit() {
 		$("#InputEmail").focus();
 		return false;
 	}
-	if ($("#InputText").val() == null || $("#InputText").val() == "") {
-		$("#InputText").focus();
-		return false;
-	}
-	if ($("#InputPhoto").val() == null || $("#InputPhoto").val() == "") {
-		$("#InputPhoto").focus();
-		return false;
-	}
-	if ($("#agree").is(":checked") == false) {
+	
+	console.log($("#agree").prop("checked"));
+	
+	if ($("#agree").prop("checked")) {
 		return false; 
 	}
 	
