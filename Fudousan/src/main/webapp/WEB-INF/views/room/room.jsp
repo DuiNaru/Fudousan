@@ -323,6 +323,16 @@ canvas {
 		<img src="<c:url value="/resources/image/loading.svg"/>" class="ld ld-spin"/>
 	</div>
 </div>
+				<!-- email modal  -->
+			 	<%@include file="/WEB-INF/views/include/emailmodal.jsp" %>
+			 	
+			 	<!-- hidden value -->
+				<input type="hidden" value="${resultEstate.estateX}" id="lat">
+				<input type="hidden" value="${resultEstate.estateY}" id="lng">
+				<input type="hidden" value="${estateId}" id="estateId">
+				<input type="hidden" value="${sessionScope.memberId }" id="memberId">
+				
+				<script src="../resources/js/emailmodal.js"></script>
 <input type="hidden" id="userId" value="${sessionScope.loginId}">
 <input type="hidden" id="userName" value="${sessionScope.what_your_name}">
 
@@ -453,15 +463,32 @@ canvas {
 					<li><button onclick="roomReset()">초기화</button></li>
 					<li><button onclick="esc()">종료</button>
 					<li><button onclick="takeSnapShot()">스냅샷 </button>
+					<li><button onclick="helpCall()">도움요청하기 </button>
 					<li id="snapshot">
 						<c:if test="${!empty room.snapshot }">
 							<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
 						</c:if>
 					</li>
 					<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
+					<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
+				<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
+				</a>
 				</ul>
 
 			<script type="text/javascript">
+			
+			function helpCall(){
+				
+				
+			
+				var sonnim = ${sessionScope.loginId};
+				var serviceProvider = "";
+				var roomId = room.roomId;
+				
+				
+			}
+			
+			
 				function changeheight() {
 					var height=$("#height").val();
 					var roomId = room.roomId;	
