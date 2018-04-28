@@ -1,5 +1,6 @@
 package com.real.fudousan.member.service;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.estate.vo.TransType;
 import com.real.fudousan.common.util.FileService;
+import com.real.fudousan.member.controller.JoinController;
 import com.real.fudousan.member.dao.MemberDAO;
 import com.real.fudousan.member.vo.Member;
 import com.real.fudousan.member.vo.Permission;
@@ -360,8 +362,14 @@ public class MemberService {
 		return result; 
 	}
 
-	
-	
+	public boolean downloadPicture(String fileName, OutputStream os) {
+		logger.info("downloadPicture({}) Start", fileName);
+		boolean result = false;
+		FileService.writeFile(JoinController.uploadPath + "/" + fileName, os);
+		result = true;
+		logger.info("downloadPicture({}) End", fileName);
+		return result;
+	}
 }
 
 
