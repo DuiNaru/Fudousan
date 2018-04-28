@@ -23,7 +23,7 @@ public class JoinController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
-	final String uploadPath ="/memberfile";
+	public static final String uploadPath ="/memberfile";
 	
 	@Autowired
 	private MemberService service;

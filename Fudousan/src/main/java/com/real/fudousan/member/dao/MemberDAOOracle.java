@@ -167,7 +167,9 @@ public class MemberDAOOracle implements MemberDAO {
 		}
 		return  result;
 	}
-	
+
+
+	@Override
 	public Member selectMemberOne(Member member){
 		Member result = null; 
 		try {

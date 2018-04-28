@@ -28,6 +28,10 @@
 				<div class="form-group">
 					<label for="InputEmail" data-lang="2"></label>
 					<input type="email" class="form-control" id="InputEmail" name="email" data-lang="2">
+					<a data-toggle="modal" href="#checkModal" class="btn btn-warning btn-lg">
+						<span class="glyphicon glyphicon-check"></span>   check
+					</a>
+					
 				</div>
 				
 				<div class="form-group">
