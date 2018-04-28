@@ -183,10 +183,14 @@ canvas {
 }
 
 .top-menu {
+	display: inline-block;
 	position: absolute;
-	top: 0%;
+	width: 17%;
 	z-index: 1;
 	background-color: rgba(255, 255, 255, 0.5);
+}
+#localCam, #remoteCam {
+	width: 100%;
 }
 
 .texture-menu {
@@ -366,8 +370,8 @@ canvas {
 	<!-- 위쪽 메뉴 -->
 	<div class="top-menu">
 		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button><br>
-		<video id="localCam" autoplay="autoplay" muted="muted" width="200" height="150"></video><br>
-		<video id="remoteCam" autoplay="autoplay" muted="muted" width="200" height="150"></video>
+		<video id="localCam" autoplay="autoplay" muted="muted"></video><br>
+		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
 	</div>
 	<div id="textureInfo" class="texture-menu">
 		<div class="form-group">

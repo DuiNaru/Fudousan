@@ -63,8 +63,7 @@ function call(){
 	setStartBtn("start");
 	
 	navigator.mediaDevices.getUserMedia({video: {width: VIDEO_WIDTH, height: VIDEO_HEIGHT}, audio: true}).then(function(stream){
-		localStream = stream;
-		localCam.srcObject = localStream;
+		localCam.srcObject = stream;
 		
 		showCallWindow();
 
@@ -78,8 +77,12 @@ function setStartBtn(state){
 	switch (state){
 		case "start":
 			startBtn.innerHTML = "화상 채팅 종료";
+			startBtn.disabled = false;
+			startBtn.style.color = "rgb(0, 0, 0)";
+			break;
+		case "calling":
 			startBtn.disabled = true;
-			startBtn.style.color = "rgb(180, 180, 180)";
+			startBtn.style.color = "rgb(150, 150, 150)";
 			break;
 		case "stop":
 			startBtn.innerHTML = "화상 채팅 시작";
@@ -90,6 +93,8 @@ function setStartBtn(state){
 }
 
 function showCallWindow(){
+	setStartBtn("calling");
+	
 	let div = document.createElement("div");
 	div.id = "callingDiv";
 	div.style.position = "absolute";
@@ -142,8 +147,10 @@ socket.on("cancel-call", function(){
 	let html = "상대방이 화상 채팅 연결을 취소하였습니다.";
 	receiveCallDiv.innerHTML = html;
 	
-	setTimeOut(function(){
+	setTimeout(function(){
 		removeDiv("receiveCallDiv");
+		
+		setStartBtn("stop");
 	}, 3000);
 });
 
@@ -157,8 +164,7 @@ socket.on("not-found-target", function(){
 });
 
 function receiveCallWindow(){
-	startBtn.disabled = true;
-	startBtn.style.color = "rgb(180, 180, 180)";
+	setStartBtn("calling");
 	
 	let div = document.createElement("div");
 	div.id = "receiveCallDiv";
@@ -211,8 +217,12 @@ socket.on("answer-call", function(answer){
 	
 	if (answer == true){
 		sendVideoOffer();
+		
+		setStartBtn("start");
 	}
 	else {
+		closeCall();
+		
 		alert("상대방이 화상 채팅을 거절했습니다.");
 	}
 });
@@ -220,16 +230,7 @@ socket.on("answer-call", function(answer){
 function sendVideoOffer(){
 	myPeerConnection = createPeerConnection();
 
-	if (localStream == null){
-		navigator.mediaDevices.getUserMedia({video: {width: VIDEO_WIDTH, height: VIDEO_HEIGHT}, audio: true}).then(function (stream){
-			localStream = stream;
-			localCam.srcObject = localStream;
-			myPeerConnection.addStream(localStream);
-		});
-	}
-	else {
-		myPeerConnection.addStream(localStream);
-	}
+	myPeerConnection.addStream(localCam.srcObject);
 
 	myPeerConnection.createOffer().then(function(offer){
 		return myPeerConnection.setLocalDescription(offer);
@@ -252,15 +253,10 @@ socket.on("video-offer", function(sdp){
 	let desc = new RTCSessionDescription(sdp);
 
 	myPeerConnection.setRemoteDescription(desc).then(function(){
-		if (localStream == null){
-			return navigator.mediaDevices.getUserMedia({video: {width: VIDEO_WIDTH, height: VIDEO_HEIGHT}, audio: true});
-		}
-		else {
-			return localStream;
-		}
+		return navigator.mediaDevices.getUserMedia({video: {width: VIDEO_WIDTH, height: VIDEO_HEIGHT}, audio: true});
 	}).then(function(stream){
-			localCam.srcObject = stream;
-			myPeerConnection.addStream(stream);
+		localCam.srcObject = stream;
+		myPeerConnection.addStream(stream);
 	}).then(function(){
 		console.log("--> create answer");
 		return myPeerConnection.createAnswer();
