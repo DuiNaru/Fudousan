@@ -39,6 +39,7 @@
 <script src="<c:url value="/resources/js/ConvexGeometry.js"/>"></script>
 <script src="<c:url value="/resources/js/QuickHull.js"/>"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="<c:url value="/resources/js/roomPageUI.js"/>"></script>
 
 <script type="text/javascript">
 	var room = {
@@ -225,8 +226,10 @@ canvas {
 }
 
 #bottom-menu-button {
-	bottom: 30px;
+	position: absolute;
+	top: 80%;
 	right: 0px;
+	z-index: 9;
 }
 
 .right-menu {
@@ -451,7 +454,7 @@ canvas {
 		<input type="button" value="적용" onclick="itemApplyListener()">
 	</div>
 	
-	<span id="bottom-menu-button" class="glyphicon glyphicon-chevron-up"></span>
+	<div id="bottom-menu-button" class="glyphicon glyphicon-chevron-up btn btn-default">아이템목록</div>
 	<div id="bottom-menu" class="bottom-menu">
 		<select id="itemList" name="itemList" onchange="getItemList()">
 			<option value='0' selected>전체 </option>
