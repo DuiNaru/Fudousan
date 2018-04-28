@@ -26,10 +26,11 @@ public class ReplyController {
 	
 	@ResponseBody
 	@RequestMapping(value="insertReply", method=RequestMethod.POST)
-	public String insertReply(Reply reply, String estateId, String memberId){
+	public int insertReply(Reply reply, String estateId, String memberId, String text){
 		logger.info("Insert Reply Start - controller");
 		Member member = new Member();
-		
+		reply.setText(text);
+		System.out.println(reply);
 		String estateIdTrim = estateId.trim();
 		int estateIdResult = Integer.parseInt(estateIdTrim);
 		int memberIdResult = Integer.parseInt(memberId);
@@ -37,15 +38,18 @@ public class ReplyController {
 		reply.setEstateId(estateIdResult);
 		reply.setMember(member);
 		service.insertReply(reply);
+		int replyId = reply.getReplyId();
+		System.out.println(replyId);
 		logger.info("Insert Reply End - controller");
-		return "";
+		return replyId;
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="selectReply", method=RequestMethod.POST)
-	public List<Reply> selectReply(Model model){
+	public List<Reply> selectReply(){
 		logger.info("Select Reply Start - Controller");
 		List<Reply> reply = service.selectReply();
+
 		logger.info("Select Reply End - Controller");
 		return reply;
 	}
@@ -54,14 +58,24 @@ public class ReplyController {
 	@RequestMapping(value="deleteReply", method=RequestMethod.POST)
 	public Boolean deleteReply( int replyId){
 		logger.info("Delete Reply Start - Controller");
-	
 		boolean result = service.deleteReply(replyId);
 		logger.info("Delete Reply End - Controller");
 		return result;
 	}
-	/*@RequestMapping(value="updateComment", method=RequestMethod.POST)
-	public String updateComment(Reply reply){
-		return "";
-	}*/
+	@ResponseBody
+	@RequestMapping(value="selectOne", method=RequestMethod.POST)
+	public Reply selectOne(int replyId){
+		logger.info("SelectOne Start - Controller");
+		Reply result = service.selectOne(replyId);
+		logger.info("SelectOne End - Controller");
+		return result;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="updateReply", method=RequestMethod.POST)
+	public int updateReply(Reply reply){
+		return 0;
+	};
 	
 }

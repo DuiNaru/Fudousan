@@ -45,12 +45,12 @@ public class ReplyDAOOracle implements ReplyDAO {
 		logger.info("Select Reply End - DAO Oracle");
 		return result;
 	}
-	public boolean deleteReply(int memberId){
+	public boolean deleteReply(int replyId){
 		logger.info("Delete Reply Start - DAO Oracle");
 		boolean result = false; 
 		try{
 			ReplyMapper replyMapper = sqlSession.getMapper(ReplyMapper.class);
-			result = replyMapper.deleteReply(memberId);
+			result = replyMapper.deleteReply(replyId);
 		} catch(Exception e){
 			e.printStackTrace();
 		}
@@ -58,7 +58,31 @@ public class ReplyDAOOracle implements ReplyDAO {
 		logger.info("Delete Reply End - DAO Oracle");
 		return result; 
 	}
-/*	public int updateReply(Reply reply){
-		return 0;
-	}*/
+	
+	public Reply selectOne(int replyId){
+		logger.info(" selectOne Start - DAO Oracle");
+		Reply  result = null; 
+		try{
+			ReplyMapper replyMapper = sqlSession.getMapper(ReplyMapper.class);
+			result = replyMapper.selectOne(replyId);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		logger.info(" selectOne End - DAO Oracle");
+		return result; 
+	}
+	public int updateReply(Reply reply){
+		logger.info(" update Reply Start - DAO Oracle");
+		int result = 0; 
+		try{
+			ReplyMapper replyMapper = sqlSession.getMapper(ReplyMapper.class);
+			result = replyMapper.updateReply(reply);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		logger.info(" update Reply End - DAO Oracle");
+		return result;
+	}
 }
