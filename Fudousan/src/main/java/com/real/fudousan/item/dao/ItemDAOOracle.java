@@ -160,5 +160,20 @@ public class ItemDAOOracle implements ItemDAO {
 		return result;
 	}
 
+	@Override
+	public int updatePreview(Item item) {
+		logger.info("updatePreview("+item+") Start");
+		int result = -1;
+		try {
+			ItemMapper mapper = session.getMapper(ItemMapper.class);
+			result = mapper.updatePreview(item);
+		} catch(Exception e) {
+			e.printStackTrace();
+			result = -1;
+		}
+		logger.info("updatePreview("+item+") End");
+		return result;
+	}
+
 
 }

@@ -263,6 +263,7 @@ public class RoomController {
             
             result = roomService.saveSnapShot(Integer.parseInt(mpf.getOriginalFilename()), mpf);
         }
+		logger.info("snapshot() End");
         return result;
 	}
 	

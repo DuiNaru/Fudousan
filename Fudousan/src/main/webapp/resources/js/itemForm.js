@@ -130,6 +130,12 @@ var previewObject;
 
 var originalSiteList = "";
 
+// 배경 표시 여부
+var backgroundEnable = true;
+
+// 축 헬퍼
+var axesHelper;
+
 function addsitecolumn() {
 	var column = "<div class='form-group'>";
 	column += "<div class='form-group'>";
@@ -193,7 +199,7 @@ function init() {
 	// 장면 생성
 	scene = new THREE.Scene();
 	// 장면 배경색
-	scene.background = new THREE.Color(0xf0f0f0);
+	scene.background = new THREE.Color(0xFFFFFF);
 	// 장면에 AmbientLight(광역 빛) 추가
 	scene.add( new THREE.AmbientLight( 0x505050 ) );
 
@@ -205,8 +211,9 @@ function init() {
 	scene.add(directionalLight);
 
 	// 렌더러
-	renderer = new THREE.WebGLRenderer();
-	//renderer = new THREE.WebGLRenderer( { canvas: canvas, antialias: true } );
+	renderer = new THREE.WebGLRenderer({
+        preserveDrawingBuffer: true
+    });
 	renderer.setPixelRatio( window.devicePixelRatio );
 	// 렌더러 크기
 	renderer.setSize(width, height);
@@ -216,15 +223,6 @@ function init() {
 	// controls
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	controls.enableKeys = false;
-	//controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
-	//controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-	//controls.dampingFactor = 0.25;
-	//controls.panningMode = THREE.HorizontalPanning; // default is THREE.ScreenSpacePanning
-	//controls.minDistance = 100;
-	//controls.maxDistance = 50000;
-	//controls.maxPolarAngle = Math.PI / 2;
-	
-	//camera.rotation.x = 90 * Math.PI / 180;
 
 	var planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
 	var planeMaterial = new THREE.MeshBasicMaterial({color:0x002200, sid:THREE.DoubleSice});
@@ -262,7 +260,7 @@ function init() {
 	
 	window.addEventListener('resize', this.onResize, false);
 	
-	var axesHelper = new THREE.AxesHelper( 1000 );
+	axesHelper = new THREE.AxesHelper( 1000 );
 	scene.add( axesHelper );
 }
 
@@ -310,4 +308,20 @@ function place(itemId, modelFileName) {
 
 function onModelFileChange(itemId) {
 	place(itemId, $("#model").val());
+}
+
+function backgroundToggle() {
+	if ( backgroundEnable ) {
+		for ( var i = 0; i < plane.length; i++ ) {
+			scene.remove(plane[i]);
+		}
+		scene.remove(axesHelper);
+	} else {
+		for ( var i = 0; i < plane.length; i++ ) {
+			scene.add(plane[i]);
+		}
+		scene.add(axesHelper);
+	}
+	backgroundEnable = !backgroundEnable;
+	
 }

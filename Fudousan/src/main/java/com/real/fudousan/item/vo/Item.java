@@ -52,15 +52,20 @@ public class Item implements Serializable {
 	private double itemY;
 	
 	private double itemZ;
+	
+	private String itemPreview;
 
 	public Item() {
 		super();
 	}
 
 
+	
+
+
 	public Item(Integer itemId, ItemType itemType, String itemName, String text, String fileDirectory,
 			String modelFileName, List<RefSite> refSiteSet, double itemScale, double itemRotateX, double itemRotateY,
-			double itemRotateZ, double itemX, double itemY, double itemZ) {
+			double itemRotateZ, double itemX, double itemY, double itemZ, String itemPreview) {
 		super();
 		this.itemId = itemId;
 		this.itemType = itemType;
@@ -76,7 +81,11 @@ public class Item implements Serializable {
 		this.itemX = itemX;
 		this.itemY = itemY;
 		this.itemZ = itemZ;
+		this.itemPreview = itemPreview;
 	}
+
+
+
 
 
 	public Integer getItemId() {
@@ -226,14 +235,33 @@ public class Item implements Serializable {
 
 
 
+	public String getItemPreview() {
+		return itemPreview;
+	}
+
+
+
+
+
+	public void setItemPreview(String itemPreview) {
+		this.itemPreview = itemPreview;
+	}
+
+
+
+
 
 	@Override
 	public String toString() {
 		return "Item [itemId=" + itemId + ", itemType=" + itemType + ", itemName=" + itemName + ", text=" + text
 				+ ", fileDirectory=" + fileDirectory + ", modelFileName=" + modelFileName + ", refSiteSet=" + refSiteSet
 				+ ", itemScale=" + itemScale + ", itemRotateX=" + itemRotateX + ", itemRotateY=" + itemRotateY
-				+ ", itemRotateZ=" + itemRotateZ + ", itemX=" + itemX + ", itemY=" + itemY + ", itemZ=" + itemZ + "]";
+				+ ", itemRotateZ=" + itemRotateZ + ", itemX=" + itemX + ", itemY=" + itemY + ", itemZ=" + itemZ
+				+ ", itemPreview=" + itemPreview + "]";
 	}
+
+
+
 
 
 	@Override
