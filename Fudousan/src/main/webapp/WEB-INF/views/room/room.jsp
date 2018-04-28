@@ -4,6 +4,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 위 3개의 메타 태그는 *반드시* head 태그의 처음에 와야합니다; 어떤 다른 콘텐츠들은 반드시 이 태그들 *다음에* 와야 합니다 -->
+    <title>boot</title>
+
+    <!-- css -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="" rel="stylesheet">
+    <link href="<c:url value="/resources/css/detailedinfomationpage.css"/>" rel="stylesheet">
+    <link href="<c:url value="/resources/css/templete.css"/>" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	
 <title>ROOMPAGE</title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>">
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -95,7 +108,6 @@
 					itemX: ${roomitem.item.itemX},
 					itemY: ${roomitem.item.itemY},
 					itemZ: ${roomitem.item.itemZ},
-					itemPreview: ${roomitem.item.itemPreview},
 					refSiteSet: [
 						<c:forEach var="site" varStatus="s" items="${roomitem.item.refSiteSet}" >
 						<c:if test="${s.index != 0 }">
@@ -114,7 +126,7 @@
 			})
 	</c:forEach>
 	];
-/* 
+
 	function getItemList() {
 		var itemList=$("#itemList").val();
 		
@@ -142,7 +154,6 @@
 				str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
 				str += 'item'+item.itemId+'.text = "'+item.text+'";';
 				str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
-				str += 'item'+item.itemId+'.itemPreview = '+item.itemPreview+';';
 				
 				$.each(item.refSiteSet,function(index,site){
 					str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
@@ -156,8 +167,8 @@
 				
 		}
 			
-		}); 
-	}*/
+		});
+	}
 </script>
 <script src="<c:url value="/resources/js/node_communication.js"/>"></script>
 <script> </script>
@@ -294,27 +305,25 @@ canvas {
 						
 				$.each(itemlist,function(index,item){
 					
-					str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+');">';
-					str += '<script type="text/javascript">';
-					str += 'var item'+item.itemId+' = new Item();';
-					str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
-					str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
-					str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
-					str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
-					str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
-					str += 'item'+item.itemId+'.text = "'+item.text+'";';
-					str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
-							
-					$.each(item.refSiteSet,function(index,site){
-						str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
-						str += 'items.push(item'+item.itemId+');';
-					});
-					str += 'item'+item.itemId+'.itemPreview = "'+item.itemPreview+'";';
-					
-					str += "<\/script>";
-	
-					str += "<label>"+item.itemName+"</label>";
-					str += "<div class='preview'><img id='itemPreview"+item.itemId+"' src='/fudousan"+item.itemPreview+"'/></div><\/li>";
+				str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+', AddItem);">';
+				str += '<label>'+item.itemName+'<\/label>';
+				str += '<script type="text/javascript">';
+				str += 'var item'+item.itemId+' = new Item();';
+				str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
+				str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
+				str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
+				str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
+				str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
+				str += 'item'+item.itemId+'.text = "'+item.text+'";';
+				str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
+						
+				$.each(item.refSiteSet,function(index,site){
+					str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
+					str += 'items.push(item'+item.itemId+');';
+				});
+				
+				str += "<\/script><\/li>";
+				
 				});
 				$("#itemUl").html(str);
 			},
@@ -343,7 +352,8 @@ canvas {
 				
 				<!-- <script src="/resources/js/emailmodal.js"></script> -->
 				<script type="text/javascript" src="<c:url value="/resources/js/emailmodal.js"/>"></script>
-				
+				<script type="text/javascript" src="<c:url value="resources/js/bootstrap.min.js"/>"></script>
+				<script type="text/javascript" src="<c:url value="/resources/js/estatedetailinit.js"/>"></script>
 				
 <input type="hidden" id="userId" value="${sessionScope.loginId}">
 <input type="hidden" id="userName" value="${sessionScope.what_your_name}">
@@ -428,7 +438,7 @@ canvas {
 <div class="bottom-menu">
 
 		<select id="itemList" name="itemList" onchange="getItemList()">
-			<option selected>전체 </option>
+			<option value='0' selected>전체 </option>
 			<option value="1">1</option>
 			<option value="24" >24</option>
 		</select>
@@ -453,11 +463,10 @@ canvas {
 							<c:forEach var="site" items="${item.refSiteSet}">
 								item${item.itemId}.refSiteSet.push(new RefSite("${site.creDate}", ${site.id}, ${site.itemId}, "${site.text}", "${site.url}"));
 							</c:forEach>
-							item${item.itemId}.itemScale = "${item.itemPreview}";
 							items.push(item${item.itemId});
 					</script> 
 					<label>${item.itemName}</label>
-					<div class="preview"><img id="itemPreview${item.itemId}" src="<c:url value="${item.itemPreview}"/>"/></div>
+					<div id="itemPreview${item.itemId}" class="preview"></div>
 				</li>
 			</c:forEach>
 		</ul>
@@ -472,27 +481,18 @@ canvas {
 					<li><button onclick="roomReset()">초기화</button></li>
 					<li><button onclick="esc()">종료</button>
 					<li><button onclick="takeSnapShot()">스냅샷 </button>
-					<li><button onclick="helpCall()">도움요청하기 </button>
+					<li><a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
+						<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
+					</a></li>
 					<li id="snapshot">
 						<c:if test="${!empty room.snapshot }">
 							<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
 						</c:if>
 					</li>
 					<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
-					<li><a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
-						<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
-					</a></li>
 				</ul>
 
 			<script type="text/javascript">
-			
-			function helpCall(){
-				
-				
-			
-				
-				
-			}
 			
 			
 				function changeheight() {

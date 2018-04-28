@@ -184,7 +184,7 @@ function init() {
 	// 렌더러 크기
 	renderer.setSize(width, height);
 	// 해당 렌더러를 화면에 추가하여서 사용
-	document.body.appendChild( renderer.domElement );
+	//document.body.appendChild( renderer.domElement );
 	
 	// controls
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
