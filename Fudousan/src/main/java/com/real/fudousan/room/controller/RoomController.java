@@ -212,9 +212,10 @@ public class RoomController {
 		final int countPerPage = 3;
 		final int pagePerGroup = 5; 
 		
+		String estateIdResult=estateId.trim();
 		
 		// estateId(String) --> int 
-		int estateIdresult = Integer.parseInt(estateId);
+		int estateIdresult = Integer.parseInt(estateIdResult);
 		
 		int total = roomService.getTotal(estateIdresult);
 		

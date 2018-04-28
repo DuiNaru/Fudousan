@@ -1,5 +1,7 @@
 package com.real.fudousan.reply.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +33,9 @@ public class ReplyDAOOracle implements ReplyDAO {
 		return result;
 	}
 	
-	public Reply selectReply(){
+	public List<Reply> selectReply(){
 		logger.info("Select Reply Start - DAO Oracle");
-		Reply result = null; 
+		List<Reply> result = null; 
 		try{
 			ReplyMapper replyMapper = sqlSession.getMapper(ReplyMapper.class);
 			result = replyMapper.selectReply();
@@ -43,10 +45,20 @@ public class ReplyDAOOracle implements ReplyDAO {
 		logger.info("Select Reply End - DAO Oracle");
 		return result;
 	}
-/*public int deleteReply(Reply reply){
-		return 0;
+	public boolean deleteReply(int memberId){
+		logger.info("Delete Reply Start - DAO Oracle");
+		boolean result = false; 
+		try{
+			ReplyMapper replyMapper = sqlSession.getMapper(ReplyMapper.class);
+			result = replyMapper.deleteReply(memberId);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		logger.info("Delete Reply End - DAO Oracle");
+		return result; 
 	}
-	public int updateReply(Reply reply){
+/*	public int updateReply(Reply reply){
 		return 0;
 	}*/
 }

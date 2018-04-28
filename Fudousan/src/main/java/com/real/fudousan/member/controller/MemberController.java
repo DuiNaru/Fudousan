@@ -140,9 +140,7 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value ="helpCallPage", method=RequestMethod.POST)
 	public ArrayList<Member> helpCallPage(Member member , Model model ,HttpSession session){
-		logger.info("메일보내는 페이지로");
-		
-	
+		logger.info("메일 보내는 페이지로");
 		ArrayList<Member> interior = new ArrayList<>();
 		interior =(ArrayList<Member>) service.interior();
 		return interior;

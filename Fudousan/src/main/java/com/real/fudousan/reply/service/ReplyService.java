@@ -1,11 +1,14 @@
 package com.real.fudousan.reply.service;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.real.fudousan.member.controller.MemberController;
+
 import com.real.fudousan.reply.dao.ReplyDAO;
 import com.real.fudousan.reply.vo.Reply;
 
@@ -23,13 +26,19 @@ public class ReplyService {
 		return result;
 	}
 	
-	public Reply selectReply(){
+	public List<Reply> selectReply(){
 		logger.info("Select Reply Start - service");
-		Reply reply = dao.selectReply();
+		List<Reply> reply = dao.selectReply();
 		logger.info("Select Reply End - service");
 		return reply; 
 	}
 	
+	public boolean deleteReply(int replyId){
+		logger.info("Delete Reply Start - service");
+		boolean result = dao.deleteReply(replyId);
+		logger.info("Delete Reply End - service");
+		return result; 
+	}
 	
 
 }
