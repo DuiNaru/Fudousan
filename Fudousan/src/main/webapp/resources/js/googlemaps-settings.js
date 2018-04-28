@@ -94,11 +94,11 @@
 	       /*  map.setCenter(marker.getPosition()) */
 			
 	       if (loan.includes="AgencyId") {
-	           var content =  '<div>'+'<h3>'+'Infomation'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'</div>'		
+	           var content =  '<div>'+'<h3>'+'Information'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'</div>'		
 		   }
 	       
 	       if (loan.includes="Estate"){
-	        var content =  '<div>'+'<h3>'+'Infomation'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'<a href="estate/detailedinfomation?id='+loan+'">'+'detailed infomation'+'</a>'+'</div>'
+	        var content =  '<div>'+'<h3>'+'Information'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'<a href="estate/detailedinfomation?id='+loan+'">'+'detailed information'+'</a>'+'</div>'
 			   
 		   } 
 	       
