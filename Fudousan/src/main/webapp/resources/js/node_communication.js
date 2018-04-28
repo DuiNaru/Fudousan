@@ -415,6 +415,10 @@ socket.on('otherheight',function(height){
 	nodeCommand.receiveHeight(height);
 });
 
+socket.on('otherTitleChange',function(roomTitle){
+	nameChange(roomTitle);
+});
+
 
 //종료하기 function esc 
 

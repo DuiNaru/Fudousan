@@ -433,7 +433,7 @@ canvas {
 		<div>
 			<label>종합기능</label>
 				<ul>
-					<li>방이름 <input type="text" id="roomTitle"> <button type="button" onclick="changeTitle()">변경</button>   </li>
+					<li>방이름 <input type="text" id="roomTitle" value="${room.roomTitle }"> <button type="button" onclick="changeTitle()">변경</button>   </li>
 					<li><button onclick="back()">뒤로가기</button></li>
 					<li><button onclick="forward()">앞으로가기</button></li>
 					<li><button onclick="roomReset()">초기화</button></li>
@@ -487,8 +487,11 @@ canvas {
 						},
 						success: function(data){
 							if(data != null || data == true || data == "true") {
-								/* changeHeigthListener(height); */
-								alert('안녕 !');
+								nameChange(roomTitle);
+								socket.emit('otherTitleChange',{
+									roomId:roomId,
+									roomTitle:roomTitle
+								});
 							} else {
 								alert("방 이름 변경에 실패하였습니다.");
 							}
@@ -500,6 +503,11 @@ canvas {
 	
 					});
 				}
+				
+				function nameChange(changeTitle){
+					$('#roomTitle').val(changeTitle);
+				}
+				
 			</script> 
 		</div>
 	</div>
