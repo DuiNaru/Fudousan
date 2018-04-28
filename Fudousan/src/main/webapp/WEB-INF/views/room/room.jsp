@@ -396,7 +396,7 @@ canvas {
 <div class="bottom-menu">
 
 		<select id="itemList" name="itemList" onchange="getItemList()">
-			<option value="0" selected>전체 </option>
+			<option selected>전체 </option>
 			<option value="1">1</option>
 			<option value="24" >24</option>
 		</select>
@@ -434,7 +434,7 @@ canvas {
 		<div>
 			<label>종합기능</label>
 				<ul>
-					<li><button onclick="setTitle()">매물이름변경</button></li>
+					<li>방이름 <input type="text" id="roomTitle"> <button type="button" onclick="changeTitle()">변경</button>   </li>
 					<li><button onclick="back()">뒤로가기</button></li>
 					<li><button onclick="forward()">앞으로가기</button></li>
 					<li><button onclick="roomReset()">초기화</button></li>
@@ -470,13 +470,37 @@ canvas {
 							console.dir(e);
 							alert("방 높이 변경 중 에러가 발생하였습니다.");
 						}
+	
 					});
 				}
-				function setTitle(){
-					var str = "";
-					str += '<input type="text" id="roomTitle">';
+			</script> 
+			
+			<script type="text/javascript">
+				function changeTitle() {
+					var roomTitle=$("#roomTitle").val();
+					var roomId = room.roomId;	
+					$.ajax({
+						url:"roomTitleChange",
+						type:"post",
+						data:{
+							roomId:roomId,
+							roomTitle:roomTitle
+						},
+						success: function(data){
+							if(data != null || data == true || data == "true") {
+								/* changeHeigthListener(height); */
+								alert('안녕 !');
+							} else {
+								alert("방 이름 변경에 실패하였습니다.");
+							}
+						},
+						error:function(e) {
+							console.dir(e);
+							alert("방 이름 변경 중 에러가 발생하였습니다.");
+						}
+	
+					});
 				}
-				
 			</script> 
 		</div>
 	</div>

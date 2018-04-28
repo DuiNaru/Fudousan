@@ -219,6 +219,23 @@ public class RoomDAOOracle implements RoomDAO {
 		return result;
 	}
 
+	/*방이름 변경*/
+	@Override
+	public int roomtitleChange(Room room) {
+		logger.info("방 이름변경 시작");
+		RoomMapper mapper = sqlsession.getMapper(RoomMapper.class);
+		int result = 0;
+		
+		try{
+			result = mapper.roomtitleChange(room);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("방 이름변경 종료");
+		return result;
+	}
+	
 	@Override
 	public int updateRoomSanpShot(Room room) {
 		logger.info("updateRoomSanpShot("+room+") Start");
@@ -270,6 +287,8 @@ public class RoomDAOOracle implements RoomDAO {
 		logger.info("updateFloorTexture("+roomId+", "+textureId+") End");
 		return result;
 	}
+
+	
 	
 	
 	

@@ -59,7 +59,7 @@
 									</a></p>
 	        						</td>
 	        						<td>	
-	        							<a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.estate.estateId}&roomPublic=0"/>">내집꾸미기</a>
+	        							<a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.roomId}&roomPublic=0"/>">내집꾸미기</a>
 	        						</td>
 	        						<td>
 	        							<a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a>

@@ -232,6 +232,15 @@ public class RoomService {
 		
 		return  result;
 	}
+
+	//방 이름 수정
+	public int roomtitleChange(Room room){
+		
+		int result = 0;
+		result = dao.roomtitleChange(room);
+		
+		return  result;
+	}
 	
 	public String saveSnapShot(int roomId, MultipartFile file) {
 		logger.info("saveSnapShot("+roomId+", "+file.getOriginalFilename()+") Start");
