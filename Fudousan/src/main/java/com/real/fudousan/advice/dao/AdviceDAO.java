@@ -13,5 +13,7 @@ public interface AdviceDAO {
 	public boolean cancelAdvice(Advice advice);
 	
 	public boolean updateState(Advice advice);
+	
+	public boolean addviceRequest(Advice advice); //어드바이스 요청
 
 }
