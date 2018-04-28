@@ -441,7 +441,7 @@ canvas {
 <div class="bottom-menu">
 
 		<select id="itemList" name="itemList" onchange="getItemList()">
-			<option selected>전체 </option>
+			<option value='0' selected>전체 </option>
 			<option value="1">1</option>
 			<option value="24" >24</option>
 		</select>
