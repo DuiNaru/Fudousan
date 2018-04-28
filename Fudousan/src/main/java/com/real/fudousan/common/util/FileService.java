@@ -37,6 +37,7 @@ public class FileService {
 	 *            업로드된 파일
 	 * @param path
 	 *            저장할 경로
+	 * @param useOriginalName 중복이여도 파일 이름 안 바꿀것인가?(무조건 원래 파일 명 사용할 것인가?)
 	 * @return 저장된 파일명
 	 * @throws DuplicateFileNameException
 	 *             원래 이름을 사용할 수 없을 때 발생

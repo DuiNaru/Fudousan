@@ -220,6 +220,11 @@ canvas {
 	overflow: scroll;
 }
 
+#bottom-menu-button {
+	bottom: 30px;
+	right: 0px;
+}
+
 .right-menu {
 	position: absolute;
 	top: 10%;
@@ -240,6 +245,10 @@ canvas {
     left: 50%;
     height: 100%;
     transform: translate(-50%,0)
+}
+
+.preview label {
+	
 }
 
 #blocker {
@@ -305,24 +314,27 @@ canvas {
 						
 				$.each(itemlist,function(index,item){
 					
-				str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+', AddItem);">';
-				str += '<label>'+item.itemName+'<\/label>';
-				str += '<script type="text/javascript">';
-				str += 'var item'+item.itemId+' = new Item();';
-				str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
-				str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
-				str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
-				str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
-				str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
-				str += 'item'+item.itemId+'.text = "'+item.text+'";';
-				str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
-						
-				$.each(item.refSiteSet,function(index,site){
-					str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
-					str += 'items.push(item'+item.itemId+');';
-				});
-				
-				str += "<\/script><\/li>";
+					str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+');">';
+					str += '<script type="text/javascript">';
+					str += 'var item'+item.itemId+' = new Item();';
+					str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
+					str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
+					str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
+					str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
+					str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
+					str += 'item'+item.itemId+'.text = "'+item.text+'";';
+					str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
+							
+					$.each(item.refSiteSet,function(index,site){
+						str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
+						str += 'items.push(item'+item.itemId+');';
+					});
+					str += 'item'+item.itemId+'.itemPreview = "'+item.itemPreview+'";';
+					
+					str += "<\/script>";
+	
+					str += "<label>"+item.itemName+"</label>";
+					str += "<div class='preview'><img id='itemPreview"+item.itemId+"' src='/fudousan"+item.itemPreview+"'/></div><\/li>";
 				
 				});
 				$("#itemUl").html(str);
@@ -438,12 +450,13 @@ canvas {
 		<input type="button" value="적용" onclick="itemApplyListener()">
 	</div>
 	
-<div class="bottom-menu">
-
+	<span id="bottom-menu-button" class="glyphicon glyphicon-chevron-up"></span>
+	<div id="bottom-menu" class="bottom-menu">
 		<select id="itemList" name="itemList" onchange="getItemList()">
 			<option value='0' selected>전체 </option>
-			<option value="1">1</option>
-			<option value="24" >24</option>
+			<c:forEach var="itemType" items="${itemTypeList }">
+				<option value="${itemType.itemTypeId}">${itemType.itemTypeName}</option>
+			</c:forEach>
 		</select>
 
 
@@ -466,10 +479,11 @@ canvas {
 							<c:forEach var="site" items="${item.refSiteSet}">
 								item${item.itemId}.refSiteSet.push(new RefSite("${site.creDate}", ${site.id}, ${site.itemId}, "${site.text}", "${site.url}"));
 							</c:forEach>
+							item${item.itemId}.itemPreview = "${item.itemPreview}";
 							items.push(item${item.itemId});
 					</script> 
 					<label>${item.itemName}</label>
-					<div id="itemPreview${item.itemId}" class="preview"></div>
+					<div class="preview"><img id="itemPreview${item.itemId}" src="<c:url value="${item.itemPreview}"/>"/></div>
 				</li>
 			</c:forEach>
 		</ul>
