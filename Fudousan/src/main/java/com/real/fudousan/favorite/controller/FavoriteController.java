@@ -54,7 +54,9 @@ public class FavoriteController {
 			logger.info("찜하기 등록 시작");
 			Favorite favorite = new Favorite();
 			Estate estate = new Estate();
-			int estateIdResult = Integer.parseInt(estateId);
+			
+			String estateIdTrim = estateId.trim();
+			int estateIdResult = Integer.parseInt(estateIdTrim);
 			int memberIdResult = Integer.parseInt(memberId);
 			
 			//estate setting 
@@ -75,18 +77,27 @@ public class FavoriteController {
 	public Favorite selectFavorite(String estateId, String memberId ){
 			logger.info("찜하기  가져오기 시작");
 			Favorite favorite = new Favorite();
+			Favorite result = new Favorite();
 			Estate estate = new Estate();
-			int estateIdResult = Integer.parseInt(estateId);
-			int memberIdResult = Integer.parseInt(memberId);
 			
-			//estate setting 
-			estate.setEstateId(estateIdResult);
-			
-			// favorite setting 
-			favorite.setMemberId(memberIdResult);
-			favorite.setEstate(estate);
-			
-			Favorite result=service.selectFavorite(favorite);
+			try {
+				String estateIdTrim = estateId.trim();
+				String memberIdTrim = memberId.trim();
+				int estateIdResult = Integer.parseInt(estateIdTrim);
+				int memberIdResult = Integer.parseInt(memberIdTrim);
+				//estate setting 
+				estate.setEstateId(estateIdResult);
+				
+				// favorite setting 
+				favorite.setMemberId(memberIdResult);
+				favorite.setEstate(estate);
+				// result setting 
+				result=service.selectFavorite(favorite);
+			} catch (Exception e) {
+				// TODO: handle exception
+				;
+			}
+		
 			
 			
 			logger.info("찜하기 가져오기 종료");

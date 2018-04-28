@@ -169,8 +169,17 @@ canvas {
 .top-menu {
 	position: absolute;
 	top: 0%;
-	margin-left: auto;
 	z-index: 1;
+	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.texture-menu {
+	position: absolute;
+	right: 0px;
+	z-index: 1;
+	width:30%;
+	height:100px;
+	overflow:scroll;
 	background-color: rgba(255, 255, 255, 0.5);
 }
 
@@ -238,13 +247,13 @@ canvas {
 	cursor: pointer;
 }
 .snapshot {
-	width: 100px;
-	height: 100px;
+	width: 160px;
+	height: 90px;
 }
 
 .imgPreview {
-	width: 100px;
-	height: 100px;
+	width: 30px;
+	height: 30px;
 }
 </style>
 
@@ -309,12 +318,8 @@ canvas {
 	<div class="description">Scene $</div>
 </script>	
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
-<div class="dat">
-</div> 
 	<div class="top-menu">
 	</div>
-	<script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
-	<div class="dat"></div>
 	
 	<!-- 위쪽 메뉴 -->
 	<div class="top-menu">
@@ -322,7 +327,7 @@ canvas {
 		<video id="localCam" autoplay="autoplay" muted="muted"></video>
 		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
 	</div>
-	<div id="textureInfo" class="left-menu">
+	<div id="textureInfo" class="texture-menu">
 		<div class="form-group">
 			<label>텍스쳐 리스트</label>
 			<div>
@@ -384,7 +389,7 @@ canvas {
 				<div id="pz"></div>
 			</div>
 		</div>
-		<input type="button" value="삭제" onclick="deleteItem(curSelected.roomItem, delItem)">
+		<input type="button" value="삭제" onclick="deleteItemButton()">
 		<input type="button" value="적용" onclick="itemApplyListener()">
 	</div>
 	
@@ -431,7 +436,6 @@ canvas {
 				<ul>
 					<li><button onclick="back()">뒤로가기</button></li>
 					<li><button onclick="forward()">앞으로가기</button></li>
-					<li><button onclick="save()">저장하기</button></li>
 					<li><button onclick="roomReset()">초기화</button></li>
 					<li><button onclick="esc()">종료</button>
 					<li><button onclick="takeSnapShot()">스냅샷 </button>
@@ -474,6 +478,7 @@ canvas {
 	<menu>
 	</menu>
 	
+	<script src="<c:url value="/resources/js/cookie.js"/>"></script>
 	<script src="<c:url value="/resources/js/videochat.js"/>"></script>
 </body>
 </html>

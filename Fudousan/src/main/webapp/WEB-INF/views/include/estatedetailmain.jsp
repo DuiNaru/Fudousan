@@ -9,7 +9,19 @@
     
     <!-- side nav(left) -->
     <div class="col-sm-2 sidenav">
-		
+    	<c:if test="${sessionScope.memberId !=null }">
+			<a class="btn btn-success btn-lg" href="../newRoom?estateId=2&amp;roomPublic=0" id="3dModelButton">
+				<span class="glyphicon glyphicon-print"></span> NEW 3D MODEL
+			</a>
+			<br><br>
+			<a data-toggle="modal" href="#3dDesignModal" class="btn btn-info btn-lg">
+				<span class="glyphicon glyphicon-search"></span> 3D DESIGN
+			</a>
+			<br><br>
+			<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
+				<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
+			</a>
+		</c:if>
     </div>
     
 <!-- text main -->
@@ -19,12 +31,13 @@
     <hr>
 		
 	<!-- Favorite Button -->
-	<label id="star" for="id-of-input" class="custom-checkbox">
-  		<input type="checkbox" id="id-of-input"/>
-  		<i class="glyphicon glyphicon-star-empty" id="empty"></i>
-  		<i class="glyphicon glyphicon-star" id="full"></i>
-	</label>
-    
+	<c:if test="${sessionScope.memberId !=null }">
+		<label id="star" for="id-of-input" class="custom-checkbox">
+	  		<input type="checkbox" id="id-of-input"/>
+	  		<i class="glyphicon glyphicon-star-empty" id="empty"></i>
+	  		<i class="glyphicon glyphicon-star" id="full"></i>
+		</label>
+    </c:if>
     		<!-- map  -->
     		<div id="map"></div>
     		<hr>
@@ -261,22 +274,33 @@
 			</div>
 		</div>
 		</div>
+		<div>
+		<hr>
+			<div class="row">
+				<div class="col-sm-12">
+					<h3>User Comment</h3>
+				</div><!-- /col-sm-12 -->
+			</div><!-- /row -->
+			<div class="row" id="replyBox">
+			
+			</div><!-- /row -->
+			</div><!-- /container -->		
+			
+			<!-- input reply -->
+			<c:if test="${sessionScope.memberId !=null }">
+				<div>
+					<div>			
+						<input type="text" class="form-control" id="text">
+						<input type="hidden" value="${sessionScope.memberId}" id="memberId">
+						<input type="hidden" value=" ${estateId}" id="estateId">
+						<input type="button" class="btn btn-info" id="replyButton" value="reply">
+					</div>
+				</div>
+			</c:if>
 		</div>
 		<div class="col-sm-2 sidenav">
 			<div class="col-sm-2 sidenav">
-				
-				<a class="btn btn-success btn-lg" href="../newRoom?estateId=2&amp;roomPublic=0" id="3dModelButton">
-					<span class="glyphicon glyphicon-print"></span> NEW 3D MODEL
-				</a>
-				<br><br>
-				<a data-toggle="modal" href="#3dDesignModal" class="btn btn-info btn-lg">
-					<span class="glyphicon glyphicon-search"></span> 3D DESIGN
-				</a>
-				<br><br>
-				<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
-					<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
-				</a>
- 			</div>
+			</div>
 		</div>
 	</div>
 </div>

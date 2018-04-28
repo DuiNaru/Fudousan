@@ -37,7 +37,7 @@
 	            
 				<div class="input-group">
 					<label for="InputText" data-lang="13"></label>
-					<textarea class="form-control" rows="3" cols="100" style="resize:none" name="text" data-lang="14"></textarea>
+					<textarea class="form-control" rows="3" id="InputText"cols="100" style="resize:none" name="text" data-lang="14"></textarea>
 				</div>
 			
 				<div class="form-group">

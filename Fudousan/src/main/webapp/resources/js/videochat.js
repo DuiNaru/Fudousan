@@ -1,7 +1,3 @@
-let script = document.createElement("script");
-script.src = "/fudousan/resources/js/cookie.js";
-document.body.appendChild(script);
-
 let startBtn = document.getElementById("startVideoChatBtn");
 startBtn.onclick = pushStartBtn;
 
@@ -43,14 +39,14 @@ let langSet = {
 	}
 };
 
-let lang = getCookie();
+let lang = getCookie("lang");
 
 if (lang === ""){
 	lang = "ko";
 }
 
 function pushStartBtn(){
-	if (startBtn.value === "화상 채팅 시작"){
+	if (startBtn.innerHTML === "화상 채팅 시작"){
 		call();
 	}
 	else {
@@ -68,15 +64,13 @@ function call(){
 	startBtn.innerHTML = "화상 채팅 종료";
 	startBtn.disabled = true;
 	
-	navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream){
+	navigator.mediaDevices.getUserMedia({video: {width: 320, height: 240}, audio: true}).then(function(stream){
 		localStream = stream;
-		localCam.width = 400;
-		localCam.height = 300;
 		localCam.srcObject = localStream;
-	}).then(function(){
-		socket.emit("call", {roomId: room.roomId});
 		
 		showCallWindow();
+
+		socket.emit("call", {roomId: room.roomId});
 	}).catch(function(e){
 		alert("getUserMedia() error: " + e.name);
 	});
@@ -92,14 +86,16 @@ function showCallWindow(){
 	div.style.color = "rgb(255, 255, 255)";
     div.style.padding = "10px";
     div.style.background = "rgba(0, 0, 0, 0.5)";
+    div.style.zIndex = "2";
     
-	let html = "상대방의 수락을 기다리고 있습니다.<br><button type='button' id='cancelCallBtn'>취소</button>";
+	let html = "상대방의 수락을 기다리고 있습니다.<br><div id='btnDiv'><button type='button' id='cancelCallBtn'>취소</button></div>";
 	div.innerHTML = html;
 	
 	document.body.appendChild(div);
 	
     let cancelCallBtn = document.getElementById("cancelCallBtn");
     cancelCallBtn.style.marginTop = "10px";
+    cancelCallBtn.style.color = "rgb(0, 0, 0)";
     cancelCallBtn.onclick = function(){
     	removeDiv("callingDiv");
     	
@@ -138,6 +134,11 @@ socket.on("cancel-call", function(){
 });
 
 socket.on("not-found-target", function(){
+	console.log("--> not found target");
+	
+	closeCall();
+	startBtn.disabled = false;
+	startBtn.innerHTML = "화상 채팅 시작";
 	removeDiv("callingDiv");
 	
 	alert("상대방이 없습니다.");
@@ -153,6 +154,7 @@ function receiveCallWindow(){
 	div.style.color = "rgb(255, 255, 255)";
     div.style.padding = "10px";
     div.style.background = "rgba(0, 0, 0, 0.5)";
+    div.style.zIndex = "2";
     
 	let html  = "상대방이 화상 채팅을 신청했습니다.<br>";
 		html += "<button type='button' id='acceptCallBtn'>수락</button>";
@@ -162,6 +164,7 @@ function receiveCallWindow(){
 	document.body.appendChild(div);
 	
 	let acceptCallBtn = document.getElementById("acceptCallBtn");
+	acceptCallBtn.style.color = "rgb(0, 0, 0)";
 	acceptCallBtn.onclick = function(){
 		removeDiv("receiveCallDiv");
 		
@@ -174,6 +177,7 @@ function receiveCallWindow(){
 		startBtn.disabled = false;
 	};
 	let refuseCallBtn = document.getElementById("refuseCallBtn");
+	refuseCallBtn.style.color = "rgb(0, 0, 0)";
 	refuseCallBtn.onclick = function(){
 		removeDiv("receiveCallDiv");
 		
@@ -187,12 +191,12 @@ function receiveCallWindow(){
 }
 
 socket.on("answer-call", function(answer){
-	if (answer == "true"){
+	removeDiv("callingDiv");
+	
+	if (answer == true){
 		sendVideoOffer();
 	}
 	else {
-		removeDiv("callingDiv");
-		
 		alert("상대방이 화상 채팅을 거절했습니다.");
 	}
 });
@@ -201,10 +205,8 @@ function sendVideoOffer(){
 	myPeerConnection = createPeerConnection();
 
 	if (localStream == null){
-		navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function (stream){
+		navigator.mediaDevices.getUserMedia({video: {width: 320, height: 240}, audio: true}).then(function (stream){
 			localStream = stream;
-			localCam.width = 400;
-			localCam.height = 300;
 			localCam.srcObject = localStream;
 			myPeerConnection.addStream(localStream);
 		});
@@ -235,14 +237,12 @@ socket.on("video-offer", function(sdp){
 
 	myPeerConnection.setRemoteDescription(desc).then(function(){
 		if (localStream == null){
-			return navigator.mediaDevices.getUserMedia({video: true, audio: true});
+			return navigator.mediaDevices.getUserMedia({video: {width: 320, height: 240}, audio: true});
 		}
 		else {
 			return localStream;
 		}
 	}).then(function(stream){
-			localCam.width = 400;
-			localCam.height = 300;
 			localCam.srcObject = stream;
 			myPeerConnection.addStream(stream);
 	}).then(function(){
@@ -284,8 +284,6 @@ socket.on("hangup", function(){
 function hangup(){
 	console.log("--> hang up");
 	
-	startBtn.innerHTML = "화상 채팅 시작";
-	
 	closeCall();
 };
 
@@ -303,7 +301,18 @@ function closeCall(){
 		myPeerConnection = null;
 	}
 	
-	localCam.srcObject = null;
+	if (localCam.srcObject !== null){
+		let tracks = localCam.srcObject.getTracks();
+		
+		tracks.forEach(function(track){
+			track.stop();
+		});
+		
+		localCam.srcObject = null;
+	}
+	
+	startBtn.innerHTML = "화상 채팅 시작";
+	startBtn.disabled = false;
 };
 
 function createPeerConnection(){
@@ -333,8 +342,8 @@ function handleICECandidateEvent(event){
 function handleAddStreamEvent(event){
 	console.log("--> handle add stream event");
 
-	remoteCam.width = 400;
-	remoteCam.height = 300;
+	remoteCam.width = 320;
+	remoteCam.height = 240;
 	remoteCam.srcObject = event.stream;
 	startBtn.innerHTML = "화상 채팅 종료";
 }

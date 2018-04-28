@@ -13,6 +13,7 @@
     <link href="../resources/css/3dmodel.css" rel="stylesheet">
     <link href="../resources/css/templete.css" rel="stylesheet">
     <link href="../resources/css/detailedinfomationpage.css" rel="stylesheet">
+     <link href="../resources/css/comment.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 
@@ -36,6 +37,7 @@
 	<!-- footer  -->
 	<%@include file="/WEB-INF/views/include/footer.jsp" %>
 
+	
 	<!-- hidden value -->
 	<input type="hidden" value="${resultEstate.estateX}" id="lat">
 	<input type="hidden" value="${resultEstate.estateY}" id="lng">
@@ -47,7 +49,7 @@
 	<script src="../resources/js/login.js"></script>
 	<script src="../resources/js/bootstrap.min.js"></script>
 	<script src="../resources/js/estatedetailinit.js"></script>    
-	
+	<script src="../resources/js/reply.js"></script>  
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&callback=initMap">
 	</script>
