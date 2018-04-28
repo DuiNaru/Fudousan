@@ -8,5 +8,6 @@ public interface ReplyMapper {
 	public int insertReply(Reply reply);
 	public List<Reply> selectReply();
 	public boolean deleteReply(int replyId);
-	/*public int updateReply(Reply reply);*/
+	public Reply selectOne(int replyId);
+	public int updateReply(Reply reply);
 }

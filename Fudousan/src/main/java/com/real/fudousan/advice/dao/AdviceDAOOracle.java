@@ -75,4 +75,20 @@ public class AdviceDAOOracle implements AdviceDAO {
 		return result;
 	}
 
+	@Override
+	public boolean addviceRequest(Advice advice) {
+		logger.info("addviceRequest("+advice+") Start");
+		AdviceMapper mapper = sqlsession.getMapper(AdviceMapper.class);
+		boolean result = false;
+		try{
+			result = mapper.addviceRequest(advice);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("addviceRequest("+advice+") End");
+		return result;
+	}
+
+
+
 }

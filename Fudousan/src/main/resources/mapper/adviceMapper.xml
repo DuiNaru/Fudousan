@@ -254,5 +254,27 @@
 	WHERE
 		request_member_id = #{requestMemberId} AND requested_member_id = #{requestedMemberId} AND room_id = #{room.roomId}
 </update>
+
+<insert id="addviceRequest" parameterType="advice">
+	insert into advice
+	(
+		REQUEST_MEMBER_ID 		
+		REQUESTED_MEMBER_ID 	
+		ROOM_ID					
+		CRE_DATE 				
+		REQUEST_DATE 			
+		STATE 					
+	)VALUES(
+	#{advice.requestMemberId}
+	,#{advice.requestedMemberId}
+	,#{advice.room.roomId}
+	,#{advice.creDate}
+	,#{advice.requestDate}
+	,#{state}
+	)
+</insert>
+
+
+
 	
 </mapper>

@@ -64,7 +64,10 @@ public interface RoomMapper {
 
 	/*벽높이*/
 	public int wallheightchange(Room room);
+	/*방이름*/
+	public int roomtitleChange(Room room);
 
+	
 	public int updateRoomSanpShot(Room room);
 
 	

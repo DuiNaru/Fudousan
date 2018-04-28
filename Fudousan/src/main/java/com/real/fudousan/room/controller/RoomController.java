@@ -200,6 +200,20 @@ public class RoomController {
 	
 		return result;
 	}
+	/*방이름*/
+	@ResponseBody
+	@RequestMapping(value="roomTitleChange", method=RequestMethod.POST)
+	public boolean roomTitleChange(int roomId, String roomTitle){
+		logger.info("방이름 변경 시작 컨트롤러 ");
+		System.out.println(roomTitle);
+		Room room = new Room();
+		room.setRoomId(roomId);
+		room.setRoomTitle(roomTitle);
+		System.out.println("room: " + room);
+		boolean result = roomService.roomtitleChange(room) == 1;
+		
+		return result;
+	}
 
 	@ResponseBody
 	@RequestMapping(value="selectRoomEstate", method=RequestMethod.POST)
@@ -249,6 +263,7 @@ public class RoomController {
             
             result = roomService.saveSnapShot(Integer.parseInt(mpf.getOriginalFilename()), mpf);
         }
+		logger.info("snapshot() End");
         return result;
 	}
 	

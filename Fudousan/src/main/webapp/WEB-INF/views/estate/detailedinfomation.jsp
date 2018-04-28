@@ -19,7 +19,7 @@
 
 </head>
 <body>
-	<!-- 3d design modal  -->
+	<!-- email modal  -->
  	<%@include file="/WEB-INF/views/include/emailmodal.jsp" %>
 		
 	<!-- 3d design modal  -->

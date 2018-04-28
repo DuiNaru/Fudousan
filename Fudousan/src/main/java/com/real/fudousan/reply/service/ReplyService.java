@@ -40,5 +40,18 @@ public class ReplyService {
 		return result; 
 	}
 	
+	public Reply selectOne(int replyId){
+		logger.info("selectOne Start - service");
+		Reply result = dao.selectOne(replyId);
+		logger.info("selectOne End - service");
+		return result; 
+	}
+	
+	public int updateReply(Reply reply){
+		logger.info("update Reply Start - service");
+		int result = dao.updateReply(reply);
+		logger.info("update Reply End - service");
+		return 0;
+	};
 
 }

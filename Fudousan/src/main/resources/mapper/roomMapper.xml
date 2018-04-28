@@ -234,9 +234,22 @@
 		HEIGHT=#{height}
 	WHERE
 		ROOM_ID=#{roomId}
-
-	
 	</update>
+
+
+	<update id="roomtitleChange" parameterType="room">
+	update
+		ROOM
+	SET
+		ROOM_TITLE=#{roomTitle}
+	WHERE
+		ROOM_ID=#{roomId}
+	</update>
+	
+	
+	
+	
+	
 
 	<update id="updateRoomSanpShot" parameterType="room">
 		UPDATE

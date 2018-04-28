@@ -20,5 +20,7 @@ public interface ItemMapper {
 	public ArrayList<Item> selectitem(ItemType itemTypeId);
 
 	public List<ItemType> selectAllItemType();
+	
+	public int updatePreview(Item item);
 
 }

@@ -14,6 +14,37 @@
 		<association property="member" column="member_id" javaType="com.real.fudousan.member.vo.Member" resultMap="com.real.fudousan.member.dao.MemberMapper.memberResultMap"/>
 	</resultMap>
 	
+	<sql id="SELECT_REPLY_SQL">
+		SELECT
+			reply.reply_id as reply_id,
+			reply.estate_id as estate_id,
+			reply.text as text,	
+			reply.cre_date as cre_date,
+			member.member_id as member_id,
+			member.email as email,
+			member.password as password,
+			member.phone as phone,
+			member.picture as picture,
+			member.text as "member_text",
+			member.cre_date as "member_cre_date",
+			del_date as "member_del_date",
+			member.designer as designer,
+			member.member_name as member_name,
+			permission.permission_id as "permission_id",
+			permission.name as "permission_name"
+		FROM
+			reply
+		JOIN
+			member
+		ON 
+			reply.member_id = member.member_id
+		JOIN 
+			permission
+		ON
+			member.permission_id = permission.permission_id
+	</sql>
+	
+	
 	<!-- insert -->
 	<insert id="insertReply" parameterType="reply">
 		INSERT INTO reply
@@ -28,10 +59,14 @@
 			#{member.memberId},
 			#{text}
 		)
+		
+		 <selectKey keyProperty="replyId" resultType="int" order="AFTER">
+	        SELECT SEQ_Reply_ID.currval AS replyId FROM dual
+	    </selectKey>
 	</insert>
 	
 	<select id="selectReply" resultMap="replyResultMap">
-		SELECT
+			SELECT
 			reply.reply_id as reply_id,
 			reply.estate_id as estate_id,
 			reply.text as text,	
@@ -67,6 +102,23 @@
 		WHERE
 			reply_id = #{reply_id}
 	</delete>
-
+	
+	<select id="selectOne" resultMap="replyResultMap">
+		<include refid="SELECT_REPLY_SQL"></include>
+		WHERE
+			reply_id = #{replyId}
+	</select>
+	<update id="updateReply" parameterType="reply">
+		UPDATE 
+			reply	
+		SET
+			text = #{text}	
+		WHERE
+			reply_id = #{replyId}
+		 <selectKey keyProperty="replyId" resultType="int" order="AFTER">
+	        SELECT SEQ_Reply_ID.currval AS replyId FROM dual
+	    </selectKey>
+		
+	</update>
 	
 </mapper>
