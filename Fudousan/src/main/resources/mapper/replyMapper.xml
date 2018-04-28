@@ -108,6 +108,7 @@
 		WHERE
 			reply_id = #{replyId}
 	</select>
+	
 	<update id="updateReply" parameterType="reply">
 		UPDATE 
 			reply	
@@ -115,9 +116,7 @@
 			text = #{text}	
 		WHERE
 			reply_id = #{replyId}
-		 <selectKey keyProperty="replyId" resultType="int" order="AFTER">
-	        SELECT SEQ_Reply_ID.currval AS replyId FROM dual
-	    </selectKey>
+
 		
 	</update>
 	
