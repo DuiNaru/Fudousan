@@ -897,6 +897,31 @@ function drawFloor(side) {
 	var roomFloorGeometry = new THREE.ShapeGeometry( shape );
 	var roomFloorMaterial = new THREE.MeshBasicMaterial({color:0xffffff, side:((side===undefined||side)?THREE.FrontSide:THREE.BackSide)});
 	
+	var geometry = roomFloorGeometry;
+	
+	geometry.computeBoundingBox();
+
+	var max = geometry.boundingBox.max,
+	    min = geometry.boundingBox.min;
+	var offset = new THREE.Vector2(0 - min.x, 0 - min.y);
+	var range = new THREE.Vector2(max.x - min.x, max.y - min.y);
+	var faces = geometry.faces;
+
+	geometry.faceVertexUvs[0] = [];
+
+	for (var i = 0; i < faces.length ; i++) {
+
+	    var v1 = geometry.vertices[faces[i].a], 
+	        v2 = geometry.vertices[faces[i].b], 
+	        v3 = geometry.vertices[faces[i].c];
+
+	    geometry.faceVertexUvs[0].push([
+	        new THREE.Vector2((v1.x + offset.x)/range.x ,(v1.y + offset.y)/range.y),
+	        new THREE.Vector2((v2.x + offset.x)/range.x ,(v2.y + offset.y)/range.y),
+	        new THREE.Vector2((v3.x + offset.x)/range.x ,(v3.y + offset.y)/range.y)
+	    ]);
+	}
+	
 	floor = new THREE.Mesh(roomFloorGeometry, roomFloorMaterial);
 	
 	return floor;
@@ -1055,12 +1080,9 @@ function changeFloorTexture(textureId) {
 				floorTexture = textureLoader.load(url, function ( texture ) {
 
 				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-				    texture.offset.set( 0, 0 );
-				    texture.repeat.set( 2, 2 );
 
 				} );
 				roomFloor.material.map = floorTexture;
-				roomFloor.material.needsUpdate = true;
 				
 			} else {
 				alert("바닥 텍스쳐 변경에 실패하였습니다.");
@@ -1086,18 +1108,14 @@ function changeCeilTexture(textureId) {
 			if(data != null && data != false && data != "false") {
 
 				var url = $("#img"+textureId).attr("src");
-				
+
 
 				ceilTexture = textureLoader.load(url, function ( texture ) {
 
 				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
-				    texture.offset.set( 0, 0 );
-				    texture.repeat.set( 2, 2 );
 
 				} );
 				roomCeil.material.map = ceilTexture;
-				roomCeil.material.needsUpdate = true;
-				
 			} else {
 				alert("천장 텍스쳐 변경에 실패하였습니다.");
 			}

@@ -10,7 +10,7 @@
     <!-- side nav(left) -->
     <div class="col-sm-2 sidenav">
     	<c:if test="${sessionScope.memberId !=null }">
-			<a class="btn btn-success btn-lg" href="../newRoom?estateId=2&amp;roomPublic=0" id="3dModelButton">
+			<a class="btn btn-success btn-lg" href="../newRoom?estateId=${estateId}&amp;roomPublic=0" id="3dModelButton">
 				<span class="glyphicon glyphicon-print"></span> NEW 3D MODEL
 			</a>
 			<br><br>
