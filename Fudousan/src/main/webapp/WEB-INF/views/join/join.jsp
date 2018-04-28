@@ -23,7 +23,9 @@
 <body>
  	<!-- login modal  -->
  	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
- 	
+ 	 
+ 	<!-- check modal  -->
+ 	<%@include file="/WEB-INF/views/include/checkmodal.jsp" %> 
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 	
@@ -47,7 +49,8 @@
 	
 	<!-- Form check.js -->
 	<script src="<c:url value="/resources/js/memberFormCheck.js"></c:url>"></script>
-		
+	<!-- email check.js -->
+	<script src="<c:url value="/resources/js/checkEmail.js"></c:url>"></script>	
 	
 	<!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>

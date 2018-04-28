@@ -146,6 +146,21 @@ public class MemberController {
 		interior =(ArrayList<Member>) service.interior();
 		return interior;
 	}
+	@ResponseBody
+	@RequestMapping(value="emailCheck", method=RequestMethod.GET)
+	public Boolean emailCheck(String email){
+		logger.info("emai Check Start - controller");
+		boolean resultB = false; 
+		
+		Member member = new Member();
+		member.setEmail(email);
+		Member result = service.selectMemberOne(member);
+		if (result.getEmail() == email) {
+			resultB = true;
+		}
+		logger.info("emai Check End - controller");
+		return resultB; 
+	}
 	
 	/*//메일 보내기
 	@RequestMapping(value = "helpCall", method = RequestMethod.GET)
