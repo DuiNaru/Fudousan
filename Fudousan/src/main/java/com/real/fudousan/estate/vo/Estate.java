@@ -132,17 +132,6 @@ public class Estate implements Serializable {
 	}
 
 
-
-
-
-
-	
-
-
-
-
-
-
 	public Estate(Integer estateId, String estateName, TransType transType, String region,
 			MunicipalityCode municipalitycode, String prefecture, String municipality, String districtname,
 			String neareststation, Integer timetoneareststation, Integer tradeprice, Integer priceperunit,
@@ -190,16 +179,6 @@ public class Estate implements Serializable {
 		this.estateY = estateY;
 		this.baseRoomId = baseRoomId;
 	}
-
-
-
-
-
-
-
-
-
-
 
 
 

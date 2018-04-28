@@ -147,104 +147,43 @@
             
              <div class="form-group">
               <label for="inputPrefecture">가격</label>
-              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 가격" name="price" value="${estate.tradeprice}">
+              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 가격" name="price" value="${entry.price}">
            </div>
+            
             
             
             <div class="form-group">
               <label for="inputRegion">地域名(지역이름)</label>
-            	<!-- Localname = 지역이름 -->
-             <select name='municipalitycodeId' data-live-search="true"  class="form-control">
-  <option value='00'>-- 選択 --</option>
-  <!-- 홋카이도 -->
-  
-  <option value='13102'>中央区</option>
-  <!-- 아오모리현 -->
+               <!-- Localname = 지역이름 -->
+               
+               <input type="text" value="${estate.prefecture}" data-live-search="true"  class="form-control" readonly >
 
-  <option value='13105'>文京区</option>
-  <!-- 미야기현 -->
-  <option value='13101'>千代田区</option>
-  <!-- 아키타현 -->
-  <option value='40101'>北九州市門司区</option>
-   <!-- 야가마타현 -->
-  <option value='13103'>港区</option>
-  <!-- 후쿠시마현-->
-  <option value='13104'>新宿区</option>
-  <!-- 이바라키현 -->
-  <option value='13106'>台東区</option>
-  <!-- 토치 기현 -->
-  <option value='13107'>墨田区</option>
-  <!-- 군마현 -->
-  <option value='13108'>江東区</option>
-  <!-- 사이타마 현 -->
-  <option value='13109'>品川区</option>
-  <!-- 치바현 -->
-  <option value='13110'>目黒区</option>
- <!--  도쿄도 -->
-  <option value='1101'>札幌市中央区</option>
-  <!-- 가나가와 현 -->
-  <option value='1202'>函館市</option>
-  <!-- 니가타 현 -->
-  <option value='1203'>小樽市</option>
-  <!-- 도야마 현 -->
-  <option value='1204'>旭川市</option>
-  <!-- 이시카와 현 -->
-  <option value='1205'>室蘭市</option>
-  <!-- 후쿠이 현 -->
-  <option value='2201'>青森市</option>
-  <!-- 야마나시 현 -->
-  <option value='2202'>弘前市</option>
-  <!-- 나가노 현 -->
-  <option value='3201'>盛岡市</option>
-  <!-- 기후현 -->
-  <option value='4101'>仙台市青葉区</option>
-  <!-- 스지오카현 -->
-  <option value='5201'>秋田市</option>
-  <!-- 아이치현 -->
-  <option value='6201'>山形市</option>
-  <!-- 미에현 -->
-  <option value='7201'>福島市</option>
-  <!-- 시가현 -->
-  <option value='9201'>宇都宮市</option>
-  <!-- 교토부 -->
-  <option value='7202'>会津若松市</option>
-  <!-- 오사카부 -->
-  <option value='7203'>郡山市</option>
-  <!-- 효고현 -->
-  <option value='8202'>日立市</option>
-  <!-- 나라현 -->
-  <option value='8203'>土浦市</option>
-  <!-- 와카야마현 -->
-  <option value='10201'>前橋市</option>
-  <!-- 돗토리현 -->
-  <option value='12101'>千葉市中央区</option>
-  <!-- 시마네현 -->
-  <option value='14101'>横浜市鶴見区</option>
-  <!-- 오카야마현 -->
-  <option value='15101'>新潟市北区</option>
-  <!-- 히로시마현 -->
-  <option value='16201'>富山市</option>
-  
-</select>
              
             </div>
-            <div class="form-group">
-              <label for="inputPrefecture">都道府県</label>
-              <input type="text" class="form-control" id="inputPrefecture" placeholder=" 도시 이름 (도도부현)" name="prefecture" value="${estate.prefecture}">
-           
+         <div class="form-group">
+              <label for="inputRegion">시구 도촌</label>
+               <!-- Localname = 지역이름 -->
+               
+            
+            <input type="text" name='municipality' data-live-search="true"  class="form-control" value="${estate.municipality}" readonly >
+           	 <label for="inputRegion">시구 도촌 코드</label>
+           	<input type="text" name="municipalitycodeId" data-live-search="true"  class="form-control" value="${estate.municipalitycode.municipalitycodeId}" readonly >
+         
+         	<input type="text" name='estateX' data-live-search="true"  class="form-control" value="${estate.estateX}" readonly>
+         	<input type="text" name='estateY' data-live-search="true"  class="form-control" value="${estate.estateY}" readonly>
+     
+             
             </div>
+             
+      
             <div class="form-group">
-              <label for="inputMunicipality">市区町村</label>
-              <input type="text" class="form-control" id="inputMunicipality" placeholder="도시 이름 (시구정촌)" name="municipality" value="${estate.municipality}">
-            </div>
-            <div class="form-group">
-              <label for="inputDistrictName">地球人</label>
-              <input type="text" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)" name="districtname" value="${estate.districtname}">
+              <label for="inputDistrictName">지역구</label>
+              <input type="text" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)" name="districtname" value="${estate.districtname}" readonly >
             </div>
             
            <div class="form-group">
               <label for="inputNearestStation"> 나머지 주소 </label>
-              <input type="text" class="form-control" id="inputNearestStation" placeholder="나머지 주소" name="address" value="${estate.address}">
+              <input type="text" class="form-control" id="inputNearestStation" placeholder="나머지 주소" name="address" value="${estate.address}" readonly >
             </div>
             
             

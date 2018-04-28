@@ -33,6 +33,8 @@ public class EstateService {
 	
 		return null;
 	}*/
+	
+	//수정페이지로 이동
 	public Estate viewEstate(int estateId) {
 		
 		Estate result = dao.viewEstate(estateId);
@@ -46,10 +48,62 @@ public class EstateService {
 	 * (완료)
 	 */
 	public int addEstate(Estate estate) {
-		int result = dao.insertByIds(estate);
 		
+		String address1 = estate.getPrefecture();
+		String address2 = estate.getMunicipality();
+		String address3 = estate.getDistrictname();
+		String address4 = estate.getAddress();
+		String address = address1 + address2 + address3 + address4;
+		logger.debug("address : " + address);
+		String locationInfo = address;
+		   RestTemplate restTemplate = new RestTemplate();
+		   String locationResult = restTemplate.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address={a}&key=AIzaSyAlZMVBrvQGWP2QTDvf5ur7HrtEC3xlOf0", String.class, locationInfo);
+		   System.out.println("locationInfo:::"+locationResult);
+		   
+		   
+		   try {
+		      
+		      JSONParser jsonParser = new JSONParser();
+		      JSONObject jsonObject = (JSONObject) jsonParser.parse(locationResult);
+		      JSONArray  locationArray = (JSONArray) jsonObject.get("results");
+		      System.out.println("locationArray" + locationArray);
+		      for (int i = 0; i < locationArray.size(); i++) {
+		         JSONObject  geometry= (JSONObject)locationArray.get(i);
+		         JSONObject geometryLocation=(JSONObject)geometry.get("geometry");
+		         JSONObject location2 = (JSONObject)geometryLocation.get("location");
+		         System.out.println("geometryLocation: "+ geometryLocation);
+		      
+		         String lat2 = location2.get("lat").toString();
+		         String lng2 = location2.get("lng").toString();
+		    
+		         
+		         estate.setEstateX(Double.parseDouble(lat2));
+		         estate.setEstateY(Double.parseDouble(lng2));
+		         
+		        /* entry.getEstate().setEstateX(Double.parseDouble(lat2));
+		         entry.getEstate().setEstateY(Double.parseDouble(lng2));*/
+		         
+		         System.out.println("estate 서비스 " + estate);
+		      }
+		      
+		   } catch (Exception e) {
+		      // TODO: handle exception
+		   }
+	
+		int result = dao.insertByIds(estate);
 		return result;
 	}
+	
+	
+	//수정//업데이트
+	public int updateByIds(Estate estate){
+		int result = dao.updateByIds(estate);
+		return result;
+		
+		
+	}
+	
+	
 	
 	/**
 	 * 매물 수정
@@ -57,6 +111,10 @@ public class EstateService {
 	 * @return
 	 */
 	public boolean modifyEstate(Estate estate) {
+		
+		
+		
+		
 		
 		return false;
 	}

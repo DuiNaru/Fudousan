@@ -227,9 +227,8 @@ insert into estate
 <if test='estateY != null'>
 	,ESTATE_Y
 </if>
-<if test='address != null'>
-	,ADDRESS
-</if>
+
+
 )
 VALUES
 (
@@ -331,14 +330,10 @@ SEQ_ESTATE_ID.nextval
 <if test='estateY != null'>
 ,#{estateY}
 </if>
+
 )
 
-
-
 </insert>
-
-
-
 
 
 <select id="select" parameterType="string" resultMap="estateResultMap">
@@ -354,7 +349,9 @@ SEQ_ESTATE_ID.nextval
 	ORDER BY
 		estate_id ASC
 </select>
+
 <update id="updateByIds" parameterType="estate" >
+
 
 
 UPDATE ESTATE
@@ -388,6 +385,47 @@ SET
 
 </update>
 
+
+
+
+
+
+
+
+<!-- <update id="updateByIds" parameterType="estate" >
+
+
+UPDATE ESTATE
+SET	
+	
+	TRANS_TYPE_ID=#{transType.transTypeId}
+	,REGION=#{region}
+	,MunicipalityCode_ID=#{municipalitycode.municipalitycodeId}
+	,PREFECTURE=#{prefecture}
+	,MUNICIPALITY=#{municipality}
+	,DISTRICTNAME=#{districtname}
+	,ADDRESS=#{address}
+	,NEARESTSTATION=#{neareststation}
+	,TIMETONEARESTSTATION=#{timetoneareststation}
+	,TRADEPRICE=#{tradeprice}
+	,PRICEPERUNIT=#{priceperunit}
+	,FLOORPLAN=#{floorplan}
+	,AREA=#{area}
+	,UNITPRICE=#{unitprice}
+	,TOTALFLOORAREA=#{totalfloorarea}
+	,LANDSHAPE=#{landshape}
+	,ESTATE_NAME=#{estateName}
+	,BUILDINGYEAR=#{buildingyear}
+	,STRUCTURE=#{structure}
+	,USE=#{use}
+	,COVERAGERATIO=#{coverageratio}
+	,FLOORAREARATIO=#{floorarearatio}
+	,DEL_DATE=#{delDate}
+	WHERE
+	 ESTATE_ID = #{ESTATE_ID}
+
+</update>
+ -->
 
 
 

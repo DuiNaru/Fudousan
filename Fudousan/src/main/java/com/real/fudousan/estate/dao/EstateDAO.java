@@ -31,7 +31,7 @@ public interface EstateDAO {
 	public List<Estate> select(Set<Integer> estateIds);
 
 
-	//가져올때
+	//가져올때(수정페이지로 이동)
 	public Estate viewEstate(int estateId);
 
 	

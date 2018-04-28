@@ -44,9 +44,6 @@ public class EstateController {
 	@Autowired
 	private AgencyService agencyService;
 	
-	
-	
-	
 
 	
 	//매물등록
@@ -57,11 +54,12 @@ public class EstateController {
 			Integer unitprice,String landshape, Integer totalfloorarea ,String buildingyear,String structure,String use,
 		    Integer  coverageratio ,Integer  floorarearatio , String address , String estateName, Integer price){
 		
-		logger.info("매물 등록 시작");
+		logger.info("매물 등록 시작 컨트롤러");
 		Entry entry = new Entry();
 		
 		System.out.println("estate = " +   estate);
 		entry.setPrice(price);
+		System.out.println("entry : "  + entry);
 		estate.setEstateName(estateName);
 		estate.setTransType(transType);
 		estate.setMunicipalitycode(municipalitycode);
@@ -84,19 +82,25 @@ public class EstateController {
 		estate.setFloorarearatio(floorarearatio);
 		estate.setAddress(address);
 		
-		System.out.println(price);
+		estate.setEstateX(estate.getEstateX());
+		estate.setEstateY(estate.getEstateY());
+		
+		System.out.println("어디까지오나 0" + estate);
 		estateService.addEstate(estate);
+		
+		System.out.println("어디까지오나 1");
 		int estate_id = estate.getEstateId();
-		
+		System.out.println("어디까지오나 2");
 		String email = (String) session.getAttribute("loginEmail");
+		System.out.println("어디까지오나 3");
 		int agency_id = agencyService.selectAgencyId(email);
-		
+		System.out.println("어디까지오나 4");
 		logger.info("estate_id : " + estate_id);
 		entry.setEstate(estate);
 		Agency agency = new Agency();
 		agency.setAgencyId(agency_id);
 		entry.setAgency(agency);
-		
+		System.out.println(entry);
 		entryService.addEntry(entry);
 
 		logger.info("매물 등록 종료");
@@ -147,7 +151,7 @@ public class EstateController {
 	 }
 	 //수정 페이지로 이동  
 	 @RequestMapping(value="bc", method=RequestMethod.GET)
-	    public String modifyEstatePage(Model model, HttpSession session, int estateId, Entry entry
+	    public String modifyEstatePage(Model model, HttpSession session, int estateId, Entry entry, Integer price
 				){
 			
 		 
@@ -174,7 +178,7 @@ public class EstateController {
 				Integer unitprice,String landshape, Integer totalfloorarea ,String buildingyear,String structure,String use,
 			    Integer  coverageratio ,Integer  floorarearatio , String address , String estateName, Integer price){
 			
-			logger.info("매물 수정 시작");
+			logger.info("매물 수정 시작(컨트롤러)");
 			Entry entry = new Entry();
 			
 			System.out.println("estate = " +   estate);
@@ -201,8 +205,12 @@ public class EstateController {
 			estate.setFloorarearatio(floorarearatio);
 			estate.setAddress(address);
 			
+		
+			
 			System.out.println(price);
-			estateService.addEstate(estate);
+			System.out.println("estate2 = " +   estate);
+			
+			estateService.updateByIds(estate);
 			int estate_id = estate.getEstateId();
 			
 			String email = (String) session.getAttribute("loginEmail");
@@ -214,7 +222,7 @@ public class EstateController {
 			agency.setAgencyId(agency_id);
 			entry.setAgency(agency);
 			
-			entryService.addEntry(entry);
+			entryService.updateByIds(entry);
 
 			logger.info("매물 수정 완료");
 		
