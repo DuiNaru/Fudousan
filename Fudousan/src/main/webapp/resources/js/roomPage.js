@@ -6,7 +6,6 @@ var cameraRotateValue = 1;
 var cameraLookAngle = 0;
 // 카메라, 씬, 렌더러, 카메라 컨트롤
 var camera, scene, renderer, controls;
-var scenes = [];
 var composer, outlinePass, otherOutlinePass;
 // 화면 돌리는 컨트롤 기준 높이
 var controlHeight = 150;
@@ -184,7 +183,7 @@ function init() {
 	renderer.setSize(width, height);
 	// 해당 렌더러를 화면에 추가하여서 사용
 	document.body.appendChild( renderer.domElement );
-
+	
 	// controls
 	controls = new THREE.OrbitControls( camera, renderer.domElement );
 	//controls.addEventListener( 'change', render ); // call this only in static scenes (i.e., if there is no animation loop)
@@ -302,40 +301,9 @@ function animate(time) {
 	requestAnimationFrame( animate );
 	// 화면 회전 정보 갱신
 	controls.update(); // only required if controls.enableDamping = true, or if controls.autoRotate = true
-
-	//renderer.setViewport( 0, 0, width, height );
-	//renderer.setScissor( 0, 0, width, height );
-	// 화면을 렌더러에 그림
-	//renderer.render( scene, camera );
+	
 	composer.render();
 
-	/*
-	scenes.forEach( function( s ) {
-		// so something moves
-		s.children[0].rotation.y = Date.now() * 0.001;
-		// get the element that is a place holder for where we want to
-		// draw the scene
-		var e = s.userData.element;
-		// get its position relative to the page's viewport
-		var r = e.getBoundingClientRect();
-		// check if it's offscreen. If so skip it
-		if ( r.bottom < 0 || r.top  > renderer.domElement.clientHeight ||
-			 r.right  < 0 || r.left > renderer.domElement.clientWidth ) {
-			return;  // it's off screen
-		}
-		// set the viewport
-		var width  = r.right - r.left;
-		var height = r.bottom - r.top;
-		var left   = r.left;
-		var top    = r.top;
-		//renderer.setViewport( left, top, width, height );
-		//renderer.setScissor( left, top, width, height );
-		var c = s.userData.camera;
-		//c.aspect = width / height; // not changing in this example
-		//c.updateProjectionMatrix();
-		//s.userData.controls.update();
-		renderer.render( s, c );
-	} );*/
 	
 	TWEEN.update(time);
 }
@@ -1191,67 +1159,6 @@ function changeWallTexture(roomWall, textureId, wallIndex) {
 			alert("벽 텍스쳐 변경 중 오류가 발생하였습니다.");
 		}
 	});
-}
-
-function previewItem(itemId, fileName) {
-	/*console.log(itemId);
-	console.log(fileName);
-	// 외부 모델 로더 생성
-	const loader = new THREE.TDSLoader();
-	// 해당 모델의 텍스쳐 경로 설정
-	loader.setPath("/fudousan/item/"+itemId+"/");
-	// 모델 데이터 경로 설정 및 로딩 완료시 리스너 지정
-	loader.load("/fudousan/item/"+itemId+"/"+fileName, (object) => {
-
-		var template = document.getElementById( "template" ).text;
-		// x축 기준으로 -90도 회전
-		//object.rotation.x = Math.PI * -90 / 180;
-
-		// 해당 모델을 가장 가깝게 에워싸는 육면체인 BoundingBox 생성
-		var boundingBox = new THREE.Box3();
-		boundingBox.setFromObject(object);
-
-		// 바운딩 박스의 z 값을 이용하여 이동
-		//object.position.z = boundingBox.max.z;
-		
-
-		var scene = new THREE.Scene();
-		
-		// make a list item
-		var preview  = document.getElementById("itemPreview"+itemId);
-		// make a list item
-		var element = document.createElement( "div" );
-		element.className = "list-item";
-		element.innerHTML = template.replace( '$', itemId );
-		// Look up the element that represents the area
-		// we want to render the scene
-		scene.userData.element = element.querySelector( ".scene" );
-		preview.appendChild( element );
-		
-		var camera = new THREE.PerspectiveCamera( 50, 1, 1, 100000 );
-		camera.position.z = 2;
-		scene.userData.camera = camera;
-		
-		var controls = new THREE.OrbitControls( scene.userData.camera, scene.userData.element );
-		controls.minDistance = 2;
-		controls.maxDistance = 5;
-		controls.enablePan = false;
-		controls.enableZoom = false;
-		scene.userData.controls = controls;
-
-		scene.add( object );
-		scene.add( new THREE.HemisphereLight( 0xaaaaaa, 0x444444 ) );
-		
-
-		var light = new THREE.DirectionalLight( 0xffffff, 0.5 );
-		light.position.set( 1, 1, 1 );
-		scene.add( light );
-		
-		//scenes.push( scene );
-		
-		// 완료 Alert 띄움
-		alert("Complete");
-	});*/
 }
 
 /**

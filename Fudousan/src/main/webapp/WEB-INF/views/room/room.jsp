@@ -424,8 +424,7 @@ canvas {
 							items.push(item${item.itemId});
 					</script> 
 					<label>${item.itemName}</label>
-					<div class="preview"></div>
-					<script type="text/javascript">previewItem(${item.itemId}, "${item.modelFileName}");</script>
+					<div id="itemPreview${item.itemId}" class="preview"></div>
 				</li>
 			</c:forEach>
 		</ul>
