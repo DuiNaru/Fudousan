@@ -77,6 +77,8 @@ public class AdviceDAOOracle implements AdviceDAO {
 
 	@Override
 	public boolean addviceRequest(Advice advice) {
+		logger.info("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+		logger.info("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		logger.info("addviceRequest("+advice+") Start");
 		AdviceMapper mapper = sqlsession.getMapper(AdviceMapper.class);
 		boolean result = false;
@@ -86,6 +88,8 @@ public class AdviceDAOOracle implements AdviceDAO {
 			e.printStackTrace();
 		}
 		logger.info("addviceRequest("+advice+") End");
+		logger.info("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
+		logger.info("★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		return result;
 	}
 

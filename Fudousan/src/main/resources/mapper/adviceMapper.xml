@@ -258,18 +258,16 @@
 <insert id="addviceRequest" parameterType="advice">
 	insert into advice
 	(
-		REQUEST_MEMBER_ID 		
-		REQUESTED_MEMBER_ID 	
-		ROOM_ID					
-		CRE_DATE 				
-		REQUEST_DATE 			
+		REQUEST_MEMBER_ID, 		
+		REQUESTED_MEMBER_ID, 	
+		room_id,					
+		REQUEST_DATE, 			
 		STATE 					
 	)VALUES(
-	#{advice.requestMemberId}
-	,#{advice.requestedMemberId}
-	,#{advice.room.roomId}
-	,#{advice.creDate}
-	,#{advice.requestDate}
+	#{requestMemberId}
+	,#{requestedMemberId}
+	,#{room.roomId}
+	,#{requestDate}
 	,#{state}
 	)
 </insert>
