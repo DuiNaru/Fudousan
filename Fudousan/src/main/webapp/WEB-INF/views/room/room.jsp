@@ -173,6 +173,9 @@
 <script src="<c:url value="/resources/js/node_communication.js"/>"></script>
 <script> </script>
 <style type="text/css">
+body {
+	overflow: hidden;
+}
 canvas {
 	position: fixed;
 	top: 0;
@@ -207,8 +210,14 @@ canvas {
 	position: absolute;
 	bottom: 0px;
 	right: 0px;
+	height: 100px;
 	z-index: 1;
 	background-color: rgba(255, 255, 255, 0.5);
+}
+
+.bottom-menu ul {
+	height: 100%;
+	overflow: scroll;
 }
 
 .right-menu {
@@ -221,11 +230,20 @@ canvas {
 
 .preview {
 	width: 100px;
-	height: 100px;
+	height: 50px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.preview img {
+    position: relative;
+    left: 50%;
+    height: 100%;
+    transform: translate(-50%,0)
 }
 
 #blocker {
-	position: absolute;
+	position: fixed;
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
@@ -433,7 +451,7 @@ canvas {
 		<label>${item.itemName}</label>
 	
 		<label>아이템 생성</label>
-		<ul style="overflow: scroll;" id="itemUl">
+		<ul id="itemUl">
 			<c:forEach var="item" items="${itemList}">
 				<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId});">
 					<script type="text/javascript">

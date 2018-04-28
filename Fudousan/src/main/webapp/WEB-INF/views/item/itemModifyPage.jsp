@@ -25,6 +25,8 @@
 
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
+	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/loading.css"/>"/>
+	
 		
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -112,6 +114,12 @@
 	</script>	
 </head>
 <body>
+	<div id="blocker">
+		<div>
+			<img src="<c:url value="/resources/image/loading.svg"/>" class="ld ld-spin"/>
+		</div>
+	</div>
+	
 	<!-- login modal  -->
  	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
  	
