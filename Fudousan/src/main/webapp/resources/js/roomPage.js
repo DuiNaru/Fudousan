@@ -216,10 +216,17 @@ function init() {
 	scene.add(roomFloor);
 	
 	floorTexture = textureLoader.load(room.floorTexture, function ( texture ) {
+		
+		roomFloor.geometry.computeBoundingBox();
+		
+		var w = roomFloor.geometry.boundingBox.max.x - roomFloor.geometry.boundingBox.min.x;
+		var h = roomFloor.geometry.boundingBox.max.y - roomFloor.geometry.boundingBox.min.y;
+		
+		var width = new THREE.Vector2(w, h).length();
 
 	    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 	    texture.offset.set( 0, 0 );
-	    texture.repeat.set( 2, 2 );
+	    texture.repeat.set( width/texture.image.width, width/texture.image.height );
 
 	} );
 	roomFloor.material.map = floorTexture;
@@ -232,10 +239,17 @@ function init() {
 	scene.add(roomCeil);
 	
 	ceilTexture = textureLoader.load(room.ceilingTexture, function ( texture ) {
+		
+		roomFloor.geometry.computeBoundingBox();
+		
+		var w = roomFloor.geometry.boundingBox.max.x - roomFloor.geometry.boundingBox.min.x;
+		var h = roomFloor.geometry.boundingBox.max.y - roomFloor.geometry.boundingBox.min.y;
+		
+		var width = new THREE.Vector2(w, h).length();
 
 	    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 	    texture.offset.set( 0, 0 );
-	    texture.repeat.set( 2, 2 );
+	    texture.repeat.set( width/texture.image.width, width/texture.image.height );
 
 	} );
 	roomCeil.material.map = ceilTexture;
@@ -1083,8 +1097,17 @@ function changeFloorTexture(textureId) {
 
 				var url = $("#img"+textureId).attr("src");
 				floorTexture = textureLoader.load(url, function ( texture ) {
+					
+					roomFloor.geometry.computeBoundingBox();
+					
+					var w = roomFloor.geometry.boundingBox.max.x - roomFloor.geometry.boundingBox.min.x;
+					var h = roomFloor.geometry.boundingBox.max.y - roomFloor.geometry.boundingBox.min.y;
+					
+					var width = new THREE.Vector2(w, h).length();
 
 				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				    texture.offset.set( 0, 0 );
+				    texture.repeat.set( width/texture.image.width, width/texture.image.height );
 
 				} );
 				roomFloor.material.map = floorTexture;
@@ -1116,8 +1139,17 @@ function changeCeilTexture(textureId) {
 
 
 				ceilTexture = textureLoader.load(url, function ( texture ) {
+					
+					roomFloor.geometry.computeBoundingBox();
+					
+					var w = roomFloor.geometry.boundingBox.max.x - roomFloor.geometry.boundingBox.min.x;
+					var h = roomFloor.geometry.boundingBox.max.y - roomFloor.geometry.boundingBox.min.y;
+					
+					var width = new THREE.Vector2(w, h).length();
 
 				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+				    texture.offset.set( 0, 0 );
+				    texture.repeat.set( width/texture.image.width, width/texture.image.height );
 
 				} );
 				roomCeil.material.map = ceilTexture;
