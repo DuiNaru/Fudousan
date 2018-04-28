@@ -168,8 +168,7 @@ canvas {
 
 .top-menu {
 	position: absolute;
-	top: 20%;
-	margin-left: auto;
+	top: 0%;
 	z-index: 1;
 	background-color: rgba(255, 255, 255, 0.5);
 }
@@ -319,12 +318,8 @@ canvas {
 	<div class="description">Scene $</div>
 </script>	
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
-<div class="dat">
-</div> 
 	<div class="top-menu">
 	</div>
-	<script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
-	<div class="dat"></div>
 	
 	<!-- 위쪽 메뉴 -->
 	<div class="top-menu">
@@ -483,6 +478,7 @@ canvas {
 	<menu>
 	</menu>
 	
-	<script src="<c:url value="/resources/js/videochat.js"/>" id="videochatjs"></script>
+	<script src="<c:url value="/resources/js/cookie.js"/>"></script>
+	<script src="<c:url value="/resources/js/videochat.js"/>"></script>
 </body>
 </html>
