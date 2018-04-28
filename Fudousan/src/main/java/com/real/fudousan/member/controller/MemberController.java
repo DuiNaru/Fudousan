@@ -1,11 +1,13 @@
 package com.real.fudousan.member.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -188,6 +191,24 @@ public class MemberController {
 		    logger.info("메일 전송 성공");
 		    return "redirect:/";
 	}*/
+	
+
+
+
+	@RequestMapping(value = JoinController.uploadPath+"/{file_name}", method = RequestMethod.GET)
+	public void getMemberfile(
+			@PathVariable("file_name") String fileName, 
+			HttpServletResponse response) {
+		
+		logger.info("getMemberfile({}) Start", fileName);
+		try {
+			service.downloadPicture( fileName, response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		logger.info("getMemberfile({}) end", fileName);
+		
+	}
 }
 
 
