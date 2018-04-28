@@ -57,17 +57,19 @@
 								<th>Estate Name</th>
 								<th>Design</th>
 								<th>Modify</th>
+								<th>Delete</th>
 								<th>Open/Close</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach var="room" varStatus="status" items="${realRoomList}">
 								<%-- <div id="room${room.roomId}" class="col-sm-12"></div> --%>
-								<tr>
+								<tr id="room${room.roomId}">
 									<td>${room.estate.estateId }</td>
 									<td>${room.estate.estateName }</td>
 									<td><a class="btn btn-default" href="../newRoom?estateId=${room.estate.estateId}&roomPublic=0">새로 꾸미기</a></td>
 									<td><a class="btn btn-default" href="../roomPage?roomId=${room.roomId}">수정</a></td>
+									<td><input class="btn btn-default" type="button" value="삭제" onclick="deleteRoom(${room.roomId})"></td>
 									<td>
 										<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="1" roomId="${room.roomId}"<c:if test="${room.roomPublic == 1}"> checked="checked"</c:if>>공개</p>
 										<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="0" roomId="${room.roomId}"<c:if test="${room.roomPublic == 0}"> checked="checked"</c:if>>비공개</p>
@@ -98,7 +100,7 @@
 					</thead>
 					<tbody>
 						<c:forEach var="virtual" varStatus="status" items="${notRealRoomList}">
-							<tr>
+							<tr id="virtual${virtual.roomId}">
 							<%-- <div id="virtual${virtual.roomId}" class="col-sm-12"></div> --%>
 								<td>${virtual.roomId}</td>
 								<td><img style="height: 100px; width: auto;" src="<c:url value="${virtual.snapshot}"/>"></td>
