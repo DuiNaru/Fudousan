@@ -70,6 +70,9 @@ public interface RoomDAO {
 	
 	//벽높이 
 	public int wallheightchange(Room room);
+	
+	//방이름 
+	public int roomtitleChange(Room room);
 
 	/**
 	 * room 테이블에서 roomId에 해당하는 snapshot 데이터를 업데이트 한다.

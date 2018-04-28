@@ -49,7 +49,7 @@
 	<script src="../resources/js/login.js"></script>
 	<script src="../resources/js/bootstrap.min.js"></script>
 	<script src="../resources/js/estatedetailinit.js"></script>    
-	
+	<script src="../resources/js/reply.js"></script>  
 	<script async defer
 		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&callback=initMap">
 	</script>

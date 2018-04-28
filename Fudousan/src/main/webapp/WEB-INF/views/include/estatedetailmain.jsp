@@ -275,36 +275,17 @@
 		</div>
 		</div>
 		<div>
+		<hr>
 			<div class="row">
 				<div class="col-sm-12">
 					<h3>User Comment</h3>
 				</div><!-- /col-sm-12 -->
 			</div><!-- /row -->
-			<div class="row">
-				<div class="col-sm-1">
-					<div class="thumbnail">
-						<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
-					</div><!-- /thumbnail -->
-				</div><!-- /col-sm-1 -->
-			<div class="col-sm-5">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<strong>${reply.member.id}</strong> <span class="text-muted">${reply.text }</span>
-					</div>
-					<div class="panel-body">
-						<p>Panel content</p>
-						<c:if test="${sessionScope.memberId !=null }">
-							<hr>
-							<div>
-								<input type="button" class="btn btn-info" value="update">
-								<input type="button" class="btn btn-warning" value="delete">
-							</div>
-						</c:if>
-					</div><!-- /panel-body -->
-				</div><!-- /panel panel-default -->
-			</div><!-- /col-sm-5 -->
+			<div class="row" id="replyBox">
+			
 			</div><!-- /row -->
 			</div><!-- /container -->		
+			
 			<!-- input reply -->
 			<c:if test="${sessionScope.memberId !=null }">
 				<div>
@@ -312,7 +293,7 @@
 						<input type="text" class="form-control" id="text">
 						<input type="hidden" value="${sessionScope.memberId}" id="memberId">
 						<input type="hidden" value=" ${estateId}" id="estateId">
-						<input type="button" class="btn btn-info" >
+						<input type="button" class="btn btn-info" id="replyButton" value="reply">
 					</div>
 				</div>
 			</c:if>
