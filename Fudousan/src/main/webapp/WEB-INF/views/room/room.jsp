@@ -318,14 +318,11 @@ canvas {
 	<div class="description">Scene $</div>
 </script>	
 <script type="text/javascript" src="<c:url value="/resources/js/roomPage.js"/>"></script>
-	<div class="top-menu">
-	</div>
-	
 	<!-- 위쪽 메뉴 -->
 	<div class="top-menu">
-		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button>
-		<video id="localCam" autoplay="autoplay" muted="muted"></video>
-		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
+		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button><br>
+		<video id="localCam" autoplay="autoplay" muted="muted" width="200" height="150"></video><br>
+		<video id="remoteCam" autoplay="autoplay" muted="muted" width="200" height="150"></video>
 	</div>
 	<div id="textureInfo" class="texture-menu">
 		<div class="form-group">
