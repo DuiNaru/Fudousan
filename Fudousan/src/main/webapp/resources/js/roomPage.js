@@ -53,8 +53,11 @@ var floorTexture;
 var curSelectedRoomObject;
 // 현재 선택된 것이 벽이면 앞/뒤면
 var curSelectedWallFace;
+// 로딩 매니져
+var manager;
+initLoadingManager();
 // 텍스쳐 로더
-var textureLoader = new THREE.TextureLoader();
+var textureLoader = new THREE.TextureLoader(manager);
 
 $(function() {
 	$("#textureInfo").hide();
@@ -138,7 +141,6 @@ $(function() {
 			infoDataChange = true;
 		}
 	});
-	console.log("BBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 	//초기화
 	init();
 	//화면 그리기
@@ -146,7 +148,7 @@ $(function() {
 	// 벽 그리기
 	drawWall();
 	// 로딩 끝
-	$( "#blocker" ).hide();
+	//$( "#blocker" ).hide(); loading manager 로 역할 이동
 });
 
 function init() {
@@ -246,6 +248,7 @@ function init() {
 	window.addEventListener('resize', this.onResize, false);
 	window.addEventListener('keydown', this.onKeydown, false);
 	
+	// SKY BOX
 	var imagePrefix = "/fudousan/resources/image/skybox/Daylight_Box_";
 	var directions  = ["Right", "Left", "Top", "Bottom", "Front", "Back"];
 	var imageSuffix = ".bmp";
@@ -293,6 +296,40 @@ function init() {
 	$.each(roomItems, function(index, obj) {
 		placeRoomItem(obj);
 	});
+	
+	
+}
+
+function initLoadingManager() {
+	// LOADING
+	manager = new THREE.LoadingManager();
+	manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+
+		$("#blocker").show();
+		console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+
+	};
+
+	manager.onLoad = function ( ) {
+
+		$("#blocker").hide();
+		console.log( 'Loading complete!');
+
+	};
+
+
+	manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+
+		console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+
+	};
+
+	manager.onError = function ( url ) {
+
+		$("#blocker").hide();
+		console.log( 'There was an error loading ' + url );
+
+	};
 }
 
 function animate(time) {
@@ -1133,7 +1170,7 @@ function changeWallTexture(roomWall, textureId, wallIndex) {
 					var c1 = walls.children[i].roomWall.roomWallConnector1;
 					var c2 = walls.children[i].roomWall.roomWallConnector2;
 
-					var width = c1.manhattanDistanceTo(c2);
+					var width = new THREE.Vector2(c2.x-c1.x, c2.y-c1.y).length();
 
 				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 				    texture.offset.set( 0, 0 );
@@ -1297,7 +1334,7 @@ function placeRoomItem(roomItem) {
 	console.dir(roomItem);
 	
 	// 외부 모델 로더 생성
-	const loader = new THREE.TDSLoader();
+	const loader = new THREE.TDSLoader(manager);
 	// 해당 모델의 텍스쳐 경로 설정
 	loader.setPath("/fudousan/item/"+(roomItem.item.itemId)+"/");
 	// 모델 데이터 경로 설정 및 로딩 완료시 리스너 지정

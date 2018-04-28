@@ -284,6 +284,7 @@ function onResize() {
 }
 
 function place(itemId, modelFileName) {
+	$("#blocker").show();
 	// 외부 모델 로더 생성
 	const loader = new THREE.TDSLoader();
 	// 해당 모델의 텍스쳐 경로 설정
@@ -303,7 +304,10 @@ function place(itemId, modelFileName) {
 		object.scale.x = objectInitValues.s;
 		object.scale.y = objectInitValues.s;
 		object.scale.z = objectInitValues.s;
-	});
+		
+		$("#blocker").hide();
+	}, (object)=>{$("#blocker").hide();});
+	
 }
 
 function onModelFileChange(itemId) {

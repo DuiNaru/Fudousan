@@ -218,12 +218,12 @@ canvas {
 .preview img {
     position: relative;
     left: 50%;
-    top: -50%;
+    height: 100%;
     transform: translate(-50%,0)
 }
 
 #blocker {
-	position: absolute;
+	position: fixed;
 	width: 100%;
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
