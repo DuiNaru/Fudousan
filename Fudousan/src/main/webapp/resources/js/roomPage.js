@@ -60,87 +60,6 @@ initLoadingManager();
 var textureLoader = new THREE.TextureLoader(manager);
 
 $(function() {
-	$("#textureInfo").hide();
-	$("#itemInfo").hide();
-
-	$( "#ax" ).slider({
-		value: 0,
-		min: 0,
-		max: 360,
-		step: 1,
-		orientation: "horizontal",
-		range: "min",
-		slide: function( event, ui ) {
-			rotate(curSelected, ui.value, null, null);
-			$("input[name='itemRotateX']").val(ui.value);
-			infoDataChange = true;
-		}
-	});
-	$( "#ay" ).slider({
-		value: 0,
-		min: 0,
-		max: 360,
-		step: 1,
-		orientation: "horizontal",
-		range: "min",
-		slide: function( event, ui ) {
-			rotate(curSelected, null, ui.value, null);
-			$("input[name='itemRotateY']").val(ui.value);
-			infoDataChange = true;
-		}
-	});
-	$( "#az" ).slider({
-		value: 0,
-		min: 0,
-		max: 360,
-		step: 1,
-		orientation: "horizontal",
-		range: "min",
-		slide: function( event, ui ) {
-			rotate(curSelected, null, null, ui.value);
-			$("input[name='itemRotateZ']").val(ui.value);
-			infoDataChange = true;
-		}
-	});
-	$( "#px" ).slider({
-		value: 0,
-		min: -1000,
-		max: 1000,
-		step: 0.1,
-		orientation: "horizontal",
-		range: "min",
-		slide: function( event, ui ) {
-			move(curSelected, ui.value, null, null);
-			$("input[name='itemX']").val(ui.value);
-			infoDataChange = true;
-		}
-	});
-	$( "#py" ).slider({
-		value: 0,
-		min: -1000,
-		max: 1000,
-		step: 0.1,
-		orientation: "horizontal",
-		range: "min",
-		slide: function( event, ui ) {
-			move(curSelected, null, ui.value, null);
-			$("input[name='itemY']").val(ui.value);
-			infoDataChange = true;
-		}
-	});
-	$( "#pz" ).slider({
-		value: 0,
-		min: -1000,
-		max: 1000,
-		step: 0.1,
-		orientation: "horizontal",
-		range: "min",
-		slide: function( event, ui ) {
-			move(curSelected, null, null, ui.value);
-			$("input[name='itemZ']").val(ui.value);
-			infoDataChange = true;
-		}
-	});
 	//초기화
 	init();
 	//화면 그리기
@@ -197,13 +116,15 @@ function init() {
 	controls.target.set(0, controlHeight, 0);
 	//controls.maxPolarAngle = Math.PI / 2;
 	
-	//camera.rotation.x = 90 * Math.PI / 180;
-
-	//var roomFloorGeometry = new THREE.PlaneGeometry(roomFloorSize, roomFloorSize);
-	
 	// 땅
 	var earthGeometry = new THREE.PlaneGeometry( earthSize, earthSize, 32 );
-	var earthMaterial = new THREE.MeshBasicMaterial({color:0x002200});
+	var earthMaterial = new THREE.MeshBasicMaterial({
+		map:textureLoader.load("/fudousan/resources/image/Grass.jpg", function(texture) {
+			texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+			texture.offset.set( 0, 0 );
+			texture.repeat.set( 100, 100 );
+		})
+	});
 	earth = new THREE.Mesh(earthGeometry, earthMaterial);
 	earth.rotateX(-90 * Math.PI / 180);
 	
@@ -215,18 +136,17 @@ function init() {
 	roomFloor.position.y += 10;
 	scene.add(roomFloor);
 	
+	// 바닥 텍스쳐
 	floorTexture = textureLoader.load(room.floorTexture, function ( texture ) {
 		
 		roomFloor.geometry.computeBoundingBox();
 		
 		var w = roomFloor.geometry.boundingBox.max.x - roomFloor.geometry.boundingBox.min.x;
 		var h = roomFloor.geometry.boundingBox.max.y - roomFloor.geometry.boundingBox.min.y;
-		
-		var width = new THREE.Vector2(w, h).length();
 
 	    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 	    texture.offset.set( 0, 0 );
-	    texture.repeat.set( width/texture.image.width, width/texture.image.height );
+	    texture.repeat.set( w/texture.image.width, h/texture.image.height );
 
 	} );
 	roomFloor.material.map = floorTexture;
@@ -238,27 +158,28 @@ function init() {
 	roomCeil.position.y += room.height;
 	scene.add(roomCeil);
 	
+	// 천장 텍스쳐
 	ceilTexture = textureLoader.load(room.ceilingTexture, function ( texture ) {
 		
 		roomFloor.geometry.computeBoundingBox();
 		
 		var w = roomFloor.geometry.boundingBox.max.x - roomFloor.geometry.boundingBox.min.x;
 		var h = roomFloor.geometry.boundingBox.max.y - roomFloor.geometry.boundingBox.min.y;
-		
-		var width = new THREE.Vector2(w, h).length();
 
 	    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 	    texture.offset.set( 0, 0 );
-	    texture.repeat.set( width/texture.image.width, width/texture.image.height );
+	    texture.repeat.set( w/texture.image.width, h/texture.image.height );
 
 	} );
 	roomCeil.material.map = ceilTexture;
 	roomCeil.material.needsUpdate = true;
 	
+	// 마우스 이동 이벤트
 	renderer.domElement.addEventListener('mousedown', this.onDocumentMouseDown, false);
 	renderer.domElement.addEventListener('mousemove', this.onDocumentMouseMove, false);
 	document.addEventListener('mouseup', this.onDocumentMouseUp, false);
 	
+	// 키보드 이벤트
 	window.addEventListener('resize', this.onResize, false);
 	window.addEventListener('keydown', this.onKeydown, false);
 	
@@ -278,6 +199,7 @@ function init() {
 	var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
 	scene.add( skyBox );
 	
+	// 3차원 축
 	var axesHelper = new THREE.AxesHelper( 1000 );
 	scene.add( axesHelper );
 	
@@ -300,6 +222,7 @@ function init() {
 	otherOutlinePass.visibleEdgeColor.set( 0xFF0000 );
 	composer.addPass( otherOutlinePass );
 	
+	// FXAA
 	effectFXAA = new THREE.ShaderPass( THREE.FXAAShader );
 	console.dir(effectFXAA);
 	effectFXAA.uniforms[ 'resolution' ].value.set( 1 / window.innerWidth, 1 / window.innerHeight );
@@ -320,6 +243,7 @@ function initLoadingManager() {
 	manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
 
 		$("#blocker").show();
+		$("#blocker p").empty();
 		console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
 
 	};
@@ -327,6 +251,7 @@ function initLoadingManager() {
 	manager.onLoad = function ( ) {
 
 		$("#blocker").hide();
+		$("#blocker p").empty();
 		console.log( 'Loading complete!');
 
 	};
@@ -334,6 +259,7 @@ function initLoadingManager() {
 
 	manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
 
+		$("#blocker p").html(url+" Loading... ("+itemsLoaded+"/"+itemsTotal+")");
 		console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
 
 	};
@@ -341,6 +267,7 @@ function initLoadingManager() {
 	manager.onError = function ( url ) {
 
 		$("#blocker").hide();
+		$("#blocker p").empty();
 		console.log( 'There was an error loading ' + url );
 
 	};
@@ -425,7 +352,9 @@ function onKeydown(event) {
  */
 function onDocumentMouseDown(event) {
 
-	 $("#textureInfo").hide('slice');
+	$("#textureInfo").slideUp({
+		duration:100
+	});
 	isMouseUp = false;
 	deSelect(true);
 	
@@ -450,10 +379,10 @@ function onDocumentMouseDown(event) {
 		      switch (index) {
 		         case 2: // front
 		        	 curSelectedWallFace = index;
-		        	 $("#textureInfo").show('slice');
+		        	 $("#textureInfo").slideDown('slide');
 		         case 3: // back
 		        	 curSelectedWallFace = index;
-		        	 $("#textureInfo").show('slice');
+		        	 $("#textureInfo").slideDown('slide');
 		      }
 		      
 		} else {
@@ -463,10 +392,10 @@ function onDocumentMouseDown(event) {
 			if (intersects.length > 0) {
 				if(intersects[0].object == roomFloor) {
 					curSelectedRoomObject = "roomFloor";
-		        	 $("#textureInfo").show('slice');
+		        	 $("#textureInfo").slideDown('slide');
 				} else if (intersects[0].object == roomCeil) {
 					curSelectedRoomObject = "roomCeil";
-		        	 $("#textureInfo").show('slice');
+		        	 $("#textureInfo").slideDown('slicd');
 				}
 			}
 			
@@ -1102,12 +1031,10 @@ function changeFloorTexture(textureId) {
 					
 					var w = roomFloor.geometry.boundingBox.max.x - roomFloor.geometry.boundingBox.min.x;
 					var h = roomFloor.geometry.boundingBox.max.y - roomFloor.geometry.boundingBox.min.y;
-					
-					var width = new THREE.Vector2(w, h).length();
 
 				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 				    texture.offset.set( 0, 0 );
-				    texture.repeat.set( width/texture.image.width, width/texture.image.height );
+				    texture.repeat.set( w/texture.image.width, h/texture.image.height );
 
 				} );
 				roomFloor.material.map = floorTexture;
@@ -1144,12 +1071,10 @@ function changeCeilTexture(textureId) {
 					
 					var w = roomFloor.geometry.boundingBox.max.x - roomFloor.geometry.boundingBox.min.x;
 					var h = roomFloor.geometry.boundingBox.max.y - roomFloor.geometry.boundingBox.min.y;
-					
-					var width = new THREE.Vector2(w, h).length();
 
 				    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 				    texture.offset.set( 0, 0 );
-				    texture.repeat.set( width/texture.image.width, width/texture.image.height );
+				    texture.repeat.set( w/texture.image.width, h/texture.image.height );
 
 				} );
 				roomCeil.material.map = ceilTexture;
@@ -1652,73 +1577,6 @@ function saveRoomItem(roomItem) {
 	roomItem.item.refSiteSet = refSiteSet;
 }
 
-/**
- * 좌측 X축 회전 바 설정
- * @param value
- * @returns
- */
-function setInfoRX(value) {
-	$("input[name='itemRotateX']").val(value);
-	$( "#ax" ).slider("value", value);
-}
-
-
-/**
- * 좌측 Y축 회전 바 설정
- * @param value
- * @returns
- */
-function setInfoRY(value) {
-	$("input[name='itemRotateY']").val(value);
-	$( "#ay" ).slider("value", value);
-}
-
-
-/**
- * 좌측 Z축 회전 바 설정
- * @param value
- * @returns
- */
-function setInfoRZ(value) {
-	$("input[name='itemRotateZ']").val(value);
-	$( "#az" ).slider("value", value);
-}
-
-/**
- * 좌측 X축 바 설정
- * @param value
- * @returns
- */
-function setInfoX(value) {
-	$("input[name='itemX']").val(value);
-	$( "#px" ).slider("option", "min", value-1000);
-	$( "#px" ).slider("option", "max", value+1000);
-	$( "#px" ).slider("value", value);
-}
-
-/**
- * 좌측 Y축 바 설정
- * @param value
- * @returns
- */
-function setInfoY(value) {
-	$("input[name='itemY']").val(value);
-	$( "#py" ).slider("option", "min", value-1000);
-	$( "#py" ).slider("option", "max", value+1000);
-	$( "#py" ).slider("value", value);
-}
-
-/**
- * 좌측 Z축 바 설정
- * @param value
- * @returns
- */
-function setInfoZ(value) {
-	$("input[name='itemZ']").val(value);
-	$( "#pz" ).slider("option", "min", value-1000);
-	$( "#pz" ).slider("option", "max", value+1000);
-	$( "#pz" ).slider("value", value);
-}
 
 /**
  * 해당 three js 객체의 roomItem의 값대로 해당 객체를 변경한다.
@@ -1732,58 +1590,6 @@ function applyRoomItem(object) {
 	object.rotation.x = object.roomItem.rotateX * Math.PI / 180;
 	object.rotation.y = object.roomItem.rotateY * Math.PI / 180;
 	object.rotation.z = object.roomItem.rotateZ * Math.PI / 180;
-}
-
-/**
- * 아이템 정보창을 초기화(시작) 한다.
- * @returns
- */
-function initInfo() {
-	$("#leftItemName").html(curSelected.roomItem.item.itemName);
-	$("#leftItemType").html(curSelected.roomItem.item.itemType.itemTypeName);
-	$("#leftItemText").html(curSelected.roomItem.item.text);
-	$("#leftItemSite").html(curSelected.roomItem.item.refSiteSet);
-
-	setInfoX(curSelected.roomItem.x);
-	setInfoY(curSelected.roomItem.y);
-	setInfoZ(curSelected.roomItem.z);
-	setInfoRX(curSelected.roomItem.rotateX);
-	setInfoRY(curSelected.roomItem.rotateY);
-	setInfoRZ(curSelected.roomItem.rotateZ);
-	
-	$("#itemInfo").show( "slide" );
-}
-
-/**
- * 아이템 정보창을 초기화(끝) 한다.
- * @returns
- */
-function resetInfo() {
-	$("#leftItemName").empty();
-	$("#leftItemType").empty();
-	$("#leftItemText").empty();
-	$("#leftItemSite").empty();
-	
-	setInfoX(0);
-	setInfoY(0);
-	setInfoZ(0);
-	setInfoRX(0);
-	setInfoRY(0);
-	setInfoRZ(0);
-	
-	infoDataChange = false;
-	
-	$("#itemInfo").hide( "slide" );
-}
-
-/**
- * 아이템 정보창 변경 적용 버튼 리스너
- * @returns
- */
-function itemApplyListener() {
-	//applyItemChange(curSelected.roomItem);
-	NewCommand.itemChange(curSelected.roomItem);
-	
 }
 
 /**
@@ -1832,6 +1638,8 @@ function applyItemChange(roomItem) {
 		}
 	});
 }
+
+
 
 /**
  * 사용자 화면의 룸 아이템을 회전/이동 한다.
@@ -1993,19 +1801,6 @@ function dataURItoBlob(dataURI)
     var bb = new Blob([ab], { "type": mimeString });
     
     return bb;
-}
-
-/**
- * 아이템 리스트에서 아이템 클릭 했을 때,
- * @param item
- * @returns
- */
-function createItemListener(item) {
-	NewCommand.create(item);
-}
-
-function deleteItemButton() {
-	NewCommand.delete(curSelected.roomItem);
 }
 /**
  * 사용자 명령어 정의
@@ -2277,7 +2072,7 @@ function applyTexture(textureId) {
 	}
 	curSelectedRoomObject = undefined;
 	curSelectedWallFace = undefined;
-	 $("#textureInfo").hide('slice');
+	 $("#textureInfo").hide('slide');
 }
 
 //-------------

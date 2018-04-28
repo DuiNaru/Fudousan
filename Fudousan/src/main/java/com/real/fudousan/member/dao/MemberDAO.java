@@ -33,7 +33,6 @@ public interface MemberDAO {
 	// select member 
 	public Member selectMemberOne(Member member);
 	
-	
 
 	
 
