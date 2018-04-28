@@ -18,5 +18,6 @@ public interface ItemDAO {
 
 	public List<ItemType> selectAllItemType();
 
+	public int updatePreview(Item item);
 }
 
