@@ -14,7 +14,7 @@
           
             <div class="form-group">
               <label for="InputName">name</label>
-              <input type="text" class="form-control" id="InputName" placeholder="이름" name="memberName">
+              <input type="text" class="form-control" id="InputName" placeholder="이름" name="memberName" value="${member.memberName }">
             </div>
             
             <div class="form-group">
@@ -30,25 +30,26 @@
             
             <div class="form-group">
               <label for="InputEmail">email</label>
-              <input type="email" class="form-control" id="InputEmail" placeholder="email" name="email">
+              <input type="email" class="form-control" id="InputEmail" placeholder="email" name="email" value="${member.email }">
             </div>
             
             <div class="form-group">
               <label for="InputText">phone</label>
-              <input type="text" class="form-control" id="userphone" placeholder="전화번호를 입력해 주세요" name="phone">
+              <input type="text" class="form-control" id="userphone" placeholder="전화번호를 입력해 주세요" name="phone" value="${member.phone }">
             </div>
 			<div class="input-group">
 			     <label for="InputText">Member Introduce</label>
-			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="text"></textarea>     
+			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="text" >${member.text }</textarea>     
 			</div>
 		
 			<div class="form-group">
 			    <label for="InputPhoto">photo</label>
+		    	<img alt="이미지 없음" src="${member.picture }">
 				<div class="input-group input-file" name="Fichier1">
 					<span class="input-group-btn">
 		        		<button class="btn btn-default btn-choose" type="button">선택</button>
 		    		</span>
-		    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요'  name="picture"/>
+		    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요' name="picture" value="${member.picture }"/>
 		    		<span class="input-group-btn">
 		       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
 		    		</span>

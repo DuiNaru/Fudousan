@@ -27,8 +27,14 @@ public class UpdateMemberController {
 	private MemberService service;
 
 	@RequestMapping(value="memberupdate", method=RequestMethod.GET)
-	public String memberupdate(){
-		
+	public String memberupdate(String email, Model model){
+		logger.info("start memberupdate - controller");
+		System.out.println("email:::"+email);
+		Member member= new Member();
+		member.setEmail(email);
+		Member result=service.selectMemberOne(member);
+		model.addAttribute("member", result);
+		logger.info("end memberupdate - controller");
 		
 		return "memberupdate/memberupdate";
 	}

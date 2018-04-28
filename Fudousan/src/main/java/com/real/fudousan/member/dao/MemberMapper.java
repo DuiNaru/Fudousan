@@ -18,4 +18,6 @@ public interface MemberMapper {
 	public int updateAgency(Agency agency);
 
 	public ArrayList<Member> interior();
+	//select Member 
+	public Member selectMemberOne(Member member);
 }

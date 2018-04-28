@@ -29,5 +29,9 @@ public interface MemberDAO {
 	//인테리어 업자만 뽑아옴
 	public ArrayList<Member> interior();
 	
+	
+	// select member 
+	public Member selectMemberOne(Member member);
+	
 
 }

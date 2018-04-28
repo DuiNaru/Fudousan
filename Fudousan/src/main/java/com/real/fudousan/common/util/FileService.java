@@ -82,7 +82,7 @@ public class FileService {
 			// 같은 이름의 파일이 없으면 나감.
 			if (!serverFile.isFile())
 				break;
-			if (useOriginalName) {
+			if (!useOriginalName) {
 				// 같은 이름의 파일이 있으면 이름 뒤에 long 타입의 시간정보를 덧붙임.
 				savedFilename = savedFilename + new Date().getTime();
 			} else {

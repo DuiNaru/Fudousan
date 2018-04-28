@@ -118,6 +118,7 @@ public class MemberController {
 			HashMap<String, Object> result = new HashMap<>();
 			result.put("result", true);
 			result.put("memberName", loginMember.getMemberName());
+			result.put("email", loginMember.getEmail());
 			result.put("permissionId", loginMember.getPermission().getPermissionId());
 
 			return result;
