@@ -25,6 +25,8 @@
 
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
+	<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/loading.css"/>"/>
+	
 		
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -33,8 +35,91 @@
 	<script src="<c:url value="/resources/js/OrbitControls.js"/>"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/itemForm.js"/>"></script>
 
+	<script type="text/javascript">
+	
+	/**
+	 * 화면 데이터를 Blob으로 변환
+	 * @param dataURI
+	 * @returns
+	 */
+	function dataURItoBlob(dataURI)
+	{
+	    var byteString = atob(dataURI.split(',')[1]);
+
+	    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+	    var ab = new ArrayBuffer(byteString.length);
+	    var ia = new Uint8Array(ab);
+	    for (var i = 0; i < byteString.length; i++)
+	    {
+	        ia[i] = byteString.charCodeAt(i);
+	    }
+
+	    var bb = new Blob([ab], { "type": mimeString });
+	    
+	    return bb;
+	}
+	
+	function formsubmit() {
+		if ($("#name").val() == null || $("#name").val() == "") {
+			$("#name").focus();
+			return false;
+		}
+		if ($("#type").val() == null || $("#type").val() == "") {
+			$("#type").focus();
+			return false;
+		}
+		if ($("#model").val() == null || $("#model").val() == "") {
+			$("#model").focus();
+			return false;
+		}
+		
+		// 3D 캡쳐
+		var strMime = "image/jpeg";
+		var imgData = renderer.domElement.toDataURL(strMime);
+    
+   		var blob = dataURItoBlob(imgData);
+   		var formData = new FormData();
+    	formData.append("file", blob, $("#itemId").val());
+
+        $.ajax({
+        	
+    		url:"preview",
+    		type:"POST",				
+    		data:formData,
+    		processData: false,
+    	    contentType: false,
+    		dataType:"text",	
+    		success:function(data) {
+    			
+    			if(data != null) {
+    				
+    			} else {
+    				
+    				alert("미리보기 저장에 실패하였습니다.");
+    				
+    			}
+    			
+    		},
+    		error:function(e) {
+    			
+    			console.log(e);
+    			alert("미리보기 저장 중 오류가 발생하였습니다.");
+    			
+    		}
+    	});
+    	
+		return true;
+	}
+	</script>	
 </head>
 <body>
+	<div id="blocker">
+		<div>
+			<img src="<c:url value="/resources/image/loading.svg"/>" class="ld ld-spin"/>
+		</div>
+	</div>
+	
 	<!-- login modal  -->
  	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
  	
@@ -50,13 +135,11 @@
 					<small>basic</small>
 				</h1>
 				<hr>
-				<div class="col-sm-3"></div>
-				<div class="col-sm-6 text-left">
-					<form id="itemform" action="moditem" method="post" onreset="formreset()">
+				<div class="col-sm-12 text-left">
+					<form id="itemform" action="moditem" method="post" enctype="multipart/form-data" onsubmit="return formsubmit()" onreset="formreset()">
 						<%@ include file="./itemForm.jsp" %>
 					</form>
 				</div>
-				<div class="col-sm-3"></div>
 			</div>
 			<div class="col-sm-2 sidenav"></div>
 		</div>		
@@ -82,32 +165,6 @@
 
 	<!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>
-	<script src="../resources/js/translation.js"></script>	
-	
-	
-	
-
-	
-		<script type="text/javascript">
-		function formsubmit() {
-			if ($("#name").val() == null || $("#name").val() == "") {
-				$("#name").focus();
-				return false;
-			}
-			if ($("#type").val() == null || $("#type").val() == "") {
-				$("#type").focus();
-				return false;
-			}
-			if ($("#model").val() == null || $("#model").val() == "") {
-				$("#model").focus();
-				return false;
-			}
-			if ($("#files").val() == null || $("#files").val() == "") {
-				$("#files").focus();
-				return false;
-			}
-			return true;
-		}
-	</script>	
+	<script src="../resources/js/translation.js"></script>
 </body>
 </html>

@@ -2,9 +2,15 @@ package com.real.fudousan.advice.controller;
 
 import java.util.List;
 
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.real.fudousan.advice.service.AdviceService;
 import com.real.fudousan.advice.vo.Advice;
+import com.real.fudousan.estate.vo.Estate;
 import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.member.controller.MemberController;
@@ -33,7 +40,9 @@ public class AdviceController {
 	private FavoriteService Fservice;
 	@Autowired
 	private RoomService Rservice;
-
+	@Autowired
+	private JavaMailSender mailSender;
+	
 	@RequestMapping(value="cancelAdviceTrue", method=RequestMethod.GET)
 	public String cancelAdviceCall(Model model,Integer customer , Integer interior){
 		logger.info("Advice_Controller 사용자의 도움요청 취소 Start");
@@ -69,4 +78,31 @@ public class AdviceController {
 		logger.info("unConfirm("+advice+") End");
 		return result;
 	}
+	
+	@RequestMapping(value = "helpCall", method = RequestMethod.GET)
+	 public String mailSending(HttpServletRequest request, HttpSession session) {
+		   
+		logger.info("메일 전송 시작");
+		  String setfrom = "2017scit@gmail.com";         
+		    String tomail  = request.getParameter("tomail");     // 받는 사람 이메일
+		    String title   = "fudousan에서 요청 메일이 왔습니다";     // 제목
+		    String content =  session.getAttribute("loginEmail") + "님이 요청을 보냈습니다."+ " 이동하기 > http://localhost:8888/fudousan/" ;     // 내용
+		    try {
+		      MimeMessage message = mailSender.createMimeMessage();
+		      MimeMessageHelper messageHelper 
+		                        = new MimeMessageHelper(message, true, "UTF-8");
+		 
+		      messageHelper.setFrom(setfrom);  // 보내는사람 생략하거나 하면 정상작동을 안함
+		      messageHelper.setTo(tomail);     // 받는사람 이메일
+		      messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
+		      messageHelper.setText(content);  // 메일 내용
+		     
+		      mailSender.send(message);
+		    } catch(Exception e){
+		      System.out.println(e);
+		    }
+		    logger.info("메일 전송 성공");
+		    return "redirect:/";
+	}
+	
 }

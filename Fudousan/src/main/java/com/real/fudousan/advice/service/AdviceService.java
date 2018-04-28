@@ -95,4 +95,18 @@ public class AdviceService {
 		
 		return false;
 	}
+	
+	/**
+	 * 일반자사용자가 인테리어 업자에게 도움을 요청
+	 * @param email1
+	 * @param email2
+	 * @return
+	 */
+	public boolean requestAdvice(Advice advice) {
+		logger.info("request(advice의 일반사용자 : , "+advice+") Start");
+		boolean result = false;
+		result = dao.addviceRequest(advice);
+		logger.info("request(advice의 일반사용자 : , "+advice+") End");
+		return result;
+	}
 }

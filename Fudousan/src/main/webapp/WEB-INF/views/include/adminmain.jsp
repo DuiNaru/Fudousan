@@ -68,7 +68,7 @@
 				</thead>
 				<tbody id="itemList">
 					<c:forEach var="item" items="${itemList }">
-						<tr>
+						<tr id="item${item.itemId}">
 							<td>${item.itemName }</td>
 							<td><a class="btn btn-success" href="../item/itemModifyPage?itemId=${item.itemId}">修正</a></td>
 							<td><input class="btn btn-warning" type="button" onclick="deleteItem(${item.itemId})" value="削除"></td>

@@ -18,6 +18,25 @@ public class EntryDAOOracle implements EntryDAO {
 	   @Autowired
 	   private SqlSession session;
 	   
+	   
+	   @Override
+	   public int updateByIds(Entry entry){
+		   
+		   int result = 0;
+		      
+		      try{
+		        
+		         EntryMapper mapper= session.getMapper(EntryMapper.class);
+		         result = mapper.updateByIds(entry);
+		      }
+		      catch(Exception e){
+		         e.printStackTrace();
+		      }
+		      
+		      return result;
+			  
+	   }
+	   
 	@Override
 	public int insertEntry(Entry entry) {
 		// TODO Auto-generated method stub

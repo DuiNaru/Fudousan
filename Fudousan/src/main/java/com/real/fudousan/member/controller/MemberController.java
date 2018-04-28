@@ -43,7 +43,7 @@ public class MemberController {
 	@Autowired
 	private AdviceService Aservice;
 	@Autowired
-	  private JavaMailSender mailSender;
+	private JavaMailSender mailSender;
 	
 
 	@RequestMapping(value = "mypageNormalUser", method = RequestMethod.GET)
@@ -146,7 +146,7 @@ public class MemberController {
 		return interior;
 	}
 	
-	//메일 보내기
+	/*//메일 보내기
 	@RequestMapping(value = "helpCall", method = RequestMethod.GET)
 	 public String mailSending(HttpServletRequest request, HttpSession session) {
 		   
@@ -171,7 +171,7 @@ public class MemberController {
 		    }
 		    logger.info("메일 전송 성공");
 		    return "redirect:/";
-	}
+	}*/
 }
 
 
