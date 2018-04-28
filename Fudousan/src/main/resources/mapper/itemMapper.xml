@@ -79,8 +79,13 @@
 <!-- 수정중 -->
 	<select id="itemlist" parameterType="int" resultMap="itemResultMap">
 		<include refid="SELECT_ITEM_SQL"></include>
-		where
-			item.item_type_id = #{itemTypeId}
+			<if test="_parameter != 0">
+			WHERE
+					item.item_type_id = #{itemTypeId}
+			
+			</if>
+			
+				
 	</select>
 	
 	
