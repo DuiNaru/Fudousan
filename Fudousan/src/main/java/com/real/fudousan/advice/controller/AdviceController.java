@@ -25,6 +25,7 @@ import com.real.fudousan.estate.vo.Estate;
 import com.real.fudousan.favorite.service.FavoriteService;
 import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.member.controller.MemberController;
+import com.real.fudousan.member.service.MemberService;
 import com.real.fudousan.room.service.RoomService;
 import com.real.fudousan.room.vo.Room;
 
@@ -42,6 +43,8 @@ public class AdviceController {
 	private RoomService Rservice;
 	@Autowired
 	private JavaMailSender mailSender;
+	@Autowired
+	private MemberService mservice;
 	
 	@RequestMapping(value="cancelAdviceTrue", method=RequestMethod.GET)
 	public String cancelAdviceCall(Model model,Integer customer , Integer interior){
@@ -80,7 +83,7 @@ public class AdviceController {
 	}
 	
 	@RequestMapping(value = "helpCall", method = RequestMethod.GET)
-	 public String mailSending(HttpServletRequest request, HttpSession session) {
+	 public String mailSending(HttpServletRequest request, HttpSession session, int roomId) {
 		   
 		logger.info("메일 전송 시작");
 		  String setfrom = "2017scit@gmail.com";         
@@ -97,6 +100,14 @@ public class AdviceController {
 		      messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
 		      messageHelper.setText(content);  // 메일 내용
 		     
+		      int rquestId = (int)session.getAttribute("loginId");
+		      // mail을 아이디로 바아옴
+		      
+		      
+		      int requestedId = mservice.getOneUser(tomail).getMemberId();
+		      
+		      
+		      
 		      mailSender.send(message);
 		    } catch(Exception e){
 		      System.out.println(e);

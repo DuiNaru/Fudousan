@@ -34,6 +34,16 @@ public class MemberService {
 	
 	
 	/**
+	 * 회원정보 가져오기(이멜로)
+	 * @param member
+	 * @return [1: not found id] [2: incorrect password] [3: login success]
+	 */
+	public Member getOneUser(String email) {
+		Member result = dao.getOneMember(email);
+		return result;
+	}
+	
+	/**
 	 * 로그인
 	 * @param member
 	 * @return [1: not found id] [2: incorrect password] [3: login success]
