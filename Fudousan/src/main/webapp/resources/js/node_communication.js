@@ -1,6 +1,6 @@
-/*var socket = io('localhost:8000');*/
+var socket = io('localhost:8000');
 
-var socket = io('http://sunnyserver.dlinkddns.com');
+/*var socket = io('http://sunnyserver.dlinkddns.com');*/
 
 
 $(function(){
@@ -413,6 +413,10 @@ socket.on('othersideWall',function(wallObject){
 
 socket.on('otherheight',function(height){
 	nodeCommand.receiveHeight(height);
+});
+
+socket.on('otherTitleChange',function(roomTitle){
+	nameChange(roomTitle);
 });
 
 

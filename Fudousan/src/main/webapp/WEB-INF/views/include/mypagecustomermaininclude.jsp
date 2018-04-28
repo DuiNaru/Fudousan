@@ -46,10 +46,20 @@
         					<c:forEach var="room" items="${rlist}">
 	        					<tr>
 	        						<td>
-	        							<p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">${room.roomTitle}</a></p>
+	        							<p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">
+									<c:choose>
+		        							<c:when test="${room.roomTitle eq null}">
+		        								이름 없음
+		        							</c:when>
+		        							<c:otherwise>
+		        								${room.roomTitle}
+		        							</c:otherwise>
+        							</c:choose>
+
+									</a></p>
 	        						</td>
 	        						<td>	
-	        							<a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.estate.estateId}&roomPublic=0"/>">내집꾸미기</a>
+	        							<a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.roomId}&roomPublic=0"/>">내집꾸미기</a>
 	        						</td>
 	        						<td>
 	        							<a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a>
