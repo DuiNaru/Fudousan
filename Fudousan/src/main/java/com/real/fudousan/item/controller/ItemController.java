@@ -2,6 +2,7 @@ package com.real.fudousan.item.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.real.fudousan.item.service.ItemService;
@@ -79,9 +81,26 @@ public class ItemController {
 		logger.info("itemModifyPage("+itemId+") End");
 		return "/item/itemModifyPage";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="preview", method=RequestMethod.POST)
+	public String preview(MultipartHttpServletRequest request){
+		logger.info("preview() Start");
+		
+		String result = null;
 
+        Iterator<String> itr =  request.getFileNames();
+        if(itr.hasNext()) {
+            MultipartFile mpf = request.getFile(itr.next());
+            
+            result = itemService.savePreview(Integer.parseInt(mpf.getOriginalFilename()), mpf);
+        }
+		logger.info("preview() End");
+        return result;
+	}
+	
 	@RequestMapping(value="moditem", method=RequestMethod.POST)
-	public String modItem(Item item, int itemTypeId, String[] titles, String[] sites) {
+	public String modItem(Item item, int itemTypeId, String[] titles, String[] sites, MultipartFile file) {
 		logger.info("modItem Start");
 		
 		item.setItemType(new ItemType(itemTypeId, null));
@@ -96,7 +115,7 @@ public class ItemController {
 		}
 		
 		logger.debug("item : " + item);
-		
+		logger.debug("preview : " + file);
 		itemService.modifyItem(item);
 		
 		
@@ -146,6 +165,21 @@ public class ItemController {
 			e.printStackTrace();
 		}
 		logger.info("getFile({}, {}) end", filePath, fileName+"."+fileExt);
+		
+	}
+	
+	@RequestMapping(value = "/preview/{item_id}", method = RequestMethod.GET)
+	public void getPreviewFile(
+			@PathVariable("item_id") String fileName, 
+			HttpServletResponse response) {
+		
+		logger.info("getPreviewFile({}) Start", fileName);
+		try {
+			itemService.downloadPreviewFile(fileName, response.getOutputStream());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		logger.info("getPreviewFile({}) End", fileName);
 		
 	}
 	

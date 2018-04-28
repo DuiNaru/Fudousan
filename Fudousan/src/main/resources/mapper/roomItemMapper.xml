@@ -43,6 +43,7 @@
 			,item_x					ITEM_item_x
 			,item_y					ITEM_item_y
 			,item_z					ITEM_item_z
+			,item_z					ITEM_item_preview
 			
 			-- item_type
 			, item.item_type_id 	ITEM_item_type_id

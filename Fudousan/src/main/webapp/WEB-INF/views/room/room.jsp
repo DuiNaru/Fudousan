@@ -95,6 +95,7 @@
 					itemX: ${roomitem.item.itemX},
 					itemY: ${roomitem.item.itemY},
 					itemZ: ${roomitem.item.itemZ},
+					itemPreview: ${roomitem.item.itemPreview},
 					refSiteSet: [
 						<c:forEach var="site" varStatus="s" items="${roomitem.item.refSiteSet}" >
 						<c:if test="${s.index != 0 }">
@@ -113,7 +114,7 @@
 			})
 	</c:forEach>
 	];
-
+/* 
 	function getItemList() {
 		var itemList=$("#itemList").val();
 		
@@ -141,6 +142,7 @@
 				str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
 				str += 'item'+item.itemId+'.text = "'+item.text+'";';
 				str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
+				str += 'item'+item.itemId+'.itemPreview = '+item.itemPreview+';';
 				
 				$.each(item.refSiteSet,function(index,site){
 					str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
@@ -154,8 +156,8 @@
 				
 		}
 			
-		});
-	}
+		}); 
+	}*/
 </script>
 <script src="<c:url value="/resources/js/node_communication.js"/>"></script>
 <script> </script>
@@ -209,6 +211,15 @@ canvas {
 .preview {
 	width: 100px;
 	height: 100px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.preview img {
+    position: relative;
+    left: 50%;
+    top: -50%;
+    transform: translate(-50%,0)
 }
 
 #blocker {
@@ -274,25 +285,27 @@ canvas {
 						
 				$.each(itemlist,function(index,item){
 					
-				str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+', AddItem);">';
-				str += '<label>'+item.itemName+'<\/label>';
-				str += '<script type="text/javascript">';
-				str += 'var item'+item.itemId+' = new Item();';
-				str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
-				str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
-				str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
-				str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
-				str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
-				str += 'item'+item.itemId+'.text = "'+item.text+'";';
-				str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
-						
-				$.each(item.refSiteSet,function(index,site){
-					str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
-					str += 'items.push(item'+item.itemId+');';
-				});
-				
-				str += "<\/script><\/li>";
-				
+					str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+');">';
+					str += '<script type="text/javascript">';
+					str += 'var item'+item.itemId+' = new Item();';
+					str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
+					str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
+					str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
+					str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
+					str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
+					str += 'item'+item.itemId+'.text = "'+item.text+'";';
+					str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
+							
+					$.each(item.refSiteSet,function(index,site){
+						str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
+						str += 'items.push(item'+item.itemId+');';
+					});
+					str += 'item'+item.itemId+'.itemPreview = "'+item.itemPreview+'";';
+					
+					str += "<\/script>";
+	
+					str += "<label>"+item.itemName+"</label>";
+					str += "<div class='preview'><img id='itemPreview"+item.itemId+"' src='/fudousan"+item.itemPreview+"'/></div><\/li>";
 				});
 				$("#itemUl").html(str);
 			},
@@ -434,10 +447,11 @@ canvas {
 							<c:forEach var="site" items="${item.refSiteSet}">
 								item${item.itemId}.refSiteSet.push(new RefSite("${site.creDate}", ${site.id}, ${site.itemId}, "${site.text}", "${site.url}"));
 							</c:forEach>
+							item${item.itemId}.itemScale = "${item.itemPreview}";
 							items.push(item${item.itemId});
 					</script> 
 					<label>${item.itemName}</label>
-					<div id="itemPreview${item.itemId}" class="preview"></div>
+					<div class="preview"><img id="itemPreview${item.itemId}" src="<c:url value="${item.itemPreview}"/>"/></div>
 				</li>
 			</c:forEach>
 		</ul>

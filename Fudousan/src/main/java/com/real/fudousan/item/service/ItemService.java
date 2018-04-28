@@ -16,12 +16,15 @@ import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.item.dao.ItemDAO;
 import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.item.vo.ItemType;
+import com.real.fudousan.room.vo.Room;
 
 @Service
 public class ItemService {
 	private static final Logger logger = LoggerFactory.getLogger(ItemService.class);
 	
 	private static final String modelFileBaseDirectory = "/model/";
+	
+	private static final String PREVIEW_DIR = "/item/preview/";
 	
 	@Autowired
 	private ItemDAO itemDao;
@@ -153,6 +156,34 @@ public class ItemService {
 		return result;
 	}
 	
-	
+	public String savePreview(int itemId, MultipartFile file) {
+		logger.info("savePreview("+itemId+", "+file.getOriginalFilename()+") Start");
+		
+		String result = null;
+		FileService.deleteFile(PREVIEW_DIR + file.getOriginalFilename());
+		result = FileService.saveFile(file, PREVIEW_DIR, true);
+		result = PREVIEW_DIR+result;
+		
+		Item item = new Item();
+		item.setItemId(itemId);
+		item.setItemPreview(result);
+		
+		// DB 저장
+		if ( itemDao.updatePreview(item) != 1 ) {
+			FileService.deleteFile(PREVIEW_DIR+result);
+			result = null;
+		}
 
+		logger.info("savePreview("+itemId+", "+file.getOriginalFilename()+") End");
+		return result;
+	}
+	
+	public boolean downloadPreviewFile(String fileName, OutputStream os) {
+		logger.info("downloadPreviewFile({}) Start", fileName);
+		boolean result = false;
+		FileService.writeFile(PREVIEW_DIR + fileName, os);
+		result = true;
+		logger.info("downloadPreviewFile({}) End", fileName);
+		return result;
+	}
 }
