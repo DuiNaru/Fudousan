@@ -167,6 +167,18 @@ public class MemberDAOOracle implements MemberDAO {
 		}
 		return  result;
 	}
+
+	@Override
+	public Member getOneMember(String email) {
+		Member box = null;
+		try{
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			box = memberMapper.getOneMember(email);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return box;
+	}
 	
 	public Member selectMemberOne(Member member){
 		Member result = null; 

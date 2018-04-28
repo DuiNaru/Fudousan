@@ -33,5 +33,9 @@ public interface MemberDAO {
 	// select member 
 	public Member selectMemberOne(Member member);
 	
+	//이메일에 맞는 회원정보 가져오기
+	public Member getOneMember(String email);
+
+	
 
 }

@@ -25,7 +25,14 @@
 		<result property="name" column="permission_name"/>
 	</resultMap>
 	
-	
+	<select id="getOneMember" resultType="member" parameterType="string">
+	select
+		*
+	from
+		member
+	where
+		email = #{email}
+	</select>
 	
 	<select id="interior" resultType="member">
 	select

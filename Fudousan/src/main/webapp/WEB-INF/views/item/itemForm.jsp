@@ -90,9 +90,6 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript">
-		threeJSInit(${item.itemX}, ${item.itemY}, ${item.itemZ}, ${item.itemRotateX}, ${item.itemRotateY}, ${item.itemRotateZ}, ${item.itemScale}, ${item.itemId}, '${item.modelFileName}');
-	</script>
 </c:if>
 <div class="form-group">
 	<label>関連サイト</label>
@@ -123,3 +120,6 @@
 	<input class="col-sm-6 btn btn-success" type="submit" value="アップロード">
 	<input class="col-sm-6 btn btn-warning" type="reset" value="リセット">
 </div>
+<script type="text/javascript">
+	threeJSInit(${item.itemX}, ${item.itemY}, ${item.itemZ}, ${item.itemRotateX}, ${item.itemRotateY}, ${item.itemRotateZ}, ${item.itemScale}, ${item.itemId}, '${item.modelFileName}');
+</script>

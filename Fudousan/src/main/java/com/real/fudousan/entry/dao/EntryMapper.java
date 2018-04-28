@@ -15,4 +15,7 @@ public interface EntryMapper {
 	
 	//수정할때 매물 불러오기
 	public int modifyEstatePage(Entry entry);
+	
+	//수정
+	  public int updateByIds(Entry entry);
 }

@@ -1,5 +1,8 @@
 package com.real.fudousan.common.util;
 
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,14 +67,16 @@ public class FileService {
 		String ext;
 		int lastIndex = originalFilename.lastIndexOf('.');
 		logger.info("fileName : " + originalFilename + ", lastIndex : " + lastIndex);
+		
 		// 확장자가 없는 경우
 		if (lastIndex == -1) {
 			ext = "";
 		}
 		// 확장자가 있는 경우
 		else {
-			ext = "";
-			// ext = "." + originalFilename.substring(lastIndex + 1);
+			//ext = "";
+			//ext = "." + originalFilename.substring(lastIndex + 1);
+			ext = originalFilename.substring(lastIndex + 1);
 		}
 
 		// 저장할 전체 경로를 포함한 File 객체
@@ -78,7 +84,8 @@ public class FileService {
 
 		// 같은 이름의 파일이 있는 경우의 처리
 		while (true) {
-			serverFile = new File(uploadPath + "/" + savedFilename + ext);
+			//serverFile = new File(uploadPath + "/" + savedFilename + ext);
+			serverFile = new File(uploadPath + "/" + savedFilename);
 			// 같은 이름의 파일이 없으면 나감.
 			if (!serverFile.isFile())
 				break;
@@ -97,6 +104,21 @@ public class FileService {
 			fos = new FileOutputStream(serverFile);
 
 			fos.write(mfile.getBytes());
+
+			// 파일이 그림 파일 인 경우, 2배로 조정
+			switch( ext ){
+			case "png":
+			case "jpg":
+			case "bmp":
+		        File input = serverFile;
+		        BufferedImage image = ImageIO.read(input);
+
+		        BufferedImage resized = resize(image);
+
+		        File output = serverFile;
+		        ImageIO.write(resized, ext, output);
+				break;
+			}
 		} catch (Exception e) {
 			savedFilename = null;
 			e.printStackTrace();
@@ -214,6 +236,29 @@ public class FileService {
 				}
 			}
 		}
-
 	}
+	
+	private static BufferedImage resize(BufferedImage img) {
+		int height = 1;
+		for ( int i = img.getHeight(); i >= 2; i/=2 ) {
+			height *= 2;
+		}
+		int width = 1;
+		for ( int i = img.getWidth(); i >= 2; i/=2 ) {
+			width *= 2;
+		}
+		// 최대 사이즈 제한
+		while( height > 512 || width > 512 ) {
+			height /= 2;
+			width /= 2;
+		}
+		//logger.debug("그림 파일("+img.getWidth()+"x"+img.getHeight()+") Resize : " + width + "x" + height);
+		if ( height == img.getHeight() && width == img.getWidth() ) return img;
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
 }
