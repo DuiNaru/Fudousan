@@ -162,6 +162,8 @@ public class RoomController {
 			model.addAttribute("roomitemList", roomItemService.getRoomItemsInRoom(roomId));
 			
 			model.addAttribute("textureList", textureService.getTextureList());
+			
+			model.addAttribute("itemTypeList", itemService.getItemTypeList());
 		}
 		System.out.println("dd");
 		logger.info("roomPage("+loginId+", "+roomId+") End");
