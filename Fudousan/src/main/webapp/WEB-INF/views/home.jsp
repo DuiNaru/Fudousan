@@ -9,10 +9,6 @@
     
     <title>boot</title>
     
-	
-	
-	
-	
     <!-- css -->
     <link href="<c:url value="resources/css/bootstrap.min.css"/>" rel="stylesheet">
 	<link href="<c:url value="resources/css/home.css"/>" rel="stylesheet">
@@ -22,9 +18,7 @@
 
  	<!-- login modal  -->
  	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
-	
-
-	
+ 	
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 

@@ -74,8 +74,20 @@ public class ReplyController {
 	
 	@ResponseBody
 	@RequestMapping(value="updateReply", method=RequestMethod.POST)
-	public int updateReply(Reply reply){
-		return 0;
+	public Reply updateReply(Reply reply, String text){
+		logger.info("update Start - Controller");
+		Reply resultSelect= null; 
+		reply.setText(text);
+		System.out.println("text::"+text);
+		
+		int result = service.updateReply(reply);
+		if (result == 1) {
+			int replyId = reply.getReplyId();
+		    resultSelect=service.selectOne(replyId);			
+		}
+		
+		logger.info("update End - Controller");
+		return resultSelect;
 	};
 	
 }

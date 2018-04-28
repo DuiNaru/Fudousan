@@ -37,6 +37,7 @@ public class FileService {
 	 *            업로드된 파일
 	 * @param path
 	 *            저장할 경로
+	 * @param useOriginalName 중복이여도 파일 이름 안 바꿀것인가?(무조건 원래 파일 명 사용할 것인가?)
 	 * @return 저장된 파일명
 	 * @throws DuplicateFileNameException
 	 *             원래 이름을 사용할 수 없을 때 발생
@@ -89,7 +90,7 @@ public class FileService {
 			// 같은 이름의 파일이 없으면 나감.
 			if (!serverFile.isFile())
 				break;
-			if (useOriginalName) {
+			if (!useOriginalName) {
 				// 같은 이름의 파일이 있으면 이름 뒤에 long 타입의 시간정보를 덧붙임.
 				savedFilename = savedFilename + new Date().getTime();
 			} else {

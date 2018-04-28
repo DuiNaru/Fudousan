@@ -52,23 +52,13 @@ public class MemberService {
 		Member result = dao.select(member);
 		return result;
 	}
-	
-	
-	
-	
-	
+
 	//인테리어 목록만
 	public ArrayList<Member> interior(){
 		ArrayList<Member> result = dao.interior();
 		return result;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	/**
 	 * 사용자 회원 가입
 	 * @param member
@@ -363,6 +353,12 @@ public class MemberService {
 		}
 	}
 	
+	public Member selectMemberOne(Member member){
+		logger.info("select Member start - service");
+		Member result=dao.selectMemberOne(member);
+		logger.info("select Member End - service ");
+		return result; 
+	}
 
 	
 	

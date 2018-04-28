@@ -23,7 +23,7 @@ function formCheck(){
 			data: {email: memberEmail.val(), password: password.val()},
 			dataType: 'json',
 			success: function(result){
-				console.dir(result);
+				console.dir("result email:"+result.email);
 				if (result.result == false && result.errCode == '1'){
 					alert('Not found ID');
 				}
@@ -36,7 +36,7 @@ function formCheck(){
 					var str ="";
 			
 					var lang = getCookie("lang");
-					
+					console.dir("result email:"+result.email);
 					if (lang == "ko"){
 						
 						str +=   '<li><a>' + result.memberName + ', Welcome!</a></li>' 
@@ -44,13 +44,13 @@ function formCheck(){
 						
 				
 						if (result.permissionId == 1) {
-							str += '<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="84">Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="84">Update Member</a></li>'
 								+  '<li><a href="/fudousan/mypageNormalUser" data-lang ="85">Member Page</a></li>';
 						}else if(result.permissionId == 2){
-							str += '<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="84">Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="84"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/interior/" data-lang ="87">Interior Page</a>';
 						}else if(result.permissionId == 3){
-							str += '<li><a href="/fudousan/memberupdate/agencyupdate" data-lang ="85">Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/agencyupdate" data-lang ="85" >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>';
 						}else if(result.permissionId == 4){
 							str += '<li><a href="/fudousan/admin/" data-lang ="88">Admin page</a></li>';
@@ -72,13 +72,13 @@ function formCheck(){
 							+	 '<li><a href="/fudousan/logout" data-lang ="1">Logout</a></li>';
 						
 						if (result.permissionId == 1) {
-							str += '<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="84">Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="84" >Update Member</a></li>'
 								+  '<li><a href="/fudousan/mypageNormalUser" data-lang ="85">Member Page</a></li>';
 						}else if(result.permissionId == 2){
-							str += '<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="84">Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="84" >Update Member</a></li>'
 								+  '<li><a href="/fudousan/interior/" data-lang ="87">Interior Page</a>';
 						}else if(result.permissionId == 3){
-							str += '<li><a href="/fudousan/memberupdate/agencyupdate" data-lang ="84">Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/agencyupdate" data-lang ="84"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>';
 						}else if(result.permissionId == 4){
 							str += '<li><a href="/fudousan/admin/" data-lang ="88">Admin page</a></li>';			
@@ -97,13 +97,13 @@ function formCheck(){
 							+	 '<li><a href="/fudousan/logout">Logout</a></li>';
 
 						if (result.permissionId == 1) {
-							str += '<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="85">Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="85"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/mypageNormalUser" data-lang ="84">Member Page</a></li>';
 						}else if(result.permissionId == 2){
-							str += '<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="85">Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="85" >Update Member</a></li>'
 								+  '<li><a href="/fudousan/interior/" data-lang ="84">Interior Page</a>';
 						}else if(result.permissionId == 3){
-							str += '<li><a href="/fudousan/memberupdate/agencyupdate" data-lang ="85">Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/agencyupdate" data-lang ="85"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="84">Agency Page</a></li>';
 						}else if(result.permissionId == 4){
 							str += '<li><a href="/fudousan/admin/" data-lang ="84">Admin page</a></li>';
@@ -115,9 +115,7 @@ function formCheck(){
 
 						$('#navbar-ul').html(str);							
 					}
-						
-					
-					
+
 				}
 			},
 			error: function(err){

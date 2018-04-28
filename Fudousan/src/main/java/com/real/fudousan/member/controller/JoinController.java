@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.real.fudousan.agency.vo.Agency;
+import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.member.service.MemberService;
 import com.real.fudousan.member.vo.Member;
 
@@ -21,6 +22,8 @@ import com.real.fudousan.member.vo.Member;
 public class JoinController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
+	
+	final String uploadPath ="/memberfile";
 	
 	@Autowired
 	private MemberService service;
@@ -46,14 +49,20 @@ public class JoinController {
 		
 		logger.info("회원 등록 시작");
 		int designer = member.getDesigner();
-		
+		System.out.println(member);
+		logger.debug("file : "+file);
 		if (designer == 0) {
-			
+			String savedFileName=FileService.saveFile(file, uploadPath, false);
+			member.setPicture(uploadPath+"/"+savedFileName);
+			System.out.println(savedFileName);
 			memberResult = service.registerMember(member, file);
 			
 		} else if(designer == 1) {
 			
-			memberResult = service.registerInterior(member, file);
+				String savedFileName=FileService.saveFile(file, uploadPath, false);
+				System.out.println("savedFileName:::"+savedFileName);
+				member.setPicture(uploadPath+"/"+savedFileName);
+				memberResult = service.registerInterior(member, file);
 		}
 		if (memberResult) {
 			// result가 true이면 
@@ -78,6 +87,10 @@ public class JoinController {
 		logger.info("회원 등록 시작");
 		agency.setAddressMain(main);
 		logger.info("member 등록 시작");
+		if (!file.isEmpty()) {
+			String savedFileName=FileService.saveFile(file, uploadPath, false);
+			member.setPicture(uploadPath+"/"+savedFileName);
+		}
 		boolean memberResult = service.registerAgencyMember(member, file);
 		logger.info("member 등록 종료");
 		

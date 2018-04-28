@@ -97,7 +97,7 @@ $(function(){
 							'<strong>'+reply.member.email+'</strong><br><span class="text-muted" >'+changeSecond(reply.creDate)+'</span>'+
 							'</div>'+
 							'<div class="panel-body">'+
-							'<p>'+reply.text+'</p>'+
+							'<p id="textBox'+reply.replyId+'">'+reply.text+'</p>'+
 							'<hr>'+
 							'<div>'+
 							'<input type="button" class="btn btn-info" value="Update" onclick="updateReply('+reply.replyId+')">'+
@@ -133,6 +133,7 @@ function deleteReply(replyId){
 		dataType: "json",
 		success : function(obj){
 			$('#topBox'+replyId).remove();
+			
 		} 
 	});
 }
@@ -154,18 +155,21 @@ function updateReply(replyId){
 }
 
 function okButton(replyId){
-	console.log("dd");
-	/*$.ajax({
+	console.log( $('#updateBox'+replyId).val());
+	$.ajax({
 		url: "../updateReply",
 		type: "POST",
 		data:{
-			"replyId":replyId
+			"replyId":replyId,
+			"text": $('#updateBox'+replyId).val()
 		},
 		dataType: "json",
-		success : function(obj){
-			$('#topBox'+replyId).remove();
+		success : function(reply){
+			console.log(reply);
+			$('#updateDiv'+replyId).remove();
+			$('#textBox'+replyId).html(reply.text);	
 		} 
-	});*/
+	});
 }
 
 function cancelButton(replyId){

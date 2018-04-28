@@ -18,7 +18,8 @@ public interface MemberMapper {
 	public int updateAgency(Agency agency);
 
 	public ArrayList<Member> interior();
-	
-	//회원정보 하나가져오기 이메일을 파라메터로 받아서.
-	public Member getOneMember(String email);
+
+	//select Member 
+	public Member selectMemberOne(Member member);
+
 }

@@ -279,29 +279,29 @@
 			<div class="row">
 				<div class="col-sm-12">
 					<h3>User Comment</h3>
-				</div><!-- /col-sm-12 -->
-			</div><!-- /row -->
-			<div class="row" id="replyBox">
-			
-			</div><!-- /row -->
-			</div><!-- /container -->		
-			
-			<!-- input reply -->
-			<c:if test="${sessionScope.memberId !=null }">
-				<div>
-					<div>			
-						<input type="text" class="form-control" id="text">
-						<input type="hidden" value="${sessionScope.memberId}" id="memberId">
-						<input type="hidden" value=" ${estateId}" id="estateId">
-						<input type="button" class="btn btn-info" id="replyButton" value="reply">
-					</div>
 				</div>
-			</c:if>
-		</div>
-		<div class="col-sm-2 sidenav">
-			<div class="col-sm-2 sidenav">
 			</div>
+			<div class="row" id="replyBox"></div>
+		</div><!-- /container -->		
+			
+		<!-- input reply -->
+		<c:if test="${sessionScope.memberId !=null }">
+			<div>
+				<div class="col-sm-12">
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="text">
+					</div>			
+					<input type="button" class="btn btn-info" id="replyButton" value="reply">
+					<input type="hidden" value="${sessionScope.memberId}" id="memberId">
+					<input type="hidden" value=" ${estateId}" id="estateId">
+				</div>
+			</div>
+		</c:if>
+	</div>
+	<div class="col-sm-2 sidenav">
+		<div class="col-sm-2 sidenav">
 		</div>
+	</div>
 	</div>
 </div>
 

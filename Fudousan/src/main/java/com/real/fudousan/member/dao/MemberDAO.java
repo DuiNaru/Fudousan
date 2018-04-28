@@ -29,8 +29,13 @@ public interface MemberDAO {
 	//인테리어 업자만 뽑아옴
 	public ArrayList<Member> interior();
 	
+	
+	// select member 
+	public Member selectMemberOne(Member member);
+	
 	//이메일에 맞는 회원정보 가져오기
 	public Member getOneMember(String email);
+
 	
 
 }

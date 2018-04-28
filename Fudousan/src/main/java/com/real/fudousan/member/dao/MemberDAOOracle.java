@@ -180,5 +180,17 @@ public class MemberDAOOracle implements MemberDAO {
 		return box;
 	}
 	
-	
+	public Member selectMemberOne(Member member){
+		Member result = null; 
+		try {
+			
+			MemberMapper memberMapper = sqlSession.getMapper(MemberMapper.class);
+			result = memberMapper.selectMemberOne(member);
+		} catch(Exception e){
+		  
+		  e.printStackTrace();
+			
+		}
+		return  result;
+	}
 }

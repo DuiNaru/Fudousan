@@ -222,7 +222,22 @@
 				
 	</update>
 	
-	
+	<select id="selectMemberOne" parameterType="member" resultMap="memberResultMap">
+		SELECT 
+			member_id,
+			email,
+			password,
+			phone,
+			picture,
+			text as "member_text",
+			member_name
+		FROM 
+			member
+		WHERE
+			email=#{email}
+		
+		
+	</select>
 	
 	
 	

@@ -51,7 +51,7 @@ public class ReplyService {
 		logger.info("update Reply Start - service");
 		int result = dao.updateReply(reply);
 		logger.info("update Reply End - service");
-		return 0;
+		return result;
 	};
 
 }
