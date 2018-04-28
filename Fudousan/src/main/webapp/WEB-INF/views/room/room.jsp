@@ -319,7 +319,10 @@ canvas {
 				<input type="hidden" value="${estateId}" id="estateId">
 				<input type="hidden" value="${sessionScope.memberId }" id="memberId">
 				
-				<script src="../resources/js/emailmodal.js"></script>
+				<!-- <script src="/resources/js/emailmodal.js"></script> -->
+				<script type="text/javascript" src="<c:url value="/resources/js/emailmodal.js"/>"></script>
+				
+				
 <input type="hidden" id="userId" value="${sessionScope.loginId}">
 <input type="hidden" id="userName" value="${sessionScope.what_your_name}">
 
@@ -456,9 +459,9 @@ canvas {
 						</c:if>
 					</li>
 					<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
-					<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
-				<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
-				</a>
+					<li><a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
+						<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
+					</a></li>
 				</ul>
 
 			<script type="text/javascript">
@@ -467,9 +470,6 @@ canvas {
 				
 				
 			
-				var sonnim = ${sessionScope.loginId};
-				var serviceProvider = "";
-				var roomId = room.roomId;
 				
 				
 			}
