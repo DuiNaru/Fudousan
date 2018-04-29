@@ -8,10 +8,10 @@
           <h1>공인중개업자 회원정보 수정 <small>Agency basic update form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="modifyAgency" method="post"  enctype="multipart/form-data">
+          <form role="form" action="modifyAgency" method="post"  enctype="multipart/form-data" onsubmit="return formsubmit()">
              <div class="form-group">
 	              <label for="InputName">name</label>
-	              <input type="text" class="form-control" id="InputName" placeholder="이름" name="memberName">
+	              <input type="text" class="form-control" id="InputName" placeholder="이름" name="memberName" value="${member.memberName }">
 	            </div>
 	            <div class="form-group">
 	              <label for="InputPassword1">password</label>
@@ -28,21 +28,21 @@
 	            </div>
 	            <div class="form-group">
 	              <label for="InputText">phone</label>
-	              <input type="text" class="form-control" id="userphone" placeholder="전화번호를 입력해 주세요" name="phone">
+	              <input type="text" class="form-control" id="userphone" placeholder="전화번호를 입력해 주세요" name="phone" value="${member.phone}">
 	            </div>
 	            
 				<div class="input-group">
 				     <label for="InputText">Member Introduce</label>
-				    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="text"></textarea>     
+				    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="memberText">${member.text}</textarea>     
 				</div>
 			
 				<div class="form-group">
 				    <label for="InputPhoto">photo</label>
-					<div class="input-group input-file" name="Fichier1">
+					<div class="input-group input-file" name="file">
 						<span class="input-group-btn">
 			        		<button class="btn btn-default btn-choose" type="button">선택</button>
 			    		</span>
-			    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요'  name="picture" />
+			    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요'  name="picture" value="${member.picture }"/>
 			    		<span class="input-group-btn">
 			       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
 			    		</span>
@@ -65,17 +65,17 @@
          
 			 <div class="form-group">
               <label for="InputText">agency name</label>
-              <input type="text" class="form-control" id="agencyname" placeholder="중개소 이름을 입력해 주세요" name="name">
+              <input type="text" class="form-control" id="agencyname" placeholder="중개소 이름을 입력해 주세요" name="name" value="${agency.name}">
             </div>
             
              <div class="form-group">
               <label for="InputText">biznum</label>
-              <input type="text" class="form-control" id="agencybiznum" placeholder="사업 번호를 입력해 주세요" name="biznum">
+              <input type="text" class="form-control" id="agencybiznum" placeholder="사업 번호를 입력해 주세요" name="biznum" value="${agency.biznum}">
             </div>
             
 			<div class="form-group">
 				<label for="InputText">Address Main</label>
-	            <select class="selectpicker" data-live-search="true" name="main">
+	            <select class="selectpicker" data-live-search="true" name="main" >
 				  <option value='0' selected>-- 選択 --</option>
 				  <!-- 홋카이도 -->
 				  <option value='北海道'>北海道</option>
@@ -176,28 +176,27 @@
             
              <div class="form-group">
               <label for="InputText">Address middle</label>
-              <input type="text" class="form-control" id="agencyaddressmiddle" placeholder="주소(市区町村名)를 입력해 주세요" name="addressMiddle">
+              <input type="text" class="form-control" id="agencyaddressmiddle" placeholder="주소(市区町村名)를 입력해 주세요" name="addressMiddle" value="${agency.addressMiddle }">
             </div>
             
              <div class="form-group">
               <label for="InputText">Address small</label>
-              <input type="text" class="form-control" id="agencyaddresssmail" placeholder="주소(地区名)를입력해 주세요"  name="addressSmall">
+              <input type="text" class="form-control" id="agencyaddresssmall" placeholder="주소(地区名)를입력해 주세요"  name="addressSmall" value="${agency.addressSmall }">
             </div>
             
              <div class="form-group">
               <label for="InputText">Address sub</label>
-              <input type="text" class="form-control" id="agencyaddresssub" placeholder="주소(詳細)를 입력해 주세요"  name="addressSub">
+              <input type="text" class="form-control" id="agencyaddresssub" placeholder="주소(詳細)를 입력해 주세요"  name="addressSub" value="${agency.addressSub }">
             </div>
             
 			<div class="input-group">
 			     <label for="InputText">Agency Introduce</label>
-			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="중개소 소개를 입력해 주세요"  name="text"></textarea>       
+			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="중개소 소개를 입력해 주세요"  name="text">${agency.text}</textarea>       
 			</div>
          
  			<br>
             <div class="form-group text-center">
               <button type="submit" class="btn btn-info">회원정보 수정<i class="fa fa-check spaceLeft"></i></button>
-              <button type="submit" class="btn btn-warning">회원정보 수정 취소<i class="fa fa-times spaceLeft"></i></button>
             </div>
             
           </form>

@@ -109,6 +109,15 @@
 			reply_id = #{replyId}
 	</select>
 	
+	<select id="selectReplyEstate" parameterType="int" resultMap="replyResultMap">
+		<include refid="SELECT_REPLY_SQL"></include>
+	WHERE
+		estate_id=#{estateId}
+	
+	
+	</select>
+	
+	
 	<update id="updateReply" parameterType="reply">
 		UPDATE 
 			reply	

@@ -29,4 +29,5 @@ public interface AgencyDAO {
 	 */
 	public List<Agency> agencyLocationPrint();
 
+	public Agency selectAgencyOne(int agencyId);
 }

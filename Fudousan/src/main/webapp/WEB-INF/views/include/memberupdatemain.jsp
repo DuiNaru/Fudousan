@@ -10,7 +10,7 @@
           <h1>회원정보수정 <small>basic update form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="modifyMember" method="post" enctype="multipart/form-data">
+          <form role="form" action="modifyMember" method="post" enctype="multipart/form-data" onsubmit="return formsubmit()" >
           
             <div class="form-group">
               <label for="InputName">name</label>
@@ -39,7 +39,7 @@
             </div>
 			<div class="input-group">
 			     <label for="InputText">Member Introduce</label>
-			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="text" >${member.text }</textarea>     
+			     <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="text" >${member.text }</textarea>     
 			</div>
 		
 			<div class="form-group">

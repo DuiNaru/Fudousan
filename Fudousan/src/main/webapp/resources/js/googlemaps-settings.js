@@ -1,6 +1,7 @@
 
 	
 	function initialize() {
+		
 	    var myOptions = {
 	        center: new google.maps.LatLng(35.4969467, 139.6627667),
 	        zoom: 8,
@@ -91,18 +92,21 @@
 	            map: map, title: loan, position: latlngset,
 	            label: labels[i % labels.length]
 	        });
-	       /*  map.setCenter(marker.getPosition()) */
-			
-	       if (loan.includes="AgencyId") {
-	           var content =  '<div>'+'<h3>'+'Information'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'</div>'		
-		   }
-	       
-	       if (loan.includes="Estate"){
-	        var content =  '<div>'+'<h3>'+'Information'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'<a href="estate/detailedinfomation?id='+loan+'">'+'detailed information'+'</a>'+'</div>'
-			   
-		   } 
-	       
-	       
+	        
+	        var content = '<div id="information'+$('#estateIdList').val()+'">'+
+	        '	<label>Information</label>'+
+	        '	<ul>'+
+	        '		<li>'+loan+'</li>'+
+	        '		<li>'+add+'</li>'+
+	        '	</ul>';
+	        
+	        if ($('#loginEmail').val()!=null && $('#loginEmail').val() !="" ) {
+	        	content += '	<a href="estate/detailedinfomation?id='+loan+'">Detailed Information</a>'; 	
+			}
+	        	content +='</div>';
+	        	
+	        
+	        	
 	        var infowindow = new google.maps.InfoWindow()
 	
 	        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 

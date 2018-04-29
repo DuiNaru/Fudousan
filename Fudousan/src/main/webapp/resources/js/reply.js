@@ -4,26 +4,30 @@
 // select Reply 
 $(function(){
 	$.ajax({
-		url: "../selectReply",
+		url: "../selectReplyEstate",
 		type: "POST",
+		data:{
+			"estateId":$('#estateId').val()		
+		},
 		dataType: "json",
 		success : function(data){
 			var memberId = $('#memberId').val();
 			var str = "";
-			$(data).each(function(index, reply){
-
-				
-			str +=
-				'<div id="topBox'+reply.replyId+'">'+
-				'<div class="col-sm-1">'+
-				'<div class="thumbnail">';
-			if(reply.member.picture !=null){
-				str +=	'<img class="img-responsive user-photo" src="'+reply.member.picture+'">';
 			
-			}else{	
-				str +=	'<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
-			}
-			str	+='</div><!-- /thumbnail -->'+
+			$(data).each(function(index, reply){
+	
+				
+				str +=
+					'<div id="topBox'+reply.replyId+'">'+
+					'<div class="col-sm-1">'+
+					'<div class="thumbnail">';
+				if(reply.member.picture !=null){
+					str +=	'<img class="img-responsive user-photo" src="'+reply.member.picture+'">';
+					
+				}else{	
+					str +=	'<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
+				}
+				str	+='</div><!-- /thumbnail -->'+
 				'</div><!-- /col-sm-1 -->'+
 				'<div class="col-sm-5">'+
 				'<div class="panel panel-default" id="replyBox">'+
@@ -32,24 +36,23 @@ $(function(){
 				'</div>'+
 				'<div class="panel-body">'+
 				'<p id="textBox'+reply.replyId+'">'+reply.text+'</p>';
-			
-			if (reply.member.memberId == memberId) {
-				str +=
-				'<hr>'+
-				'<div>'+
-				'<input type="button" class="btn btn-info" value="Update" onclick="updateReply('+reply.replyId+')">'+
-				'&nbsp;'+
-				'<input type="button" class="btn btn-warning delete" value="Delete" onclick="deleteReply('+reply.replyId+')">';
-			}	
-			str+='</div>'+
+				
+				if (reply.member.memberId == memberId) {
+					str +=
+						'<hr>'+
+						'<div>'+
+						'<input type="button" class="btn btn-info" value="Update" onclick="updateReply('+reply.replyId+')">'+
+						'&nbsp;'+
+						'<input type="button" class="btn btn-warning delete" value="Delete" onclick="deleteReply('+reply.replyId+')">';
+				}	
+				str+='</div>'+
 				'</div>'+
 				'</div><!-- /panel panel-default -->'+
 				'</div><!-- /col-sm-5 -->'
-				+'</div>';
-					
-				
+				+'</div>';				
+			
+				$('#replyBox').append(str);
 			});
-			$('#replyBox').append(str);
 			
 		},
 		error: function(e){

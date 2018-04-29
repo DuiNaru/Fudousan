@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.real.fudousan.agency.service.AgencyService;
 import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.member.service.MemberService;
@@ -24,9 +25,13 @@ public class UpdateMemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UpdateMemberController.class);
 	public static final String uploadPath ="/memberfile";
+	
 	@Autowired
 	private MemberService service;
 
+	@Autowired
+	private AgencyService aService; 
+	
 	@RequestMapping(value="memberupdate", method=RequestMethod.GET)
 	public String memberupdate(String email, Model model){
 		logger.info("start memberupdate - controller");
@@ -41,9 +46,25 @@ public class UpdateMemberController {
 	}
 	
 	@RequestMapping(value="agencyupdate", method=RequestMethod.GET)
-	public String agencyupdate(){
+	public String agencyupdate( Model model, HttpSession session){
+		logger.info("start agency update - controller");
+		String email=(String)session.getAttribute("loginEmail");
+		Member member= new Member();
+		member.setEmail(email);
+		Member result=service.selectMemberOne(member);
+		System.out.println(result);
+		System.out.println(result);
+		model.addAttribute("member", result);
 		
+		Agency agency = new Agency();
+		int agencyId=aService.selectAgencyId(email);
+		agency=aService.selectAgencyOne(agencyId);
+		System.out.println(agency);
 		
+		model.addAttribute("agency", agency);
+		
+		logger.info("end agency update - controller");
+
 		return "memberupdate/agencyupdate";
 	}
 	
@@ -97,9 +118,11 @@ public class UpdateMemberController {
 			, Model model
 			, HttpSession session
 			, String main 
+			, String memberText
 			){
 		
 		logger.info("회원 수정 시작(agency)");
+		member.setText(memberText);
 		// get login Id
 		String loginEmail=(String)session.getAttribute("loginEmail");
 		//search member
@@ -116,6 +139,8 @@ public class UpdateMemberController {
 		agency.setAddressMain(main);
 		// set email address to member
 		member.setEmail(loginEmail);
+		System.out.println(file);
+		
 		logger.info("member 등록 시작");
 		if (!file.isEmpty()) {
 			// 변환
@@ -148,7 +173,7 @@ public class UpdateMemberController {
 		else{
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberUpdateResult);
-			return "redirect:/agencyupdate";
+			return "redirect:agencyupdate";
 		}
 	}
 	
