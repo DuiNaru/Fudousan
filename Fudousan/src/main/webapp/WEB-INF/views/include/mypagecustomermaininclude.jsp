@@ -24,7 +24,7 @@
     				<h1>3D 작성 매물 확인</h1>
 					<!-- search button -->
 					<div id="custom-search-input">
-            			<div class="input-group col-md-12">
+            			<div class="input-group col-md-12"  name="seachedRoom">
                 			<input type="text" class="  search-query form-control" placeholder="Search" id ="roomSearch" name="roomSearch" />
                 			<span class="input-group-btn">
 	                    		<button class="btn btn-danger" type="button" onclick="roomSearch()" >
@@ -36,34 +36,25 @@
         			</div>
         			<br>
         			<!-- result -->      
-        			<table class="table">
+        			<table class="table" >
+        			<thead>
         				<tr>
         					<th>Name</th>
         					<th>Create</th>
         					<th>Delete</th>
         				</tr>
-        				<tbody>
+       				</thead>
+        				<tbody id="hhh">
         					<c:forEach var="room" items="${rlist}">
-	        					<tr>
-	        						<td>
-	        							<p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">
+	        					<tr name="home">
+	        						<td><p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">
 									<c:choose>
-		        							<c:when test="${room.roomTitle eq null}">
-		        								이름 없음
-		        							</c:when>
-		        							<c:otherwise>
-		        								${room.roomTitle}
-		        							</c:otherwise>
+		        							<c:when test="${room.roomTitle eq null}">이름 없음</c:when>
+		        							<c:otherwise>${room.roomTitle}</c:otherwise>
         							</c:choose>
-
-									</a></p>
-	        						</td>
-	        						<td>	
-	        							<a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.roomId}&roomPublic=0"/>">내집꾸미기</a>
-	        						</td>
-	        						<td>
-	        							<a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a>
-	        						</td>
+									</a></p></td>
+	        						<td><a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.roomId}&roomPublic=0"/>">내집꾸미기</a></td>
+	        						<td><a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a></td>
 	        					</tr>
         					</c:forEach>
         				</tbody>
@@ -86,9 +77,9 @@
 					<hr>
 					<!-- result -->
 					<c:forEach var="favorite" items="${flist}">
-						<div class="col-sm-12 form-group">
+						<div class="col-sm-12 form-group" name="favorite">
 							<p><a href="/fudousan/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}estataId:${favorite.estate.estateId}"/></p>
-							<input type="hidden" value="${favorite.estate.estateId}" id='favo' name='favo' >
+							<input type="hidden" value="${favorite.estate.estateId}" id="favo" name="favo" >
 							<button><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}"/>">매물상세정보</a></button>
 						</div>
 						

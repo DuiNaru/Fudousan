@@ -61,14 +61,14 @@ public class RoomController {
 	@Autowired
 	private TextureService textureService;
 	
-	
+	@ResponseBody
 	@RequestMapping(value="searchMyRoom" , method=RequestMethod.GET)
-	public String searchMyRoom(Model model,String roomSearch,int memberId){
+	public List<Room> searchMyRoom(Model model,String roomSearch,int memberId){
 		logger.info("RoomController-searchMyRoom_Start");
 		logger.info("매물 이름 검색한 결과 :  " + roomSearch);
 		logger.info("검색자ID :  " + memberId);
 		List<Room> srlist = roomService.showMyRoom(roomSearch, memberId);
-		model.addAttribute("rlist",srlist);
+	/*	model.addAttribute("rlist",srlist);
 
         List<Favorite> flist = favService.showAllFavorite(memberId);
         List<Advice> alist = advService.getRequestList(memberId, Advice.REQUEST);
@@ -76,10 +76,11 @@ public class RoomController {
         
         model.addAttribute("flist", flist);
         model.addAttribute("alist", alist);
-        model.addAttribute("rclist", rclist);
+        model.addAttribute("rclist", rclist);*/
 		
 		logger.info("RoomController-searchMyRoom_End");
-		return "user/mypagecustomer";
+		logger.info("srlist : "+srlist);
+		return srlist;
 	}
 	
 	@RequestMapping(value="allMyRooms" , method=RequestMethod.GET)
@@ -158,7 +159,7 @@ public class RoomController {
 	
 	//작업중
 	@RequestMapping(value="roomPage", method=RequestMethod.GET)
-	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model,Integer itemTypeId ) {
+	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model ) {
 		logger.info("roomPage("+loginId+", "+roomId+") Start");
 		
 
@@ -178,7 +179,6 @@ public class RoomController {
 			
 			model.addAttribute("itemTypeList", itemService.getItemTypeList());
 		}
-		System.out.println("dd");
 		logger.info("roomPage("+loginId+", "+roomId+") End");
 		return "room/room";
 		//return "itemlist";

@@ -53,5 +53,18 @@
 	<script src="resources/js/cookie.js"></script>
 	<script src="resources/js/translation.js"></script>
 	<script src="resources/js/login.js"></script>
+	
+	<!-- value -->
+	<input type="hidden" value="${loginEmail }" id="loginEmail">
+	<input type="hidden" value="${estateIdList }" id="estateIdList">
+	<input type="hidden" value="${addList }" id="addList">
+
+
+
 </body>
 </html>
+
+
+
+
+

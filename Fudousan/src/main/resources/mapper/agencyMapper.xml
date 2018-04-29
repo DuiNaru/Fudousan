@@ -28,8 +28,7 @@
 		<result property="transName" column="trans_name"/>
 	</resultMap>
 	
-
-	<select id="selectByConfirmed" parameterType="int" resultMap="agencyResultMap">
+	<sql id="SELECT_AGENCY_SQL">
 		SELECT 
 			address_main 
 			, address_middle 
@@ -72,6 +71,15 @@
 			permission
 		ON
 			member.permission_id = permission.permission_id
+	</sql>
+
+	<select id="selectByMemberId" resultMap="agencyResultMap">
+		<include refid="SELECT_AGENCY_SQL"></include>
+		WHERE agency.member_id = #{0}
+	</select>
+	
+	<select id="selectByConfirmed" parameterType="int" resultMap="agencyResultMap">
+		<include refid="SELECT_AGENCY_SQL"></include>
 		WHERE
 			confirm = #{confirm}
 	</select>
@@ -84,6 +92,18 @@
 		WHERE
 			member_id = (SELECT member_id FROM member WHERE email = #{email})
 	</select>
+	
+	<select id="selectAgencyOne" parameterType="int" resultMap="agencyResultMap">
+		SELECT 
+			*
+		FROM 
+			agency
+		WHERE 
+			agency_id = #{agencyId}
+			
+	</select>
+	
+	
 	
 	<update id="updateConfirm">
 		UPDATE

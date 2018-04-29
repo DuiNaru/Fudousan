@@ -1,5 +1,7 @@
 package com.real.fudousan.member.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -10,23 +12,32 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.real.fudousan.agency.service.AgencyService;
 import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.member.service.MemberService;
 import com.real.fudousan.member.vo.Member;
 
+@SessionAttributes("loginId")
 @Controller
 @RequestMapping(value="memberupdate")
 public class UpdateMemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UpdateMemberController.class);
 	public static final String uploadPath ="/memberfile";
+	
 	@Autowired
 	private MemberService service;
+	@Autowired
+	private AgencyService agencyService;
 
+	@Autowired
+	private AgencyService aService; 
+	
 	@RequestMapping(value="memberupdate", method=RequestMethod.GET)
 	public String memberupdate(String email, Model model){
 		logger.info("start memberupdate - controller");
@@ -41,9 +52,14 @@ public class UpdateMemberController {
 	}
 	
 	@RequestMapping(value="agencyupdate", method=RequestMethod.GET)
-	public String agencyupdate(){
+	public String agencyupdate(@ModelAttribute("loginId") int loginId, Model model){
+		logger.info("agencyupdate("+loginId+") Start");
 		
-		
+		List<Agency> agency = agencyService.viewAgencyByMemberId(loginId);
+		logger.debug("Result : " + agency);
+		model.addAttribute("agency", agency.get(0));
+
+		logger.info("agencyupdate("+loginId+") End");
 		return "memberupdate/agencyupdate";
 	}
 	
@@ -97,9 +113,13 @@ public class UpdateMemberController {
 			, Model model
 			, HttpSession session
 			, String main 
+			, String agencytext
+			, String membertext
 			){
 		
 		logger.info("회원 수정 시작(agency)");
+		member.setText(membertext);
+		agency.setText(agencytext);
 		// get login Id
 		String loginEmail=(String)session.getAttribute("loginEmail");
 		//search member
@@ -116,14 +136,16 @@ public class UpdateMemberController {
 		agency.setAddressMain(main);
 		// set email address to member
 		member.setEmail(loginEmail);
+		System.out.println(file);
+		
 		logger.info("member 등록 시작");
-		if (!file.isEmpty()) {
-			// 변환
-			String savedFileName=FileService.saveFile(file, uploadPath, false);
+		if (file != null && !file.isEmpty()) {
 			// 검색 
 			Member result=service.selectMemberOne(member);
 			// 삭제 
 			FileService.deleteFile(result.getPicture());
+			// 저장
+			String savedFileName=FileService.saveFile(file, uploadPath, false);
 			// 등록 
 			member.setPicture(uploadPath+"/"+savedFileName);
 		}
@@ -148,7 +170,7 @@ public class UpdateMemberController {
 		else{
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberUpdateResult);
-			return "redirect:/agencyupdate";
+			return "redirect:agencyupdate";
 		}
 	}
 	

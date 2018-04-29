@@ -22,6 +22,7 @@ import com.real.fudousan.estate.vo.Estate;
 import com.real.fudousan.estate.vo.MunicipalityCode;
 import com.real.fudousan.estate.vo.TransType;
 import com.real.fudousan.member.controller.MemberController;
+import com.real.fudousan.room.service.RoomService;
 
 
 
@@ -41,6 +42,8 @@ public class EstateController {
 	private EntryService entryService;
 	@Autowired
 	private AgencyService agencyService;
+	@Autowired
+	private RoomService roomService;
 	
 
 	
@@ -237,9 +240,13 @@ public class EstateController {
 		model.addAttribute("select", select);
 	
 		//에이전시 아이디 
-		int agencyId = agencyService.selectAgencyId(email);
+		//int agencyId = agencyService.selectAgencyId(email);
+		int agencyId = (int)session.getAttribute("loginId");
 		
 		model.addAttribute("agencyId", agencyId);
+		
+		// 해당 중개사가 만든 방
+		model.addAttribute( "roomList", roomService.showAllRoom(agencyId) );
 		
 		System.out.println();
 		System.out.println(email);
