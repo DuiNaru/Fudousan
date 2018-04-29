@@ -124,7 +124,7 @@ public class Estate implements Serializable {
 	private double estateX;
 	private double estateY;
 	
-	private int baseRoomId;
+	private Integer baseRoomId;
 
 
 	public Estate() {
@@ -139,7 +139,7 @@ public class Estate implements Serializable {
 			Integer totalfloorarea, String buildingyear, String structure, String use, String purpose, String direction,
 			String classification, Double breadth, String cityplanning, Integer coverageratio, Integer floorarearatio,
 			String period, String renovation, String remarks, Date delDate, Date creDate, String address,
-			double estateX, double estateY, int baseRoomId) {
+			double estateX, double estateY, Integer baseRoomId) {
 		super();
 		this.estateId = estateId;
 		this.estateName = estateName;
@@ -543,7 +543,7 @@ public class Estate implements Serializable {
 
 
 
-	public int getBaseRoomId() {
+	public Integer getBaseRoomId() {
 		return baseRoomId;
 	}
 
@@ -552,7 +552,7 @@ public class Estate implements Serializable {
 
 
 
-	public void setBaseRoomId(int baseRoomId) {
+	public void setBaseRoomId(Integer baseRoomId) {
 		this.baseRoomId = baseRoomId;
 	}
 

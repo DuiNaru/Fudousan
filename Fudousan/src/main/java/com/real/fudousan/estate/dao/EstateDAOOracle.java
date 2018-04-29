@@ -148,6 +148,24 @@ public List<Estate> selectEsatesLocation(){
 		return 0;
 	}
 
+	@Override
+	public boolean updateBaseRoomId(int estateId, int roomId) {
+		logger.info("updateBaseRoomId("+estateId+", "+roomId+") Start");
+
+		boolean result = false;
+
+		try {
+			EstateMapper mapper = session.getMapper(EstateMapper.class);
+
+			result = mapper.updateBaseRoomId(estateId, roomId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("updateBaseRoomId("+estateId+", "+roomId+") End");
+		return result;
+	}
+
 }
 
 /*

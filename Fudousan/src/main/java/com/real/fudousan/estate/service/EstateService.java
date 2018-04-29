@@ -179,6 +179,14 @@ public class EstateService {
 		return result;
 	}
 
+	public boolean updateBaseRoomId(int estateId, int roomId) {
+		logger.info("updateBaseRoomId("+estateId+", "+roomId+") Start");
+		
+		boolean result= false;
+		result = dao.updateBaseRoomId(estateId, roomId);
 
+		logger.info("updateBaseRoomId("+estateId+", "+roomId+") End");
+		return result;
+	}
 	
 }

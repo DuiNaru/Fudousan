@@ -141,6 +141,19 @@ public class RoomController {
 		return returnedURL;
 	}
 	
+	@RequestMapping(value="newBaseRoom", method=RequestMethod.GET)
+	public String newBaseRoom(@ModelAttribute("loginId") int loginId, int estateId, Model model) {
+		logger.info("newBaseRoom("+loginId+", "+estateId+") Start");
+		String returnedURL = "redirect:roomPage";
+		
+		int roomId = roomService.createBaseRoom(loginId, estateId);
+		model.addAttribute("roomId", roomId);
+		
+		returnedURL = "redirect:wall/wallPage";
+		
+		logger.info("newBaseRoom("+loginId+", "+estateId+") End");
+		return returnedURL;
+	}
 	
 	
 	//작업중
