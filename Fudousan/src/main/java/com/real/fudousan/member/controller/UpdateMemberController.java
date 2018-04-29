@@ -52,7 +52,6 @@ public class UpdateMemberController {
 	}
 	
 	@RequestMapping(value="agencyupdate", method=RequestMethod.GET)
-<<<<<<< HEAD
 	public String agencyupdate(@ModelAttribute("loginId") int loginId, Model model){
 		logger.info("agencyupdate("+loginId+") Start");
 		
@@ -61,27 +60,6 @@ public class UpdateMemberController {
 		model.addAttribute("agency", agency.get(0));
 
 		logger.info("agencyupdate("+loginId+") End");
-=======
-	public String agencyupdate( Model model, HttpSession session){
-		logger.info("start agency update - controller");
-		String email=(String)session.getAttribute("loginEmail");
-		Member member= new Member();
-		member.setEmail(email);
-		Member result=service.selectMemberOne(member);
-		System.out.println(result);
-		System.out.println(result);
-		model.addAttribute("member", result);
-		
-		Agency agency = new Agency();
-		int agencyId=aService.selectAgencyId(email);
-		agency=aService.selectAgencyOne(agencyId);
-		System.out.println(agency);
-		
-		model.addAttribute("agency", agency);
-		
-		logger.info("end agency update - controller");
-
->>>>>>> 5924fd75563cbe409e034cc3fc3369b191fe9e07
 		return "memberupdate/agencyupdate";
 	}
 	
