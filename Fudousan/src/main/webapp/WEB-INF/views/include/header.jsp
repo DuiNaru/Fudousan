@@ -40,7 +40,7 @@
 
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="84">Update Member</a></li>
+					<li><a href="/fudousan/memberupdate/memberupdate?email=${sessionScope.loginEmail}" data-lang ="84">Update Member</a></li>
 					
 					<li><a href="/fudousan/mypageNormalUser" data-lang ="85">Member Page</a></li>
 					
@@ -53,7 +53,7 @@
 
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="/fudousan/memberupdate/memberupdate" data-lang ="84">Update Member</a></li>
+					<li><a href="/fudousan/memberupdate/memberupdate?email=${sessionScope.loginEmail}" data-lang ="84">Update Member</a></li>
 					
 					<li><a href="/fudousan/interior/" data-lang ="87">Interior Page</a></li>
 					
@@ -64,7 +64,7 @@
 					
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 
-					<li><a href="/fudousan/memberupdate/agencyupdate" data-lang ="84">Update Member</a></li>
+					<li><a href="/fudousan/memberupdate/agencyupdate?email=${sessionScope.loginEmail}" data-lang ="84">Update Member</a></li>
 					
 					<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>
 				</c:if>
