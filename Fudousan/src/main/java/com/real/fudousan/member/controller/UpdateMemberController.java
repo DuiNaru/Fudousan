@@ -14,6 +14,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.real.fudousan.agency.vo.Agency;
+import com.real.fudousan.common.util.FileService;
 import com.real.fudousan.member.service.MemberService;
 import com.real.fudousan.member.vo.Member;
 
@@ -22,7 +23,7 @@ import com.real.fudousan.member.vo.Member;
 public class UpdateMemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UpdateMemberController.class);
-	
+	public static final String uploadPath ="/memberfile";
 	@Autowired
 	private MemberService service;
 
@@ -54,6 +55,19 @@ public class UpdateMemberController {
 			, HttpSession session){
 
 			logger.info("회원 수정 시작(member)");
+			if (!file.isEmpty()) {
+				// 변환
+				String savedFileName=FileService.saveFile(file, uploadPath, false);
+				// 검색 
+				Member result=service.selectMemberOne(member);
+				// 삭제 
+				FileService.deleteFile(result.getPicture());
+				// 등록 
+				member.setPicture(uploadPath+"/"+savedFileName);
+			}
+			
+			
+			
 			System.out.println(member);
 			boolean result = service.modifyMember(member, file);
 			
@@ -71,7 +85,7 @@ public class UpdateMemberController {
 				session.setAttribute("memberName", resultMemberName);
 				logger.info("회원 수정 종료");
 				
-				return "redirect:updateResult";
+				return "redirect:/";
 			}
 	}
 	
@@ -103,6 +117,17 @@ public class UpdateMemberController {
 		// set email address to member
 		member.setEmail(loginEmail);
 		logger.info("member 등록 시작");
+		if (!file.isEmpty()) {
+			// 변환
+			String savedFileName=FileService.saveFile(file, uploadPath, false);
+			// 검색 
+			Member result=service.selectMemberOne(member);
+			// 삭제 
+			FileService.deleteFile(result.getPicture());
+			// 등록 
+			member.setPicture(uploadPath+"/"+savedFileName);
+		}
+	
 		boolean memberUpdateResult = service.modifyAgencyMember(member, file);
 		logger.info("member 등록 종료");
 		
@@ -118,44 +143,18 @@ public class UpdateMemberController {
 			// true 
 			logger.info("회원 등록 성공");
 			model.addAttribute(memberUpdateResult);
-			return "redirect:/memberupdate/agencyupdateresult";
+			return "redirect:/";
 		}
 		else{
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberUpdateResult);
-			return "redirect:/memberupdate/agencyupdate";
+			return "redirect:/agencyupdate";
 		}
 	}
 	
 	
 	
-	@RequestMapping(value="updateResult", method=RequestMethod.GET)
-	public String updateResult(
-			SessionStatus session
-			,Model model 
-			,@ModelAttribute("member")Member member){
-		
-		logger.info("회원 정보 수정 완료 폼 이동 시작");
-		model.addAttribute("memberName", member.getMemberName());
-		session.setComplete();
-		logger.info("회원 정보 수정 완료 폼 이동 종료");
-		return "memberupdate/updateResult";
-		
-	}
-	
-	@RequestMapping(value="agencyupdateresult", method=RequestMethod.GET)
-	public String agencyupdateresult(
-			SessionStatus session
-			,Model model 
-			,@ModelAttribute("member")Member member){
-		
-		logger.info("회원 정보 수정 완료 폼 이동 시작");
-		model.addAttribute("memberName", member.getMemberName());
-		session.setComplete();
-		logger.info("회원 정보 수정 완료 폼 이동 종료");
-		return "memberupdate/agencyupdateresult";
-		
-	}
+
 	
 
 	

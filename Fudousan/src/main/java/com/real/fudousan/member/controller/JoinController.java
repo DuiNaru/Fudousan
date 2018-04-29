@@ -52,17 +52,18 @@ public class JoinController {
 		System.out.println(member);
 		logger.debug("file : "+file);
 		if (designer == 0) {
-			String savedFileName=FileService.saveFile(file, uploadPath, false);
-			member.setPicture(uploadPath+"/"+savedFileName);
-			System.out.println(savedFileName);
-			memberResult = service.registerMember(member, file);
+			if (!file.isEmpty()) {
+				String savedFileName=FileService.saveFile(file, uploadPath, false);
+				member.setPicture(uploadPath+"/"+savedFileName);
+				memberResult = service.registerMember(member, file);
+			}
 			
 		} else if(designer == 1) {
-			
+			if (!file.isEmpty()) {
 				String savedFileName=FileService.saveFile(file, uploadPath, false);
-				System.out.println("savedFileName:::"+savedFileName);
 				member.setPicture(uploadPath+"/"+savedFileName);
-				memberResult = service.registerInterior(member, file);
+				memberResult = service.registerMember(member, file);
+			}
 		}
 		if (memberResult) {
 			// result가 true이면 
@@ -85,18 +86,26 @@ public class JoinController {
 	public String insertAgency(Model model, Member member,  MultipartFile file, Agency agency, String main){
 			
 		logger.info("회원 등록 시작");
+		
 		agency.setAddressMain(main);
+		
 		logger.info("member 등록 시작");
+
+		boolean memberResult= false;
+
 		if (file != null && !file.isEmpty()) {
+
 			String savedFileName=FileService.saveFile(file, uploadPath, false);
 			member.setPicture(uploadPath+"/"+savedFileName);
 		}
-		boolean memberResult = service.registerAgencyMember(member, file);
+			memberResult = service.registerAgencyMember(member, file);
+			System.out.println(memberResult);
 		logger.info("member 등록 종료");
 		
 		logger.info("agency 등록 시작");
 		agency.setMember(member);
 		System.out.println(member);
+		System.out.println();
 		boolean AgencyResult = service.registerAgency(agency);
 		logger.info("agency 등록 종료");
 		System.out.println(agency);
