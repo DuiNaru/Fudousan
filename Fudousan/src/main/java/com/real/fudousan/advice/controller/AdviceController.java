@@ -113,32 +113,20 @@ public class AdviceController {
 		      int requestedId = memberOne.getMemberId(); //null pointer
 		      int roomNum = roomId;
 		      
-		      logger.info("1★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      Advice advice = new Advice();
-		      logger.info("2★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      advice.setRequestMemberId(rquestId);
-		      logger.info("3★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      advice.setRequestedMemberId(requestedId);
-		      logger.info("4★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      
 		      Room room = new Room();
-		      logger.info("5★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      room.setRoomId(roomNum);
-		      logger.info("6★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      advice.setRoom(room);
-		      logger.info("7★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      Date date = new Date();
 		      String ddd = date.toString();
 		      advice.setId(ddd);
-		      logger.info("8★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      boolean abc = Aservice.requestAdvice(advice);
 		      logger.info("이 요청은 성공적입니다.");
 		      
 		      if(abc){
-		    	  logger.info("이 요청은 성공적입니다.");
-		    	  logger.info("이 요청은 성공적입니다.");
-		    	  logger.info("이 요청은 성공적입니다.");
-		    	  logger.info("이 요청은 성공적입니다.");
 		    	  logger.info("이 요청은 성공적입니다.");
 		      }
 		      
