@@ -127,6 +127,7 @@
               <input type="text" class="form-control" id="inputestateName"  name="estateName" value="${estate.estateName}">
             </div>
           
+          <input type="hidden"   class="form-control" id="inputestateName"  name=estateId value="${estate.estateId}">
           
           
             <div class="form-group">
@@ -149,40 +150,34 @@
               <label for="inputPrefecture">가격</label>
               <input type="text" class="form-control" id="inputPrefecture" placeholder=" 가격" name="price" value="${entry.price}">
            </div>
-            
-            
-            
-            <div class="form-group">
-              <label for="inputRegion">地域名(지역이름)</label>
-               <!-- Localname = 지역이름 -->
-               
-               <input type="text" value="${estate.prefecture}" data-live-search="true"  class="form-control" readonly >
 
-             
+            <div class="form-group">
+
+               <!-- Localname = 지역이름 -->
+
+               <input type="text" value="${estate.prefecture}" data-live-search="true"  class="form-control" name ="prefecture" readonly >
+
             </div>
          <div class="form-group">
-              <label for="inputRegion">시구 도촌</label>
-               <!-- Localname = 지역이름 -->
-               
-            
+             
             <input type="text" name='municipality' data-live-search="true"  class="form-control" value="${estate.municipality}" readonly >
-           	 <label for="inputRegion">시구 도촌 코드</label>
+        
            	<input type="text" name="municipalitycodeId" data-live-search="true"  class="form-control" value="${estate.municipalitycode.municipalitycodeId}" readonly >
          
-         	<input type="text" name='estateX' data-live-search="true"  class="form-control" value="${estate.estateX}" readonly>
-         	<input type="text" name='estateY' data-live-search="true"  class="form-control" value="${estate.estateY}" readonly>
+         	<input type="hidden" name='estateX' data-live-search="true"  class="form-control" value="${estate.estateX}" readonly>
+         	<input type="hidden" name='estateY' data-live-search="true"  class="form-control" value="${estate.estateY}" readonly>
      
              
             </div>
              
       
             <div class="form-group">
-              <label for="inputDistrictName">지역구</label>
+             
               <input type="text" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)" name="districtname" value="${estate.districtname}" readonly >
             </div>
             
            <div class="form-group">
-              <label for="inputNearestStation"> 나머지 주소 </label>
+            
               <input type="text" class="form-control" id="inputNearestStation" placeholder="나머지 주소" name="address" value="${estate.address}" readonly >
             </div>
             
@@ -267,21 +262,7 @@
           </form>
         </div>
 </article>
- 
- 
 
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
  <!-- script -->
 
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">

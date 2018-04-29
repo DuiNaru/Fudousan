@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.real.fudousan.agency.service.AgencyService;
 import com.real.fudousan.agency.vo.Agency;
@@ -22,8 +21,6 @@ import com.real.fudousan.estate.vo.Estate;
 import com.real.fudousan.estate.vo.MunicipalityCode;
 import com.real.fudousan.estate.vo.TransType;
 import com.real.fudousan.member.controller.MemberController;
-import com.real.fudousan.texture.service.TextureService;
-import com.real.fudousan.texture.vo.Texture;
 
 
 
@@ -97,9 +94,12 @@ public class EstateController {
 		System.out.println("어디까지오나 4");
 		logger.info("estate_id : " + estate_id);
 		entry.setEstate(estate);
+		
+		
 		Agency agency = new Agency();
 		agency.setAgencyId(agency_id);
 		entry.setAgency(agency);
+		model.addAttribute("entry", entry);
 		System.out.println(entry);
 		entryService.addEntry(entry);
 
@@ -134,36 +134,34 @@ public class EstateController {
 	
 
 	
-	/*테스트*/
-	//이젠 무쓸모 
+	
+	
 	 @RequestMapping(value="okhtest", method=RequestMethod.GET)
 	    public String prototype() {
 		 logger.info("okh 테스트 페이지 이동");
 	    	return "/okhtest";
-	
 	    }
-	 
 	 @RequestMapping(value="bw", method=RequestMethod.GET)
 	    public String bw() {
 		 logger.info("매물 등록 페이지 이동");
-	    	return "/brokers/bw";
-	    	
+	    	return "/brokers/bw";    	
 	 }
 	 //수정 페이지로 이동  
 	 @RequestMapping(value="bc", method=RequestMethod.GET)
-	    public String modifyEstatePage(Model model, HttpSession session, int estateId, Entry entry, Integer price
-				){
-			
+	    public String modifyEstatePage(Model model, HttpSession session, int estateId, Entry entry, Integer price){
+		
 		 
 		 logger.info("매물 수정 페이지로 이동 ");
-		 logger.debug("estateId : " + estateId);
+		 logger.debug("estateId(bc) : " + estateId);
+		 System.out.println(price);
+		 
 		Estate estate = estateService.viewEstate(estateId);
-	
-		
 		model.addAttribute("estate", estate);
 		
+		Entry entry1 = entryService.listEntry(estateId);
+		System.out.println("entry 1 - " + entry1);
 		entry.getPrice();
-		model.addAttribute("entry", entry) ;
+		model.addAttribute("entry", entry1) ;
 		 System.out.println(estate);
 		 System.out.println(entry);
 
@@ -181,7 +179,7 @@ public class EstateController {
 			logger.info("매물 수정 시작(컨트롤러)");
 			Entry entry = new Entry();
 			
-			System.out.println("estate = " +   estate);
+			System.out.println("(수정)estate = " +   estate);
 			entry.setPrice(price);
 			estate.setEstateName(estateName);
 			estate.setTransType(transType);
@@ -205,15 +203,18 @@ public class EstateController {
 			estate.setFloorarearatio(floorarearatio);
 			estate.setAddress(address);
 			
-		
 			
 			System.out.println(price);
 			System.out.println("estate2 = " +   estate);
 			
+			
 			estateService.updateByIds(estate);
+			System.out.println("여기까지 1");
 			int estate_id = estate.getEstateId();
+			System.out.println("여기까지2");
 			
 			String email = (String) session.getAttribute("loginEmail");
+			System.out.println("여기까지 3");
 			int agency_id = agencyService.selectAgencyId(email);
 			
 			logger.info("estate_id : " + estate_id);
@@ -225,13 +226,9 @@ public class EstateController {
 			entryService.updateByIds(entry);
 
 			logger.info("매물 수정 완료");
-		
-		
-		
 		return "redirect:/bm";
 	}
 	
-	 
 	 @RequestMapping(value="bm", method=RequestMethod.GET)
 	 public String bm(Model model, HttpSession session,Agency agency) {
 		logger.info("매니저 페이저 진입 / 매물 목록 출력 완료  ");

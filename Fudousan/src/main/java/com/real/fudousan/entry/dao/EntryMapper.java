@@ -18,4 +18,6 @@ public interface EntryMapper {
 	
 	//수정
 	  public int updateByIds(Entry entry);
+	  
+	  public Entry listEntry(int estateId);
 }

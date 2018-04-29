@@ -154,11 +154,7 @@
               <label for="inputPrefecture">가격</label>
               <input type="text" class="form-control" id="inputPrefecture" placeholder=" 가격" name="price">
            </div>
-            
-            
-            
-            
-            
+
             <div class="form-group">
               <label for="inputRegion">地域名(지역이름)</label>
                <!-- Localname = 지역이름 -->

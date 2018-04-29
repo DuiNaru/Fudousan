@@ -90,8 +90,11 @@ public class JoinController {
 		agency.setAddressMain(main);
 		
 		logger.info("member 등록 시작");
+
 		boolean memberResult= false;
-		if (!file.isEmpty()) {
+
+		if (file != null && !file.isEmpty()) {
+
 			String savedFileName=FileService.saveFile(file, uploadPath, false);
 			member.setPicture(uploadPath+"/"+savedFileName);
 		}
