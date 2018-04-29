@@ -12,4 +12,5 @@ public interface AgencyMapper {
 
 	public List<Agency> agencyLocationPrint();
 
+	public List<Agency> selectByMemberId(int member);
 }

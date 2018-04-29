@@ -29,6 +29,17 @@ public class AgencyService {
 		return result;
 	}
 	
+	public List<Agency> viewAgencyByMemberId(int memberId) {
+		logger.info("viewAgencyByMemberId("+memberId+") Start");
+		
+		List<Agency> result = null;
+		
+		result = dao.selectByMemberId(memberId);
+		
+		logger.info("viewAgencyByMemberId("+memberId+") End");
+		return result;
+	}
+	
 	/**
 	 * 모든 중개사무소 가져오기
 	 * @return

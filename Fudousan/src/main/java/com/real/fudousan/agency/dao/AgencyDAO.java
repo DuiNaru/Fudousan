@@ -28,5 +28,12 @@ public interface AgencyDAO {
 	 * @return Agency List
 	 */
 	public List<Agency> agencyLocationPrint();
+	
+	/**
+	 * 해당 회원이 운영하는 모든 중개사 정보를 가져온다.
+	 * @param memberId
+	 * @return
+	 */
+	public List<Agency> selectByMemberId(int memberId);
 
 }
