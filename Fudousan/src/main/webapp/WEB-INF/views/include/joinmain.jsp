@@ -25,15 +25,12 @@
 					<p class="help-block" data-lang="10"></p>
 				</div>
 				
-				<div class="form-group">
+				<div class="form-group has-feedback">
 					<label for="InputEmail" data-lang="2"></label>
-					<input type="email" class="form-control" id="InputEmail" name="email" data-lang="2">
-					<a data-toggle="modal" href="#checkModal" class="btn btn-warning btn-lg">
-						<span class="glyphicon glyphicon-check"></span>   check
-					</a>
-					
-				</div>
-				
+					<input id="email" class="form-control" type="text" name="email" required="required"  data-lang="89">
+					<span class="glyphicon form-control-feedback"></span>
+				</div>				
+
 				<div class="form-group">
 					<label for="InputText" data-lang="11"></label>
 					<input type="text" class="form-control" id="userphone" name="phone" data-lang="12">

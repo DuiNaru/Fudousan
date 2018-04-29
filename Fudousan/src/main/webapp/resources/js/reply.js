@@ -8,8 +8,10 @@ $(function(){
 		type: "POST",
 		dataType: "json",
 		success : function(data){
+			var memberId = $('#memberId').val();
 			var str = "";
 			$(data).each(function(index, reply){
+
 				
 			str +=
 				'<div id="topBox'+reply.replyId+'">'+
@@ -29,13 +31,17 @@ $(function(){
 				'<strong >'+reply.member.email+'</strong><br><span class="text-muted" >'+changeSecond(reply.creDate)+'</span>'+
 				'</div>'+
 				'<div class="panel-body">'+
-				'<p id="textBox'+reply.replyId+'">'+reply.text+'</p>'+
+				'<p id="textBox'+reply.replyId+'">'+reply.text+'</p>';
+			
+			if (reply.member.memberId == memberId) {
+				str +=
 				'<hr>'+
 				'<div>'+
 				'<input type="button" class="btn btn-info" value="Update" onclick="updateReply('+reply.replyId+')">'+
 				'&nbsp;'+
-				'<input type="button" class="btn btn-warning delete" value="Delete" onclick="deleteReply('+reply.replyId+')">'+
-				'</div>'+
+				'<input type="button" class="btn btn-warning delete" value="Delete" onclick="deleteReply('+reply.replyId+')">';
+			}	
+			str+='</div>'+
 				'</div>'+
 				'</div><!-- /panel panel-default -->'+
 				'</div><!-- /col-sm-5 -->'
@@ -123,7 +129,7 @@ $(function(){
 });
 
 function deleteReply(replyId){
-	console.log("delete Reply");
+	
 	$.ajax({
 		url: "../deleteReply",
 		type: "POST",
@@ -139,7 +145,7 @@ function deleteReply(replyId){
 }
 
 function updateReply(replyId){
-	console.log("update Reply");
+	
 	$('#textBox'+replyId).after(
 			'<div id="updateDiv'+replyId+'">'
 			+'<input type="text" id="updateBox'+replyId+'" class="form-control" placeholder="input your new update texts">'
@@ -155,7 +161,7 @@ function updateReply(replyId){
 }
 
 function okButton(replyId){
-	console.log( $('#updateBox'+replyId).val());
+	
 	$.ajax({
 		url: "../updateReply",
 		type: "POST",
@@ -165,7 +171,7 @@ function okButton(replyId){
 		},
 		dataType: "json",
 		success : function(reply){
-			console.log(reply);
+			
 			$('#updateDiv'+replyId).remove();
 			$('#textBox'+replyId).html(reply.text);	
 		} 

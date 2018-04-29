@@ -75,7 +75,7 @@ public class JoinController {
 			// result가 false이면 
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberResult);
-			return "redirect:join/join";
+			return "redirect:join";
 		}	
 	}
 		
@@ -112,7 +112,7 @@ public class JoinController {
 			// result가 false이면 
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberResult);
-			return "redirect:join/agencyjoin";
+			return "redirect:agencyjoin";
 		}	
 	}
 	

@@ -19,9 +19,7 @@
 
 </head>
 <body>
-	<!-- email modal  -->
- 	<%@include file="/WEB-INF/views/include/emailmodal.jsp" %>
-		
+
 	<!-- 3d design modal  -->
  	<%@include file="/WEB-INF/views/include/3ddesignmodal.jsp" %>
  	
@@ -55,7 +53,7 @@
 	</script>
 	<script src="../resources/js/infiniteScrollPagingAjax.js"></script>    
     <script src="../resources/js/estateFavorite.js"></script>    
-    <script src="../resources/js/emailmodal.js"></script>
+    
     <!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>
 	<script src="../resources/js/translation.js"></script>
