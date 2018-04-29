@@ -222,15 +222,15 @@
 			TEXTURE_TYPE cf
 		on
 			c.TEXTURE_TYPE_ID = cf.TEXTURE_TYPE_ID
-		join
+		left outer join
 			ESTATE
 		on
 			room.ESTATE_ID = estate.ESTATE_ID
-		join
+		left outer join
 			MunicipalityCode
 		on
 			estate.MunicipalityCode_ID = municipalitycode.MunicipalityCode_ID
-		join
+		left outer join
 			TRANS_TYPE
 		on
 			estate.TRANS_TYPE_ID = trans_type.TRANS_TYPE_ID
