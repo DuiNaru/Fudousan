@@ -84,12 +84,13 @@ public class AdviceController {
 		return result;
 	}
 	
+	@ResponseBody
 	@RequestMapping(value = "helpCall", method = RequestMethod.GET)
-	 public String mailSending(HttpServletRequest request, HttpSession session, int roomId) {
+	 public void mailSending(HttpServletRequest request, HttpSession session, int roomId, String email) {
 		   
 		logger.info("메일 전송 시작");
 		  String setfrom = "2017scit@gmail.com";         
-		    String tomail  = request.getParameter("tomail");     // 받는 사람 이메일
+		    String tomail  = email;     // 받는 사람 이메일
 		    String title   = "fudousan에서 요청 메일이 왔습니다";     // 제목
 		    String content =  session.getAttribute("loginEmail") + "님이 요청을 보냈습니다."+ " 이동하기 > http://localhost:8888/fudousan/" ;     // 내용
 		    try {
@@ -147,7 +148,6 @@ public class AdviceController {
 		      System.out.println(e);
 		    }
 		    logger.info("메일 전송 성공");
-		    return "redirect:/";
 	}
 	
 }
