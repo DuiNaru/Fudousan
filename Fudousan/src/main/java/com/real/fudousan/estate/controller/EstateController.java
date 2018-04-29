@@ -78,6 +78,7 @@ public class EstateController {
 		estate.setCoverageratio(coverageratio);
 		estate.setFloorarearatio(floorarearatio);
 		estate.setAddress(address);
+		estate.setAddress(estate.getPrefecture()+estate.getMunicipality()+estate.getDistrictname()+estate.getAddress());
 		
 		estate.setEstateX(estate.getEstateX());
 		estate.setEstateY(estate.getEstateY());
@@ -206,7 +207,7 @@ public class EstateController {
 			
 			System.out.println(price);
 			System.out.println("estate2 = " +   estate);
-			
+				
 			
 			estateService.updateByIds(estate);
 			System.out.println("여기까지 1");
