@@ -10,4 +10,5 @@ public interface ReplyMapper {
 	public boolean deleteReply(int replyId);
 	public Reply selectOne(int replyId);
 	public int updateReply(Reply reply);
+	public List<Reply>selectReplyEstate(int estateId);
 }

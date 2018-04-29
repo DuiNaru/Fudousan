@@ -53,5 +53,12 @@ public class ReplyService {
 		logger.info("update Reply End - service");
 		return result;
 	};
+	
+	public List<Reply>selectReplyEstate(int estateId){
+		logger.info("selectReplyEstate Start - service");
+		List<Reply> result = dao.selectReplyEstate(estateId);
+		logger.info("selectReplyEstate End - service");
+		return result;
+	}
 
 }

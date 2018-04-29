@@ -52,18 +52,19 @@ public class JoinController {
 		System.out.println(member);
 		logger.debug("file : "+file);
 		if (designer == 0) {
-			if (!file.isEmpty()) {
+			if (file != null && !file.isEmpty()) {
 				String savedFileName=FileService.saveFile(file, uploadPath, false);
 				member.setPicture(uploadPath+"/"+savedFileName);
-				memberResult = service.registerMember(member, file);
+				
 			}
+			memberResult = service.registerMember(member, file);
 			
 		} else if(designer == 1) {
-			if (!file.isEmpty()) {
+			if (file != null && !file.isEmpty()) {
 				String savedFileName=FileService.saveFile(file, uploadPath, false);
 				member.setPicture(uploadPath+"/"+savedFileName);
-				memberResult = service.registerMember(member, file);
 			}
+			memberResult = service.registerMember(member, file);
 		}
 		if (memberResult) {
 			// result가 true이면 

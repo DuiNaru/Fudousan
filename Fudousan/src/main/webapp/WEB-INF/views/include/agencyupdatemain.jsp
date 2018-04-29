@@ -9,7 +9,7 @@
           <h1>공인중개업자 회원정보 수정 <small>Agency basic update form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="modifyAgency" method="post"  enctype="multipart/form-data">
+          <form role="form" action="modifyAgency" method="post"  enctype="multipart/form-data" onsubmit="return formsubmit()">
              <div class="form-group">
 	              <label for="InputName">name</label>
 	              <input type="text" class="form-control" id="InputName" placeholder="이름" name="memberName" value="${agency.member.memberName}" required="required">
@@ -34,7 +34,7 @@
 	            
 				<div class="input-group">
 				     <label for="InputText">Member Introduce</label>
-				    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="membertext">${agency.member.text}</textarea>     
+				    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="membertext">${agency.member.text}</textarea>   
 				</div>
 			
 				<div class="form-group">
@@ -42,11 +42,11 @@
 				    <c:if test="${!empty agency.member.picture}">
 				    	<img class="col-sm-12" src="${agency.member.picture}">
 				    </c:if>
-					<div class="input-group input-file" name="Fichier1">
+					<div class="input-group input-file" name="file">
 						<span class="input-group-btn">
 			        		<button class="btn btn-default btn-choose" type="button">선택</button>
 			    		</span>
-			    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요'  name="picture" />
+			    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요'  name="picture" value="${member.picture }"/>
 			    		<span class="input-group-btn">
 			       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
 			    		</span>
@@ -180,28 +180,47 @@
             
              <div class="form-group">
               <label for="InputText">Address middle</label>
+<<<<<<< HEAD
               <input type="text" class="form-control" id="agencyaddressmiddle" placeholder="주소(市区町村名)를 입력해 주세요" name="addressMiddle" value="${agency.addressMiddle}">
+=======
+              <input type="text" class="form-control" id="agencyaddressmiddle" placeholder="주소(市区町村名)를 입력해 주세요" name="addressMiddle" value="${agency.addressMiddle }">
+>>>>>>> 5924fd75563cbe409e034cc3fc3369b191fe9e07
             </div>
             
              <div class="form-group">
               <label for="InputText">Address small</label>
+<<<<<<< HEAD
               <input type="text" class="form-control" id="agencyaddresssmail" placeholder="주소(地区名)를입력해 주세요"  name="addressSmall" value="${agency.addressSmall}">
+=======
+              <input type="text" class="form-control" id="agencyaddresssmall" placeholder="주소(地区名)를입력해 주세요"  name="addressSmall" value="${agency.addressSmall }">
+>>>>>>> 5924fd75563cbe409e034cc3fc3369b191fe9e07
             </div>
             
              <div class="form-group">
               <label for="InputText">Address sub</label>
+<<<<<<< HEAD
               <input type="text" class="form-control" id="agencyaddresssub" placeholder="주소(詳細)를 입력해 주세요"  name="addressSub" value="${agency.addressSub}">
+=======
+              <input type="text" class="form-control" id="agencyaddresssub" placeholder="주소(詳細)를 입력해 주세요"  name="addressSub" value="${agency.addressSub }">
+>>>>>>> 5924fd75563cbe409e034cc3fc3369b191fe9e07
             </div>
             
 			<div class="input-group">
 			     <label for="InputText">Agency Introduce</label>
+<<<<<<< HEAD
 			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="중개소 소개를 입력해 주세요"  name="agencytext">${agency.text}</textarea>       
+=======
+			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="중개소 소개를 입력해 주세요"  name="text">${agency.text}</textarea>       
+>>>>>>> 5924fd75563cbe409e034cc3fc3369b191fe9e07
 			</div>
          
  			<br>
             <div class="form-group text-center">
               <button type="submit" class="btn btn-info">회원정보 수정<i class="fa fa-check spaceLeft"></i></button>
+<<<<<<< HEAD
               <button type="reset" class="btn btn-warning">회원정보 수정 취소<i class="fa fa-times spaceLeft"></i></button>
+=======
+>>>>>>> 5924fd75563cbe409e034cc3fc3369b191fe9e07
             </div>
             
           </form>

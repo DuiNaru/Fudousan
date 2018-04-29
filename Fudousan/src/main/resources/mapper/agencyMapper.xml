@@ -93,6 +93,18 @@
 			member_id = (SELECT member_id FROM member WHERE email = #{email})
 	</select>
 	
+	<select id="selectAgencyOne" parameterType="int" resultMap="agencyResultMap">
+		SELECT 
+			*
+		FROM 
+			agency
+		WHERE 
+			agency_id = #{agencyId}
+			
+	</select>
+	
+	
+	
 	<update id="updateConfirm">
 		UPDATE
 			agency

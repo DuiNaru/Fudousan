@@ -32,7 +32,7 @@ public class ReplyDAOOracle implements ReplyDAO {
 		logger.info("Insert Reply End - DAO Oracle");
 		return result;
 	}
-	
+	@Override
 	public List<Reply> selectReply(){
 		logger.info("Select Reply Start - DAO Oracle");
 		List<Reply> result = null; 
@@ -45,6 +45,7 @@ public class ReplyDAOOracle implements ReplyDAO {
 		logger.info("Select Reply End - DAO Oracle");
 		return result;
 	}
+	@Override
 	public boolean deleteReply(int replyId){
 		logger.info("Delete Reply Start - DAO Oracle");
 		boolean result = false; 
@@ -58,7 +59,7 @@ public class ReplyDAOOracle implements ReplyDAO {
 		logger.info("Delete Reply End - DAO Oracle");
 		return result; 
 	}
-	
+	@Override
 	public Reply selectOne(int replyId){
 		logger.info(" selectOne Start - DAO Oracle");
 		Reply  result = null; 
@@ -72,6 +73,7 @@ public class ReplyDAOOracle implements ReplyDAO {
 		logger.info(" selectOne End - DAO Oracle");
 		return result; 
 	}
+	@Override
 	public int updateReply(Reply reply){
 		logger.info(" update Reply Start - DAO Oracle");
 		int result = 0; 
@@ -83,6 +85,20 @@ public class ReplyDAOOracle implements ReplyDAO {
 		}
 		
 		logger.info(" update Reply End - DAO Oracle");
+		return result;
+	}
+	@Override
+	public List<Reply>selectReplyEstate(int estateId){
+		logger.info(" select Estate Reply Start - DAO Oracle");
+		List<Reply> result = null; 
+		try{
+			ReplyMapper replyMapper = sqlSession.getMapper(ReplyMapper.class);
+			result = replyMapper.selectReplyEstate(estateId);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		logger.info(" select Estate End - DAO Oracle");
 		return result;
 	}
 }

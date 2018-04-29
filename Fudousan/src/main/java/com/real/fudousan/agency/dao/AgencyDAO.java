@@ -36,4 +36,5 @@ public interface AgencyDAO {
 	 */
 	public List<Agency> selectByMemberId(int memberId);
 
+	public Agency selectAgencyOne(int agencyId);
 }

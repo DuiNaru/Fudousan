@@ -29,11 +29,15 @@ public class UpdateMemberController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UpdateMemberController.class);
 	public static final String uploadPath ="/memberfile";
+	
 	@Autowired
 	private MemberService service;
 	@Autowired
 	private AgencyService agencyService;
 
+	@Autowired
+	private AgencyService aService; 
+	
 	@RequestMapping(value="memberupdate", method=RequestMethod.GET)
 	public String memberupdate(String email, Model model){
 		logger.info("start memberupdate - controller");
@@ -48,6 +52,7 @@ public class UpdateMemberController {
 	}
 	
 	@RequestMapping(value="agencyupdate", method=RequestMethod.GET)
+<<<<<<< HEAD
 	public String agencyupdate(@ModelAttribute("loginId") int loginId, Model model){
 		logger.info("agencyupdate("+loginId+") Start");
 		
@@ -56,6 +61,27 @@ public class UpdateMemberController {
 		model.addAttribute("agency", agency.get(0));
 
 		logger.info("agencyupdate("+loginId+") End");
+=======
+	public String agencyupdate( Model model, HttpSession session){
+		logger.info("start agency update - controller");
+		String email=(String)session.getAttribute("loginEmail");
+		Member member= new Member();
+		member.setEmail(email);
+		Member result=service.selectMemberOne(member);
+		System.out.println(result);
+		System.out.println(result);
+		model.addAttribute("member", result);
+		
+		Agency agency = new Agency();
+		int agencyId=aService.selectAgencyId(email);
+		agency=aService.selectAgencyOne(agencyId);
+		System.out.println(agency);
+		
+		model.addAttribute("agency", agency);
+		
+		logger.info("end agency update - controller");
+
+>>>>>>> 5924fd75563cbe409e034cc3fc3369b191fe9e07
 		return "memberupdate/agencyupdate";
 	}
 	
@@ -132,6 +158,8 @@ public class UpdateMemberController {
 		agency.setAddressMain(main);
 		// set email address to member
 		member.setEmail(loginEmail);
+		System.out.println(file);
+		
 		logger.info("member 등록 시작");
 		if (file != null && !file.isEmpty()) {
 			// 검색 
@@ -164,7 +192,7 @@ public class UpdateMemberController {
 		else{
 			logger.info("회원 등록 실패");
 			model.addAttribute(memberUpdateResult);
-			return "redirect:/agencyupdate";
+			return "redirect:agencyupdate";
 		}
 	}
 	

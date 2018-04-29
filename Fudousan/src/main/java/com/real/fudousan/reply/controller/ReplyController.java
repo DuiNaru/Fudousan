@@ -91,5 +91,15 @@ public class ReplyController {
 		logger.info("update End - Controller");
 		return resultSelect;
 	};
+
+	@ResponseBody
+	@RequestMapping(value="selectReplyEstate", method=RequestMethod.POST)
+	public List<Reply> selectReplyEstate(int estateId){
+		logger.info("selectReplyEstate - Controller");
+		List<Reply> result = service.selectReplyEstate(estateId);
+		
+		logger.info("selectReplyEstate - Controller");
+		return result;
+	}
 	
 }
