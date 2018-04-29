@@ -73,7 +73,7 @@
 		if(realsayo){
 			var client = document.getElementById("client").value;
 			var accepter = document.getElementById("accepter").value;
-			location.href = "cancelAdvicedivue?customer="+client+"&interior="+accepter;
+			location.href = "cancelAdviceTrue?customer="+client+"&interior="+accepter;
 		}
 		return false;
 	}

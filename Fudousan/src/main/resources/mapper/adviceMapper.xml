@@ -15,7 +15,7 @@
 		<association property="room" column="room_id" javaType="com.real.fudousan.room.vo.Room" resultMap="com.real.fudousan.room.dao.RoomMapper.roomResultMap"/>
 	</resultMap>
 
-	<select id="selectByIdAndStatus" resultMap="adviceResultMapper">
+	<select id="selectByIdAndStatus" resultMap="adviceResultMapper" parameterType="int">
 		select
 			-- ADIVCE
 			advice.REQUEST_MEMBER_ID REQUEST_MEMBER_ID
@@ -260,14 +260,14 @@
 	(
 		REQUEST_MEMBER_ID, 		
 		REQUESTED_MEMBER_ID, 	
-		room_id,					
-		REQUEST_DATE, 			
+		room_id,
+		id,					
 		STATE 					
 	)VALUES(
 	#{requestMemberId}
 	,#{requestedMemberId}
 	,#{room.roomId}
-	,#{requestDate}
+	,#{id}
 	,#{state}
 	)
 </insert>
