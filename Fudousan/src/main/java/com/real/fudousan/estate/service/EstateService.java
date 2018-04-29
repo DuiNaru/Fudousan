@@ -111,15 +111,12 @@ public class EstateService {
 	 * @return
 	 */
 	public boolean modifyEstate(Estate estate) {
-		
-		
-		
-		
-		
+
 		return false;
 	}
+	
 	//매물 수정 페이지로 이동
-public boolean modifyEstatepage(Estate estate) {
+	 boolean modifyEstatepage(Estate estate) {
 		
 		return false;
 	}

@@ -145,14 +145,28 @@ AGENCY_ID
 )
 </insert>
 
-<!-- 
-<delete id="deleteEntry" parameterType="int">
-delete
-from Entry
-where ESTATE_ID and AGENCY_ID IN(SELECT AGENCY_ID FROM AGENCY where )
+<select id="listEntry" resultMap="EntryResultMap">
+select 
+	price
+from 
+	entry
+where
+ESTATE_ID =#{estate.estateId}
 
-</delete> -->
+</select>
 
+
+<update id="updateByIds" parameterType="Entry">
+update
+entry
+set
+price=#{price}
+where
+ESTATE_ID =#{estate.estateId}
+
+
+
+</update>
 <delete id="deleteEntry" parameterType="entry">
 delete
 from Entry

@@ -43,48 +43,21 @@ public class EntryService {
 	//public boolean addEntry(Entry entry) {
 		
 	public int addEntry(Entry entry) {
-	
-  /*  //중개소 주소 파싱  
-    String locationInfo = "municipality"+"districtname"+"address";
-   RestTemplate restTemplate = new RestTemplate();
-   String locationResult = restTemplate.getForObject("https://maps.googleapis.com/maps/api/geocode/json?address={a}&key=AIzaSyAlZMVBrvQGWP2QTDvf5ur7HrtEC3xlOf0", String.class, locationInfo);
-   System.out.println("locationInfo:::"+locationResult);
-   
-   
-   try {
-      
-      JSONParser jsonParser = new JSONParser();
-      JSONObject jsonObject = (JSONObject) jsonParser.parse(locationResult);
-      JSONArray  locationArray = (JSONArray) jsonObject.get("results");
-      for (int i = 0; i < locationArray.size(); i++) {
-         JSONObject  geometry= (JSONObject)locationArray.get(i);
-         JSONObject geometryLocation=(JSONObject)geometry.get("geometry");
-         JSONObject location2 = (JSONObject)geometryLocation.get("location");
-         System.out.println("geometryLocation: "+ geometryLocation);
-      
-         String lat2 = location2.get("lat").toString();
-         String lng2 = location2.get("lng").toString();
-    
-         entry.getEstate().setEstateX(Double.parseDouble(lat2));
-         entry.getEstate().setEstateY(Double.parseDouble(lng2));
-         
-         System.out.println("서비스 " + entry);
-      }
-      
-   } catch (Exception e) {
-      // TODO: handle exception
-   }
-    */
-
 	int result = dao.insertEntry(entry);
 	System.out.println(entry);
 		return result;
 	}
-	
+	//업데이트
 	public int updateByIds(Entry entry){
 		int result = dao.updateByIds(entry);
 		return result;
 		
+	}
+	
+	//리스트
+	public Entry listEntry(int estateId){
+		Entry result = dao.listEntry(estateId);
+		return result;
 	}
 	
 	/**

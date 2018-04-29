@@ -350,10 +350,54 @@ SEQ_ESTATE_ID.nextval
 		estate_id ASC
 </select>
 
+
 <update id="updateByIds" parameterType="estate" >
+UPDATE ESTATE
+SET	
+	TRANS_TYPE_ID=#{transType.transTypeId}
+	,MunicipalityCode_ID=#{municipalitycode.municipalitycodeId}
+	,PREFECTURE=#{prefecture}
+	,MUNICIPALITY=#{municipality}
+	,DISTRICTNAME=#{districtname}
+	,ADDRESS=#{address}
+	,NEARESTSTATION=#{neareststation}
+	,TIMETONEARESTSTATION=#{timetoneareststation}
+	,TRADEPRICE=#{tradeprice}
+	,PRICEPERUNIT=#{priceperunit}
+	,FLOORPLAN=#{floorplan}
+	,AREA=#{area}
+	,UNITPRICE=#{unitprice}
+	,TOTALFLOORAREA=#{totalfloorarea}
+	,LANDSHAPE=#{landshape}
+	,ESTATE_NAME=#{estateName}
+	,BUILDINGYEAR=#{buildingyear}
+	,STRUCTURE=#{structure}
+	,USE=#{use}
+	,COVERAGERATIO=#{coverageratio}
+	,FLOORAREARATIO=#{floorarearatio}
+	
+	WHERE
+	 ESTATE_ID = #{estateId}
+
+</update>
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <update id="updateByIds" parameterType="estate" >
 UPDATE ESTATE
 SET	
 	
@@ -384,7 +428,7 @@ SET
 	 ESTATE_ID = #{ESTATE_ID}
 
 </update>
-
+ -->
 
 
 

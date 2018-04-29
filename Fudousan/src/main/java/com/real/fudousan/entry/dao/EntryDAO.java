@@ -11,11 +11,12 @@ public interface EntryDAO {
 	//삭제
 	public int deleteEntry(Entry entry);
 	
-	//수정 페이지로 이동
+	//수정 페이지로 이동?
 	public int modifyEstatePage(Entry entry);
 	
 	public int updateByIds(Entry entry);
-	
+	//수정 페이지 에서 가격불러올때 
+	public Entry listEntry(int estateId);
 	
 	
 }
