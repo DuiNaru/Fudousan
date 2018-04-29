@@ -158,7 +158,7 @@ public class RoomController {
 	
 	//작업중
 	@RequestMapping(value="roomPage", method=RequestMethod.GET)
-	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model,Integer itemTypeId ) {
+	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model ) {
 		logger.info("roomPage("+loginId+", "+roomId+") Start");
 		
 
@@ -178,7 +178,6 @@ public class RoomController {
 			
 			model.addAttribute("itemTypeList", itemService.getItemTypeList());
 		}
-		System.out.println("dd");
 		logger.info("roomPage("+loginId+", "+roomId+") End");
 		return "room/room";
 		//return "itemlist";

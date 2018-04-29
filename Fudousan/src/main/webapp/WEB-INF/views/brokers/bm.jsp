@@ -40,6 +40,9 @@
 	<!-- login.js -->
 	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
 	
+	<!-- bm.js -->
+	<script src="<c:url value="/resources/js/bm.js"></c:url>"></script>
+	
 
 	
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

@@ -15,8 +15,18 @@
 <script src="<c:url value="/resources/js/dat.gui.js"/>"></script>
 <script src="<c:url value="/resources/js/stats.js"/>"></script>
 <script src="<c:url value="/resources/js/socket.io.js"/>"></script>
-<script>
- var socket = io('http://localhost:7000');
+<script type="text/javascript">
+	var roomId = ${roomId};
+	var originalWalls = [];
+	var originalConnectors = [];
+	<c:if test="${!empty wallsAndConnectors}">
+		<c:forEach var="wall" items="${wallsAndConnectors.walls}" >
+			originalWalls.push({startPoint:${wall.roomWallConnector1.connectorId}, endPoint:${wall.roomWallConnector2.connectorId}});
+		</c:forEach>
+		<c:forEach var="connector" items="${wallsAndConnectors.connectors}" >
+			originalConnectors.push(new THREE.Vector3(${connector.x}, ${connector.y}, 0));
+		</c:forEach>
+	</c:if>
 </script>
 <style type="text/css">
 canvas {
@@ -30,24 +40,13 @@ canvas {
 	left: 0px;
 	z-index: 1;
 }
+.left-menu menu {
+	list-style: none;
+}
 </style>
 </head>
 <body>
-<div class="left-menu">
-	<script type="text/javascript">
-		var roomId = ${roomId};
-		var originalWalls = [];
-		var originalConnectors = [];
-		<c:if test="${!empty wallsAndConnectors}">
-			<c:forEach var="wall" items="${wallsAndConnectors.walls}" >
-				originalWalls.push({startPoint:${wall.roomWallConnector1.connectorId}, endPoint:${wall.roomWallConnector2.connectorId}});
-			</c:forEach>
-			<c:forEach var="connector" items="${wallsAndConnectors.connectors}" >
-				originalConnectors.push(new THREE.Vector3(${connector.x}, ${connector.y}, 0));
-			</c:forEach>
-		</c:if>
-	</script>
-<script type="text/javascript" src="<c:url value="/resources/js/wallPage.js"/>"></script>
+<div class="left-menu" oncontextmenu='return false' onselectstart='return false'>
 	<menu>
 		<li><input type="button" class="btn btn-default" value="저장" onclick="save()"></li>
 		<li><input id="btn_back" type="button" class="btn btn-default" value="뒤로가기"></li>
@@ -58,5 +57,6 @@ canvas {
 	</menu>
 </div>
 
+<script type="text/javascript" src="<c:url value="/resources/js/wallPage.js"/>"></script>
 </body>
 </html>

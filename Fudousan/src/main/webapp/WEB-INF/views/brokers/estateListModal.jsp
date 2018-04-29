@@ -20,10 +20,10 @@
 						<c:forEach var="estate" items="${select }">
 							<tr>
 								<td>${estate.estateName}</td>
-								<td>${estate.address}</td>
+								<td>${estate.region}${estate.prefecture}${estate.municipality}${estate.districtname}${estate.address}</td>
 								<td>
 									<c:if test="${empty estate.baseRoomId}"><a class="btn btn-default" href="./newBaseRoom?estateId=${estate.estateId}">Create</a></c:if>
-									<c:if test="${!empty estate.baseRoomId}">${estate.baseRoomId}</c:if>
+									<c:if test="${!empty estate.baseRoomId}"><a class="btn btn-default" href="./wall/wallPage?roomId=${estate.baseRoomId}">Modify</a></c:if>
 								</td>
 							</tr>
 						</c:forEach> 
