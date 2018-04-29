@@ -58,6 +58,10 @@ var manager;
 initLoadingManager();
 // 텍스쳐 로더
 var textureLoader = new THREE.TextureLoader(manager);
+// 마우스 올렸을때 투명도
+var onMouseOpacity = 0.3;
+// 모든 벽의 점들
+var allDots = [];
 
 $(function() {
 	//초기화
@@ -87,9 +91,9 @@ function init() {
 	scene.add( new THREE.AmbientLight( 0x505050 ) );
 
 	// DirectionalLight(직선 형태의 빛) 추가
-	var directionalLight = new THREE.DirectionalLight(0xffeedd);
+	var directionalLight = new THREE.HemisphereLight(0xffffff);
 	// 빛의 시작 점
-	directionalLight.position.set(0, 0, 2);
+	directionalLight.position.set(0, earthSize, earthSize/2);
 	// 빛을 장면에 추가
 	scene.add(directionalLight);
 
@@ -415,24 +419,41 @@ function onDocumentMouseMove(event) {
 		// 제자리 그대로면 종료
 		return;
 	}
-
-	if (curSelected != null && !isMouseUp && !controls.enabled) {
-		// 드래그 중인 아이템이 있으면 지면에 맞게 움직인다.
-		raycaster.setFromCamera(mouse, camera);
-		var intersects = raycaster.intersectObjects([roomFloor]);
-		if (intersects.length > 0) {
+	
+	// 벽 투명도 초기화
+	for ( var i = 0; i < walls.children.length; i++ ) {
+		for ( var j = 0; j < walls.children[i].material.length; j++ ) {
+			walls.children[i].material[j].opacity = 1;
+		}
+	}
+	
+	raycaster.setFromCamera(mouse, camera);
+	var intersects = raycaster.intersectObjects([roomFloor]);
+	if (intersects.length > 0) {
+		if (curSelected != null && !isMouseUp && !controls.enabled) {
+			// 드래그 중인 아이템이 있으면 지면에 맞게 움직인다.
 			var x = curSelected.roomItem.item.itemX;
 			var y = curSelected.roomItem.item.itemY;
 			var z = curSelected.roomItem.item.itemZ;
-
+	
 			// 원점 보정해서 움직임
 			move(curSelected, intersects[0].point.x+x, intersects[0].point.y+y, intersects[0].point.z+z, false);
 			
 			// 움직이고 나서 움직였음을 표시한다.
 			curMoving = true;
 		}
+
+		// 벽 반 투명
+		raycaster.setFromCamera(mouse, camera);
+		var intersects = raycaster.intersectObjects(walls.children, true);
+		if (intersects.length > 0) {
+			for ( var i = 0; i < intersects[0].object.material.length; i++ ) {
+			    intersects[0].object.material[i].opacity = onMouseOpacity;
+			    //intersects[0].object.material[i].transparent = true;
+			    //intersects[0].object.material[i].needsUpdate = true;
+			}
+		}
 	}
-	
 }
 
 /**
@@ -519,7 +540,9 @@ function drawWall() {
 		
 		//var material = new THREE.MeshFaceMaterial( { vertexColors: THREE.FaceColors, overdraw: 0.5 } );
 		
-		var frontMat = new THREE.MeshBasicMaterial();
+		var frontMat = new THREE.MeshBasicMaterial({
+			transparent : true
+		});
 		var frontTexture;
 		if (originalWalls[i].frontTextureURL != "" ) {
 			frontTexture = textureLoader.load(originalWalls[i].frontTextureURL, function ( texture ) {
@@ -537,7 +560,9 @@ function drawWall() {
 			frontMat.needsUpdate = true;
 		}
 		
-		var backMat = new THREE.MeshBasicMaterial();
+		var backMat = new THREE.MeshBasicMaterial({
+			transparent : true
+		});
 		var backTexture;
 		if (originalWalls[i].backTextureURL != "" ) {
 			backTexture = textureLoader.load(originalWalls[i].backTextureURL, function ( texture ) {
@@ -640,7 +665,7 @@ function drawFloor(side) {
 		if(!flag1) con.push(c1);
 		if(!flag2) con.push(c2);
 	}
-	
+	allDots = con;
 	// 방문 기록
 	var visit = [];
 	// 인접 행렬 생성
