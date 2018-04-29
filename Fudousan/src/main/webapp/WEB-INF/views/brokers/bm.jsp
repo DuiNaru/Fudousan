@@ -14,19 +14,6 @@
     <!-- 부트스트랩 -->
 	<link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
 	<link rel="stylesheet" href="<c:url value="/resources/css/templete.css"/>" >
-	
-<body>
-	<!-- login modal  -->
- 	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
- 	
-	<!-- header -->
-	<%@include file="/WEB-INF/views/include/header.jsp" %>
-	
-	<!-- main -->
-	<%@include file="/WEB-INF/views/include/agencypagemain.jsp" %>
-
-	<!-- footer -->
-	<%@include file="/WEB-INF/views/include/footer.jsp" %>
 
 	<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요합니다) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -37,7 +24,8 @@
 	<!-- login.js -->
 	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
 	
-
+	<!-- bm.js -->
+	<script src="<c:url value="/resources/js/bm.js"></c:url>"></script>
 	
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,5 +37,22 @@
 	<script src="<c:url value="resources/js/cookie.js"/>"></script>
 	<script src="<c:url value="resources/js/translation.js"/>"></script>
 	
+<body>
+	<!-- login modal  -->
+ 	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
+ 	
+	<!-- estate list modal  -->
+ 	<%@include file="estateListModal.jsp" %> 
+ 	
+	<!-- header -->
+	<%@include file="/WEB-INF/views/include/header.jsp" %>
+	
+	<!-- main -->
+	<%@include file="/WEB-INF/views/include/agencypagemain.jsp" %>
+
+	<!-- footer -->
+	<%@include file="/WEB-INF/views/include/footer.jsp" %>
+</body>
+
 </html>
 

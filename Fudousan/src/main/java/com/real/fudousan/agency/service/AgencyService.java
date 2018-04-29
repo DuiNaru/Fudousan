@@ -98,6 +98,16 @@ public class AgencyService {
 		return result; 
 	}
 	
+
+	public Agency selectAgencyOne(int agencyId){
+		logger.info("selectAgencyOne Start");
+		
+		Agency result = null;
+		result = dao.selectAgencyOne(agencyId);
+		
+		logger.info("selectAgencyOne End");
+		return result; 
+	}
 	
 
 }

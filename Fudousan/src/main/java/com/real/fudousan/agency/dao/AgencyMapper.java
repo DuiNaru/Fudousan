@@ -11,5 +11,6 @@ public interface AgencyMapper {
 	public int selectAgencyId(String email);
 
 	public List<Agency> agencyLocationPrint();
-
+	
+	public Agency selectAgencyOne(int agencyId);
 }

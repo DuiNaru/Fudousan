@@ -56,6 +56,8 @@ public class HomeController {
 
     	List<Estate> Eresult = null;
 		List<String> ElocationList = new ArrayList<>();
+		List<Integer> estateIdList = new ArrayList<>();
+		List<String> addList = new ArrayList<>();
     	Eresult = eService.selectEsatesLocation();
     	
     	for (Estate estate : Eresult) {
@@ -81,11 +83,13 @@ public class HomeController {
 			estateLocation.append("']");
 			
 			ElocationList.add(estateLocation.toString());
+			estateIdList.add(estate.getEstateId());
+			addList.add(estate.getAddress());
 		}
-    	
+    	model.addAttribute("estateIdList", estateIdList );
     	model.addAttribute("locationList", locationList);
 		model.addAttribute("elocationList", ElocationList);
-
+		model.addAttribute("addList", addList);
     	logger.info("Home End");
     	return "home";
     }

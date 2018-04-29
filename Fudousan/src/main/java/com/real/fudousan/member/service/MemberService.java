@@ -64,10 +64,7 @@ public class MemberService {
 			member.setPermission(p);
 			
 			int result = 0; 
-			if ((result = dao.insertMember(member))>= -1 && file != null) {
-				FileService.saveFile(file, memberFileBaseDirectory + result, true);
-			}
-			
+			result =dao.insertMember(member);
 			if (result == 1) {
 				// insert success
 				return true; 
@@ -120,9 +117,7 @@ public class MemberService {
 		member.setPermission(p);
 		
 		int result = 0; 
-		/*if ((result = dao.insertAgencyMember(member))>= -1 && file != null) {
-			FileService.saveFile(file, memberFileBaseDirectory + result, true);
-		}*/
+
 		result = dao.insertAgencyMember(member);
 		
 		if (result == 1) {
@@ -132,7 +127,6 @@ public class MemberService {
 		
 		}
 		else{			
-			
 			// insert fail 
 			logger.info("end agency member - service");
 			return false; 
@@ -234,23 +228,17 @@ public class MemberService {
 			
 			Permission p= new Permission(1, "Member");
 			member.setPermission(p);
+			result = dao.updateMember(member);
 			System.out.println(member);
-			if ((result = dao.updateMember(member))>= -1 && file != null) {
-				
-				FileService.saveFile(file, memberFileBaseDirectory + result, true);
-				
-			}
+			
 			
 		} else if(designer == 1){
 			
 			Permission p= new Permission(2, "Interior");
 			member.setPermission(p);
+			result = dao.updateMember(member);
 			System.out.println(member);
-			if ((result = dao.updateInterior(member))>= -1 && file != null) {
-				
-				FileService.saveFile(file, memberFileBaseDirectory + result, true);
-				
-			}
+		
 		}
 	
 		if (result == 1) {
