@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.real.fudousan.agency.service.AgencyService;
 import com.real.fudousan.agency.vo.Agency;
@@ -113,7 +114,6 @@ public class EstateController {
 	@RequestMapping(value="deleteEntry" ,method=RequestMethod.GET)
 	public String deleteEntry(Model model, HttpSession session, Estate estate, int agencyId , int estateId, Agency Select){
 		
-		
 		Entry entry = new Entry();
 		
 		Agency agency = new Agency();
@@ -124,19 +124,13 @@ public class EstateController {
 		deleteEstate.setEstateId(estateId);
 		entry.setEstate(deleteEstate);
 		
-		
 		System.out.println("entry : " + entry);
-		
 		entryService.deleteEntry(entry);
 		
 			
 		return "redirect:bm";
 	}
-	
 
-	
-	
-	
 	 @RequestMapping(value="okhtest", method=RequestMethod.GET)
 	    public String prototype() {
 		 logger.info("okh 테스트 페이지 이동");
@@ -277,8 +271,17 @@ public class EstateController {
 		 return "estate/detailedinfomation";
 	}
 
-	 
-	 
-	 
-	 
+	@ResponseBody
+	@RequestMapping(value="codecheck", method=RequestMethod.GET)
+	public String codeCheck(int municipalitycodeId){
+		String result = null;
+		logger.info("서비스 지역 여부 확인 "); 
+		System.out.println(municipalitycodeId);
+	
+		result = estateService.codecheck(municipalitycodeId);
+		
+		System.out.println(result);
+		
+		return result;
+	}
 }

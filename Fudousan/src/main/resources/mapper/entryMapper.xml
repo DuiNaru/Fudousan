@@ -12,6 +12,8 @@
 		<association property="estate" column="ES_ESTATE_ID" javaType="com.real.fudousan.estate.vo.Estate" resultMap="com.real.fudousan.estate.dao.EstateMapper.estateResultMap" columnPrefix="ES_" />
 	</resultMap>
 
+
+
 	<sql id="SELECT_ENTRY_SQL">
 		SELECT
 			entry.cre_date						CRE_DATE
@@ -156,6 +158,7 @@ ESTATE_ID =#{estate.estateId}
 </select>
 
 
+
 <update id="updateByIds" parameterType="Entry">
 update
 entry
@@ -173,5 +176,9 @@ from Entry
 where ESTATE_ID =#{estate.estateId} and AGENCY_ID =#{agency.agencyId}
 
 </delete>
+
+
+
+
 
 </mapper>

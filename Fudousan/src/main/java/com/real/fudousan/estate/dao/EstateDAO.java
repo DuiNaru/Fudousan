@@ -11,8 +11,6 @@ public interface EstateDAO {
 
 
 	//리스트 뿌려주는거
-	/*public List<Estate> select(Set<Integer> estateIds);*/
-	
 	public List<Estate> select(String email);
 	
 	
@@ -27,13 +25,24 @@ public interface EstateDAO {
 	public int updateByIds(Estate estate);
 	
 	/* 목록 기능 테스트*/
-
 	public List<Estate> select(Set<Integer> estateIds);
 
 
 	//가져올때(수정페이지로 이동)
 	public Estate viewEstate(int estateId);
 
+	//코드 여부
+	public String codecheck(int municipalitycodeId);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	// INSERT TRANS 
