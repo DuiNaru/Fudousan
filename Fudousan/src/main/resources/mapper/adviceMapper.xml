@@ -6,8 +6,8 @@
 <mapper namespace="com.real.fudousan.advice.dao.AdviceMapper">
 
 	<resultMap type="advice" id="adviceResultMapper">
-		<id property="requestMemberId" column="REQUEST_MEMBER_ID"/>
-		<id property="requestedMemberId" column="REQUESTED_MEMBER_ID"/>
+		<result property="requestMemberId" column="REQUEST_MEMBER_ID"/>
+		<result property="requestedMemberId" column="REQUESTED_MEMBER_ID"/>
 		<result property="creDate" column="ADVICE_CRE_DATE"/>
 		<result property="requestDate" column="REQUEST_DATE"/>
 		<result property="state" column="STATE"/>
@@ -132,7 +132,7 @@
 	</select>
 
 	<select id="reverseCall" resultMap="adviceResultMapper" parameterType="int">
-			<include refid="SELECT_ADVICE_SQL"></include>
+		<include refid="SELECT_ADVICE_SQL"></include>
 		where REQUESTED_MEMBER_ID = #{requestedMemberId} and STATE = 0
 	</select>
 	
