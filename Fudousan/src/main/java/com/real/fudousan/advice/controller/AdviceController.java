@@ -1,5 +1,6 @@
 package com.real.fudousan.advice.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.mail.internet.MimeMessage;
@@ -125,7 +126,10 @@ public class AdviceController {
 		      logger.info("6★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      advice.setRoom(room);
 		      logger.info("7★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
-		      
+		      Date date = new Date();
+		      String ddd = date.toString();
+		      advice.setId(ddd);
+		      logger.info("8★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      boolean abc = Aservice.requestAdvice(advice);
 		      logger.info("이 요청은 성공적입니다.");
 		      
