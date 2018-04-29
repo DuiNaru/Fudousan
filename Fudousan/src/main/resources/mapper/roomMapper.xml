@@ -123,7 +123,7 @@
 	<select id="searchRoomInfo" resultMap="roomResultMap">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
-			estate.ESTATE_NAME Like '%'||#{0}||'%' and room.MEMBER_ID = #{1} and room.DEL_DATE IS NULL
+			room.ROOM_TITLE Like '%'||#{0}||'%' and room.MEMBER_ID = #{1} and room.DEL_DATE IS NULL
 	</select>
 
 	<select id="allMyRoom" resultMap="roomResultMap" parameterType="int">

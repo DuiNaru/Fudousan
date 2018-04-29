@@ -1,6 +1,8 @@
 package com.real.fudousan.favorite.controller;
 
 import org.springframework.stereotype.Controller;
+
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -32,20 +34,25 @@ public class FavoriteController {
 	@Autowired
 	private AdviceService Aservice;
 	
+	@ResponseBody
 	@RequestMapping(value="searchFavorite",method=RequestMethod.GET)
-	public String saerchFavorite(Model model,int memberId, String favoSearch){
+	public List<Favorite> saerchFavorite(Model model,int memberId, String favoSearch){
 		List<Favorite> seacrhFavorite = null;
 		seacrhFavorite = service.showSearchFavorite(memberId, favoSearch);
 		logger.info("찜하기 매물의 검색값  : "+favoSearch);
 		model.addAttribute("flist",seacrhFavorite);
 		
-		List<Room> allRooms = Rservice.showAllRoom(memberId);
+		/*List<Room> allRooms = Rservice.showAllRoom(memberId);
         List<Advice> alist = Aservice.getRequestList(memberId, Advice.REQUEST);
         List<Advice> rclist = Aservice.getRequestList(memberId, Advice.CONFIRMED);
         model.addAttribute("rlist",allRooms);
         model.addAttribute("alist", alist);
         model.addAttribute("rclist", rclist);
-		return "user/mypagecustomer";
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("rlist", allRooms);
+        map.put("alist", alist);
+        map.put("rclist", rclist);*/
+		return seacrhFavorite;
 	}
 	
 	@ResponseBody
