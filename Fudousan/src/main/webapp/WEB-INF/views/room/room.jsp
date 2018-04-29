@@ -166,6 +166,7 @@
 				}
 			});
 		}
+		
 		function getItemList() {
 			var itemList=$("#itemList").val();
 			
@@ -298,10 +299,11 @@
 				
 <input type="hidden" id="userId" value="${sessionScope.loginId}">
 <input type="hidden" id="userName" value="${sessionScope.what_your_name}">
+
 	<!-- 위쪽 메뉴 -->
 	<div class="top-menu">
-		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button>
-		<video id="localCam" autoplay="autoplay" muted="muted"></video>
+		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button><br>
+		<video id="localCam" autoplay="autoplay" muted="muted"></video><br>
 		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
 	</div>
 	
