@@ -12,20 +12,23 @@
 						 //서버로 부터 받아오는 타입
 						dataType : "json",
 						success : function(obj){
-							var oMemberId = obj.memberId
-							var memberId = $('#memberId').val();
-							var oEstateId = obj.estate.estateId
-							var estateId = $('#estateId').val();
-							console.log(oMemberId);
-							console.log(memberId);
-							console.log(oEstateId);
-							console.log(estateId);
-							if (oMemberId == memberId && oEstateId == estateId ) {
-								$("#id-of-input").attr("checked", "checked");
-							}else{
-								$("input:checkbox[id='#id-of-input']").prop("checked", false);
 								
-							}
+								// member setting
+								var oMemberId = obj.memberId
+								var memberId = $('#memberId').val();
+								
+								//estate setting
+								var oEstateId = obj.estate.estateId
+								var estateId = $('#estateId').val();
+								
+								
+								if (oMemberId == memberId && oEstateId == estateId ) {
+									$("#id-of-input").attr("checked", "checked");
+								}else{
+									$("input:checkbox[id='#id-of-input']").prop("checked", false);
+									
+								}
+							
 						},
 						error : function(e){//에러 정보를 갖고 있는 
 							

@@ -134,6 +134,6 @@ public class Advice implements Serializable {
 				+ room + ", creDate=" + creDate + ", id=" + id + ", requestDate=" + requestDate + ", state=" + state
 				+ "]";
 	}
-	
+
 	
 }

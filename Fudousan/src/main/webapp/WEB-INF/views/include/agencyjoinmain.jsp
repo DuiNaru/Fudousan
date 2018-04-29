@@ -7,23 +7,24 @@
 			<h1><span data-lang="7"></span>&nbsp;<small>Agency basic form</small></h1>
 		</div>
 		<div class="col-md-6 col-md-offset-3">
-			<form role="form" action="insertAgency" method="post" enctype="multipart/form-data">
+			<form role="form" action="insertAgency" method="post" enctype="multipart/form-data" onsubmit="return formsubmit()">
 				<div class="form-group">
 					<label for="InputName" data-lang="8"></label>
-					<input type="text" class="form-control" id="InputName" name="memberName" data-lang="8">
+					<input type="text" class="form-control" id="InputName" name="memberName" data-lang="8" required="required">
 				</div>
 				<div class="form-group">
 					<label for="InputPassword1" data-lang="3"></label>
-					<input type="password" class="form-control" id="InputPassword1" name="password" data-lang="3">
+					<input type="password" class="form-control" id="InputPassword1" name="password" data-lang="3" required="required">
 				</div>
 				<div class="form-group">
 					<label for="InputPassword2" data-lang="9"></label>
-					<input type="password" class="form-control" id="InputPassword2" data-lang="9">
+					<input type="password" class="form-control" id="InputPassword2" data-lang="9" required="required">
 					<p class="help-block" data-lang="10"></p>
 				</div>
-				<div class="form-group">
+				<div class="form-group has-feedback">
 					<label for="InputEmail" data-lang="2"></label>
-					<input type="email" class="form-control" id="InputEmail" name="email" data-lang="2">
+					<input id="email" class="form-control" type="text" name="email" required="required"  data-lang="89">
+					<span class="glyphicon form-control-feedback"></span>
 				</div>
 				<div class="form-group">
 					<label for="InputText" data-lang="11"></label>
@@ -37,7 +38,7 @@
 			
 				<div class="form-group">
 					<label for="InputPhoto" data-lang="15"></label>
-					<div class="input-group input-file" name="Fichier1">
+					<div class="input-group input-file" name="file">
 						<span class="input-group-btn">
 							<button class="btn btn-default btn-choose" type="button" data-lang="16"></button>
 						</span>
@@ -73,7 +74,7 @@
             
 				<div class="form-group">
 					<label for="InputText" data-lang="27"></label>
-					<select class="selectpicker" data-live-search="true" name="main">
+					<select class="selectpicker" data-live-search="true" name="main" id="main">
 						<option value='0' selected="selected" data-lang="28"></option>
 						<!-- 홋카이도 -->
 						<option value='北海道' data-lang="29">北海道</option>
@@ -179,7 +180,7 @@
             
 				<div class="form-group">
 					<label for="InputText" data-lang="78"></label>
-					<input type="text" class="form-control" id="agencyaddresssmail" name="addressSmall" data-lang="79">
+					<input type="text" class="form-control" id="agencyaddresssmall" name="addressSmall" data-lang="79">
 				</div>
             
 				<div class="form-group">
@@ -209,7 +210,6 @@
 	         
 				<div class="form-group text-center">
 					<button type="submit" class="btn btn-info"><span data-lang="5"></span><i class="fa fa-check spaceLeft"></i></button>
-					<button type="submit" class="btn btn-warning"><span data-lang="4"></span><i class="fa fa-times spaceLeft"></i></button>
 				</div>
 			</form>
 		</div>

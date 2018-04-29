@@ -24,11 +24,12 @@ public class AdviceService {
 	 * @return
 	 */
 	public List<Advice> getRequestList(int id, int status) {
-		logger.info("getRequestList("+id+", "+status+") Start");
+		logger.info("getRequestList("+id+")("+status+") Start");
 		List<Advice> helpCall = null;
 		helpCall = dao.selectByIdAndStatus(id, status);
-		logger.info("getRequestList("+id+", "+status+") End");
+		logger.info("getRequestList("+id+")("+status+") End");
 		return helpCall;
+		
 	}
 	
 	/**
@@ -98,8 +99,7 @@ public class AdviceService {
 	
 	/**
 	 * 일반자사용자가 인테리어 업자에게 도움을 요청
-	 * @param email1
-	 * @param email2
+	 * @param Advice advice
 	 * @return
 	 */
 	public boolean requestAdvice(Advice advice) {

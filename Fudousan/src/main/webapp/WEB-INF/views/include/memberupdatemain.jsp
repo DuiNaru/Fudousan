@@ -44,8 +44,7 @@
 		
 			<div class="form-group">
 			    <label for="InputPhoto">photo</label>
-		    	<img alt="이미지 없음" src="${member.picture }">
-				<div class="input-group input-file" name="Fichier1">
+				<div class="input-group input-file" name="file">
 					<span class="input-group-btn">
 		        		<button class="btn btn-default btn-choose" type="button">선택</button>
 		    		</span>

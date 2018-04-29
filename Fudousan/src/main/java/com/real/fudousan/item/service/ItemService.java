@@ -43,7 +43,7 @@ public class ItemService {
 		if((result = itemDao.insert(item)) >= 0 && files != null) {
 			logger.info("DAO insert -> item ID : " + result);
 			for(MultipartFile file : files) {
-				FileService.saveFile(file, modelFileBaseDirectory + result, true);
+				FileService.saveFile(file, modelFileBaseDirectory + result, true, true);
 			}
 		}
 		logger.info("addItem(" + item + ", " + files +  ") End");

@@ -11,7 +11,7 @@
     <title>Agency Join</title>
 
   	<!-- 부트스트랩 -->
-    <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="<c:url value="/resources/css/templete.css"/>" >
 	<!-- Latest compiled and minified CSS -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/font-awesome.min.css"/>" media="screen" title="no title" charset="utf-8">
     <!-- Custom style -->
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>" media="screen" title="no title" charset="utf-8">
-
+	
 </head>
 
 <body>
@@ -49,6 +49,13 @@
 	
 	<!-- login.js -->
 	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
+	
+	<!-- email check.js -->
+	<script src="<c:url value="/resources/js/checkEmail.js"></c:url>"></script>	
+	
+	<!-- agency check.js -->
+	<script src="<c:url value="/resources/js/agencyFormCheck.js"></c:url>"></script>	
+	
 	
 	<!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>

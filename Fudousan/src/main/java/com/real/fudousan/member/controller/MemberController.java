@@ -149,51 +149,37 @@ public class MemberController {
 		interior =(ArrayList<Member>) service.interior();
 		return interior;
 	}
+	
 	@ResponseBody
 	@RequestMapping(value="emailCheck", method=RequestMethod.GET)
-	public Boolean emailCheck(String email){
+	public String emailCheck(String email){
 		logger.info("emai Check Start - controller");
-		boolean resultB = false; 
+		System.out.println("email::"+email);
+		String check = "false"; 
 		
 		Member member = new Member();
 		member.setEmail(email);
-		Member result = service.selectMemberOne(member);
-		if (result.getEmail() == email) {
-			resultB = true;
+		
+		Member result = new Member();
+		try {
+			result =service.selectMemberOne(member);
+			if (result.getEmail() == null) {
+				check = "false";
+			}else{
+				if (result.getEmail().equals(email)) {
+					check = "true";
+				}
+			}
+		
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
+
 		logger.info("emai Check End - controller");
-		return resultB; 
+		
+		return check; 
 	}
 	
-	/*//메일 보내기
-	@RequestMapping(value = "helpCall", method = RequestMethod.GET)
-	 public String mailSending(HttpServletRequest request, HttpSession session) {
-		   
-		logger.info("메일 전송 시작");
-		  String setfrom = "2017scit@gmail.com";         
-		    String tomail  = request.getParameter("tomail");     // 받는 사람 이메일
-		    String title   = "fudousan에서 요청 메일이 왔습니다";     // 제목
-		    String content =  session.getAttribute("loginEmail") + "님이 요청을 보냈습니다."+ " 이동하기 > http://localhost:8888/fudousan/" ;     // 내용
-		    try {
-		      MimeMessage message = mailSender.createMimeMessage();
-		      MimeMessageHelper messageHelper 
-		                        = new MimeMessageHelper(message, true, "UTF-8");
-		 
-		      messageHelper.setFrom(setfrom);  // 보내는사람 생략하거나 하면 정상작동을 안함
-		      messageHelper.setTo(tomail);     // 받는사람 이메일
-		      messageHelper.setSubject(title); // 메일제목은 생략이 가능하다
-		      messageHelper.setText(content);  // 메일 내용
-		     
-		      mailSender.send(message);
-		    } catch(Exception e){
-		      System.out.println(e);
-		    }
-		    logger.info("메일 전송 성공");
-		    return "redirect:/";
-	}*/
-	
-
-
 
 	@RequestMapping(value = JoinController.uploadPath+"/{file_name}", method = RequestMethod.GET)
 	public void getMemberfile(
