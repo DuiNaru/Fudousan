@@ -24,9 +24,12 @@ public class AdviceService {
 	 * @return
 	 */
 	public List<Advice> getRequestList(int id, int status) {
+		logger.info("getRequestList("+id+")("+status+") Start");
 		List<Advice> helpCall = null;
 		helpCall = dao.selectByIdAndStatus(id, status);
+		logger.info("getRequestList("+id+")("+status+") End");
 		return helpCall;
+		
 	}
 	
 	/**

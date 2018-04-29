@@ -87,7 +87,7 @@
 					<!-- result -->
 					<c:forEach var="favorite" items="${flist}">
 						<div class="col-sm-12 form-group">
-							<p><a href="/">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}estataId:${favorite.estate.estateId}"/></p>
+							<p><a href="/fudousan/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}estataId:${favorite.estate.estateId}"/></p>
 							<input type="hidden" value="${favorite.estate.estateId}" id='favo' name='favo' >
 							<button><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}"/>">매물상세정보</a></button>
 						</div>

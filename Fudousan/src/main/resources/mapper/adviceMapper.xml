@@ -128,7 +128,7 @@
 	</select>
 
 
-<select id="reverseCall" resultMap="adviceResultMapper" parameterType="advice">
+<select id="reverseCall" resultMap="adviceResultMapper" parameterType="int">
 	select
 			-- ADIVCE
 			advice.REQUEST_MEMBER_ID REQUEST_MEMBER_ID
