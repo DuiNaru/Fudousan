@@ -27,7 +27,7 @@
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 	
 	<!-- Interior Main -->
-	<%@include file="/WEB-INF/views/include/interiormain.jsp" %>
+	<%@include file="interiormain.jsp" %>
 
 	
 

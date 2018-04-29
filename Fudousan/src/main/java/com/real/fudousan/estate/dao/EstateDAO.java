@@ -48,5 +48,12 @@ public interface EstateDAO {
 
 
 	
+	/**
+	 * 대표방 변경
+	 * @param estateId
+	 * @return
+	 */
+	public boolean updateBaseRoomId(int estateId, int roomId);
+	
 
 }

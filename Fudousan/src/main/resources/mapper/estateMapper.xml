@@ -635,14 +635,13 @@ VALUES
 
 </select>
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
+<update id="updateBaseRoomId">
+	UPDATE
+		estate
+	SET
+		base_room_id =#{1}
+	WHERE
+		estate_id = #{0}
+</update>
 	
 </mapper>

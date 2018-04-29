@@ -50,6 +50,9 @@
 		    <div role="tabpanel" class="tab-pane" id="profile">
 		 		<!-- 매물 3D 모델링 관리  Start -->
 				<h1>매물 3D 모델링 관리</h1>
+				<div class="text-right">
+					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#estateListModal">모델링 등록</button>
+				</div>
 				<!-- result -->
 				<table class="table">
 					<thead class="table">

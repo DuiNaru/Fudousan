@@ -33,8 +33,7 @@
 					</thead>
 					<tbody>
 					<c:forEach var="advice" varStatus="status" items="${adviceList}">
-						<%-- <div id="req${status.index}" class="col-sm-12"></div> --%>
-							<tr>
+							<tr id="req${status.index}">
 								<td>${advice.room.estate.estateId }</td>
 								<td>${advice.room.estate.estateName }</td>
 								<td><button class="btn btn-success">인테리어 시작</button></td>

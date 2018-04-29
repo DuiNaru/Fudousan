@@ -36,7 +36,7 @@ $(function(){
 					'            <td>'+member.email+'</td>'+
 					'            <td>'+member.text+'</td>'+
 					'            <td>'+member.phone+'</td>'+
-					'			 <td> <a href="/fudousan/helpCall?tomail='+member.email+'&roomId='+room.roomId+'" class="btn btn-warning" OnClick="alert(\'Send to Interior\')">Send</a></td>'+	
+					'			 <td> <a class="btn btn-warning" OnClick="noMove(\''+member.email+'\','+room.roomId+')">Send</a></td>'+	
 					'        </tr>';
 					count++;
 
@@ -53,9 +53,26 @@ $(function(){
 			result = true;
 		} 
 		
-	});
-	
-	
-	
-	
-});
+	}); // ajax helpCall
+});//레디펑션 끝
+
+function noMove(email, roomId){
+	alert('noMove 실행');
+	$.ajax({
+	url : "/fudousan/helpCall",
+	type : "get",
+	data : {
+		email : email,
+		roomId : roomId
+	},
+	success : function(){
+		alert('메일이 보내졌습니다.');
+	},
+	error : function(e){
+		alert(JSON.stringify(e));
+		alert('메일 전송 실패');
+	}
+	}); //ajax 끝
+}
+
+
