@@ -141,11 +141,24 @@ public class RoomController {
 		return returnedURL;
 	}
 	
+	@RequestMapping(value="newBaseRoom", method=RequestMethod.GET)
+	public String newBaseRoom(@ModelAttribute("loginId") int loginId, int estateId, Model model) {
+		logger.info("newBaseRoom("+loginId+", "+estateId+") Start");
+		String returnedURL = "redirect:roomPage";
+		
+		int roomId = roomService.createBaseRoom(loginId, estateId);
+		model.addAttribute("roomId", roomId);
+		
+		returnedURL = "redirect:wall/wallPage";
+		
+		logger.info("newBaseRoom("+loginId+", "+estateId+") End");
+		return returnedURL;
+	}
 	
 	
 	//작업중
 	@RequestMapping(value="roomPage", method=RequestMethod.GET)
-	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model,Integer itemTypeId ) {
+	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model ) {
 		logger.info("roomPage("+loginId+", "+roomId+") Start");
 		
 
@@ -165,7 +178,6 @@ public class RoomController {
 			
 			model.addAttribute("itemTypeList", itemService.getItemTypeList());
 		}
-		System.out.println("dd");
 		logger.info("roomPage("+loginId+", "+roomId+") End");
 		return "room/room";
 		//return "itemlist";

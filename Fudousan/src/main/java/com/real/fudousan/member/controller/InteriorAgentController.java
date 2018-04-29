@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import com.real.fudousan.agency.service.AgencyService;
 import com.real.fudousan.agency.vo.Agency;
 import com.real.fudousan.estate.service.EstateService;
 import com.real.fudousan.estate.vo.Estate;
+import com.real.fudousan.favorite.vo.Favorite;
 import com.real.fudousan.item.service.ItemService;
 import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.item.vo.ItemType;
@@ -43,13 +46,24 @@ public class InteriorAgentController {
 	@Autowired
 	private RoomService roomService;
 	
+	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String interiorPage(@ModelAttribute("loginId") int memberId, Model model) {
 		logger.info("interiorPage() Start");
 		
 		// 요청 받은 목록
 		List<Advice> adviceList = adviceService.getRequestedList(memberId);
-		
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
 		// 실제 매물이 존재하는 모델링 목록
 		List<Room> realRoomList = roomService.showAllRoom(memberId, true);
 		

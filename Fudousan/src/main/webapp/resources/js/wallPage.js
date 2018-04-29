@@ -4,7 +4,7 @@
 // 카메라, 씬, 렌더러
 var camera, scene, renderer;
 // 카메라 높이(z)
-var cameraZ = 6000;
+var cameraZ = 1000;
 // 화면 가로 길이
 var width = window.innerWidth;
 // 화면 세로 길이
@@ -44,11 +44,11 @@ var supportLines = [];
 // 배경 보조선
 var backgroundLines = [];
 // 단위 길이
-var vectorPerLength = 100;
+var vectorPerLength = 10;
 // 점 스냅 가중치
 var pointSnapAdv = 1;
 // 인터섹트 검사시 기존 점과의 가까운 한계 길이 값 (해당 값 이하는 값은 점으로 간주)
-var closeTolerance = 100;
+var closeTolerance = 20;
 // 카메라 이동 단위
 var cameraMoveValue = 100;
 
@@ -213,7 +213,7 @@ function onDocumentMouseDown(event) {
 		isDrawing = true;
 		
 		// 마우스 끝 지점 생성
-		endPoint = new THREE.Mesh(new THREE.CircleGeometry(50, 32), new THREE.MeshBasicMaterial({color:0x000000}));
+		endPoint = new THREE.Mesh(new THREE.CircleGeometry(vectorPerLength/2, 32), new THREE.MeshBasicMaterial({color:0x000000}));
 		endPoint.position.copy(snapVector3(intersects[0].point, event.shiftKey, event.ctrlKey));
 		
 		drawingLine = new THREE.Line(new THREE.Geometry(), new THREE.LineBasicMaterial({color:0x000000}));
@@ -242,7 +242,7 @@ function onDocumentMouseMove(event) {
 		} else {
 			// 마우스 시작 지점 생성
 			if(startPoint !=null) scene.remove(startPoint);
-			startPoint = new THREE.Mesh(new THREE.CircleGeometry(50, 32), new THREE.MeshBasicMaterial({color:0x000000}));
+			startPoint = new THREE.Mesh(new THREE.CircleGeometry(vectorPerLength/2, 32), new THREE.MeshBasicMaterial({color:0x000000}));
 			startPoint.position.copy(snapVector3(intersects[0].point, event.shiftKey, event.ctrlKey));
 			scene.add(startPoint);
 		}
@@ -533,7 +533,7 @@ function redraw() {
 	
 	// 화면에 점 그리기
 	for(var i = 0; i < dots[curIndex].length; i++) {
-		var geometry = new THREE.CircleGeometry( 50, 32 );
+		var geometry = new THREE.CircleGeometry( vectorPerLength/2, 32 );
 		var material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
 		var circle = new THREE.Mesh( geometry, material );
 		circle.position.copy(dots[curIndex][i]);

@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.real.fudousan.common.util.FileService;
+import com.real.fudousan.estate.service.EstateService;
+import com.real.fudousan.estate.vo.Estate;
 import com.real.fudousan.room.controller.RoomController;
 import com.real.fudousan.room.dao.RoomDAO;
 import com.real.fudousan.room.vo.Room;
@@ -33,6 +35,9 @@ public class RoomService {
 	
 	@Autowired
 	private RoomWallService wallService;
+	
+	@Autowired
+	private EstateService estateService;
 	
 	private final String snapShotDir = "/snapshot/";
 	
@@ -119,6 +124,40 @@ public class RoomService {
 		
 		logger.info("createRoom(" + room + ") End");
 		return roomId;
+	}
+	
+	/**
+	 * 해당 매물의 대표방 생성
+	 * @param memberId
+	 * @param estateId
+	 * @return
+	 */
+	@Transactional
+	public int createBaseRoom(int memberId, int estateId) {
+		logger.info("createBaseRoom(" + memberId + ", "+estateId+") Start");
+		int result = -1;
+		
+		Room room = new Room();
+		room.setMemberId(memberId);
+		room.setRoomPublic(1);
+		Estate estate = new Estate();
+		estate.setEstateId(estateId);
+		room.setEstate(estate);
+		
+		if ( ( result = dao.insert( room ) ) >= 0 ) {
+			
+			// 대표방 설정
+			if ( !estateService.updateBaseRoomId( estateId, result ) ) {
+				
+				result = -1;
+				
+			}
+			
+		}
+		
+		
+		logger.info("createBaseRoom(" + memberId + ", "+estateId+") End");
+		return result;
 	}
 	
 	/**

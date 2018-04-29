@@ -76,7 +76,7 @@ function init() {
 	THREE.Cache.enabled = true;
 	// 카메라 생성 및 초기화
 	camera = new THREE.PerspectiveCamera(60, width / height, 10, earthSize);
-	camera.position.y = 10000;
+	camera.position.y = 5000;
 	camera.lookAt(0, 0, 0);
 	
 	// 장면 생성

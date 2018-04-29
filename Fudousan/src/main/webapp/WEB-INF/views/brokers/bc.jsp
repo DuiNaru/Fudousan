@@ -155,14 +155,14 @@
 
                <!-- Localname = 지역이름 -->
 
-               <input type="text" value="${estate.prefecture}" data-live-search="true"  class="form-control" name ="prefecture" readonly >
+               <input type="hidden" value="${estate.prefecture}" data-live-search="true"  class="form-control" name ="prefecture" readonly >
 
             </div>
          <div class="form-group">
              
-            <input type="text" name='municipality' data-live-search="true"  class="form-control" value="${estate.municipality}" readonly >
+            <input type="hidden" name='municipality' data-live-search="true"  class="form-control" value="${estate.municipality}" readonly >
         
-           	<input type="text" name="municipalitycodeId" data-live-search="true"  class="form-control" value="${estate.municipalitycode.municipalitycodeId}" readonly >
+           	<input type="hidden" name="municipalitycodeId" data-live-search="true"  class="form-control" value="${estate.municipalitycode.municipalitycodeId}" readonly >
          
          	<input type="hidden" name='estateX' data-live-search="true"  class="form-control" value="${estate.estateX}" readonly>
          	<input type="hidden" name='estateY' data-live-search="true"  class="form-control" value="${estate.estateY}" readonly>
@@ -173,12 +173,12 @@
       
             <div class="form-group">
              
-              <input type="text" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)" name="districtname" value="${estate.districtname}" readonly >
+              <input type="hidden" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)" name="districtname" value="${estate.districtname}" readonly >
             </div>
             
            <div class="form-group">
             
-              <input type="text" class="form-control" id="inputNearestStation" placeholder="나머지 주소" name="address" value="${estate.address}" readonly >
+              <input type="hidden" class="form-control" id="inputNearestStation" placeholder="나머지 주소" name="address" value="${estate.address}" readonly >
             </div>
             
             
