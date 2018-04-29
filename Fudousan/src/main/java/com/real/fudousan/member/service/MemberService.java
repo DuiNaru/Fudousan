@@ -115,22 +115,26 @@ public class MemberService {
 	 * @return
 	 */
 	public boolean registerAgencyMember(Member member, MultipartFile file) {
-
+		logger.info("start agency member - service");
 		Permission p= new Permission(3, "Agency");
 		member.setPermission(p);
 		
 		int result = 0; 
-		if ((result = dao.insertAgencyMember(member))>= -1 && file != null) {
+		/*if ((result = dao.insertAgencyMember(member))>= -1 && file != null) {
 			FileService.saveFile(file, memberFileBaseDirectory + result, true);
-		}
+		}*/
+		result = dao.insertAgencyMember(member);
 		
 		if (result == 1) {
 			// insert success
+			logger.info("end agency member - service");
 			return true; 
+		
 		}
 		else{			
 			
 			// insert fail 
+			logger.info("end agency member - service");
 			return false; 
 		}
 	}

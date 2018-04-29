@@ -12,8 +12,7 @@
 						 //서버로 부터 받아오는 타입
 						dataType : "json",
 						success : function(obj){
-							
-							if ($('#memberId').val() !=null && $('estateId').val() !=null) {
+								
 								// member setting
 								var oMemberId = obj.memberId
 								var memberId = $('#memberId').val();
@@ -21,13 +20,15 @@
 								//estate setting
 								var oEstateId = obj.estate.estateId
 								var estateId = $('#estateId').val();
+								
+								
 								if (oMemberId == memberId && oEstateId == estateId ) {
 									$("#id-of-input").attr("checked", "checked");
 								}else{
 									$("input:checkbox[id='#id-of-input']").prop("checked", false);
 									
 								}
-							}
+							
 						},
 						error : function(e){//에러 정보를 갖고 있는 
 							

@@ -8,7 +8,7 @@
   <div class="row content">
     
     <!-- side nav(left) -->
-    <div class="col-sm-2 sidenav">
+    <div class="col-sm-2 sidenav" id="buttonBar">
     	<c:if test="${sessionScope.memberId !=null }">
 			<a class="btn btn-success btn-lg" href="../newRoom?estateId=${estateId}&amp;roomPublic=0" id="3dModelButton">
 				<span class="glyphicon glyphicon-print"></span> MODEL
@@ -18,9 +18,6 @@
 				<span class="glyphicon glyphicon-search"></span> DESIGN
 			</a>
 			<br><br>
-<!-- 			<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
-				<span class="glyphicon glyphicon-envelope"></span> MAIL
-			</a> -->
 		</c:if>
     </div>
     
@@ -31,13 +28,15 @@
     <hr>
 		
 	<!-- Favorite Button -->
-	<c:if test="${sessionScope.memberId !=null }">
-		<label id="star" for="id-of-input" class="custom-checkbox">
-	  		<input type="checkbox" id="id-of-input"/>
-	  		<i class="glyphicon glyphicon-star-empty" id="empty"></i>
-	  		<i class="glyphicon glyphicon-star" id="full"></i>
-		</label>
-    </c:if>
+		<div id="favoriteBox">
+			<c:if test="${sessionScope.memberId !=null }">
+					<label id="star" for="id-of-input" class="custom-checkbox">
+				  		<input type="checkbox" id="id-of-input"/>
+				  		<i class="glyphicon glyphicon-star-empty" id="empty"></i>
+				  		<i class="glyphicon glyphicon-star" id="full"></i>
+					</label>
+		    </c:if>
+		</div>
     		<!-- map  -->
     		<div id="map"></div>
     		<hr>
@@ -285,19 +284,16 @@
 		</div><!-- /container -->		
 			
 		<!-- input reply -->
-		<c:if test="${sessionScope.memberId !=null }">
-			<div>
-				<div class="col-sm-12">
-					<label>Comment here</label>
-					<textarea rows="3" class="form-control" id="text"></textarea>
-					<br>	
-					<input type="button" class="btn btn-info" id="replyButton" value="reply">
-							
-					<input type="hidden" value="${sessionScope.memberId}" id="memberId">
-					<input type="hidden" value=" ${estateId}" id="estateId">
-				</div>
+			<div id="commentBox">
+				<c:if test="${sessionScope.memberId !=null }">
+						<div class="col-sm-12">
+							<label>Comment here</label>
+							<textarea rows="3" class="form-control" id="text"></textarea>
+							<br>	
+							<input type="button" class="btn btn-info" id="replyButton" value="reply">
+						</div>
+				</c:if>
 			</div>
-		</c:if>
 		<br><br><br><br>
 	</div>
 	<div class="col-sm-2 sidenav">
@@ -306,4 +302,6 @@
 	</div>
 	</div>
 </div>
-
+<!-- value -->
+<input type="hidden" value="${sessionScope.memberId}" id="memberId">
+<input type="hidden" value=" ${estateId}" id="estateId">

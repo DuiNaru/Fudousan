@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.real.fudousan.entry.vo.Entry;
-import com.real.fudousan.estate.dao.EstateMapper;
 import com.real.fudousan.estate.service.EstateService;
-import com.real.fudousan.estate.vo.Estate;
 
 @Repository
 public class EntryDAOOracle implements EntryDAO {
@@ -55,6 +53,24 @@ public class EntryDAOOracle implements EntryDAO {
 		
 		
 	}
+	
+	
+	@Override
+	public Entry listEntry(int estateId){
+		Entry result = null;
+		try{      
+			EntryMapper mapper= session.getMapper(EntryMapper.class);
+        result = mapper.listEntry(estateId);
+     }
+     catch(Exception e){
+        e.printStackTrace();
+     }
+     
+     return result;
+	
+	
+}
+
 	//매물 삭제 
 	  @Override
 		public int deleteEntry(Entry entry){
