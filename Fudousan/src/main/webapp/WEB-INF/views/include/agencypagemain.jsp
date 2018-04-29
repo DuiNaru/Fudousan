@@ -37,8 +37,8 @@
 								<tbody>
 									<c:forEach var="estate" items="${select}">
 										<tr>
-											<td>${estate.estateId}</td>
-											<td>${estate.estateName}</td>
+											<td><a href="./estate/detailedinfomation?id=EstateId:${estate.estateId }">${estate.estateId}</a></td>
+											<td><a href="./estate/detailedinfomation?id=EstateId:${estate.estateId }">${estate.estateName}</a></td>
 											<td><input type="button" value="수정" class="btn btn-info" onclick="location.href='/fudousan/bc?estateId=${estate.estateId}'"></td>
 											<td><input type="button" value="삭제" class="btn btn-danger" onclick="location.href='deleteEntry?agencyId=${agencyId}&estateId=${estate.estateId}'"></td>
 										</tr>
@@ -67,7 +67,7 @@
 								<c:forEach var="room" items="${roomList }">	
 									<tr id="room${room.roomId}">
 										<td><c:if test="${empty room.roomTitle }">(名無し)</c:if><c:if test="${!empty room.roomTitle }">${room.roomTitle }</c:if></td>
-										<td><img src="<c:url value="${room.snapshot}"/>"></td>
+										<td><img class="col-sm-12" src="<c:url value="${room.snapshot}"/>"></td>
 										<td><a class="btn btn-info" href="./roomPage?roomId=${room.roomId}">수정</a></td>
 										<td><button type="button" class="btn btn-danger" onclick="roomDeleteListener(${room.roomId})">삭제</button></td>
 									</tr>
