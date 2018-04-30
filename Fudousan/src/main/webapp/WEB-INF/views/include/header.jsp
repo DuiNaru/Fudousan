@@ -77,6 +77,9 @@
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
 					<li><a href="/fudousan/logout" data-lang="1"></a></li>
 					<li><a href="/fudousan/admin/" data-lang ="88">Admin page</a></li>
+					<li><a href="/fudousan/mypageNormalUser" data-lang ="85">Member Page</a></li>
+					<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>
+					<li><a href="/fudousan/interior/" data-lang ="87">Interior Page</a></li>
 				</c:if>
 				 	
  				

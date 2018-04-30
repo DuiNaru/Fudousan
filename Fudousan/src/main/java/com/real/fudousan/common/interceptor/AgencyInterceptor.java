@@ -21,7 +21,7 @@ public class AgencyInterceptor extends HandlerInterceptorAdapter {
 		Integer permissionId = (Integer) session.getAttribute("permissionId");
 		
 		logger.debug("AgencyInterceptor preHandler session(permissionId) : " + permissionId);
-		if (permissionId != null && permissionId == 3) {
+		if (permissionId != null && ( permissionId == 3 || permissionId == 99)) {
 			result &= true;
 		} else {
 			result = false;
