@@ -5,15 +5,15 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title">Estate List</h4>
+				<h4 class="modal-title" data-lang="151">Estate List</h4>
 			</div>
 			<div class="modal-body">
 				<table class="table">
 					<thead>
 						<tr>
-							<th>Estate Name</th>
-							<th>Estate Address</th>
-							<th>Base Room</th>
+							<th data-lang="121">Estate Name</th>
+							<th data-lang="149">Estate Address</th>
+							<th data-lang="150">Base Room</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -23,10 +23,10 @@
 								<td>${estate.region}${estate.prefecture}${estate.municipality}${estate.districtname}${estate.address}</td>
 								<td>
 									<c:if test="${empty estate.baseRoomId}"><a class="btn btn-default" href="./newBaseRoom?estateId=${estate.estateId}">Create</a></c:if>
-									<c:if test="${!empty estate.baseRoomId}"><a class="btn btn-default" href="./wall/wallPage?roomId=${estate.baseRoomId}">Modify</a></c:if>
+									<c:if test="${!empty estate.baseRoomId}"><a class="btn btn-default" href="./wall/wallPage?roomId=${estate.baseRoomId}" data-lang="310"></a></c:if>
 								</td>
 							</tr>
-						</c:forEach> 
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
