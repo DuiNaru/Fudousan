@@ -15,6 +15,7 @@ import com.real.fudousan.agency.vo.Agency;
 
 import com.real.fudousan.member.controller.MemberController;
 
+@RequestMapping("agency")
 @Controller
 public class AgencyController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
@@ -22,13 +23,15 @@ public class AgencyController {
 	@Autowired
 	private AgencyService service;
 	
-	 @RequestMapping(value="agency/detailedinformation", method=RequestMethod.GET)
-	public String detailedInformation(int agencyId, Model model){
-		logger.info("detailedInformation("+agencyId+") Start");
+	 @RequestMapping(value="detailedinformation", method=RequestMethod.GET)
+	public String detailedInformation(String id, Model model){
+		logger.info("detailedInformation("+id+") Start");
+		
+		int agencyId = Integer.parseInt(id.split(":")[1]);
 		
 		model.addAttribute("agency", service.selectAgencyOne(agencyId));
 
-		logger.info("detailedInformation("+agencyId+") End");
+		logger.info("detailedInformation("+id+") End");
 		 return "agency/detailedinformation";
 	}
 	
