@@ -1456,7 +1456,7 @@ function rotate(object, rx, ry, rz, useAni) {
 	
 	if ( rx != null ) {
 		targetRX = rx * Math.PI / 180;
-		object.roomItem.rotateX = rx;
+		//object.roomItem.rotateX = rx;
 
 		if ( useAni !== undefined && useAni == false ) {
 			object.rotation.x = targetRX;
@@ -1468,7 +1468,7 @@ function rotate(object, rx, ry, rz, useAni) {
 	
 	if ( ry != null ) {
 		targetRY = ry * Math.PI / 180;
-		object.roomItem.rotateY = ry;
+		//object.roomItem.rotateY = ry;
 
 		if ( useAni !== undefined && useAni == false ) {
 			object.rotation.y = targetRY;
@@ -1480,7 +1480,7 @@ function rotate(object, rx, ry, rz, useAni) {
 	
 	if ( rz != null ) {
 		targetRZ = rz * Math.PI / 180;
-		object.roomItem.rotateZ = rz;
+		//object.roomItem.rotateZ = rz;
 
 		if ( useAni !== undefined && useAni == false ) {
 			object.rotation.z = targetRZ;
@@ -1979,12 +1979,12 @@ var NewCommand = {
 			command.name = "itemChange";
 			command.onDo = function() {
 				applyItemChange(command.onDoRoomItem.clone());
-				command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+				applyItemChangeLocal(command.onDoRoomItem.clone());
 			};
 			command.onDoRoomItem = roomItem.clone();
 			command.onRedo = function() {
 				applyItemChange(command.onRedoRoomItem.clone());
-				command.onDoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+				applyItemChangeLocal(command.onRedoRoomItem.clone());
 			};
 			command.onRedoRoomItem = roomItem.clone();
 			addCommand(command);
@@ -1997,11 +1997,11 @@ var NewCommand = {
 			var command = new Command();
 			command.name = "itemChangeLocal";
 			command.onDo = function() {
-				command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+				applyItemChangeLocal(command.onDoRoomItem.clone());
 			};
 			command.onDoRoomItem = roomItem;
 			command.onRedo = function() {
-				command.onDoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
+				applyItemChangeLocal(command.onRedoRoomItem.clone());
 			};
 			command.onRedoRoomItem = roomItem;
 			addCommand(command);
