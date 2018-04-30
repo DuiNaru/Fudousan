@@ -117,6 +117,32 @@
     "115": "Design",
     "116": "Estate Name",
     "117": "Estate Id",
-    "118": "Start Interior"
+    "118": "Start Interior",
+    "119": "Open",
+    "120": "Close",
+    "121": "Property name",
+    "122" : "Transaction type",
+    "123" : "Price",
+    "124" : "Apartment",
+    "125" : "Dwelling house",
+    "126" : "ground",
+    "127" : "DistrictName",
+    "128" : "Municipality",
+    "129" : "Municipality Code",
+    "130" : "Prefecture",	
+    "131" : "The remaining address",
+    "132" : "NearStation",
+    "133" : "TimeToNearestStation(minute)",
+    "134" : "TradePrice",
+    "135" : "PricePerUnit",
+    "136" : "Structure",
+    "137" : "Building Year",
+    "138" : "The structure of a building",
+    "139" : "Purpose",
+    "140" : "Concealment rate (%)",
+    "141" : "Floor area ratio (%)",
+    "142" : "Registration",
+    "143" : "Reset"
+    
     
 }
