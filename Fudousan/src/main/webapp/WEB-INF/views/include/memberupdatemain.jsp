@@ -44,7 +44,7 @@
 		
 			<div class="form-group">
 			    <label for="InputPhoto">photo</label>
-			    <div class="thumbnail">
+			    <div >
 			    	<img src="/fudousan${member.picture}" id="uploadPictures">
 				</div>
 				<div class="input-group input-file" name="file">

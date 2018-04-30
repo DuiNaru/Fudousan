@@ -22,10 +22,6 @@
     <!-- Custom style -->
     <link rel="stylesheet" href="<c:url value="/resources/css/style.css"/>" media="screen" title="no title" charset="utf-8">
 
-   
-    
-   
- 
 </head>
 <body>
   	<!-- login modal  -->
