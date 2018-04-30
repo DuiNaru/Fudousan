@@ -146,7 +146,32 @@
     "144" : "New design",
     "145" :"Edit property",
     "146" : "Modifications completed"
-    
 
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ,"300" : "Application list of real estate company.",
+    "301" : "Grant Applicant",
+    "302" : "Approve permission",
+    "303" : "Approve",
+    "304" : "Item Information Management",    
+    "305" : "Search",    
+    "306" : "Item Registration",    
+    "307" : "Item Name",    
+    "308" : "Item Update",    
+    "309" : "Item Delete" 
 }
