@@ -36,8 +36,8 @@
 							<tr id="req${status.index}">
 								<td>${advice.room.estate.estateId }</td>
 								<td>${advice.room.estate.estateName }</td>
-								<td><button class="btn btn-success">인테리어 시작</button></td>
-								<td><input class="btn btn-danger" type="button" value="취소" onclick = "unConfirm(${status.index}, ${advice.requestMemberId}, ${advice.room.roomId})"></td>
+								<td><button class="btn btn-success" data-lang="118">인테리어 시작</button></td>
+								<td><button class="btn btn-danger" type="button"onclick = "unConfirm(${status.index}, ${advice.requestMemberId}, ${advice.room.roomId})"><span data-lang="4"></span></button></td>
 							</tr>
 						
 					</c:forEach>
@@ -66,9 +66,9 @@
 								<tr id="room${room.roomId}">
 									<td>${room.estate.estateId }</td>
 									<td>${room.estate.estateName }</td>
-									<td><a class="btn btn-default" href="../newRoom?estateId=${room.estate.estateId}&roomPublic=0">새로 꾸미기</a></td>
+									<td><a class="btn btn-default" href="../newRoom?estateId=${room.estate.estateId}&roomPublic=0" data-lang="144">새로 꾸미기</a></td>
 									<td><a class="btn btn-default" href="../roomPage?roomId=${room.roomId}" data-lang="112">수정</a></td>
-									<td><input class="btn btn-default" type="button" value="삭제" onclick="deleteRoom(${room.roomId})"></td>
+									<td><button class="btn btn-default" type="button" onclick="deleteRoom(${room.roomId})"><span data-lang="93"></span></button></td>
 									<td>
 										<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="1" roomId="${room.roomId}"<c:if test="${room.roomPublic == 1}"> checked="checked"</c:if>><span data-lang="119">공개</span></p>
 										<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="0" roomId="${room.roomId}"<c:if test="${room.roomPublic == 0}"> checked="checked"</c:if>><span data-lang="120">비공개</span></p>
