@@ -1,4 +1,4 @@
-
+var linkClass = 'hidden';
 	
 	function initialize() {
 		
@@ -70,6 +70,15 @@
 	      });
 	      map.fitBounds(bounds);
 	    });
+	    
+	    // 로그인 콜백
+	    Login.onLogin = function() {
+	    	// 이미 띄어진 내용 변경
+	    	$("a[name='detailLink']").removeClass('hidden');
+	    	$("a[name='detailLink']").addClass('show');
+	    	// 앞으로 띄워질 내용 변경
+	    	linkClass = 'show';
+	    }
 	}
 
 	function setMarkers(map, locations) {
@@ -93,7 +102,7 @@
 	            label: labels[i % labels.length]
 	        });
 	        
-	        var content = '<div id="information'+$('#estateIdList').val()+'">'+
+	        var content = '<div>'+
 	        '	<label>Information</label>'+
 	        '	<ul>'+
 	        '		<li>'+loan+'</li>'+
@@ -101,9 +110,11 @@
 	        '	</ul>';
 	        
 	        if ($('#loginEmail').val()!=null && $('#loginEmail').val() !="" ) {
-	        	content += '	<a href="estate/detailedinfomation?id='+loan+'">Detailed Information</a>'; 	
-			}
-	        	content +='</div>';
+	        	linkClass = 'show';
+			} 
+			content += '	<a name="detailLink" class="'+linkClass+'" href="estate/detailedinfomation?id='+loan+'">Detailed Information</a>';
+
+	        content +='</div>';
 	        	
 	        
 	        	
@@ -111,6 +122,9 @@
 	
 	        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
 	            return function() {
+	            	if(linkClass == 'show') {
+	            		content = content.replace('class="hidden"', 'class="show"');
+	            	}
 	                infowindow.setContent(content);
 	                infowindow.open(map,marker);
 	            };
