@@ -8,30 +8,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class AdminInterceptor extends HandlerInterceptorAdapter {
-	private static final Logger logger = LoggerFactory.getLogger(AdminInterceptor.class);
+public class AgencyInterceptor extends HandlerInterceptorAdapter {
+	private static final Logger logger = LoggerFactory.getLogger(AgencyInterceptor.class);
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		logger.info("AdminInterceptor preHandler Start");
+		logger.info("AgencyInterceptor preHandler Start");
 		boolean result = super.preHandle(request, response, handler);
 		
 		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("loginId");
+		Integer permissionId = (Integer) session.getAttribute("permissionId");
 		
-		logger.debug("AdminInterceptor preHandler session(loginId) : " + id);
-		if (id != null && id.equals("admin")) {
+		logger.debug("AgencyInterceptor preHandler session(permissionId) : " + permissionId);
+		if (permissionId != null && permissionId == 3) {
 			result &= true;
 		} else {
 			result = false;
 		}
 		
-		logger.debug("AdminInterceptor preHandler result : " + result);
+		logger.debug("AgencyInterceptor preHandler result : " + result);
 		if (!result) {
 			response.sendRedirect(request.getContextPath()+"/");
 		}
-		logger.info("AdminInterceptor preHandler End");
+		logger.info("AgencyInterceptor preHandler End");
 		return result;
 	}
 

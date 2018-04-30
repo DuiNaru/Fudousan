@@ -103,12 +103,14 @@
 							<%-- <div id="virtual${virtual.roomId}" class="col-sm-12"></div> --%>
 								<td>${virtual.roomId}</td>
 								<td><img style="height: 100px; width: auto;" src="<c:url value="${virtual.snapshot}"/>"></td>
-								<td><a class="btn btn-default" href="../wall/wallPage?roomId=${virtual.roomId}">벽 수정</a></td>
-								<td><a class="btn btn-default" href="../roomPage?roomId=${virtual.roomId}">수정</a></td>
-								<td><input class="btn btn-default" type="button" value="삭제" onclick="deleteRoom(${virtual.roomId})"></td>
+								<td><a class="btn btn-default" href="../wall/wallPage?roomId=${virtual.roomId}" data-lang="111">벽 수정</a></td>
+								<td><a class="btn btn-default" href="../roomPage?roomId=${virtual.roomId}" data-lang="112">수정</a></td>
 								<td>
-									<p class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="1" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 1}"> checked="checked"</c:if>>공개</p>
-									<p class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="0" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 0}"> checked="checked"</c:if>>비공개</p>
+									<button class="btn btn-default" type="button" onclick="deleteRoom(${virtual.roomId})"><span data-lang="113"></span></button>
+								</td>
+								<td>
+									<p class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="1" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 1}"> checked="checked"</c:if>><span data-lang="119">공개</span></p>
+									<p class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="0" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 0}"> checked="checked"</c:if>><span data-lang="120">비공개</span></p>
 								</td>
 							
 							</tr>
