@@ -112,11 +112,10 @@ var linkClass = 'hidden';
 	        if ($('#loginEmail').val()!=null && $('#loginEmail').val() !="" ) {
 	        	linkClass = 'show';
 			} 
-	        if (loan.contains("Estate") ) {
-				
-	        	content += '	<a name="detailLink" class="'+linkClass+'" href="estate/detailedinfomation?id='+loan+'">Estate Detailed Information</a>';
-	        }else{
+	        if (loan.indexOf("Estate") ) {
 	        	content += '	<a name="detailLink" class="'+linkClass+'" href="agency/detailedinformation?id='+loan+'">Agency Detailed Information</a>';
+	        }else if(loan.indexOf("Agency")){
+	        	content += '	<a name="detailLink" class="'+linkClass+'" href="estate/detailedinfomation?id='+loan+'">Estate Detailed Information</a>';
 				
 			}
 	        
