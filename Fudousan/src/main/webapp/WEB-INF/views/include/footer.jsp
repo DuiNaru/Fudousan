@@ -3,6 +3,6 @@
 <!DOCTYPE html>
 
 <!-- footer -->
-<footer class="container-fluid text-center">
+<footer class="container-fluid text-center" >
  		<p>Copyright ⓒ 2018 FUDOUSAN ★ All Rights Reserved</p>
 </footer>
