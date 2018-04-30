@@ -174,5 +174,6 @@
     "306" : "Item Registration",    
     "307" : "Item Name",    
     "308" : "Item Update",    
-    "309" : "Item Delete" 
+    "309" : "Item Delete",    
+	"310" : "Update"    
 }

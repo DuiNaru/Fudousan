@@ -71,7 +71,7 @@
 						<tr id="item${item.itemId}">
 							<td>${item.itemName }</td>
 							<td><a class="btn btn-success" href="../item/itemModifyPage?itemId=${item.itemId}" data-lang="308">修正</a></td>
-							<td><input class="btn btn-warning" type="button" onclick="deleteItem(${item.itemId})" data-lang="309"></td>
+							<td><button class="btn btn-warning" type="button" onclick="deleteItem(${item.itemId})"><span data-lang="93"></span></button></td>
 						</tr>
 	
 					</c:forEach>
