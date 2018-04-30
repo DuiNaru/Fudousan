@@ -46,7 +46,6 @@
 					<div class="col-sm-12">
 			    		<img class="col-sm-12" src="" id="uploadPictures">
 					</div>
-					
 					<div class="input-group input-file" name="file">
 						<span class="input-group-btn">
 							<button class="btn btn-default btn-choose" type="button" data-lang="16"></button>
@@ -59,11 +58,11 @@
 				<div class="form-group">
 					<label for="InputDesigner" data-lang="19"></label>
 					<div class="btn-group" data-toggle="buttons">
-						<label class="btn btn-secondary active">
-							<input type="radio" name="designer" id="option1" autocomplete="off" value="1" checked> Yes
+						<label class="btn btn-secondary ">
+							<input type="radio" name="designer" id="option1" autocomplete="off" value="1" > Yes
 						</label>
-						<label class="btn btn-secondary">
-							<input type="radio" name="designer" id="option2" autocomplete="off" value="0"> No
+						<label class="btn btn-secondary active">
+							<input type="radio" name="designer" id="option2" autocomplete="off" value="0" checked> No
 						</label>
 					</div>
 				</div>

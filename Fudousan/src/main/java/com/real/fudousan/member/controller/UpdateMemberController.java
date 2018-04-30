@@ -100,7 +100,8 @@ public class UpdateMemberController {
 				// get member name 
 				String resultMemberName = member.getMemberName();
 							
-				session.setAttribute("memberName", resultMemberName);
+				session.setAttribute("loginMemberName", resultMemberName);
+				session.setAttribute("loginDesigner", member.getDesigner());
 				logger.info("회원 수정 종료");
 				
 				return "redirect:/";
@@ -169,6 +170,8 @@ public class UpdateMemberController {
 			// true 
 			logger.info("회원 등록 성공");
 			model.addAttribute(memberUpdateResult);
+			session.setAttribute("loginMemberName", member.getMemberName());
+			session.setAttribute("loginDesigner", member.getDesigner());
 			return "redirect:/";
 		}
 		else{

@@ -44,8 +44,10 @@
 		
 			<div class="form-group">
 			    <label for="InputPhoto">photo</label>
-			    <div >
-			    	<img src="/fudousan${member.picture}" id="uploadPictures">
+			    <div>
+			    	<c:if test="${member.picture} != null">
+			    		<img class="col-sm-12" src="/fudousan${member.picture}" id="uploadPictures">
+					</c:if>
 				</div>
 				<div class="input-group input-file" name="file">
 					<span class="input-group-btn">
