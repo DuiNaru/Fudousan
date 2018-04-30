@@ -20,10 +20,10 @@
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane active" id="home">
 						<!--  매물 관리 Start -->
-						<h1>매물 관리</h1>
+						<h1 data-lang="147">매물 관리</h1>
 						<div class="text-right">
-							<input type="button" value="매물 작성" class="btn btn-info"
-								onclick="location.href='/fudousan/bw'" />
+							<button type="button"  data-lang="142"  class="btn btn-info" data-lang="142"
+								onclick="location.href='/fudousan/bw'" /></button>
 						</div>
 
 						<!-- result -->
@@ -31,10 +31,10 @@
 							<table class="table">
 								<thead class="table">
 									<tr>
-										<th>Estate Id</th>
-										<th>Estate Name</th>
-										<th>Estate Modify</th>
-										<th>Estate Delete</th>
+										<th data-lang="117">Estate Id</th>
+										<th data-lang="116">Estate Name</th>
+										<th data-lang="145">Estate Modify</th>
+										<th data-lang="93">Estate Delete</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -42,8 +42,8 @@
 										<tr>
 											<td><a href="./estate/detailedinfomation?id=EstateId:${estate.estateId }">${estate.estateId}</a></td>
 											<td><a href="./estate/detailedinfomation?id=EstateId:${estate.estateId }">${estate.estateName}</a></td>
-											<td><input type="button" value="수정" class="btn btn-info" onclick="location.href='/fudousan/bc?estateId=${estate.estateId}'"></td>
-											<td><input type="button" value="삭제" class="btn btn-danger" onclick="location.href='deleteEntry?agencyId=${agencyId}&estateId=${estate.estateId}'"></td>
+											<td><button type="button"  data-lang="145" class="btn btn-info" onclick="location.href='/fudousan/bc?estateId=${estate.estateId}'"></button></td>
+											<td><button type="button" data-lang="93" class="btn btn-danger" onclick="location.href='deleteEntry?agencyId=${agencyId}&estateId=${estate.estateId}'"></button></td>
 										</tr>
 									</c:forEach>
 								</tbody>
