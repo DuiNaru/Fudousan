@@ -67,11 +67,11 @@
 									<td>${room.estate.estateId }</td>
 									<td>${room.estate.estateName }</td>
 									<td><a class="btn btn-default" href="../newRoom?estateId=${room.estate.estateId}&roomPublic=0">새로 꾸미기</a></td>
-									<td><a class="btn btn-default" href="../roomPage?roomId=${room.roomId}">수정</a></td>
+									<td><a class="btn btn-default" href="../roomPage?roomId=${room.roomId}" data-lang="112">수정</a></td>
 									<td><input class="btn btn-default" type="button" value="삭제" onclick="deleteRoom(${room.roomId})"></td>
 									<td>
-										<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="1" roomId="${room.roomId}"<c:if test="${room.roomPublic == 1}"> checked="checked"</c:if>>공개</p>
-										<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="0" roomId="${room.roomId}"<c:if test="${room.roomPublic == 0}"> checked="checked"</c:if>>비공개</p>
+										<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="1" roomId="${room.roomId}"<c:if test="${room.roomPublic == 1}"> checked="checked"</c:if>><span data-lang="119">공개</span></p>
+										<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="0" roomId="${room.roomId}"<c:if test="${room.roomPublic == 0}"> checked="checked"</c:if>><span data-lang="120">비공개</span></p>
 									</td>
 								</tr>
 								
