@@ -52,27 +52,27 @@
 					</div>
 					<div role="tabpanel" class="tab-pane" id="profile">
 						<!-- 매물 3D 모델링 관리  Start -->
-						<h1>매물 3D 모델링 관리</h1>
+						<h1 data-lang="148">매물 3D 모델링 관리</h1>
 						<div class="text-right">
-							<button type="button" class="btn btn-info" data-toggle="modal" data-target="#estateListModal">매물 모델링 관리</button>
+							<button type="button" data-lang="148" class="btn btn-info" data-toggle="modal" data-target="#estateListModal">매물 모델링 관리</button>
 						</div>
 						<!-- result -->
 						<table class="table">
 							<thead class="table">
 								<tr>
-									<th>Room Title</th>
-									<th>Snap Shot</th>
-									<th>Modify</th>
-									<th>Delete</th>
+									<th data-lang="116">Room Title</th>
+									<th data-lang="110">Snap Shot</th>
+									<th data-lang="145">Modify</th>
+									<th data-lang="93">Delete</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="room" items="${roomList }">	
 									<tr id="room${room.roomId}">
 										<td><c:if test="${empty room.roomTitle }">(名無し)</c:if><c:if test="${!empty room.roomTitle }">${room.roomTitle }</c:if></td>
-										<td><img class="col-sm-12" src="<c:url value="${room.snapshot}"/>"></td>
-										<td><a class="btn btn-info" href="./roomPage?roomId=${room.roomId}">수정</a></td>
-										<td><button type="button" class="btn btn-danger" onclick="roomDeleteListener(${room.roomId})">삭제</button></td>
+										<td><img style="width: 350px" class="col-sm-12" src="<c:url value="${room.snapshot}"/>"></td>
+										<td><a class="btn btn-info" data-lang="145" href="./roomPage?roomId=${room.roomId}"></a></td>
+										<td><button type="button" class="btn btn-danger" data-lang="93" onclick="roomDeleteListener(${room.roomId})">삭제</button></td>
 									</tr>
 								</c:forEach>
 							</tbody>
