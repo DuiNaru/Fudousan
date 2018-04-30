@@ -2,7 +2,11 @@
 
 //var socket = io('https://sunnyserver.dlinkddns.com');
 
-let socket = io("https://10.10.12.139:3443");
+let socket = io("https://syper01.com/roompage", {
+	path: "/fudousan",
+	secure: true,
+	rejectUnauthorized: false
+});
 
 
 $(function(){

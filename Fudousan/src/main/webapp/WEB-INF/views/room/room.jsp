@@ -304,7 +304,7 @@
 	<div class="top-menu">
 		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button><br>
 		<video id="localCam" autoplay="autoplay" muted="muted"></video><br>
-		<video id="remoteCam" autoplay="autoplay" muted="muted"></video>
+		<video id="remoteCam" autoplay="autoplay"></video>
 	</div>
 	
 	<div id="textureInfo" class="texture-menu">
