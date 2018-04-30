@@ -6,18 +6,30 @@ $(function(){
 	$('#loginBtn').on('click', function(){
 		formCheck();
 	});
-})
+	
+	$("#memberEmail").on("keydown", function(event){
+		if (event.key === "Enter"){
+			formCheck();
+		}
+	});
+	
+	$("#password").on("keydown", function(event){
+		if (event.key === "Enter"){
+			formCheck();
+		}
+	});
+});
 
 function formCheck(){
 	var memberEmail = $('#memberEmail');
 	var password = $('#password');
 	
 	if (memberEmail.val() == ''){
-		alert('Input your name');
-		memberID.focus();
+		alert('Input your Email, please.');
+		memberEmail.focus();
 	}
 	else if (password.val() == ''){
-		alert('Input your password');
+		alert('Input your password, please.');
 		password.focus();
 	}
 	else {
@@ -69,14 +81,9 @@ function formCheck(){
 						'<li><a href="javascript:selectLanguage(\'en\')"><img  src="/fudousan/resources/image/if_United States of America(USA)_16036.png"></a></li>';
 							
 						$('#navbar-ul').html(str);
-		
 						
-					
-							
-						
-						
-							
 					} else if (lang == "jp"){
+						
 						str +=   '<li><a>' + result.memberName + ', Welcome!</a></li>' 
 							+	 '<li><a href="/fudousan/logout" data-lang ="1">Logout</a></li>';
 						
@@ -98,10 +105,6 @@ function formCheck(){
 
 						$('#navbar-ul').html(str);
 						
-						
-					
-							
-							
 					} else if (lang == "en"){
 						
 						str +=   '<li><a>' + result.memberName + ', Welcome!</a></li>' 
