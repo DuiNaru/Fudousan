@@ -247,7 +247,7 @@ function initLoadingManager() {
 	manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
 
 		$("#blocker").show();
-		$("#blocker p").empty();
+		$("#blocker p").html( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
 		console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
 
 	};
@@ -263,6 +263,7 @@ function initLoadingManager() {
 
 	manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
 
+		$("#blocker").show();
 		$("#blocker p").html(url+" Loading... ("+itemsLoaded+"/"+itemsTotal+")");
 		console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
 
@@ -270,8 +271,7 @@ function initLoadingManager() {
 
 	manager.onError = function ( url ) {
 
-		$("#blocker").hide();
-		$("#blocker p").empty();
+		$("#blocker p").html('There was an error loading ' + url);
 		console.log( 'There was an error loading ' + url );
 
 	};
@@ -1402,10 +1402,15 @@ function move(object, x, y, z, useAni) {
 	if ( useAni === undefined || useAni == true ) {
 		itemMoveAni(object, targetX, targetY, targetZ);
 	} else {
-		console.log(useAni);
-		object.position.x = targetX;
-		object.position.y = targetY;
-		object.position.z = targetZ;
+		if(x != null) {
+			object.position.x = x;
+		}
+		if(y != null) {
+			object.position.y = y;
+		}
+		if(z != null) {
+			object.position.z = z;
+		}
 	}
 }
 
@@ -1655,7 +1660,6 @@ function applyItemChange(roomItem) {
 		success:function(data) {
 			
 			if(data != null && data != false && data != "false") {
-				
 				infoDataChange = false;
 
 				if(CommandCallBack.onItemChange !== undefined) {
@@ -1694,6 +1698,7 @@ function applyItemChangeLocal(roomItem) {
 	for(var i = 0; i < curRoomItems.length; i++) {
 		if ( curRoomItems[i].roomItem.roomItemId == roomItem.roomItemId ) {
 			result = curRoomItems[i].roomItem.clone();
+			
 			move(curRoomItems[i], roomItem.x, roomItem.y, roomItem.z);
 			rotate(curRoomItems[i], roomItem.rotateX, roomItem.rotateY, roomItem.rotateZ);
 			return result;
@@ -1976,15 +1981,15 @@ var NewCommand = {
 				applyItemChange(command.onDoRoomItem.clone());
 				command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
 			};
-			command.onDoRoomItem = roomItem;
+			command.onDoRoomItem = roomItem.clone();
 			command.onRedo = function() {
 				applyItemChange(command.onRedoRoomItem.clone());
 				command.onDoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
 			};
-			command.onRedoRoomItem = roomItem;
+			command.onRedoRoomItem = roomItem.clone();
 			addCommand(command);
 			
-			applyItemChange(roomItem);
+			applyItemChange(roomItem.clone());
 			command.onRedoRoomItem = applyItemChangeLocal(command.onDoRoomItem.clone());
 		},
 		// 단순 아이템 속성 변경 커맨드

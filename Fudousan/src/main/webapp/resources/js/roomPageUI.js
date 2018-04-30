@@ -210,6 +210,12 @@ function resetInfo() {
  */
 function itemApplyListener() {
 	//applyItemChange(curSelected.roomItem);
+	curSelected.roomItem.x = curSelected.position.x;
+	curSelected.roomItem.y = curSelected.position.y;
+	curSelected.roomItem.z = curSelected.position.z;
+	curSelected.roomItem.rotateX = curSelected.rotation.x*180/Math.PI;
+	curSelected.roomItem.rotateY = curSelected.rotation.y*180/Math.PI;
+	curSelected.roomItem.rotateZ = curSelected.rotation.z*180/Math.PI;
 	NewCommand.itemChange(curSelected.roomItem);
 }
 
