@@ -109,7 +109,7 @@ public class RoomService {
 		room.setHeight(r.getHeight());
 		
 		// 실제 방이 있는 룸일 경우, 대표 방의 벽을 복사한다.
-		if(r.getEstate() != null && r.getEstate().getEstateId() != null) {
+		if(r.getEstate() != null && r.getEstate().getEstateId() != null && r.getEstate().getBaseRoomId() != null) {
 			int baseRoomId = r.getEstate().getBaseRoomId();
 			Map<String, List<?>> map = wallService.getWallAndConnector(baseRoomId);
 			logger.debug("BaseRoomId : " + baseRoomId);
