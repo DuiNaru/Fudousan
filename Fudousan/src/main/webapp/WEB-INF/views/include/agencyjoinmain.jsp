@@ -54,11 +54,11 @@
 				<div class="form-group">
 					<label for="InputDesigner" data-lang="19"></label>
 					<div class="btn-group" data-toggle="buttons">
-						<label class="btn btn-secondary active">
-							<input type="radio" name="designer" id="option1" autocomplete="off" value="1" checked> Yes
+						<label class="btn btn-secondary ">
+							<input type="radio" name="designer" id="option1" autocomplete="off" value="1" > Yes
 						</label>
-						<label class="btn btn-secondary">
-							<input type="radio" name="designer" id="option2" autocomplete="off" value="0"> No
+						<label class="btn btn-secondary active">
+							<input type="radio" name="designer" id="option2" autocomplete="off" value="0" checked> No
 						</label>
 					</div>
 				</div>

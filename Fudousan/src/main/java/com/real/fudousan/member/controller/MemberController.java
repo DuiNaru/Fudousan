@@ -111,6 +111,7 @@ public class MemberController {
 			session.setAttribute("what_your_name", loginMember.getMemberName());
 			session.setAttribute("loginEmail", email);
 			session.setAttribute("loginMemberName", loginMember.getMemberName());
+			session.setAttribute("loginDesigner", loginMember.getDesigner());
 			// 회원 권한 분류 세션에 추가 (2018.4.4 15:11)
 			session.setAttribute("permissionId", loginMember.getPermission().getPermissionId());
 			// 회원 아이디 세션에 추가

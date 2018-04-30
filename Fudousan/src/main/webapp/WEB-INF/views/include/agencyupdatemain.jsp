@@ -43,8 +43,10 @@
 				    <c:if test="${!empty agency.member.picture}">
 				    	<img class="col-sm-12" src="/fudousan${agency.member.picture}" id="uploadPictures">
 				    </c:if> --%>
-				    <div >
-			    		<img src="/fudousan${member.picture}" id="uploadPictures">
+				    <div>
+				    	<c:if test="${member.picture} != null">
+			    			<img class="col-sm-12" src="/fudousan${member.picture}" id="uploadPictures">
+						</c:if>					
 					</div>
 					<div class="input-group input-file" name="file">
 						<span class="input-group-btn">

@@ -6,18 +6,30 @@ $(function(){
 	$('#loginBtn').on('click', function(){
 		formCheck();
 	});
-})
+	
+	$("#memberEmail").on("keydown", function(event){
+		if (event.key === "Enter"){
+			formCheck();
+		}
+	});
+	
+	$("#password").on("keydown", function(event){
+		if (event.key === "Enter"){
+			formCheck();
+		}
+	});
+});
 
 function formCheck(){
 	var memberEmail = $('#memberEmail');
 	var password = $('#password');
 	
 	if (memberEmail.val() == ''){
-		alert('Input your name');
-		memberID.focus();
+		alert('Input your Email, please.');
+		memberEmail.focus();
 	}
 	else if (password.val() == ''){
-		alert('Input your password');
+		alert('Input your password, please.');
 		password.focus();
 	}
 	else {
@@ -46,6 +58,7 @@ function formCheck(){
 					var commentBox = "";
 					var lang = getCookie("lang");
 					console.dir("result email:"+result.email);
+
 					if (lang == "ko"){
 						
 						str +=   '<li><a>' + result.memberName + ', Welcome!</a></li>' 
@@ -60,7 +73,7 @@ function formCheck(){
 						}else if(result.permissionId == 3){
 							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="85" >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>';
-						}else if(result.permissionId == 4){
+						}else if(result.permissionId == 99){
 							str += '<li><a href="/fudousan/admin/" data-lang ="88">Admin page</a></li>';
 						}
 						
@@ -69,14 +82,9 @@ function formCheck(){
 						'<li><a href="javascript:selectLanguage(\'en\')"><img  src="/fudousan/resources/image/if_United States of America(USA)_16036.png"></a></li>';
 							
 						$('#navbar-ul').html(str);
-		
 						
-					
-							
-						
-						
-							
 					} else if (lang == "jp"){
+						
 						str +=   '<li><a>' + result.memberName + ', Welcome!</a></li>' 
 							+	 '<li><a href="/fudousan/logout" data-lang ="1">Logout</a></li>';
 						
@@ -89,7 +97,7 @@ function formCheck(){
 						}else if(result.permissionId == 3){
 							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="84"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>';
-						}else if(result.permissionId == 4){
+						}else if(result.permissionId == 99){
 							str += '<li><a href="/fudousan/admin/" data-lang ="88">Admin page</a></li>';			
 						}
 						str +=  '<li><a href="javascript:selectLanguage(\'ko\')"><img  src="/fudousan/resources/image/if_South Korea_15986.png"></a></li>'+
@@ -98,10 +106,6 @@ function formCheck(){
 
 						$('#navbar-ul').html(str);
 						
-						
-					
-							
-							
 					} else if (lang == "en"){
 						
 						str +=   '<li><a>' + result.memberName + ', Welcome!</a></li>' 
@@ -116,17 +120,14 @@ function formCheck(){
 						}else if(result.permissionId == 3){
 							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="85"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="84">Agency Page</a></li>';
-						}else if(result.permissionId == 4){
+						}else if(result.permissionId == 99){
 							str += '<li><a href="/fudousan/admin/" data-lang ="84">Admin page</a></li>';
 						}
 						
-						str +=   '<li><a href="javascript:selectLanguage(\'ko\')"><img  src="/fudousan/resources/image/if_South Korea_15986.png"></a></li>'+
-						'<li><a href="javascript:selectLanguage(\'jp\')"><img  src="/fudousan/resources/image/if_Japan_92149.png"></a></li>'+
-						'<li><a href="javascript:selectLanguage(\'en\')"><img  src="/fudousan/resources/image/if_United States of America(USA)_16036.png"></a></li>';
-
-						$('#navbar-ul').html(str);	
+						$('#navbar-ul').html(str);
 						
 					}
+					
 					translation();
 				}
 			},
