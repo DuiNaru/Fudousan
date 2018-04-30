@@ -126,8 +126,9 @@ function formCheck(){
 						
 						$('#navbar-ul').html(str);
 						
-						translation();
 					}
+					
+					translation();
 				}
 			},
 			error: function(err){
