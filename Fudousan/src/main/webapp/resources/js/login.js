@@ -126,13 +126,8 @@ function formCheck(){
 
 						$('#navbar-ul').html(str);	
 						
-					
-						
-						
-					
-						
 					}
-
+					translation();
 				}
 			},
 			error: function(err){
