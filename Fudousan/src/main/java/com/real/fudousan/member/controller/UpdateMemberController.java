@@ -76,8 +76,10 @@ public class UpdateMemberController {
 				String savedFileName=FileService.saveFile(file, uploadPath, false);
 				// 검색 
 				Member result=service.selectMemberOne(member);
-				// 삭제 
-				FileService.deleteFile(result.getPicture());
+				if( result.getPicture() != null ) {
+					// 삭제 
+					FileService.deleteFile(result.getPicture());
+				}
 				// 등록 
 				member.setPicture(uploadPath+"/"+savedFileName);
 			}
