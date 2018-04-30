@@ -21,7 +21,7 @@
   			<!-- Tab panes -->
   			<div class="tab-content">
     			<div role="tabpanel" class="tab-pane active" id="home">
-    				<h1>3D 작성 매물 확인</h1>
+    				<h1 data-lang="94">3D 작성 매물 확인</h1>
 					<!-- search button -->
 					<div id="custom-search-input">
             			<div class="input-group col-md-12"  name="seachedRoom">
@@ -41,7 +41,7 @@
         				<tr>
         					<th data-lang="8">Name</th>
         					<th data-lang="92">Create</th>
-        					<th>Delete</th>
+        					<th data-lang="93">Delete</th>
         				</tr>
        				</thead>
         				<tbody id="hhh">
