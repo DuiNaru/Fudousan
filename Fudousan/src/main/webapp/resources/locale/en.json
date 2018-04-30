@@ -143,7 +143,9 @@
     "141" : "Floor area ratio (%)",
     "142" : "Registration",
     "143" : "Reset",
-    "144" : "New design"
+    "144" : "New design",
+    "145" :"Edit property",
+    "146" : "Modifications completed"
     
 
     
