@@ -41,6 +41,12 @@
 	<!-- login modal  -->
  	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
  	
+ 	  <!-- estate list modal  -->
+  <%@include file="estateListModal.jsp" %>
+ 	
+	<!-- header -->
+	<%@include file="/WEB-INF/views/include/header.jsp" %>
+ 	
 	<!-- estate list modal  -->
  	<%@include file="estateListModal.jsp" %> 
  	

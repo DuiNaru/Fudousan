@@ -46,6 +46,13 @@
 	</style>
   </head>
   <body>
+  <%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
+  <!-- estate list modal  -->
+  <%@include file="estateListModal.jsp" %>
+ 	
+	<!-- header -->
+	<%@include file="/WEB-INF/views/include/header.jsp" %>
+  
   
   <!-- 로그인 모달 시작 -->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
@@ -69,7 +76,7 @@
 	</div>
 	<!-- 로그인 모달 끝 -->
    <!-- Header -->
-		 <nav class="navbar navbar-default" style="margin: auto 0"> 
+		<%--  <nav class="navbar navbar-default" style="margin: auto 0"> 
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header">
@@ -109,7 +116,7 @@
 		        
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
+		  </div><!-- /.container-fluid --> --%>
 		 </nav> 
    
  

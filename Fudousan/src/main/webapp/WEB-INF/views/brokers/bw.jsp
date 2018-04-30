@@ -48,6 +48,13 @@
   </head>
   <body>
   <%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
+  <!-- estate list modal  -->
+  <%@include file="estateListModal.jsp" %>
+ 	
+	<!-- header -->
+	<%@include file="/WEB-INF/views/include/header.jsp" %>
+  
+  
   <!-- 로그인 모달 시작 -->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
@@ -70,8 +77,8 @@
    </div>
    <!-- 로그인 모달 끝 -->
    <!-- Header -->
-       <nav class="navbar navbar-default" style="margin: auto 0"> 
-        <div class="container-fluid">
+     <!--   <nav class="navbar navbar-default" style="margin: auto 0">  -->
+        <%-- <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -110,7 +117,7 @@
               
             </ul>
           </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+        </div><!-- /.container-fluid --> --%>
        </nav> 
    
  
@@ -142,7 +149,7 @@
 				
 				<div class="form-group">
 					<label for="inputPrefecture" data-lang="123">가격</label>
-					<input type="text" class="form-control" id="inputPrefecture" data-lang="97" placeholder=" 가격" name="price">
+					<input type="text" class="form-control" id="inputPrefecture" data-lang="123" placeholder=" 가격" name="price">
 				</div>
 	
 				<div class="form-group">
