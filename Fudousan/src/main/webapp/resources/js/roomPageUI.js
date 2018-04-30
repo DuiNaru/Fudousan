@@ -16,7 +16,7 @@ $(function() {
 		orientation: "horizontal",
 		range: "min",
 		slide: function( event, ui ) {
-			rotate(curSelected, ui.value, null, null);
+			rotate(curSelected, ui.value, null, null, false);
 			$("input[name='itemRotateX']").val(ui.value);
 			infoDataChange = true;
 		}
@@ -29,7 +29,7 @@ $(function() {
 		orientation: "horizontal",
 		range: "min",
 		slide: function( event, ui ) {
-			rotate(curSelected, null, ui.value, null);
+			rotate(curSelected, null, ui.value, null, false);
 			$("input[name='itemRotateY']").val(ui.value);
 			infoDataChange = true;
 		}
@@ -42,7 +42,7 @@ $(function() {
 		orientation: "horizontal",
 		range: "min",
 		slide: function( event, ui ) {
-			rotate(curSelected, null, null, ui.value);
+			rotate(curSelected, null, null, ui.value, false);
 			$("input[name='itemRotateZ']").val(ui.value);
 			infoDataChange = true;
 		}
@@ -55,7 +55,7 @@ $(function() {
 		orientation: "horizontal",
 		range: "min",
 		slide: function( event, ui ) {
-			move(curSelected, ui.value, null, null);
+			move(curSelected, ui.value, null, null, false);
 			$("input[name='itemX']").val(ui.value);
 			infoDataChange = true;
 		}
@@ -68,7 +68,7 @@ $(function() {
 		orientation: "horizontal",
 		range: "min",
 		slide: function( event, ui ) {
-			move(curSelected, null, ui.value, null);
+			move(curSelected, null, ui.value, null, false);
 			$("input[name='itemY']").val(ui.value);
 			infoDataChange = true;
 		}
@@ -81,7 +81,7 @@ $(function() {
 		orientation: "horizontal",
 		range: "min",
 		slide: function( event, ui ) {
-			move(curSelected, null, null, ui.value);
+			move(curSelected, null, null, ui.value, false);
 			$("input[name='itemZ']").val(ui.value);
 			infoDataChange = true;
 		}
@@ -210,6 +210,12 @@ function resetInfo() {
  */
 function itemApplyListener() {
 	//applyItemChange(curSelected.roomItem);
+	curSelected.roomItem.x = curSelected.position.x;
+	curSelected.roomItem.y = curSelected.position.y;
+	curSelected.roomItem.z = curSelected.position.z;
+	curSelected.roomItem.rotateX = curSelected.rotation.x*180/Math.PI;
+	curSelected.roomItem.rotateY = curSelected.rotation.y*180/Math.PI;
+	curSelected.roomItem.rotateZ = curSelected.rotation.z*180/Math.PI;
 	NewCommand.itemChange(curSelected.roomItem);
 }
 

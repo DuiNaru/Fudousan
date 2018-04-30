@@ -21,7 +21,7 @@ public class InteriorInterceptor extends HandlerInterceptorAdapter {
 		Integer permissionId = (Integer) session.getAttribute("permissionId");
 		
 		logger.debug("InteriorInterceptor preHandler session(permissionId) : " + permissionId);
-		if (permissionId != null && permissionId == 2) {
+		if (permissionId != null && (permissionId == 2 || permissionId == 99)) {
 			result &= true;
 		} else {
 			result = false;
