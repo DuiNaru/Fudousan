@@ -142,7 +142,7 @@
 		set 
 			state = 2
 		where
-			REQUEST_MEMBER_ID = #{requestMemberId} and REQUESTED_MEMBER_ID = #{requestedMemberId}
+			REQUEST_MEMBER_ID = #{requestMemberId} and REQUESTED_MEMBER_ID = #{requestedMemberId} and room_id = #{room.roomId}
 	</update>
 	
 	<update id="updateState" parameterType="advice">
