@@ -142,8 +142,10 @@ public class UpdateMemberController {
 		if (file != null && !file.isEmpty()) {
 			// 검색 
 			Member result=service.selectMemberOne(member);
-			// 삭제 
-			FileService.deleteFile(result.getPicture());
+			if( result.getPicture() != null ) {
+				// 삭제 
+				FileService.deleteFile(result.getPicture());
+			}
 			// 저장
 			String savedFileName=FileService.saveFile(file, uploadPath, false);
 			// 등록 

@@ -240,6 +240,7 @@ public class FileService {
 	 * @return 삭제 여부
 	 */
 	public static boolean deleteFile(String fullpath) {
+		logger.info("deleteFile("+fullpath+") Start");
 		// 파일 삭제 여부를 리턴할 변수
 		boolean result = false;
 
@@ -252,6 +253,7 @@ public class FileService {
 			result = true;
 		}
 
+		logger.info("deleteFile("+fullpath+") End");
 		return result;
 	}
 
