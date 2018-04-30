@@ -20,7 +20,7 @@
 		  <div class="tab-content">
 		    <div role="tabpanel" class="tab-pane active" id="home">
 		    <!-- 사용자 요청 리스트 Start -->
-				<h1>사용자 요청 리스트</h1>
+				<h1 data-lang="106">사용자 요청 리스트</h1>
 				<!-- result -->      
 				<table class="table">
 					<thead class="table">
@@ -46,7 +46,7 @@
 		    </div>
 		    <div role="tabpanel" class="tab-pane" id="profile">
 					<!-- 3D 작성 매물 확인  Start -->
-		  			<h1>3D 작성 매물 확인</h1>
+		  			<h1 data-lang="94">3D 작성 매물 확인</h1>
 			
 					<!-- result -->
 					<table class="table">
@@ -81,7 +81,7 @@
 			</div>
 		    <div role="tabpanel" class="tab-pane" id="messages">
 		    	<!-- 내가 만든 리스트 Start -->
-	   			<h1>내가 만든 리스트</h1>
+	   			<h1 data-lang="107">내가 만든 리스트</h1>
 	   			<div class="text-right">
 					<a class="btn btn-info" href="../newRoom?roomPublic=0">모델링 작성</a>
 				</div>
