@@ -112,7 +112,15 @@ var linkClass = 'hidden';
 	        if ($('#loginEmail').val()!=null && $('#loginEmail').val() !="" ) {
 	        	linkClass = 'show';
 			} 
-			content += '	<a name="detailLink" class="'+linkClass+'" href="estate/detailedinfomation?id='+loan+'">Detailed Information</a>';
+	        if (loan.contains("Agency") ) {
+				
+	        	content += '	<a name="detailLink" class="'+linkClass+'" href="estate/detailedinfomation?id='+loan+'">Detailed Information</a>';
+			
+	        }else{
+	        	content += '	<a name="detailLink" class="'+linkClass+'" href="agency/detailedinformation?id='+loan+'">Detailed Information</a>';
+				
+			}
+	        
 
 	        content +='</div>';
 	        	

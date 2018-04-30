@@ -54,7 +54,7 @@
         							</c:choose>
 									</a></p></td>
 	        						<td><a class="btn btn-info" data-lang="98" href="<c:url value="/roomPage?roomId=${room.roomId}&roomPublic=0"/>">내집꾸미기</a></td>
-	        						<td><a class="btn btn-warning"data-lang="99" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a></td>
+	        						<td><a class="btn btn-warning" data-lang="99" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a></td>
 	        					</tr>
         					</c:forEach>
         				</tbody>
@@ -78,9 +78,9 @@
 					<!-- result -->
 					<c:forEach var="favorite" items="${flist}">
 						<div class="col-sm-12 form-group" name="favorite">
-							<p><a href="/fudousan/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}estataId:${favorite.estate.estateId}"/></p>
+							<p><a href="/fudousan/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}">${favorite.estate.estateName}</a></p>
+							<button><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}"/>" data-lang="103">매물상세정보</a></button>
 							<input type="hidden" value="${favorite.estate.estateId}" id="favo" name="favo" >
-							<button><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}"/>">매물상세정보</a></button>
 						</div>
 						
 					</c:forEach>
@@ -115,7 +115,7 @@
 			<h6 data-lang="97">인테리어 업자 승인 여부</h6>
 			<c:forEach var="helpRes" items="${rclist}">
 			 		<div class="col-sm-12 form-group">
-			 			<p><c:out value="${helpRes.requestedMemberId}"/><span data-lang="102">님이</span><c:out value="${helpRes.requestMemberId }님의 요청을 승락하셨습니다. "/></p>
+			 			<p><c:out value="${helpRes.requestedMemberId}"/><span data-lang="102">님이 당신의 요청을 받아들였습니다.</span></p>
 						<button data-lang="100"  id="cancel" name="cancel" onclick="sayonara()"></button>
 						<input type="hidden" value="${helpRes.requestMemberId }" id="client" name="client">
 						<input type="hidden" value="${helpRes.requestedMemberId }" id="accepter" name="accepter">
