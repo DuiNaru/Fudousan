@@ -93,5 +93,19 @@
     "91": "Input your email",
     "92": "Create",
     "93": "Delete",
-    "94": "3D offering check List"
+    "94": "3D offering check List",
+    "95": "Property name",
+    "96": "Transaction type",
+    "97" : "Price",
+    "98": "Apartment",
+    "99": "Dwelling house",
+    "110" : "Structure",
+    "111" : "Building Year",
+    "112" :"The structure of a building",
+    "113" : "Purpose",
+    "114" : "Concealment rate (%)",
+    "115" : "Floor area ratio (%)",
+    "116" : "Registration",
+    "117" : "Reset"
+    
 }
