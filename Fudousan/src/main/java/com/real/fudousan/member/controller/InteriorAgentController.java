@@ -53,17 +53,7 @@ public class InteriorAgentController {
 		
 		// 요청 받은 목록
 		List<Advice> adviceList = adviceService.getRequestedList(memberId);
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
-		logger.info("인테리어 업자는 요청목록을 몇개 받는가? : " + adviceList.size());
+		
 		// 실제 매물이 존재하는 모델링 목록
 		List<Room> realRoomList = roomService.showAllRoom(memberId, true);
 		

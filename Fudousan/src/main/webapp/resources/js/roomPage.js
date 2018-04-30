@@ -446,11 +446,11 @@ function onDocumentMouseMove(event) {
 		// 벽 반 투명
 		raycaster.setFromCamera(mouse, camera);
 		var intersects = raycaster.intersectObjects(walls.children, true);
-		if (intersects.length > 0) {
-			for ( var i = 0; i < intersects[0].object.material.length; i++ ) {
-			    intersects[0].object.material[i].opacity = onMouseOpacity;
-			    //intersects[0].object.material[i].transparent = true;
-			    //intersects[0].object.material[i].needsUpdate = true;
+		for(var j = 0; j < intersects.length; j++) {
+			for ( var i = 0; i < intersects[j].object.material.length; i++ ) {
+			    intersects[j].object.material[i].opacity = onMouseOpacity;
+			    //intersects[j].object.material[i].transparent = true;
+			    //intersects[j].object.material[i].needsUpdate = true;
 			}
 		}
 	}
@@ -1443,14 +1443,19 @@ function moveRoomItem(roomItem, excuteCallBack, useAni) {
  * @param rx 도
  * @param ry 도
  * @param rz 도
+ * @param useAni 애니메이션 사용여부
  * @returns
  */
-function rotate(object, rx, ry, rz) {
+function rotate(object, rx, ry, rz, useAni) {
 	let targetRX, targetRY, targetRZ;
 	
 	if ( rx != null ) {
 		targetRX = rx * Math.PI / 180;
 		object.roomItem.rotateX = rx;
+
+		if ( useAni !== undefined && useAni == false ) {
+			object.rotation.x = targetRX;
+		}
 	}
 	else {
 		targetRX = object.rotation.x;
@@ -1459,6 +1464,10 @@ function rotate(object, rx, ry, rz) {
 	if ( ry != null ) {
 		targetRY = ry * Math.PI / 180;
 		object.roomItem.rotateY = ry;
+
+		if ( useAni !== undefined && useAni == false ) {
+			object.rotation.y = targetRY;
+		}
 	}
 	else {
 		targetRY = object.rotation.y;
@@ -1467,12 +1476,18 @@ function rotate(object, rx, ry, rz) {
 	if ( rz != null ) {
 		targetRZ = rz * Math.PI / 180;
 		object.roomItem.rotateZ = rz;
+
+		if ( useAni !== undefined && useAni == false ) {
+			object.rotation.z = targetRZ;
+		}
 	}
 	else {
 		targetRZ = object.rotation.z;
 	}
 	
-	itemRotateAni(object, targetRX, targetRY, targetRZ);
+	if ( useAni === undefined || useAni == true ) {
+		itemRotateAni(object, targetRX, targetRY, targetRZ);
+	} 
 }
 
 /**
@@ -1609,12 +1624,15 @@ function saveRoomItem(roomItem) {
  * @returns
  */
 function applyRoomItem(object) {
-	object.position.x = object.roomItem.x;
+	/*object.position.x = object.roomItem.x;
 	object.position.y = object.roomItem.y;
 	object.position.z = object.roomItem.z;
 	object.rotation.x = object.roomItem.rotateX * Math.PI / 180;
 	object.rotation.y = object.roomItem.rotateY * Math.PI / 180;
-	object.rotation.z = object.roomItem.rotateZ * Math.PI / 180;
+	object.rotation.z = object.roomItem.rotateZ * Math.PI / 180;*/
+	
+	itemMoveAni(object, object.roomItem.x, object.roomItem.y, object.roomItem.z);
+	itemRotateAni(object, object.roomItem.rotateX * Math.PI / 180, object.roomItem.rotateY * Math.PI / 180, object.roomItem.rotateZ * Math.PI / 180);
 }
 
 /**

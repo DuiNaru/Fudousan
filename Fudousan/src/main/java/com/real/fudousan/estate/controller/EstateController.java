@@ -266,6 +266,10 @@ public class EstateController {
 		logger.info("매물 상세 보기 이동 시작 ");
 		System.out.println("id"+id);
 		String result[] = id.split(":"); 
+		if(result.length == 0) {
+			logger.info("id가 없이 매물 정보를 요청하였습니다.");
+			 return "redirect:/";
+		}
 		String estateIdString = result[1];	
 		int estateId=Integer.parseInt(estateIdString);
 		
