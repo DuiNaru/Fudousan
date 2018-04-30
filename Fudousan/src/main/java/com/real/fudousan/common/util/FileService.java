@@ -75,9 +75,9 @@ public class FileService {
 		}
 		// 확장자가 있는 경우
 		else {
-			//ext = "";
+			ext = "";
 			//ext = "." + originalFilename.substring(lastIndex + 1);
-			ext = originalFilename.substring(lastIndex + 1);
+			//ext = originalFilename.substring(lastIndex + 1);
 		}
 
 		// 저장할 전체 경로를 포함한 File 객체
