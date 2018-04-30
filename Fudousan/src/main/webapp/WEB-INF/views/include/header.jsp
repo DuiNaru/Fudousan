@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html >
 	<!-- Header -->
 	<nav class="navbar navbar-default" style="margin: auto 0">
@@ -67,6 +68,10 @@
 					<li><a href="/fudousan/memberupdate/agencyupdate?email=${sessionScope.loginEmail}" data-lang ="84">Update Member</a></li>
 					
 					<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>
+					
+					<c:if test="${sessionScope.loginDesigner == 1 }">
+						<li><a href="/fudousan/interior/" data-lang ="87">Interior Page</a></li>
+					</c:if>
 				</c:if>
 				<c:if test="${sessionScope.permissionId == 99 }">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
