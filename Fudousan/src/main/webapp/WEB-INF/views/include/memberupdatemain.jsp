@@ -44,15 +44,15 @@
 		
 			<div class="form-group">
 			    <label for="InputPhoto">photo</label>
-			    <img src="/fudousan${member.picture}">
+			    <div class="thumbnail">
+			    	<img src="/fudousan${member.picture}" id="uploadPictures">
+				</div>
 				<div class="input-group input-file" name="file">
 					<span class="input-group-btn">
 		        		<button class="btn btn-default btn-choose" type="button">선택</button>
 		    		</span>
 		    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요' name="picture" value="${member.picture }"/>
-		    		<span class="input-group-btn">
-		       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
-		    		</span>
+		    
 				</div>
 			</div>
 

@@ -43,14 +43,16 @@
 			
 				<div class="form-group">
 					<label for="InputPhoto" data-lang="15"></label>
+					<div class="col-sm-12">
+			    		<img class="col-sm-12" src="" id="uploadPictures">
+					</div>
+					<br>
 					<div class="input-group input-file" name="file">
 						<span class="input-group-btn">
 							<button class="btn btn-default btn-choose" type="button" data-lang="16"></button>
 						</span>
 						<input type="text" class="form-control" data-lang="17" name="picture"/>
-						<span class="input-group-btn">
-							<button class="btn btn-warning btn-reset" type="button" data-lang="18"></button>
-						</span>
+					
 					</div>
 				</div>
 	

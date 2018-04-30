@@ -22,7 +22,7 @@ $(function(){
 					'<div class="col-sm-1">'+
 					'<div class="thumbnail">';
 				if(reply.member.picture !=null){
-					str +=	'<img class="img-responsive user-photo" src="'+reply.member.picture+'">';
+					str +=	'<img class="img-responsive user-photo" src="/fudousan'+reply.member.picture+'">';
 					
 				}else{	
 					str +=	'<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
