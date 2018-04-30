@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.real.fudousan.agency.service.AgencyService;
 import com.real.fudousan.agency.vo.Agency;
@@ -21,6 +22,7 @@ import com.real.fudousan.estate.vo.Estate;
 import com.real.fudousan.estate.vo.MunicipalityCode;
 import com.real.fudousan.estate.vo.TransType;
 import com.real.fudousan.member.controller.MemberController;
+import com.real.fudousan.room.service.RoomService;
 
 
 
@@ -40,6 +42,8 @@ public class EstateController {
 	private EntryService entryService;
 	@Autowired
 	private AgencyService agencyService;
+	@Autowired
+	private RoomService roomService;
 	
 
 	
@@ -78,6 +82,7 @@ public class EstateController {
 		estate.setCoverageratio(coverageratio);
 		estate.setFloorarearatio(floorarearatio);
 		estate.setAddress(address);
+		estate.setAddress(estate.getPrefecture()+estate.getMunicipality()+estate.getDistrictname()+estate.getAddress());
 		
 		estate.setEstateX(estate.getEstateX());
 		estate.setEstateY(estate.getEstateY());
@@ -112,7 +117,6 @@ public class EstateController {
 	@RequestMapping(value="deleteEntry" ,method=RequestMethod.GET)
 	public String deleteEntry(Model model, HttpSession session, Estate estate, int agencyId , int estateId, Agency Select){
 		
-		
 		Entry entry = new Entry();
 		
 		Agency agency = new Agency();
@@ -123,19 +127,13 @@ public class EstateController {
 		deleteEstate.setEstateId(estateId);
 		entry.setEstate(deleteEstate);
 		
-		
 		System.out.println("entry : " + entry);
-		
 		entryService.deleteEntry(entry);
 		
 			
 		return "redirect:bm";
 	}
-	
 
-	
-	
-	
 	 @RequestMapping(value="okhtest", method=RequestMethod.GET)
 	    public String prototype() {
 		 logger.info("okh 테스트 페이지 이동");
@@ -206,7 +204,7 @@ public class EstateController {
 			
 			System.out.println(price);
 			System.out.println("estate2 = " +   estate);
-			
+				
 			
 			estateService.updateByIds(estate);
 			System.out.println("여기까지 1");
@@ -242,9 +240,13 @@ public class EstateController {
 		model.addAttribute("select", select);
 	
 		//에이전시 아이디 
-		int agencyId = agencyService.selectAgencyId(email);
+		//int agencyId = agencyService.selectAgencyId(email);
+		int agencyId = (int)session.getAttribute("loginId");
 		
 		model.addAttribute("agencyId", agencyId);
+		
+		// 해당 중개사가 만든 방
+		model.addAttribute( "roomList", roomService.showAllRoom(agencyId) );
 		
 		System.out.println();
 		System.out.println(email);
@@ -276,8 +278,17 @@ public class EstateController {
 		 return "estate/detailedinfomation";
 	}
 
-	 
-	 
-	 
-	 
+	@ResponseBody
+	@RequestMapping(value="codecheck", method=RequestMethod.GET)
+	public String codeCheck(int municipalitycodeId){
+		String result = null;
+		logger.info("서비스 지역 여부 확인 "); 
+		System.out.println(municipalitycodeId);
+	
+		result = estateService.codecheck(municipalitycodeId);
+		
+		System.out.println(result);
+		
+		return result;
+	}
 }

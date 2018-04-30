@@ -1,6 +1,7 @@
-
+var linkClass = 'hidden';
 	
 	function initialize() {
+		
 	    var myOptions = {
 	        center: new google.maps.LatLng(35.4969467, 139.6627667),
 	        zoom: 8,
@@ -69,6 +70,15 @@
 	      });
 	      map.fitBounds(bounds);
 	    });
+	    
+	    // 로그인 콜백
+	    Login.onLogin = function() {
+	    	// 이미 띄어진 내용 변경
+	    	$("a[name='detailLink']").removeClass('hidden');
+	    	$("a[name='detailLink']").addClass('show');
+	    	// 앞으로 띄워질 내용 변경
+	    	linkClass = 'show';
+	    }
 	}
 
 	function setMarkers(map, locations) {
@@ -91,22 +101,30 @@
 	            map: map, title: loan, position: latlngset,
 	            label: labels[i % labels.length]
 	        });
-	       /*  map.setCenter(marker.getPosition()) */
-			
-	       if (loan.includes="AgencyId") {
-	           var content =  '<div>'+'<h3>'+'Information'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'</div>'		
-		   }
-	       
-	       if (loan.includes="Estate"){
-	        var content =  '<div>'+'<h3>'+'Information'+'</h3>'+'<p>'+ loan +'<p>'+'<p>'+add+'<p>'+'<a href="estate/detailedinfomation?id='+loan+'">'+'detailed information'+'</a>'+'</div>'
-			   
-		   } 
-	       
-	       
+	        
+	        var content = '<div>'+
+	        '	<label>Information</label>'+
+	        '	<ul>'+
+	        '		<li>'+loan+'</li>'+
+	        '		<li>'+add+'</li>'+
+	        '	</ul>';
+	        
+	        if ($('#loginEmail').val()!=null && $('#loginEmail').val() !="" ) {
+	        	linkClass = 'show';
+			} 
+			content += '	<a name="detailLink" class="'+linkClass+'" href="estate/detailedinfomation?id='+loan+'">Detailed Information</a>';
+
+	        content +='</div>';
+	        	
+	        
+	        	
 	        var infowindow = new google.maps.InfoWindow()
 	
 	        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
 	            return function() {
+	            	if(linkClass == 'show') {
+	            		content = content.replace('class="hidden"', 'class="show"');
+	            	}
 	                infowindow.setContent(content);
 	                infowindow.open(map,marker);
 	            };

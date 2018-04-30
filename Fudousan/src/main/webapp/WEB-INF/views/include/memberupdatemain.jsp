@@ -10,7 +10,7 @@
           <h1>회원정보수정 <small>basic update form</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="modifyMember" method="post" enctype="multipart/form-data">
+          <form role="form" action="modifyMember" method="post" enctype="multipart/form-data" onsubmit="return formsubmit()" >
           
             <div class="form-group">
               <label for="InputName">name</label>
@@ -39,19 +39,22 @@
             </div>
 			<div class="input-group">
 			     <label for="InputText">Member Introduce</label>
-			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="text" >${member.text }</textarea>     
+			     <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="자기소개를 입력해 주세요" name="text" >${member.text }</textarea>     
 			</div>
 		
 			<div class="form-group">
 			    <label for="InputPhoto">photo</label>
+			    <div>
+			    	<c:if test="${member.picture} != null">
+			    		<img class="col-sm-12" src="/fudousan${member.picture}" id="uploadPictures">
+					</c:if>
+				</div>
 				<div class="input-group input-file" name="file">
 					<span class="input-group-btn">
 		        		<button class="btn btn-default btn-choose" type="button">선택</button>
 		    		</span>
 		    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요' name="picture" value="${member.picture }"/>
-		    		<span class="input-group-btn">
-		       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
-		    		</span>
+		    
 				</div>
 			</div>
 
@@ -70,7 +73,7 @@
          
             <div class="form-group text-center">
               <button type="submit" class="btn btn-info">회원정보 수정<i class="fa fa-check spaceLeft"></i></button>
-              <button type="submit" class="btn btn-warning">회원정보 수정 취소<i class="fa fa-times spaceLeft"></i></button>
+            
             </div>
           </form>
         </div>

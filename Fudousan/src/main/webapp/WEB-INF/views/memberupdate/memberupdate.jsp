@@ -38,7 +38,7 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
    	
-   	<!-- header -->
+   	<!-- Main -->
 	<%@include file="/WEB-INF/views/include/memberupdatemain.jsp" %>
  	
    
@@ -54,6 +54,9 @@
     <!-- login.js -->
 	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
 	
+	<!-- Form check.js -->
+	<script src="<c:url value="/resources/js/memberFormCheck.js"></c:url>"></script>
+	
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
 	
@@ -63,6 +66,7 @@
 	<!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>
 	<script src="../resources/js/translation.js"></script>
+   
    
    
   </body>

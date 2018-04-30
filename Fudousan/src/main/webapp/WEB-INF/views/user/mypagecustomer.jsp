@@ -54,8 +54,49 @@
 			$('#roomSearch').focus();
 			return false;
 		}
-		location.href ="searchMyRoom?roomSearch="+roomSearch+"&memberId="+memberId;
+		 /* location.href ="searchMyRoom?roomSearch="+roomSearch+"&memberId="+memberId; */
+		$.ajax({
+		url : "/fudousan/searchMyRoom",
+		type : "get",
+		data : {
+			roomSearch : roomSearch,
+			memberId : memberId
+		},
+		success : function(srlist){
+			alert('검색성공');
+			 $('[name="home"]').remove(); 
+			
+			$.each(srlist,function(index,room){
+				var str  = '<tr name="home">';
+				str += '<td><p><a href="/fudousan/estate/detailedinfomation?id=EstateId:'+room.estate.estateId+'">';
+				if (room.roomTitle == null){
+					str += '이름없음';
+				}
+				else {
+					str += room.roomTitle;
+				}
+				str += '</a></p></td>';
+				str += '<td><a class="btn btn-info" href="/fudousan/roomPage?roomId='+room.roomId+'&roomPublic=0">내집꾸미기</a></td>';
+				str += '<td><a class="btn btn-warning" href="/fudousan/deletionLogical?memberId=${sessionScope.loginId}&roomId='+room.roomId+'">논리삭제</a></td>';
+				str += '</tr>'; 
+				
+				$('#hhh').append(str);
+			})
+			
+			
+		},
+		error : function(e){
+			alert(JSON.stringify(e));
+			alert('검색 실패');
+		}
+		}); //ajax 끝 
+		
+		 
+		
+		
 	}
+	
+	
 	
 	function favoriteSearch(){
 		var favoSearch = document.getElementById("favoSearch").value; //방검색
@@ -65,7 +106,36 @@
 			$('#favoSearch').focus();
 			return false;
 		}
-		location.href ="searchFavorite?favoSearch="+favoSearch+"&memberId="+memberId;
+		/*  location.href ="searchFavorite?favoSearch="+favoSearch+"&memberId="+memberId;  */
+		
+	 	alert('검색 실행');
+		$.ajax({
+		url : "/fudousan/searchFavorite",
+		type : "get",
+		data : {
+			favoSearch : favoSearch,
+			memberId : memberId
+		},
+		success : function(flist){
+			$('[name="favorite"]').remove();
+			
+			$.each(flist,function(index,favorite){
+				var str  = '<div class="col-sm-12 form-group" name="favorite">';
+				str += '<p><a href="/fudousan/estate/detailedinfomation?id=EstateId:'+favorite.estate.estateId+'">'+favorite.estate.estateName+'</a></p>';
+				str += '<input type="hidden" value="'+favorite.estate.estateId+'" id="favo" name="favo">';
+				str += '<button><a href="/fudousan/estate/detailedinfomation?id=EstateId:'+favorite.estate.estateId+'">매물상세정보</a></button>';
+				str += '</div>';
+				
+				$('#profile').append(str);
+			})
+			
+			alert('검색성공');
+		},
+		error : function(e){
+			alert(JSON.stringify(e));
+			alert('검색 실패');
+		}
+		}); //ajax 끝 
 	}
 	
 	function sayonara(){
@@ -73,7 +143,8 @@
 		if(realsayo){
 			var client = document.getElementById("client").value;
 			var accepter = document.getElementById("accepter").value;
-			location.href = "cancelAdviceTrue?customer="+client+"&interior="+accepter;
+			var roomNum = document.getElementById("roomNum").value;
+			location.href = "cancelAdviceTrue?customer="+client+"&interior="+accepter+"&roomNum="+roomNum;
 		}
 		return false;
 	}

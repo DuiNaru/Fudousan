@@ -129,43 +129,6 @@
 				})
 		</c:forEach>
 		];
-	
-		function getItemList() {
-			var itemList=$("#itemList").val();
-			
-			$.ajax({
-				url:"itemlist",
-				type:"get",
-				data:{
-					itemTypeId:itemList
-				},
-				dataType: 'json',
-				success: function(itemlist){
-					var str = '';
-					
-					$.each(itemlist,function(index,item){
-						str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+', AddItem);">';
-						str += '<label>'+item.itemName+'<\/label>';
-						str += '<script type="text/javascript">';
-						str += 'var item'+item.itemId+' = new Item();';
-						str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
-						str += 'item'+item.itemId+'.itemId = '+item.itemId+';';
-						str += 'item'+item.itemId+'.itemName = "'+item.itemName+'";';
-						str += 'item'+item.itemId+'.itemType = new ItemType('+item.itemType.itemTypeId+', "'+item.itemType.itemTypeName+'");';
-						str += 'item'+item.itemId+'.modelFileName = "'+item.modelFileName+'";';
-						str += 'item'+item.itemId+'.text = "'+item.text+'";';
-						str += 'item'+item.itemId+'.itemScale = '+item.itemScale+';';
-						
-						$.each(item.refSiteSet,function(index,site){
-							str +='item'+item.itemId+'.refSiteSet.push(new RefSite("'+site.creDate+'", '+site.id+', '+site.itemId+', "'+site.text+'", "'+site.url+'"));';
-							str += 'items.push(item'+item.itemId+');';
-						});
-						str += "<\/script><\/li>";
-					});
-					$("#itemUl").html(str);
-				}
-			});
-		}
 		
 		function getItemList() {
 			var itemList=$("#itemList").val();

@@ -24,6 +24,12 @@ public interface EstateMapper {
 	
 	//매물가져올때
 	public Estate viewEstate(int estateId);
+	
+	
+	//코드 여부
+	public String codecheck(int municipalitycodeId);
+	
+	
 
 	
 	// INSERT TRANS 
@@ -33,5 +39,7 @@ public interface EstateMapper {
 	public int insertMunicipalitycode(MunicipalityCode mun);
 
 	// SELECT selectEsatesLocation
-	public List<Estate> selectEsatesLocation(); 
+	public List<Estate> selectEsatesLocation();
+
+	public boolean updateBaseRoomId(int estateId, int roomId);
 }

@@ -49,11 +49,14 @@ public class AdviceController {
 	private MemberService mservice;
 	
 	@RequestMapping(value="cancelAdviceTrue", method=RequestMethod.GET)
-	public String cancelAdviceCall(Model model,Integer customer , Integer interior){
+	public String cancelAdviceCall(Model model,Integer customer , Integer interior, Integer roomNum){
 		logger.info("Advice_Controller 사용자의 도움요청 취소 Start");
 		Advice advice = new Advice();
 		advice.setRequestMemberId(customer);
 		advice.setRequestedMemberId(interior);
+		Room room = new Room();
+		room.setRoomId(roomNum);
+		advice.setRoom(room);
 		
 		boolean tfresult = false;
 		tfresult = Aservice.cancelAdvice(advice);
@@ -61,7 +64,7 @@ public class AdviceController {
 		
         List<Favorite> flist = Fservice.showAllFavorite(customer);
         List<Advice> alist = Aservice.getRequestList(customer, Advice.REQUEST);
-        List<Advice> rclist = Aservice.getRequestList(customer, Advice.CONFIRMED);
+        List<Advice> rclist = Aservice.getRequestList(customer, Advice.DENIED);
 		List<Room> allRooms = Rservice.showAllRoom(customer);
         
 		model.addAttribute("rlist",allRooms);
@@ -113,32 +116,20 @@ public class AdviceController {
 		      int requestedId = memberOne.getMemberId(); //null pointer
 		      int roomNum = roomId;
 		      
-		      logger.info("1★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      Advice advice = new Advice();
-		      logger.info("2★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      advice.setRequestMemberId(rquestId);
-		      logger.info("3★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      advice.setRequestedMemberId(requestedId);
-		      logger.info("4★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      
 		      Room room = new Room();
-		      logger.info("5★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      room.setRoomId(roomNum);
-		      logger.info("6★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      advice.setRoom(room);
-		      logger.info("7★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      Date date = new Date();
 		      String ddd = date.toString();
 		      advice.setId(ddd);
-		      logger.info("8★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★");
 		      boolean abc = Aservice.requestAdvice(advice);
 		      logger.info("이 요청은 성공적입니다.");
 		      
 		      if(abc){
-		    	  logger.info("이 요청은 성공적입니다.");
-		    	  logger.info("이 요청은 성공적입니다.");
-		    	  logger.info("이 요청은 성공적입니다.");
-		    	  logger.info("이 요청은 성공적입니다.");
 		    	  logger.info("이 요청은 성공적입니다.");
 		      }
 		      

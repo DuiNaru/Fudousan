@@ -120,7 +120,9 @@
           <h1> 物件登録<small>매물등록</small></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="estatewrite" method="post" >
+        
+        
+          <form role="form" action="estatewrite" method="post" id="estateForm">
           
           <div class="form-group">
               <label for="inputMunicipality">매물이름</label>
@@ -358,27 +360,13 @@
            
             
             <div class="form-group text-center">
-              <button type="submit" class="btn btn-info">登録完了<i class="fa fa-check spaceLeft"></i></button>
+              <button type="button" class="btn btn-info" onclick="formcheck()">登録完了<i class="fa fa-check spaceLeft"></i></button>
               <button type="reset" class="btn btn-warning" >初期化<i class="fa fa-times spaceLeft"></i></button>
             </div>
           </form>
         </div>
 </article>
- 
- 
 
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
  <!-- script -->
 
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
@@ -424,6 +412,37 @@ function bs_input_file() {
 $(function() {
    bs_input_file();
 });
+function formcheck() {
+	var municipalitycodeId = $('[name="municipalitycodeId"]').val();
+	
+	if (municipalitycodeId == ""){
+		alert('지역 코드명을 입력해 주세요.');
+	}
+	else {
+		$.ajax({
+			url : "codecheck",
+			type : "get",
+			data : {municipalitycodeId:municipalitycodeId},
+			dataType : "text",
+			success: function(result){
+				if (result == ''){
+					alert("서비스되지 않는 지역코드입니다");
+				}
+				else {
+					$('#estateForm').submit();
+				}
+			},
+			error: function(err){
+				console.log(err);
+			}
+		});
+	}
+}
+
+
+
+
+
 </script>
 
 
@@ -431,7 +450,15 @@ $(function() {
 
 
 
-    
-    
+
+
+
+
+
+
+
+
+
+
   </body>
 </html>

@@ -21,10 +21,10 @@
   			<!-- Tab panes -->
   			<div class="tab-content">
     			<div role="tabpanel" class="tab-pane active" id="home">
-    				<h1>3D 작성 매물 확인</h1>
+    				<h1 data-lang="94">3D 작성 매물 확인</h1>
 					<!-- search button -->
 					<div id="custom-search-input">
-            			<div class="input-group col-md-12">
+            			<div class="input-group col-md-12"  name="seachedRoom">
                 			<input type="text" class="  search-query form-control" placeholder="Search" id ="roomSearch" name="roomSearch" />
                 			<span class="input-group-btn">
 	                    		<button class="btn btn-danger" type="button" onclick="roomSearch()" >
@@ -36,41 +36,32 @@
         			</div>
         			<br>
         			<!-- result -->      
-        			<table class="table">
+        			<table class="table" >
+        			<thead>
         				<tr>
-        					<th>Name</th>
-        					<th>Create</th>
-        					<th>Delete</th>
+        					<th data-lang="8">Name</th>
+        					<th data-lang="92">Create</th>
+        					<th data-lang="93">Delete</th>
         				</tr>
-        				<tbody>
+       				</thead>
+        				<tbody id="hhh">
         					<c:forEach var="room" items="${rlist}">
-	        					<tr>
-	        						<td>
-	        							<p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">
+	        					<tr name="home">
+	        						<td><p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">
 									<c:choose>
-		        							<c:when test="${room.roomTitle eq null}">
-		        								이름 없음
-		        							</c:when>
-		        							<c:otherwise>
-		        								${room.roomTitle}
-		        							</c:otherwise>
+		        							<c:when test="${room.roomTitle eq null}">이름 없음</c:when>
+		        							<c:otherwise>${room.roomTitle}</c:otherwise>
         							</c:choose>
-
-									</a></p>
-	        						</td>
-	        						<td>	
-	        							<a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.roomId}&roomPublic=0"/>">내집꾸미기</a>
-	        						</td>
-	        						<td>
-	        							<a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a>
-	        						</td>
+									</a></p></td>
+	        						<td><a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.roomId}&roomPublic=0"/>">내집꾸미기</a></td>
+	        						<td><a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a></td>
 	        					</tr>
         					</c:forEach>
         				</tbody>
         			</table>
     			</div>
    				<div role="tabpanel" class="tab-pane" id="profile">
-    				<h1>찜한 매물 보기</h1>
+    				<h1 data-lang="95">찜한 매물 보기</h1>
 					<!-- search button -->
 					<div id="custom-search-input">
             			<div class="input-group col-md-12">
@@ -86,9 +77,9 @@
 					<hr>
 					<!-- result -->
 					<c:forEach var="favorite" items="${flist}">
-						<div class="col-sm-12 form-group">
+						<div class="col-sm-12 form-group" name="favorite">
 							<p><a href="/fudousan/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}">${favorite.estate.estateName}</a><c:out value="${favorite.memberId}estataId:${favorite.estate.estateId}"/></p>
-							<input type="hidden" value="${favorite.estate.estateId}" id='favo' name='favo' >
+							<input type="hidden" value="${favorite.estate.estateId}" id="favo" name="favo" >
 							<button><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}"/>">매물상세정보</a></button>
 						</div>
 						
@@ -112,7 +103,7 @@
     <div class="col-sm-3 sidenav">
 		
 		<div class="well">
-			<h6>인테리어 업자에게 도움 요청</h6>
+			<h6 data-lang="96" >인테리어 업자에게 도움 요청</h6>
 			<c:forEach var="helper" items="${alist}">
 				<p><c:out value="${helper.requestedMemberId}님에게 도움을 요청하셨습니다."/></p>
 			</c:forEach>
@@ -128,6 +119,7 @@
 						<input type="button" value="거절" id="cancel" name="cancel" onclick="sayonara()">
 						<input type="hidden" value="${helpRes.requestMemberId }" id="client" name="client">
 						<input type="hidden" value="${helpRes.requestedMemberId }" id="accepter" name="accepter">
+						<input type="hidden" value="${helpRes.room.roomId }" id="roomNum" name="roomNum">
 			 		</div>
 			</c:forEach>
 		</div>
@@ -135,3 +127,6 @@
   </div>
 </div>
 <div style="clear: both;"></div>
+
+<script src="<c:url value="/resources/js/cookie.js"/>"></script>
+<script src="<c:url value="/resources/js/translation.js"/>"></script>

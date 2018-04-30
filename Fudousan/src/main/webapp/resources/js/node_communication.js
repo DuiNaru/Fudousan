@@ -1,5 +1,5 @@
-//var socket = io('localhost:8000');
-
+/*var socket = io('localhost:8000');
+*/
 //var socket = io('https://sunnyserver.dlinkddns.com');
 
 let socket = io("https://syper01.com/roompage", {

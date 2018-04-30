@@ -84,13 +84,11 @@ public List<Estate> selectEsatesLocation(){
 			result = mapper.viewEstate(estateId);
 		} catch (Exception e) {
 			e.printStackTrace();
-			
 		}
-
 		return result;
 	}
 		@Override
-		
+		//업데이트
 	public int updateByIds(Estate estate) {
 		int result = 0;
 
@@ -105,6 +103,22 @@ public List<Estate> selectEsatesLocation(){
 		
 		
 	}
+		
+		//코드 여부
+		public String codecheck(int municipalitycodeId){
+			String result = null;
+
+			try {
+				EstateMapper mapper = session.getMapper(EstateMapper.class);
+				result = mapper.codecheck(municipalitycodeId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return result;
+		}
+		
+		
 
 	@Override
 	public List<Estate> select(Set<Integer> estateIds) {
@@ -146,6 +160,24 @@ public List<Estate> selectEsatesLocation(){
 	public int modifyEstatepage(Estate estate) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public boolean updateBaseRoomId(int estateId, int roomId) {
+		logger.info("updateBaseRoomId("+estateId+", "+roomId+") Start");
+
+		boolean result = false;
+
+		try {
+			EstateMapper mapper = session.getMapper(EstateMapper.class);
+
+			result = mapper.updateBaseRoomId(estateId, roomId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("updateBaseRoomId("+estateId+", "+roomId+") End");
+		return result;
 	}
 
 }

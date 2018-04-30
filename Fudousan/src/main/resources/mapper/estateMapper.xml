@@ -382,185 +382,6 @@ SET
 </update>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <update id="updateByIds" parameterType="estate" >
-UPDATE ESTATE
-SET	
-	
-	TRANS_TYPE_ID=#{transType.transTypeId}
-	,REGION=#{region}
-	,MunicipalityCode_ID=#{municipalitycode.municipalitycodeId}
-	,PREFECTURE=#{prefecture}
-	,MUNICIPALITY=#{municipality}
-	,DISTRICTNAME=#{districtname}
-	,ADDRESS=#{address}
-	,NEARESTSTATION=#{neareststation}
-	,TIMETONEARESTSTATION=#{timetoneareststation}
-	,TRADEPRICE=#{tradeprice}
-	,PRICEPERUNIT=#{priceperunit}
-	,FLOORPLAN=#{floorplan}
-	,AREA=#{area}
-	,UNITPRICE=#{unitprice}
-	,TOTALFLOORAREA=#{totalfloorarea}
-	,LANDSHAPE=#{landshape}
-	,ESTATE_NAME=#{estateName}
-	,BUILDINGYEAR=#{buildingyear}
-	,STRUCTURE=#{structure}
-	,USE=#{use}
-	,COVERAGERATIO=#{coverageratio}
-	,FLOORAREARATIO=#{floorarearatio}
-	,DEL_DATE=#{delDate}
-	WHERE
-	 ESTATE_ID = #{ESTATE_ID}
-
-</update>
- -->
-
-
-
-
-
-
-
-<!-- <update id="updateByIds" parameterType="estate" >
-
-
-UPDATE ESTATE
-SET	
-	
-	TRANS_TYPE_ID=#{transType.transTypeId}
-	,REGION=#{region}
-	,MunicipalityCode_ID=#{municipalitycode.municipalitycodeId}
-	,PREFECTURE=#{prefecture}
-	,MUNICIPALITY=#{municipality}
-	,DISTRICTNAME=#{districtname}
-	,ADDRESS=#{address}
-	,NEARESTSTATION=#{neareststation}
-	,TIMETONEARESTSTATION=#{timetoneareststation}
-	,TRADEPRICE=#{tradeprice}
-	,PRICEPERUNIT=#{priceperunit}
-	,FLOORPLAN=#{floorplan}
-	,AREA=#{area}
-	,UNITPRICE=#{unitprice}
-	,TOTALFLOORAREA=#{totalfloorarea}
-	,LANDSHAPE=#{landshape}
-	,ESTATE_NAME=#{estateName}
-	,BUILDINGYEAR=#{buildingyear}
-	,STRUCTURE=#{structure}
-	,USE=#{use}
-	,COVERAGERATIO=#{coverageratio}
-	,FLOORAREARATIO=#{floorarearatio}
-	,DEL_DATE=#{delDate}
-	WHERE
-	 ESTATE_ID = #{ESTATE_ID}
-
-</update>
- -->
-
-
-
-<!-- <update id="estateupdate" parameterType="estate" >
-<selectKey resultType="int" keyProperty="estateId" order="AFTER">
-SELECT
-SEQ_ESTATE_ID.CURRVAL
-FROM DUAL
-</selectKey>
-
-UPDATE ESTATE
-SET	
-	
-	TRANS_TYPE_ID
-	<if test='region != null'>
-	,REGION
-	</if>
-	,MunicipalityCode_ID
-	<if test = 'prefecture != null'>
-	,PREFECTURE
-	</if>
-	<if test = 'municipality != null'>
-	,MUNICIPALITY
-	</if>
-
-	<if test = 'districtname != null'>
-	,DISTRICTNAME
-	</if>
-
-	<if test = 'address != null'>
-	,ADDRESS
-	</if>
-	<if test = 'neareststation != null'>
-	,NEARESTSTATION
-	</if>
-	<if test = 'timetoneareststation != null'>
-	,TIMETONEARESTSTATION
-	</if>
-	<if test ='tradeprice != null'>
-	,TRADEPRICE
-	</if>
-	<if test ='priceperunit != null'>
-	,PRICEPERUNIT
-	</if>
-	<if test = 'floorplan != null'>
-	,FLOORPLAN
-	</if>
-	<if test = 'area != null'>
-	,AREA
-	</if>
-	<if test = 'unitprice != null'>
-	,UNITPRICE
-	</if>
-	<if test = 'totalfloorarea != null'>
-	,TOTALFLOORAREA
-	</if>
-	<if test ='landshape != null'>
-	,LANDSHAPE
-	</if>
-	<if test='estateName != null'>
-	,ESTATE_NAME
-	</if>
-
-<if test = 'buildingyear != null'>
-,BUILDINGYEAR
-</if>
-<if test = 'structure != null'>
-,STRUCTURE
-</if>
-<if test = 'use != null'>
-,USE
-</if>
-<if test ='coverageratio != null'>
-,COVERAGERATIO</if>
-
-
-<if test = 'floorarearatio != null'>
-,FLOORAREARATIO
-</if>
-
-<if test = 'delDate != null'>
-,DEL_DATE
-</if>
-
-WHERE
- ESTATE_ID = #{ESTATE_ID}
-
-
-
-</update> -->
-
 <delete id="deleteByIds" parameterType="int">
 delete 
 from ESTATE
@@ -630,19 +451,24 @@ VALUES
 
 </select>	
 	
-<select id=""  resultMap="estateResultMap">
 
 
-</select>
-
+<update id="updateBaseRoomId">
+	UPDATE
+		estate
+	SET
+		base_room_id =#{1}
+	WHERE
+		estate_id = #{0}
+</update>
 	
-	
-	
-	
-	
-	
-	
-	
-	
+<select id="codecheck"  parameterType="int" resultType="string">
+select
+	CODE_NAME
+from	
+	MUNICIPALITYCODE
+where
+	MUNICIPALITYCODE_ID=#{municipalitycodeId}
+</select>	
 	
 </mapper>

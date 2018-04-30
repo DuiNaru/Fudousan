@@ -49,6 +49,7 @@ public class EstateService {
 	 */
 	public int addEstate(Estate estate) {
 		
+
 		String address1 = estate.getPrefecture();
 		String address2 = estate.getMunicipality();
 		String address3 = estate.getDistrictname();
@@ -103,34 +104,14 @@ public class EstateService {
 		
 	}
 	
+	//코드 여부 확인
+	public String codecheck(int municipalitycodeId){
 	
+		String result = dao.codecheck(municipalitycodeId);
+		return result;
+	}
 	
-	/**
-	 * 매물 수정
-	 * @param estate
-	 * @return
-	 */
-	public boolean modifyEstate(Estate estate) {
 
-		return false;
-	}
-	
-	//매물 수정 페이지로 이동
-	 boolean modifyEstatepage(Estate estate) {
-		
-		return false;
-	}
-	
-	/**
-	 * 매물 삭제
-	 * @param estate
-	 * @return
-	 */
-/*	public boolean delEstate(Estate estate) {
-		int result = dao.delteByIds(estate)
-		
-		return false;
-	}*/
 	
 	/**
 	 * estateId 들을 모두 검색하여 가져온다.
@@ -179,6 +160,14 @@ public class EstateService {
 		return result;
 	}
 
+	public boolean updateBaseRoomId(int estateId, int roomId) {
+		logger.info("updateBaseRoomId("+estateId+", "+roomId+") Start");
+		
+		boolean result= false;
+		result = dao.updateBaseRoomId(estateId, roomId);
 
+		logger.info("updateBaseRoomId("+estateId+", "+roomId+") End");
+		return result;
+	}
 	
 }
