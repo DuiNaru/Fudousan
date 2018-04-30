@@ -46,6 +46,13 @@
 	</style>
   </head>
   <body>
+  <%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
+  <!-- estate list modal  -->
+  <%@include file="estateListModal.jsp" %>
+ 	
+	<!-- header -->
+	<%@include file="/WEB-INF/views/include/header.jsp" %>
+  
   
   <!-- 로그인 모달 시작 -->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
@@ -69,7 +76,7 @@
 	</div>
 	<!-- 로그인 모달 끝 -->
    <!-- Header -->
-		 <nav class="navbar navbar-default" style="margin: auto 0"> 
+		<%--  <nav class="navbar navbar-default" style="margin: auto 0"> 
 		  <div class="container-fluid">
 		    <!-- Brand and toggle get grouped for better mobile display -->
 		    <div class="navbar-header">
@@ -103,13 +110,13 @@
 				</c:if>
 				<c:if test="${sessionScope.loginEmail != null}">
 					<li><a>${sessionScope.loginMemberName}, Welcome!</a></li>
-					<li><a href="/fudousan/bw">Logout</a></li>
+					<li><a href="/fudousan/bw" data-lang="1">Logout</a></li>
 				</c:if>
 		    
 		        
 		      </ul>
 		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
+		  </div><!-- /.container-fluid --> --%>
 		 </nav> 
    
  
@@ -117,13 +124,13 @@
  
  <article class="container">
         <div class="page-header">
-          <h1> 物件修整<small>매물수정</small></h1>
+          <h1 data-lang="145" > 物件修整 </h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <form role="form" action="updateByIds" method="post" enctype="multipart/form-data">
           
           <div class="form-group">
-              <label for="inputMunicipality">매물이름</label>
+              <label for="inputMunicipality" data-lang="121">매물이름</label>
               <input type="text" class="form-control" id="inputestateName"  name="estateName" value="${estate.estateName}">
             </div>
           
@@ -131,23 +138,20 @@
           
           
             <div class="form-group">
-              <label for="inputType">取引タイプ(거래종류)</label>
+              <label for="inputType" data-lang="122">取引タイプ(거래종류)</label>
               
             <select name='transTypeId' class="form-control" data-live-search="true">
-  			
-  			
-  			
-  			
-  			<option value='1' <c:if test="${estate.transType.transTypeId == 1}"> selected </c:if>>中古マンション等</option>
-  			<option value='2' <c:if test="${estate.transType.transTypeId == 2}"> selected </c:if>>宅地(土地と建物)</option>
-  			<option value='3' <c:if test="${estate.transType.transTypeId == 3}"> selected </c:if>>宅地(土地)</option>
+
+  			<option value='1' data-lang="124" <c:if test="${estate.transType.transTypeId == 1}"> selected </c:if>>中古マンション等</option>
+  			<option value='2' data-lang="125" <c:if test="${estate.transType.transTypeId == 2}"> selected </c:if>>宅地(土地と建物)</option>
+  			<option value='3' data-lang="126" <c:if test="${estate.transType.transTypeId == 3}"> selected </c:if>>宅地(土地)</option>
 			</select>
             </div>
             
             
             
              <div class="form-group">
-              <label for="inputPrefecture">가격</label>
+              <label for="inputPrefecture" data-lang="123">가격</label>
               <input type="text" class="form-control" id="inputPrefecture" placeholder=" 가격" name="price" value="${entry.price}">
            </div>
 
@@ -183,25 +187,25 @@
             
             
             <div class="form-group">
-              <label for="inputNearestStation"> 最寄駅</label>
+              <label for="inputNearestStation" data-lang="132"> 最寄駅</label>
               <input type="text" class="form-control" id="inputNearestStation" placeholder="전제일 가까운 역 : 명칭 " name="neareststation" value="${estate.neareststation}">
             </div>
          
 		<div class="form-group">
-              <label for="inputTimeToNearestStation"> 最寄駅の距離（分）</label>
+              <label for="inputTimeToNearestStation" data-lang="133"> 最寄駅の距離（分）</label>
               <input type="text" class="form-control" id="inputTimeToNearestStation" placeholder="제일 가까운역 거리(분)" name="timetoneareststation" value="${estate.timetoneareststation}">
             </div>
             
-            <div class="form-group">
+            <%-- <div class="form-group">
               <label for="inputTradePrice"> 取引価格（総額）</label>
-              <input type="text" class="form-control" id="inputTradePrice" placeholder="거래 가격(총액)" name="tradeprice" value="${estate.tradeprice}">
-            </div>
+              <input type="text" class="form-control" data-lang="108" id="inputTradePrice" placeholder="거래 가격(총액)" name="tradeprice" value="${estate.tradeprice}">
+            </div> --%>
             
-            <div class="form-group">
+            <%-- <div class="form-group">
               <label for="inputPricePerUnit"> 坪単価</label>
               <input type="text" class="form-control" id="inputPricePerUnit" placeholder="평단가" name="priceperunit" value="${estate.priceperunit}">
             </div>
-              <!-- -- -->
+              
             <div class="form-group">
               <label for="inputFloorPlan"> 構造</label>
               <input type="text" class="form-control" id="inputFloorPlan" placeholder="구조 " name="floorplan" value="${estate.floorplan}">
@@ -225,30 +229,30 @@
            <div class="form-group">
               <label for="inputTotalFloorArea">延べ面積（㎡） </label>
               <input type="text" class="form-control" id="inputTotalFloorArea" placeholder="연면적 (㎡)" name="totalfloorarea" value="${estate.totalfloorarea}">
-            </div>
+            </div> --%>
             
             <div class="form-group">
-              <label for="inputBuildingYear">設した年 </label>
+              <label for="inputBuildingYear" data-lang="138">건축년도 </label>
               <input type="text" class="form-control" id="inputBuildingYear" placeholder="건축 년도 " name="buildingyear" value="${estate.buildingyear}">
             </div>
             
-            <div class="form-group">
+     <%--        <div class="form-group">
               <label for="inputStructure">建物の構造 </label>
               <input type="text" class="form-control" id="inputStructure" placeholder="건물의 구조 " name="structure" value="${estate.structure}">
-            </div>
+            </div> --%>
             
             <div class="form-group">
-              <label for="inputUse">用途</label>
+              <label for="inputUse" data-lang="139">用途</label>
               <input type="text" class="form-control" id="inputUse" placeholder="용도" name="use" value="${estate.use}">
             </div>
         
         <div class="form-group">
-              <label for="inputCoverageRatio">建ぺい率（％）</label>
+              <label for="inputCoverageRatio" data-lang="140">建ぺい率（％）</label>
               <input type="text" class="form-control" id="inputCoverageRatio" placeholder="건폐율 (%)" name="coverageratio" value="${estate.coverageratio}" >
             </div>
             
             <div class="form-group">
-              <label for="inputFloorAreaRatio">容積率（％）</label>
+              <label for="inputFloorAreaRatio" data-lang="141">容積率（％）</label>
               <input type="text" class="form-control" id="inputFloorAreaRatio" placeholder="용적률 (%)" name="floorarearatio" value="${estate.floorarearatio}">
             </div>
         
@@ -256,8 +260,8 @@
            
             
             <div class="form-group text-center">
-              <button type="submit" class="btn btn-info">登録完了<i class="fa fa-check spaceLeft"></i></button>
-              <button type="reset" class="btn btn-warning" >初期化<i class="fa fa-times spaceLeft"></i></button>
+              <button type="submit" class="btn btn-info" data-lang="146">登録完了<i class="fa fa-check spaceLeft"></i></button>
+              <button type="reset" class="btn btn-warning" data-lang="143">初期化<i class="fa fa-times spaceLeft"></i></button>
             </div>
           </form>
         </div>
@@ -315,7 +319,8 @@ $(function() {
 
 
 
-    
+    <script src="<c:url value="/resources/js/cookie.js"/>"></script>
+	<script src="<c:url value="/resources/js/translation.js"/>"></script>
     
   </body>
 </html>
