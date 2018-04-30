@@ -38,7 +38,7 @@
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
    	
-   	<!-- header -->
+   	<!-- Main -->
 	<%@include file="/WEB-INF/views/include/memberupdatemain.jsp" %>
  	
    
