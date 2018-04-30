@@ -61,7 +61,7 @@
         			</table>
     			</div>
    				<div role="tabpanel" class="tab-pane" id="profile">
-    				<h1>찜한 매물 보기</h1>
+    				<h1 data-lang="95">찜한 매물 보기</h1>
 					<!-- search button -->
 					<div id="custom-search-input">
             			<div class="input-group col-md-12">
@@ -103,7 +103,7 @@
     <div class="col-sm-3 sidenav">
 		
 		<div class="well">
-			<h6>인테리어 업자에게 도움 요청</h6>
+			<h6 data-lang="96" >인테리어 업자에게 도움 요청</h6>
 			<c:forEach var="helper" items="${alist}">
 				<p><c:out value="${helper.requestedMemberId}님에게 도움을 요청하셨습니다."/></p>
 			</c:forEach>

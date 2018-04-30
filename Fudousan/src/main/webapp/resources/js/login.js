@@ -60,7 +60,7 @@ function formCheck(){
 						}else if(result.permissionId == 3){
 							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="85" >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>';
-						}else if(result.permissionId == 4){
+						}else if(result.permissionId == 99){
 							str += '<li><a href="/fudousan/admin/" data-lang ="88">Admin page</a></li>';
 						}
 						
@@ -89,7 +89,7 @@ function formCheck(){
 						}else if(result.permissionId == 3){
 							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="84"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>';
-						}else if(result.permissionId == 4){
+						}else if(result.permissionId == 99){
 							str += '<li><a href="/fudousan/admin/" data-lang ="88">Admin page</a></li>';			
 						}
 						str +=  '<li><a href="javascript:selectLanguage(\'ko\')"><img  src="/fudousan/resources/image/if_South Korea_15986.png"></a></li>'+
@@ -116,7 +116,7 @@ function formCheck(){
 						}else if(result.permissionId == 3){
 							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="85"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="84">Agency Page</a></li>';
-						}else if(result.permissionId == 4){
+						}else if(result.permissionId == 99){
 							str += '<li><a href="/fudousan/admin/" data-lang ="84">Admin page</a></li>';
 						}
 						
