@@ -39,8 +39,8 @@
         			<table class="table" >
         			<thead>
         				<tr>
-        					<th>Name</th>
-        					<th>Create</th>
+        					<th data-lang="8">Name</th>
+        					<th data-lang="92">Create</th>
         					<th>Delete</th>
         				</tr>
        				</thead>
@@ -119,6 +119,7 @@
 						<input type="button" value="거절" id="cancel" name="cancel" onclick="sayonara()">
 						<input type="hidden" value="${helpRes.requestMemberId }" id="client" name="client">
 						<input type="hidden" value="${helpRes.requestedMemberId }" id="accepter" name="accepter">
+						<input type="hidden" value="${helpRes.room.roomId }" id="roomNum" name="roomNum">
 			 		</div>
 			</c:forEach>
 		</div>
@@ -126,3 +127,6 @@
   </div>
 </div>
 <div style="clear: both;"></div>
+
+<script src="<c:url value="/resources/js/cookie.js"/>"></script>
+<script src="<c:url value="/resources/js/translation.js"/>"></script>
