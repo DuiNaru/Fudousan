@@ -56,7 +56,7 @@ public class MemberController {
 		List<Room> rlist = Rservice.showAllRoom(memberId);
 		List<Favorite> flist = Fservice.showAllFavorite(memberId);
 		List<Advice> alist = Aservice.getRequestList(memberId, Advice.REQUEST);
-		List<Advice> rclist = Aservice.getRequestList(memberId, Advice.CONFIRMED);
+		List<Advice> rclist = Aservice.getRequestList(memberId, Advice.DENIED);
 		logger.info("사용자가 꾸미는 매물 리스트 출력 결과 : " + rlist.size());
 		if (flist != null) {
 			logger.info("사용자의 찜목록  출력 결과 : " + flist.size());

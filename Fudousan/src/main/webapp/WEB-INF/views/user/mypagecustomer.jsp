@@ -98,14 +98,6 @@
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	function favoriteSearch(){
 		var favoSearch = document.getElementById("favoSearch").value; //방검색
 		var memberId = document.getElementById("memberId").value; //사용자아이디
@@ -151,7 +143,8 @@
 		if(realsayo){
 			var client = document.getElementById("client").value;
 			var accepter = document.getElementById("accepter").value;
-			location.href = "cancelAdviceTrue?customer="+client+"&interior="+accepter;
+			var roomNum = document.getElementById("roomNum").value;
+			location.href = "cancelAdviceTrue?customer="+client+"&interior="+accepter+"&roomNum="+roomNum;
 		}
 		return false;
 	}
