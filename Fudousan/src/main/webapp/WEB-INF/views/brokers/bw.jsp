@@ -412,8 +412,6 @@ function bs_input_file() {
 $(function() {
    bs_input_file();
 });
-
-
 function formcheck() {
 	var municipalitycodeId = $('[name="municipalitycodeId"]').val();
 	
