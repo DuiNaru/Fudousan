@@ -39,9 +39,11 @@
 			
 				<div class="form-group">
 				    <label for="InputPhoto">photo</label>
+				    <div class="thumbnail">
 				    <c:if test="${!empty agency.member.picture}">
 				    	<img class="col-sm-12" src="/fudousan${agency.member.picture}" id="uploadPictures">
 				    </c:if>
+				    </div>
 					<div class="input-group input-file" name="file">
 						<span class="input-group-btn">
 			        		<button class="btn btn-default btn-choose" type="button">선택</button>
