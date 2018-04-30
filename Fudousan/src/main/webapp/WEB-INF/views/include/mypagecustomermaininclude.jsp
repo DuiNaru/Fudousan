@@ -53,8 +53,8 @@
 		        							<c:otherwise>${room.roomTitle}</c:otherwise>
         							</c:choose>
 									</a></p></td>
-	        						<td><a class="btn btn-info" href="<c:url value="/roomPage?roomId=${room.roomId}&roomPublic=0"/>">내집꾸미기</a></td>
-	        						<td><a class="btn btn-warning" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a></td>
+	        						<td><a class="btn btn-info" data-lang="98" href="<c:url value="/roomPage?roomId=${room.roomId}&roomPublic=0"/>">내집꾸미기</a></td>
+	        						<td><a class="btn btn-warning"data-lang="99" href="<c:url value="/deletionLogical?memberId=${sessionScope.loginId}&roomId=${room.roomId}"/>">논리삭제</a></td>
 	        					</tr>
         					</c:forEach>
         				</tbody>
@@ -105,18 +105,18 @@
 		<div class="well">
 			<h6 data-lang="96" >인테리어 업자에게 도움 요청</h6>
 			<c:forEach var="helper" items="${alist}">
-				<p><c:out value="${helper.requestedMemberId}님에게 도움을 요청하셨습니다."/></p>
+				<p><c:out value="${helper.requestedMemberId}"/><span data-lang="101">님에게 도움을 요청하셨습니다.</span></p>
 			</c:forEach>
 			<!-- Clear -->
 		<div style="clear: both;"></div>
 		</div>
 		
 		<div class="well">
-			<h6 >인테리어 업자 승인 여부</h6>
+			<h6 data-lang="97">인테리어 업자 승인 여부</h6>
 			<c:forEach var="helpRes" items="${rclist}">
 			 		<div class="col-sm-12 form-group">
-			 			<p><c:out value="${helpRes.requestedMemberId}님이 ${helpRes.requestMemberId }님의 요청을 승락하셨습니다. "/></p>
-						<input type="button" value="거절" id="cancel" name="cancel" onclick="sayonara()">
+			 			<p><c:out value="${helpRes.requestedMemberId}"/><span data-lang="102">님이</span><c:out value="${helpRes.requestMemberId }님의 요청을 승락하셨습니다. "/></p>
+						<button data-lang="100"  id="cancel" name="cancel" onclick="sayonara()"></button>
 						<input type="hidden" value="${helpRes.requestMemberId }" id="client" name="client">
 						<input type="hidden" value="${helpRes.requestedMemberId }" id="accepter" name="accepter">
 						<input type="hidden" value="${helpRes.room.roomId }" id="roomNum" name="roomNum">
