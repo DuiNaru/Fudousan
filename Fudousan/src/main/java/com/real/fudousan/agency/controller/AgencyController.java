@@ -26,8 +26,13 @@ public class AgencyController {
 	 @RequestMapping(value="detailedinformation", method=RequestMethod.GET)
 	public String detailedInformation(String id, Model model){
 		logger.info("detailedInformation("+id+") Start");
-		
-		int agencyId = Integer.parseInt(id.split(":")[1]);
+
+		String result[] = id.split(":");
+		if(result.length == 0) {
+			logger.info("id가 없이 에이전시 정보를 요청하였습니다.");
+			 return "redirect:/";
+		}
+		int agencyId = Integer.parseInt(result[1]);
 		
 		model.addAttribute("agency", service.selectAgencyOne(agencyId));
 		System.out.println(service.selectAgencyOne(agencyId));
