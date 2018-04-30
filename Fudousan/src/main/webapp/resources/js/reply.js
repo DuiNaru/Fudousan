@@ -11,15 +11,15 @@ $(function(){
 		},
 		dataType: "json",
 		success : function(data){
+			
 			var memberId = $('#memberId').val();
 			var str = "";
 			
 			$(data).each(function(index, reply){
-	
 				
 				str +=
 					'<div id="topBox'+reply.replyId+'">'+
-					'<div class="col-sm-1">'+
+					'<div class="col-sm-1" id="innerBox'+reply.replyId+'">'+
 					'<div class="thumbnail">';
 				if(reply.member.picture !=null){
 					str +=	'<img class="img-responsive user-photo" src="/fudousan'+reply.member.picture+'">';
@@ -85,7 +85,7 @@ $(function(){
 					dataType:"json",
 					success: function(reply){
 						var str = "";
-						
+					
 						
 						/*-----------------------------html tag--------------------------------*/
 						str +=
@@ -93,7 +93,7 @@ $(function(){
 							'<div class="col-sm-1">'+
 							'<div class="thumbnail">';
 						if(reply.member.picture !=null){
-							str +=	'<img class="img-responsive user-photo" src="'+reply.member.picture+'">';
+							str +=	'<img class="img-responsive user-photo" src="/fudousan'+reply.member.picture+'">';
 						
 						}else{	
 							str +=	'<img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">';
@@ -141,7 +141,9 @@ function deleteReply(replyId){
 		},
 		dataType: "json",
 		success : function(obj){
+			
 			$('#topBox'+replyId).remove();
+			
 			
 		} 
 	});

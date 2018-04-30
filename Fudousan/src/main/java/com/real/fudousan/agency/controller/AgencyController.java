@@ -30,7 +30,7 @@ public class AgencyController {
 		int agencyId = Integer.parseInt(id.split(":")[1]);
 		
 		model.addAttribute("agency", service.selectAgencyOne(agencyId));
-		System.out.println(service.selectAgencyOne(agencyId));
+		
 		logger.info("detailedInformation("+id+") End");
 		 return "agency/detailedinformation";
 	}

@@ -27,7 +27,7 @@
 					<span class="glyphicon form-control-feedback"></span>
 				</div>
 				<div class="form-group">
-					<label for="InputText" data-lang="11"></label>
+					<label for="InputPhone" data-lang="11"></label>
 					<input type="text" class="form-control" id="userphone" name="phone" data-lang="12">
 				</div>
 	            
