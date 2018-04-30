@@ -25,10 +25,10 @@
 				<table class="table">
 					<thead class="table">
 						<tr>
-							<th>Estate Id</th>
-							<th>Estate Name</th>
-							<th>Start Interior</th>
-							<th>Cancel</th>
+							<th data-lang="117">Estate Id</th>
+							<th data-lang="116">Estate Name</th>
+							<th data-lang="118">Start Interior</th>
+							<th data-lang="4">Cancel</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -52,12 +52,12 @@
 					<table class="table">
 						<thead class="table">
 							<tr>
-								<th>Estate Id</th>
-								<th>Estate Name</th>
-								<th>Design</th>
-								<th>Modify</th>
-								<th>Delete</th>
-								<th>Open/Close</th>
+								<th data-lang="117">Estate Id</th>
+								<th data-lang="116">Estate Name</th>
+								<th data-lang="115">Design</th>
+								<th data-lang="112">Modify</th>
+								<th data-lang="113">Delete</th>
+								<th data-lang="114">Open/Close</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -83,18 +83,18 @@
 		    	<!-- 내가 만든 리스트 Start -->
 	   			<h1 data-lang="107">내가 만든 리스트</h1>
 	   			<div class="text-right">
-					<a class="btn btn-info" href="../newRoom?roomPublic=0">모델링 작성</a>
+					<a class="btn btn-info" data-lang="108" href="../newRoom?roomPublic=0">모델링 작성</a>
 				</div>
 				<!-- result -->
 				<table class="table">
 					<thead class="table">
 						<tr>
-							<th>Room Id</th>
-							<th>Snap Shot</th>
-							<th>Wall Modify</th>
-							<th>Modify</th>
-							<th>Delete</th>
-							<th>Open / Close</th>
+							<th data-lang="109">Room Id</th>
+							<th data-lang="110">Snap Shot</th>
+							<th data-lang="111">Wall Modify</th>
+							<th data-lang="112">Modify</th>
+							<th data-lang="113">Delete</th>
+							<th data-lang="114">Open / Close</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -103,12 +103,14 @@
 							<%-- <div id="virtual${virtual.roomId}" class="col-sm-12"></div> --%>
 								<td>${virtual.roomId}</td>
 								<td><img style="height: 100px; width: auto;" src="<c:url value="${virtual.snapshot}"/>"></td>
-								<td><a class="btn btn-default" href="../wall/wallPage?roomId=${virtual.roomId}">벽 수정</a></td>
-								<td><a class="btn btn-default" href="../roomPage?roomId=${virtual.roomId}">수정</a></td>
-								<td><input class="btn btn-default" type="button" value="삭제" onclick="deleteRoom(${virtual.roomId})"></td>
+								<td><a class="btn btn-default" href="../wall/wallPage?roomId=${virtual.roomId}" data-lang="111">벽 수정</a></td>
+								<td><a class="btn btn-default" href="../roomPage?roomId=${virtual.roomId}" data-lang="112">수정</a></td>
 								<td>
-									<p class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="1" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 1}"> checked="checked"</c:if>>공개</p>
-									<p class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="0" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 0}"> checked="checked"</c:if>>비공개</p>
+									<button class="btn btn-default" type="button" onclick="deleteRoom(${virtual.roomId})"><span data-lang="113"></span></button>
+								</td>
+								<td>
+									<p class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="1" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 1}"> checked="checked"</c:if>><span data-lang="119">공개</span></p>
+									<p class="radio-inline"><input name="public${virtual.roomId}" type="radio" value="0" roomId="${virtual.roomId}"<c:if test="${virtual.roomPublic == 0}"> checked="checked"</c:if>><span data-lang="120">비공개</span></p>
 								</td>
 							
 							</tr>

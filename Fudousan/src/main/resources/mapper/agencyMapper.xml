@@ -94,10 +94,7 @@
 	</select>
 	
 	<select id="selectAgencyOne" parameterType="int" resultMap="agencyResultMap">
-		SELECT 
-			*
-		FROM 
-			agency
+		<include refid="SELECT_AGENCY_SQL"></include>
 		WHERE 
 			agency_id = #{agencyId}
 			
@@ -116,10 +113,7 @@
 	
 	<!-- 중개업소 출력 쿼리문 -->
 	<select id="agencyLocationPrint" resultMap="agencyResultMap">
-		SELECT
-			*
-		FROM 
-			agency
+		<include refid="SELECT_AGENCY_SQL"></include>
 	</select>
 	
 </mapper>
