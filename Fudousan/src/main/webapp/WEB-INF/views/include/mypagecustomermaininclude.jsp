@@ -21,7 +21,7 @@
   			<!-- Tab panes -->
   			<div class="tab-content">
     			<div role="tabpanel" class="tab-pane active" id="home">
-    				<h1>3D 작성 매물 확인</h1>
+    				<h1 data-lang="94">3D 작성 매물 확인</h1>
 					<!-- search button -->
 					<div id="custom-search-input">
             			<div class="input-group col-md-12"  name="seachedRoom">
@@ -39,9 +39,9 @@
         			<table class="table" >
         			<thead>
         				<tr>
-        					<th>Name</th>
-        					<th>Create</th>
-        					<th>Delete</th>
+        					<th data-lang="8">Name</th>
+        					<th data-lang="92">Create</th>
+        					<th data-lang="93">Delete</th>
         				</tr>
        				</thead>
         				<tbody id="hhh">
@@ -119,6 +119,7 @@
 						<input type="button" value="거절" id="cancel" name="cancel" onclick="sayonara()">
 						<input type="hidden" value="${helpRes.requestMemberId }" id="client" name="client">
 						<input type="hidden" value="${helpRes.requestedMemberId }" id="accepter" name="accepter">
+						<input type="hidden" value="${helpRes.room.roomId }" id="roomNum" name="roomNum">
 			 		</div>
 			</c:forEach>
 		</div>
@@ -126,3 +127,6 @@
   </div>
 </div>
 <div style="clear: both;"></div>
+
+<script src="<c:url value="/resources/js/cookie.js"/>"></script>
+<script src="<c:url value="/resources/js/translation.js"/>"></script>

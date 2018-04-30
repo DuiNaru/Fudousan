@@ -47,7 +47,7 @@
 		];
 	</script>
 	<script src="resources/js/googlemaps-settings.js"></script>
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&libraries=places&callback=initialize" async defer></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1tbIAqN0XqcgTR1-FxYoVTVq6Is6lD98&libraries=places&callback=initialize&language=en" async defer></script>
 	
 	<!-- 다국어 처리 -->
 	<script src="resources/js/cookie.js"></script>

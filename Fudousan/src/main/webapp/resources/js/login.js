@@ -1,3 +1,7 @@
+var Login = {
+		onLogin:undefined
+}
+
 $(function(){
 	$('#loginBtn').on('click', function(){
 		formCheck();
@@ -31,6 +35,9 @@ function formCheck(){
 					alert('Incorrect password');
 				}
 				else {
+					if(Login.onLogin !== undefined) {
+						Login.onLogin();
+					}
 					
 					$('#loginModal').modal('hide');
 					var str ="";
@@ -119,13 +126,8 @@ function formCheck(){
 
 						$('#navbar-ul').html(str);	
 						
-					
-						
-						
-					
-						
 					}
-
+					translation();
 				}
 			},
 			error: function(err){

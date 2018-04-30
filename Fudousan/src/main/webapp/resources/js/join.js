@@ -8,8 +8,13 @@ function bs_input_file() {
 			if ( ! $(this).prev().hasClass('input-ghost') ) {
 				var element = $("<input type='file' name='file' class='input-ghost' style='visibility:hidden; height:0'>");
 				element.attr("name",$(this).attr("name"));
-				element.change(function(){
+				element.change(function(e){
 					element.next(element).find('input').val((element.val()).split('\\').pop());
+					var fileReader = new FileReader();
+					fileReader.readAsDataURL(e.target.files[0]);
+					fileReader.onload = function(e){
+						document.getElementById('uploadPictures').src = e.target.result; 
+					}
 				});
 				$(this).find("button.btn-choose").click(function(){
 					element.click();

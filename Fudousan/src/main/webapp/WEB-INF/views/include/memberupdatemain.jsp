@@ -44,14 +44,15 @@
 		
 			<div class="form-group">
 			    <label for="InputPhoto">photo</label>
+			    <div >
+			    	<img src="/fudousan${member.picture}" id="uploadPictures">
+				</div>
 				<div class="input-group input-file" name="file">
 					<span class="input-group-btn">
 		        		<button class="btn btn-default btn-choose" type="button">선택</button>
 		    		</span>
 		    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요' name="picture" value="${member.picture }"/>
-		    		<span class="input-group-btn">
-		       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
-		    		</span>
+		    
 				</div>
 			</div>
 
@@ -70,7 +71,7 @@
          
             <div class="form-group text-center">
               <button type="submit" class="btn btn-info">회원정보 수정<i class="fa fa-check spaceLeft"></i></button>
-              <button type="submit" class="btn btn-warning">회원정보 수정 취소<i class="fa fa-times spaceLeft"></i></button>
+            
             </div>
           </form>
         </div>

@@ -39,17 +39,19 @@
 			
 				<div class="form-group">
 				    <label for="InputPhoto">photo</label>
+				   <%-- 
 				    <c:if test="${!empty agency.member.picture}">
-				    	<img class="col-sm-12" src="${agency.member.picture}">
-				    </c:if>
+				    	<img class="col-sm-12" src="/fudousan${agency.member.picture}" id="uploadPictures">
+				    </c:if> --%>
+				    <div >
+			    		<img src="/fudousan${member.picture}" id="uploadPictures">
+					</div>
 					<div class="input-group input-file" name="file">
 						<span class="input-group-btn">
 			        		<button class="btn btn-default btn-choose" type="button">선택</button>
 			    		</span>
 			    		<input type="text" class="form-control" placeholder='파일을 업로드해주세요'  name="picture" value="${member.picture }"/>
-			    		<span class="input-group-btn">
-			       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
-			    		</span>
+			    	
 					</div>
 				</div>
 	
@@ -195,13 +197,12 @@
             
 			<div class="input-group">
 			     <label for="InputText">Agency Introduce</label>
-			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="중개소 소개를 입력해 주세요"  name="text">${agency.text}</textarea>  
+			    <textarea class="form-control" rows="3" cols="100" style="resize:none" placeholder="중개소 소개를 입력해 주세요"  name="agencytext">${agency.text}</textarea>  
 			</div>
          
  			<br>
             <div class="form-group text-center">
               <button type="submit" class="btn btn-info">회원정보 수정<i class="fa fa-check spaceLeft"></i></button>
-              <button type="reset" class="btn btn-warning">회원정보 수정 취소<i class="fa fa-times spaceLeft"></i></button>
             </div>
             
           </form>
