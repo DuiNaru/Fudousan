@@ -8,8 +8,11 @@ let socket = io("https://syper01.com/roompage", {
 	rejectUnauthorized: false
 });
 
-
 $(function(){
+	socket.emit("connect-server", {roomId: room.roomId});	
+});
+
+/*$(function(){
 	 var userId = document.getElementById('userId').value;
 	 var userName = document.getElementById('userName').value;
 	 var user = {
@@ -19,7 +22,7 @@ $(function(){
 	 }
 	 
 	 socket.emit('room_join', user);
-});
+});*/
 
 
 //CommandCallBack 정의

@@ -1,16 +1,14 @@
+$(function(){
+	$("#startVideoChatBtn").html(langSet[lang][0]);
+});
+
 let startBtn = document.getElementById("startVideoChatBtn");
 startBtn.onclick = pushStartBtn;
 
-let localCam = document.getElementById("localCam");
-let remoteCam = document.getElementById("remoteCam");
-
+let localCam = null;
+let remoteCam = null;
 let localStream = null;
 let myPeerConnection;
-
-const VIDEO_WIDTH = 200;
-const VIDEO_HEIGHT = 150;
-
-socket.emit("connect-server", {roomId: room.roomId});
 
 let langSet = {
 	ko: {
@@ -20,7 +18,9 @@ let langSet = {
 		3: "취소",
 		4: "상대방이 화상 채팅을 신청했습니다.",
 		5: "상대방이 없습니다.",
-		6: "상대방이 화상 채팅을 거절했습니다."
+		6: "상대방이 화상 채팅을 거절했습니다.",
+		7: "상대방이 화상 채팅 연결을 취소했습니다.",
+		8: "수락"
 	},
 	jp: {
 		0: "画像チャット開始",
@@ -29,7 +29,9 @@ let langSet = {
 		3: "キャンセル",
 		4: "相手が画像チャットを申請しました。",
 		5: "相手がありません。",
-		6: "相手が画像チャットを拒絶しました。"
+		6: "相手が画像チャットを拒絶しました。",
+		7: "相手が画像チャットの連結をキャンセルしました。",
+		8: "受ける"
 	},
 	en: {
 		0: "Start Video Chat",
@@ -38,7 +40,9 @@ let langSet = {
 		3: "Cancel",
 		4: "The other person has requested a video chat.",
 		5: "There is no other person.",
-		6: "The other person declined the video chat."
+		6: "The other person declined the video chat.",
+		7: "The other person canceled the call.",
+		8: "Accept"
 	}
 };
 
@@ -49,7 +53,7 @@ if (lang === ""){
 }
 
 function pushStartBtn(){
-	if (startBtn.innerHTML === "화상 채팅 시작"){
+	if (startBtn.innerHTML === langSet[lang][0]){
 		call();
 	}
 	else {
@@ -62,7 +66,13 @@ function call(){
 	
 	setStartBtn("start");
 	
-	navigator.mediaDevices.getUserMedia({video: {width: VIDEO_WIDTH, height: VIDEO_HEIGHT}, audio: true}).then(function(stream){
+	localCam = setLocalCamTo("top-menu");
+	remoteCam = setRemoteCamTo("top-menu");
+	
+	console.dir(localCam);
+	console.dir(remoteCam);
+	
+	navigator.mediaDevices.getUserMedia({video: true, audio: true}).then(function(stream){
 		localCam.srcObject = stream;
 		
 		showCallWindow();
@@ -76,18 +86,15 @@ function call(){
 function setStartBtn(state){
 	switch (state){
 		case "start":
-			startBtn.innerHTML = "화상 채팅 종료";
+			startBtn.innerHTML = langSet[lang][1];
 			startBtn.disabled = false;
-			startBtn.style.color = "rgb(0, 0, 0)";
 			break;
 		case "calling":
 			startBtn.disabled = true;
-			startBtn.style.color = "rgb(150, 150, 150)";
 			break;
 		case "stop":
-			startBtn.innerHTML = "화상 채팅 시작";
+			startBtn.innerHTML = langSet[lang][0];
 			startBtn.disabled = false;
-			startBtn.style.color = "rgb(0, 0, 0)";
 			break;
 	}
 }
@@ -106,7 +113,7 @@ function showCallWindow(){
     div.style.background = "rgba(0, 0, 0, 0.5)";
     div.style.zIndex = "2";
     
-	let html = "상대방의 수락을 기다리고 있습니다.<br><div id='btnDiv'><button type='button' id='cancelCallBtn'>취소</button></div>";
+	let html = langSet[lang][2] + "<br><div id='btnDiv'><button type='button' id='cancelCallBtn'>취소</button></div>";
 	div.innerHTML = html;
 	
 	document.body.appendChild(div);
@@ -144,7 +151,7 @@ socket.on("cancel-call", function(){
 		receiveCallDiv.removeChild(receiveCallDiv.firstChild);
 	}
 	
-	let html = "상대방이 화상 채팅 연결을 취소하였습니다.";
+	let html = langSet[lang][7];
 	receiveCallDiv.innerHTML = html;
 	
 	setTimeout(function(){
@@ -160,7 +167,7 @@ socket.on("not-found-target", function(){
 	closeCall();
 	removeDiv("callingDiv");
 	
-	alert("상대방이 없습니다.");
+	alert(langSet[lang][5]);
 });
 
 function receiveCallWindow(){
@@ -177,9 +184,9 @@ function receiveCallWindow(){
     div.style.background = "rgba(0, 0, 0, 0.5)";
     div.style.zIndex = "2";
     
-	let html  = "상대방이 화상 채팅을 신청했습니다.<br>";
-		html += "<button type='button' id='acceptCallBtn'>수락</button>";
-		html += "<button type='button' id='refuseCallBtn'>취소</button>";
+	let html  = langSet[lang][4] + "<br>";
+		html += "<button type='button' id='acceptCallBtn'>" + langSet[lang][8] + "</button>";
+		html += "<button type='button' id='refuseCallBtn'>" + langSet[lang][3] + "</button>";
 	div.innerHTML = html;
 	
 	document.body.appendChild(div);
@@ -223,7 +230,7 @@ socket.on("answer-call", function(answer){
 	else {
 		closeCall();
 		
-		alert("상대방이 화상 채팅을 거절했습니다.");
+		alert(langSet[lang][6]);
 	}
 });
 
@@ -252,8 +259,11 @@ socket.on("video-offer", function(sdp){
 
 	let desc = new RTCSessionDescription(sdp);
 
+	localCam = setLocalCamTo("top-menu");
+	remoteCam = setRemoteCamTo("top-menu");
+	
 	myPeerConnection.setRemoteDescription(desc).then(function(){
-		return navigator.mediaDevices.getUserMedia({video: {width: VIDEO_WIDTH, height: VIDEO_HEIGHT}, audio: true});
+		return navigator.mediaDevices.getUserMedia({video: true, audio: true});
 	}).then(function(stream){
 		localCam.srcObject = stream;
 		myPeerConnection.addStream(stream);
@@ -327,6 +337,7 @@ function closeCall(){
 		localCam.srcObject = null;
 	}
 	
+	removeCam();
 	setStartBtn("stop");
 };
 
@@ -356,9 +367,7 @@ function handleICECandidateEvent(event){
 
 function handleAddStreamEvent(event){
 	console.log("--> handle add stream event");
-
-	remoteCam.width = VIDEO_WIDTH;
-	remoteCam.height = VIDEO_HEIGHT;
+	
 	remoteCam.srcObject = event.stream;
 	setStartBtn("start");
 }
@@ -389,4 +398,34 @@ function handleSignalingStateChangeEvent(event){
 			hangup();
 			break;
 	}
+}
+
+function setLocalCamTo(id){
+	let localVideo = document.createElement("video");
+	localVideo.id = "localCam";
+	localVideo.width = 200;
+	localVideo.height = 150;
+	localVideo.autoplay = true;
+	localVideo.muted = true;
+	
+	$("#" + id).append(localVideo);
+	
+	return localVideo;
+}
+
+function setRemoteCamTo(id){
+	let remoteVideo = document.createElement("video");
+	remoteVideo.id = "remoteCam";
+	remoteVideo.width = 200;
+	remoteVideo.height = 150;
+	remoteVideo.autoplay = true;
+	
+	$("#" + id).append("<br>");
+	$("#" + id).append(remoteVideo);
+	
+	return remoteVideo;
+}
+
+function removeCam(){
+	$("#top-menu").children().remove();
 }

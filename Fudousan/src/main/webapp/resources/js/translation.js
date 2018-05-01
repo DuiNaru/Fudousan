@@ -43,5 +43,5 @@ function changeLanguage(lang, json){
 function selectLanguage(lang){
 	setCookie("lang", lang, 365);
 	
-	translation();
+	location.reload();
 };

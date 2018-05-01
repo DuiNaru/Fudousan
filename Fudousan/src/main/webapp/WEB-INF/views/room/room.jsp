@@ -63,19 +63,19 @@
 				<c:if test="${s.index != 0 }">
 					,
 				</c:if>
-						new RoomWall(
-								'<c:url value='${wall.backTexture.file==null?undefined:wall.backTexture.file}'/>', 
-								'<c:url value='${wall.frontTexture.file==null?undefined:wall.frontTexture.file}'/>',
-								${wall.roomWallId},
-								${wall.roomId},
-								${wall.roomWallConnector1.connectorId},
-								${wall.roomWallConnector1.x},
-								${wall.roomWallConnector1.y},
-								${wall.roomWallConnector2.connectorId},
-								${wall.roomWallConnector2.x},
-								${wall.roomWallConnector2.y},
-								'${wall.type}'
-						)
+					new RoomWall(
+						'<c:url value='${wall.backTexture.file==null?undefined:wall.backTexture.file}'/>', 
+						'<c:url value='${wall.frontTexture.file==null?undefined:wall.frontTexture.file}'/>',
+						${wall.roomWallId},
+						${wall.roomId},
+						${wall.roomWallConnector1.connectorId},
+						${wall.roomWallConnector1.x},
+						${wall.roomWallConnector1.y},
+						${wall.roomWallConnector2.connectorId},
+						${wall.roomWallConnector2.x},
+						${wall.roomWallConnector2.y},
+						'${wall.type}'
+					)
 			</c:forEach>
 		];
 		var items = [];
@@ -263,11 +263,11 @@
 <input type="hidden" id="userId" value="${sessionScope.loginId}">
 <input type="hidden" id="userName" value="${sessionScope.what_your_name}">
 
+	<!-- 화상 채팅 버튼 -->
+	<button type="button" id="startVideoChatBtn" class="btn btn-default"></button>
+	
 	<!-- 위쪽 메뉴 -->
-	<div class="top-menu">
-		<button type="button" id="startVideoChatBtn">화상 채팅 시작</button><br>
-		<video id="localCam" autoplay="autoplay" muted="muted"></video><br>
-		<video id="remoteCam" autoplay="autoplay"></video>
+	<div class="top-menu" id="top-menu">
 	</div>
 	
 	<div id="textureInfo" class="texture-menu">
@@ -378,29 +378,34 @@
 		</div>
 	</div>
 	<div class="right-menu">
-		<div>
-			<label>종합기능</label>
-			<ul>
-				<li>방이름 <input type="text" id="roomTitle" value="${room.roomTitle }"> <button type="button" onclick="changeTitle()">변경</button>   </li>
-				<li><button class="btn btn-default" onclick="back()">뒤로가기</button></li>
-				<li><button class="btn btn-default" onclick="forward()">앞으로가기</button></li>
-				<li><button class="btn btn-default" onclick="roomReset()">초기화</button></li>
-				<li><button class="btn btn-default" onclick="esc()">종료</button>
-				<li><button class="btn btn-default" onclick="takeSnapShot()">스냅샷 </button>
-				<li><a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-lg">
+		<ul class="list-group">
+			<li>
+				방이름<br>
+				<input type="text" id="roomTitle" value="${room.roomTitle }">
+				<button type="button" onclick="changeTitle()" class="btn btn-default">변경</button>
+			</li>
+			<li><button class="btn btn-default" onclick="back()">뒤로가기</button></li>
+			<li><button class="btn btn-default" onclick="forward()">앞으로가기</button></li>
+			<li><button class="btn btn-default" onclick="roomReset()">초기화</button></li>
+			<li><button class="btn btn-default" onclick="esc()">종료</button></li>
+			<li><button class="btn btn-default" onclick="takeSnapShot()">스냅샷 </button></li>
+			<li>
+				<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-md">
 					<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
-				</a></li>
-				<li id="snapshot">
-					<c:if test="${!empty room.snapshot }">
-						<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
-					</c:if>
-				</li>
-				<li>높이 <input type="text" id="height"> <button type="button" onclick="changeheight()">변경</button>   </li>
-			</ul>
-		</div>
+				</a>
+			</li>
+			<li id="snapshot">
+				<c:if test="${!empty room.snapshot }">
+					<img class="snapshot" src="<c:url value="${room.snapshot}"/>">
+				</c:if>
+			</li>
+			<li>
+				높이<br>
+				<input type="text" id="height">
+				<button type="button" onclick="changeheight()" class="btn btn-default">변경</button>
+			</li>
+		</ul>
 	</div>
-	<menu>
-	</menu>
 	
 	<script src="<c:url value="/resources/js/cookie.js"/>"></script>
 	<script src="<c:url value="/resources/js/videochat.js"/>"></script>

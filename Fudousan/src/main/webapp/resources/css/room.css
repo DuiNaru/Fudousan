@@ -8,12 +8,21 @@ canvas {
 	left: 0;
 }
 
+#startVideoChatBtn {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	z-index: 2;
+}
+
 .top-menu {
 	position: absolute;
-	width: 17%;
-	top: 0%;
+	width: 1;
+	height: 1;
+	top: 60px;
+	left: 10px;
 	z-index: 1;
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(0, 0, 0, 0.0);
 }
 
 .texture-menu {
@@ -23,14 +32,14 @@ canvas {
 	width:30%;
 	height:100px;
 	overflow:scroll;
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 .left-menu {
 	position: absolute;
 	left: 0px;
 	z-index: 1;
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 .bottom-menu {
@@ -39,7 +48,7 @@ canvas {
 	left: 0px;
 	height: 200px;
 	z-index: 1;
-	background-color: rgba(255, 255, 255, 0.5);
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 .bottom-menu ul {
@@ -56,10 +65,27 @@ canvas {
 
 .right-menu {
 	position: absolute;
-	top: 10%;
-	right: 0px;
+	display: inline-block;
+	top: 25%;
+	right: 20px;
 	z-index: 1;
-	background-color: rgba(255, 255, 255, 0.5);
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.list-group {
+	margin: 0px;
+}
+
+li {
+	list-style-type: none;
+	margin: 5px;
+}
+
+input {
+	width: 120px;
+	margin-bottom: 5px;
+	color: rgb(0, 0, 0);
 }
 
 .preview {
@@ -84,7 +110,7 @@ canvas {
 	position: fixed;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
+	background-color: rgba(0, 0, 0, 0.2);
 	z-index: 2;
 }
 #blocker > div {
