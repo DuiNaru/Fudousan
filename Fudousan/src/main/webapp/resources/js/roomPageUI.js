@@ -210,7 +210,14 @@ function resetInfo() {
  */
 function itemApplyListener() {
 	//applyItemChange(curSelected.roomItem);
-	NewCommand.itemChange(curSelected.roomItem);
+	var newRoomItem = curSelected.roomItem.clone();
+	newRoomItem.x = curSelected.position.x;
+	newRoomItem.y = curSelected.position.y;
+	newRoomItem.z = curSelected.position.z;
+	newRoomItem.rotateX = curSelected.rotation.x*180/Math.PI;
+	newRoomItem.rotateY = curSelected.rotation.y*180/Math.PI;
+	newRoomItem.rotateZ = curSelected.rotation.z*180/Math.PI;
+	NewCommand.itemChange(newRoomItem);
 }
 
 function deleteItemButton() {

@@ -43,6 +43,7 @@ public class FileService {
 	 *             원래 이름을 사용할 수 없을 때 발생
 	 */
 	public static String saveFile(MultipartFile mfile, String uploadPath, boolean useOriginalName) {
+		logger.info("saveFile("+mfile+", "+uploadPath+", "+useOriginalName+") Start");
 		// 업로드된 파일이 없거나 크기가 0이면 저장하지 않고 null을 리턴
 		if (mfile == null || mfile.isEmpty() || mfile.getSize() == 0) {
 			return null;
@@ -119,6 +120,7 @@ public class FileService {
 			}
 		}
 
+		logger.info("saveFile("+mfile+", "+uploadPath+", "+useOriginalName+") End");
 		return savedFilename + ext;
 	}
 	

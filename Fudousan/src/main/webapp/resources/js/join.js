@@ -13,7 +13,8 @@ function bs_input_file() {
 					var fileReader = new FileReader();
 					fileReader.readAsDataURL(e.target.files[0]);
 					fileReader.onload = function(e){
-						document.getElementById('uploadPictures').src = e.target.result; 
+						console.log(e);
+						document.getElementById('uploadPictures').src = e.currentTarget.result; 
 					}
 				});
 				$(this).find("button.btn-choose").click(function(){
