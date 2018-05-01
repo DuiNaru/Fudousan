@@ -1,6 +1,27 @@
 /**
  * 
  */
+$(function () {
+	$("input[name^=public]:radio").change(function () {
+		var roomId = $(this).attr("roomId");
+		var value = $(this).val();
+		$.ajax({
+			url:"./changeRoomPublic?roomId="+roomId+"&roomPublic="+value,
+			type:"GET",
+			success:function(data) {
+				if(data == -1) {
+					alert("공개여부 변경에 실패하였습니다.");
+					$("input[name=public"+roomId+"]").filter("[value="+(1-value)+"]").prop("checked", true);
+				}
+			},
+			error:function(e) {
+				console.log(e);
+				alert("공개여부 변경 중 오류가 발생하였습니다.");
+				$("input[name=public"+roomId+"]").filter("[value="+(1-value)+"]").prop("checked", true);
+			}
+		});
+	});
+});
 
 function roomDeleteListener(roomId) {
 	
@@ -22,5 +43,7 @@ function roomDeleteListener(roomId) {
 			alert("삭제 중 오류가 발생하였습니다.");
 		}
 	});
+	
+	
 	
 }
