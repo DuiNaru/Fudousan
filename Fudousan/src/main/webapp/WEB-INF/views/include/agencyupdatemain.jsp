@@ -72,12 +72,12 @@
          
 			 <div class="form-group">
               <label for="InputText" data-lang="23"></label>
-              <input type="text" class="form-control" id="agencyname" data-lang="24" name="name" value="${agency.name}">
+              <input type="text" class="form-control" id="agencyname" data-lang="24" name="name" value="${agency.name}" required="required">
             </div>
             
              <div class="form-group">
               <label for="InputText" data-lang="25"></label>
-              <input type="text" class="form-control" id="agencybiznum" data-lang="26" name="biznum" value="${agency.biznum}">
+              <input type="text" class="form-control" id="agencybiznum" data-lang="26" name="biznum" value="${agency.biznum}" required="required">
             </div>
             
 			<div class="form-group">
@@ -183,17 +183,17 @@
             
              <div class="form-group">
               <label for="InputText" data-lang="76"></label>
-              <input type="text" class="form-control" id="agencyaddressmiddle" data-lang="77" name="addressMiddle" value="${agency.addressMiddle }">
+              <input type="text" class="form-control" id="agencyaddressmiddle" data-lang="77" name="addressMiddle" value="${agency.addressMiddle }" required="required">
             </div>
             
              <div class="form-group">
               <label for="InputText" data-lang="78"></label>
-              <input type="text" class="form-control" id="agencyaddresssmall" data-lang="79"  name="addressSmall" value="${agency.addressSmall }">
+              <input type="text" class="form-control" id="agencyaddresssmall" data-lang="79"  name="addressSmall" value="${agency.addressSmall }" required="required">
             </div>
             
              <div class="form-group">
               <label for="InputText" data-lang="80">b</label>
-              <input type="text" class="form-control" id="agencyaddresssub" data-lang="81"  name="addressSub" value="${agency.addressSub }">
+              <input type="text" class="form-control" id="agencyaddresssub" data-lang="81"  name="addressSub" value="${agency.addressSub }" required="required">
             </div>
             
 			<div class="input-group">

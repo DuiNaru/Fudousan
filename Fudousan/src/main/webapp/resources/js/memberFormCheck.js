@@ -19,13 +19,15 @@ function formsubmit() {
 	}
 	
 	if ($("#InputPassword1").val() != $("#InputPassword2").val()) {
-		alert("다르다");
+		alert("パスワード①とパスワード②が異なります。");
 		return false;
 	}
 	
+	if ($(".glyphicon-remove").length > 0) {
+		alert("正しいメールアドレスを入力してください");
+		return false;
+	}
 
-
-	
 	if ($("#agree").prop("checked")) {
 		return false; 
 	}

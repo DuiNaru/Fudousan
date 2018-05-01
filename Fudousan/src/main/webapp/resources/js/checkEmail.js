@@ -29,7 +29,8 @@
 				emailClass('reset');
 				if (!emailRegexp.test($('#email').val())) {
 					emailClass('error');
-					return false;
+						return false;
+					
 				} else {
 					$.ajax({
 						url:'../emailCheck',
@@ -46,13 +47,17 @@
 								emailClass('success');
 							}
 							
-							console.log($('#email').val())
+							
 						},
 						error:function(err) {
 							console.log(err);
 						}
 					});
+					
 				}
+				
+				
+				
 			});
 			
 		})
