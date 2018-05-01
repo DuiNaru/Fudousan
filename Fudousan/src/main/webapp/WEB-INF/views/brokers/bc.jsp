@@ -131,7 +131,7 @@
           
           <div class="form-group">
               <label for="inputMunicipality" data-lang="121">매물이름</label>
-              <input type="text" class="form-control" id="inputestateName"  name="estateName" value="${estate.estateName}">
+              <input type="text" class="form-control"  value="${estate.estateName}" id="inputestateName"  name="estateName" >
             </div>
           
           <input type="hidden"   class="form-control" id="inputestateName"  name=estateId value="${estate.estateId}">
@@ -196,50 +196,50 @@
               <input type="text" class="form-control" id="inputTimeToNearestStation" placeholder="제일 가까운역 거리(분)" name="timetoneareststation" value="${estate.timetoneareststation}">
             </div>
             
-            <%-- <div class="form-group">
+            <%--  <div class="form-group">
               <label for="inputTradePrice"> 取引価格（総額）</label>
               <input type="text" class="form-control" data-lang="108" id="inputTradePrice" placeholder="거래 가격(총액)" name="tradeprice" value="${estate.tradeprice}">
+            </div>  --%>
+            
+           <%-- <div class="form-group">
+              <label for="inputPricePerUnit"> 坪単価</label>
+              <input type="text" class="form-control" id="inputPricePerUnit" placeholder="평단가" name="priceperunit" value="${estate.priceperunit}">
+            </div> --%>
+              
+         <%--    <div class="form-group">
+              <label for="inputFloorPlan"> 構造</label>
+              <input type="text" class="form-control" id="inputFloorPlan" placeholder="구조 " name="floorplan" value="${estate.floorplan}">
+            </div> --%>
+            
+           <%--  <div class="form-group">
+              <label for="inputArea"> 面積（平方メートル</label>
+              <input type="text" class="form-control" id="inputArea" placeholder="면적(평방 미터)" name="area" value="${estate.area}">
+            </div> --%>
+            
+           <%--  <div class="form-group">
+              <label for="inputUnitPrice"> 取引価格（平方メートル単価）</label>
+              <input type="text" class="form-control" id="inputUnitPrice" placeholder="거래 가격(평방 미터 단가 )" name="unitprice" value="${estate.unitprice}">
             </div> --%>
             
             <%-- <div class="form-group">
-              <label for="inputPricePerUnit"> 坪単価</label>
-              <input type="text" class="form-control" id="inputPricePerUnit" placeholder="평단가" name="priceperunit" value="${estate.priceperunit}">
-            </div>
-              
-            <div class="form-group">
-              <label for="inputFloorPlan"> 構造</label>
-              <input type="text" class="form-control" id="inputFloorPlan" placeholder="구조 " name="floorplan" value="${estate.floorplan}">
-            </div>
-            
-            <div class="form-group">
-              <label for="inputArea"> 面積（平方メートル</label>
-              <input type="text" class="form-control" id="inputArea" placeholder="면적(평방 미터)" name="area" value="${estate.area}">
-            </div>
-            
-            <div class="form-group">
-              <label for="inputUnitPrice"> 取引価格（平方メートル単価）</label>
-              <input type="text" class="form-control" id="inputUnitPrice" placeholder="거래 가격(평방 미터 단가 )" name="unitprice" value="${estate.unitprice}">
-            </div>
-            
-            <div class="form-group">
               <label for="inputLandShape">土地の形状 </label>
               <input type="text" class="form-control" id="inputLandShape" placeholder="토지의 형상" name="landshape" value="${estate.landshape}">
-            </div>
+            </div> --%>
             
-           <div class="form-group">
+          <%--  <div class="form-group">
               <label for="inputTotalFloorArea">延べ面積（㎡） </label>
               <input type="text" class="form-control" id="inputTotalFloorArea" placeholder="연면적 (㎡)" name="totalfloorarea" value="${estate.totalfloorarea}">
-            </div> --%>
+            </div>  --%>
             
             <div class="form-group">
               <label for="inputBuildingYear" data-lang="138">건축년도 </label>
               <input type="text" class="form-control" id="inputBuildingYear" placeholder="건축 년도 " name="buildingyear" value="${estate.buildingyear}">
             </div>
             
-     <%--        <div class="form-group">
+           <%-- <div class="form-group">
               <label for="inputStructure">建物の構造 </label>
               <input type="text" class="form-control" id="inputStructure" placeholder="건물의 구조 " name="structure" value="${estate.structure}">
-            </div> --%>
+            </div>  --%>
             
             <div class="form-group">
               <label for="inputUse" data-lang="139">用途</label>

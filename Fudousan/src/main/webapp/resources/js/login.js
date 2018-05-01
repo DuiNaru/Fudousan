@@ -71,7 +71,7 @@ function formCheck(){
 							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="84"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/interior/" data-lang ="87">Interior Page</a>';
 						}else if(result.permissionId == 3){
-							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="85" >Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="84" >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="86">Agency Page</a></li>';
 							if ( result.designer ) {
 								str += '<li><a href="/fudousan/interior/" data-lang ="87">Interior Page</a>';
@@ -118,13 +118,13 @@ function formCheck(){
 							+	 '<li><a href="/fudousan/logout">Logout</a></li>';
 
 						if (result.permissionId == 1) {
-							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="85"  >Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="84"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/mypageNormalUser" data-lang ="84">Member Page</a></li>';
 						}else if(result.permissionId == 2){
-							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="85" >Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/memberupdate?email='+result.email+'" data-lang ="84" >Update Member</a></li>'
 								+  '<li><a href="/fudousan/interior/" data-lang ="84">Interior Page</a>';
 						}else if(result.permissionId == 3){
-							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="85"  >Update Member</a></li>'
+							str += '<li><a href="/fudousan/memberupdate/agencyupdate?email='+result.email+'" data-lang ="84"  >Update Member</a></li>'
 								+  '<li><a href="/fudousan/bm" data-lang ="84">Agency Page</a></li>';
 						}else if(result.permissionId == 99){
 							str += '<li><a href="/fudousan/admin/" data-lang ="84">Admin page</a></li>';
