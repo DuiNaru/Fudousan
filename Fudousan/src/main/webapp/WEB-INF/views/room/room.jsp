@@ -233,6 +233,10 @@
 		function nameChange(changeTitle){
 			$('#roomTitle').val(changeTitle);
 		}
+		
+		$(function () {
+			setRoomEditable(${editable});
+		})
 	</script>
 </head>
 <body>
@@ -301,7 +305,7 @@
 			<label>아이템 참고 사이트</label>
 			<p id="leftItemSite" class="form-control-static"></p>
 		</div>
-		<div class="form-group">
+		<div id="itemEditGroup" class="form-group">
 			<div>
 				<label>Axis X</label> 
 				<input name="itemRotateX" type="hidden">
@@ -333,8 +337,8 @@
 				<div id="pz"></div>
 			</div>
 		</div>
-		<input type="button" value="삭제" onclick="deleteItemButton()">
-		<input type="button" value="적용" onclick="itemApplyListener()">
+		<input id="itemDeleteButton" type="button" value="삭제" onclick="deleteItemButton()">
+		<input id="itemApplyButton" type="button" value="적용" onclick="itemApplyListener()">
 	</div>
 	
 	<div class="bottom-menu">

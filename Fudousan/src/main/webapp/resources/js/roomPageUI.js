@@ -232,3 +232,19 @@ function deleteItemButton() {
 function createItemListener(item) {
 	NewCommand.create(item);
 }
+
+/**
+ * 해당 방을 편집할 수 있는가?
+ * @param editable 편집 가능 여부
+ * @returns
+ */
+function setRoomEditable(editable) {
+	var cssvalue = editable ? "visible" : "hidden";
+	
+	$("#textureInfo").css("visibility", cssvalue);
+	$("#itemEditGroup").css("visibility", cssvalue);
+	$("#itemDeleteButton").css("visibility", cssvalue);
+	$("#itemApplyButton").css("visibility", cssvalue);
+	$(".bottom-menu").css("visibility", cssvalue);
+	$(".right-menu").css("visibility", cssvalue);
+}

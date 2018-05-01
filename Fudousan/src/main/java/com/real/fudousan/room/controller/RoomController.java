@@ -156,11 +156,9 @@ public class RoomController {
 		return returnedURL;
 	}
 	
-	
-	//작업중
 	@RequestMapping(value="roomPage", method=RequestMethod.GET)
-	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model ) {
-		logger.info("roomPage("+loginId+", "+roomId+") Start");
+	public String roomPage(@ModelAttribute("loginId") int loginId, int roomId, Model model, @RequestParam( value="editable", defaultValue="true" ) boolean editable ) {
+		logger.info("roomPage("+loginId+", "+roomId+", "+editable+") Start");
 		
 
 		Room room = roomService.showRoom(roomId);
@@ -178,10 +176,11 @@ public class RoomController {
 			model.addAttribute("textureList", textureService.getTextureList());
 			
 			model.addAttribute("itemTypeList", itemService.getItemTypeList());
+			
+			model.addAttribute("editable", editable);
 		}
-		logger.info("roomPage("+loginId+", "+roomId+") End");
+		logger.info("roomPage("+loginId+", "+roomId+", "+editable+") End");
 		return "room/room";
-		//return "itemlist";
 	}
 	
 	
