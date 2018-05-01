@@ -11,7 +11,7 @@ body{
 	padding: 3px;
 }
 .gal-item .box{
-	height: 350px;
+	height: 100px;
 	overflow: hidden;
 }
 .box img{

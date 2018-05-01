@@ -237,7 +237,7 @@ public class RoomController {
 			, @RequestParam(value="page", defaultValue="1")int page
 			){
 		logger.info("estate id에 해당하는 3d디자인 방 가져오기 시작");
-		final int countPerPage = 3;
+		final int countPerPage = 50;
 		final int pagePerGroup = 5; 
 		
 		String estateIdResult=estateId.trim();

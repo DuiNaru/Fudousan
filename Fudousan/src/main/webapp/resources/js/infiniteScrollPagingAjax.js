@@ -49,7 +49,7 @@ function getRoomSnapShot() {
 			var str = "";
 					
 			// 가져온 데이터가 마지막이면 마지막이라고 표시 해준다. 
-			if (page < endPage ) {
+			if (page <= endPage ) {
 				count++;
 				page = count;
 				console.log(count);
@@ -57,13 +57,13 @@ function getRoomSnapShot() {
 					function(index, room){
 						str += "<div class="+ "'col-md-4 col-sm-6 co-xs-12 gal-item'" +">"
 							+     "<div class="+"'box'"+">"
-							+		"<a herg="+"'#'"+"data-toggle="+"'modal'"+">"
+							+		"<a href='../roomPage?roomId="+room.roomId+"&editable=false' data-toggle="+"'modal'"+">"
 						str +=        "<img src="+"'";
 						
 						if (room.snapshot == null || room.snapshot == "null") {
 							str += "/fudousan/resources/image/noimg.gif";
 						}else{
-							str += room.snapshot;
+							str += "/fudousan"+room.snapshot;
 						}
 						
 						str += "'"+">"
@@ -72,6 +72,7 @@ function getRoomSnapShot() {
 							+	"</div>";
 				result = true;
 				}); //each end
+				console.log(str);
 				$(".gal-container").append(str);
 	
 			}else{
