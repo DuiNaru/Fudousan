@@ -4,7 +4,7 @@
 	<!--  join form  -->
 	<article class="container">
         <div class="page-header">
-			<h1><span data-lang="6"></span>&nbsp;<small>basic form</small></h1>
+			<h1><span data-lang="6"></span></h1>
 		</div>
 		
 		<div class="col-md-6 col-md-offset-3">
@@ -74,7 +74,7 @@
 							<span class="fa fa-check"></span>
 							<input id="agree" type="checkbox" autocomplete="off" name="checkbox" >
 						</label>
-						<span data-lang="21"></span>&nbsp;<a href="#" data-lang="22"></a>
+						<span data-lang="21"></span>
 					</div>
 				</div>
 	         

@@ -6,7 +6,7 @@
  
  <article class="container">
         <div class="page-header">
-          <h1>공인중개업자 회원정보 수정 <small>Agency basic update form</small></h1>
+          <h1 data-lang="84"></h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <form role="form" action="modifyAgency" method="post"  enctype="multipart/form-data" onsubmit="return formsubmit()">
@@ -51,7 +51,7 @@
 						<span class="input-group-btn">
 			        		<button class="btn btn-default btn-choose" type="button" data-lang="16"></button>
 			    		</span>
-			    		<input type="text" class="form-control" data-lang="17"  name="picture" value="${member.picture }"/>
+			    		<input type="text" class="form-control" data-lang="17"  name="picture" value="${agency.member.picture }"/>
 			    	
 					</div>
 				</div>

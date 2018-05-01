@@ -7,7 +7,7 @@
  
  <article class="container">
         <div class="page-header">
-          <h1 data-lang="84">회원정보수정 <small>basic update form</small></h1>
+          <h1 data-lang="84"> </h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <form role="form" action="modifyMember" method="post" enctype="multipart/form-data" onsubmit="return formsubmit()" >
@@ -45,9 +45,12 @@
 			<div class="form-group">
 			    <label for="InputPhoto" data-lang="15"></label>
 			    <div>
-			    	<c:if test="${member.picture} != null">
+				 	<c:if test="${!empty member.picture}">
 			    		<img class="col-sm-12" src="/fudousan${member.picture}" id="uploadPictures">
-					</c:if>
+			   	 	</c:if>
+			    	<c:if test="${empty member.picture}">
+		    			<img class="col-sm-12" src="" id="uploadPictures">
+					</c:if>		
 				</div>
 				<div class="input-group input-file" name="file">
 					<span class="input-group-btn">
