@@ -380,18 +380,20 @@
 	<div class="right-menu">
 		<ul class="list-group">
 			<li>
-				방이름<br>
-				<input type="text" id="roomTitle" value="${room.roomTitle }">
-				<button type="button" onclick="changeTitle()" class="btn btn-default">변경</button>
+				<span>방이름</span><br>
+				<input type="text" id="roomTitle" value="${room.roomTitle}">
+				<button type="button" onclick="changeTitle()" class="btn btn-default right-menu-btn">변경</button>
 			</li>
-			<li><button class="btn btn-default" onclick="back()">뒤로가기</button></li>
-			<li><button class="btn btn-default" onclick="forward()">앞으로가기</button></li>
-			<li><button class="btn btn-default" onclick="roomReset()">초기화</button></li>
-			<li><button class="btn btn-default" onclick="esc()">종료</button></li>
-			<li><button class="btn btn-default" onclick="takeSnapShot()">스냅샷 </button></li>
 			<li>
-				<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-md">
-					<span class="glyphicon glyphicon-envelope"></span>   E - MAIL
+				<button class="btn btn-success glyphicon glyphicon-backward" onclick="back()"></button>
+				<button class="btn btn-success glyphicon glyphicon-forward" onclick="forward()"></button>
+			</li>
+			<li><button class="btn btn-success right-menu-btn glyphicon glyphicon-refresh" onclick="roomReset()">&nbsp;초기화</button></li>
+			<li><button class="btn btn-danger right-menu-btn glyphicon glyphicon-remove" onclick="esc()">&nbsp;종료</button></li>
+			<li><button class="btn btn-info right-menu-btn glyphicon glyphicon-camera" onclick="takeSnapShot()">&nbsp;스냅샷</button></li>
+			<li>
+				<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-md right-menu-btn">
+					<span class="glyphicon glyphicon-envelope"></span>&nbsp; E-MAIL
 				</a>
 			</li>
 			<li id="snapshot">
@@ -400,9 +402,9 @@
 				</c:if>
 			</li>
 			<li>
-				높이<br>
+				<span>높이</span><br>
 				<input type="text" id="height">
-				<button type="button" onclick="changeheight()" class="btn btn-default">변경</button>
+				<button type="button" onclick="changeheight()" class="btn btn-default right-menu-btn">변경</button>
 			</li>
 		</ul>
 	</div>
