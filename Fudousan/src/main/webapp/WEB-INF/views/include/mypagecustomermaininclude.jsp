@@ -49,7 +49,7 @@
 	        					<tr name="home">
 	        						<td><p><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">
 									<c:choose>
-		        							<c:when test="${room.roomTitle eq null}">이름 없음</c:when>
+		        							<c:when test="${room.roomTitle eq null}"><span data-lang="311">이름없음</span></c:when>
 		        							<c:otherwise>${room.roomTitle}</c:otherwise>
         							</c:choose>
 									</a></p></td>
