@@ -230,6 +230,7 @@
 			phone,
 			picture,
 			text as "member_text",
+			designer,
 			member_name
 		FROM 
 			member
