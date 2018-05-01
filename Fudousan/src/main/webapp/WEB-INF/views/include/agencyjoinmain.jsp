@@ -4,7 +4,7 @@
 <!--  agency join form  -->
 	<article class="container">
 		<div class="page-header">
-			<h1><span data-lang="7"></span>&nbsp;<small>Agency basic form</small></h1>
+			<h1><span data-lang="7"></span></h1>
 		</div>
 		<div class="col-md-6 col-md-offset-3">
 			<form role="form" action="insertAgency" method="post" enctype="multipart/form-data" onsubmit="return formsubmit()">
@@ -27,7 +27,7 @@
 					<span class="glyphicon form-control-feedback"></span>
 				</div>
 				<div class="form-group">
-					<label for="InputText" data-lang="11"></label>
+					<label for="InputPhone" data-lang="11"></label>
 					<input type="text" class="form-control" id="userphone" name="phone" data-lang="12">
 				</div>
 	            
@@ -204,7 +204,7 @@
 							<span class="fa fa-check"></span>
 							<input id="agree" type="checkbox" autocomplete="off" name="checkbox" value="checked">
 						</label>
-						<span data-lang="21"></span>&nbsp;<a href="#" data-lang="22"></a>
+						<span data-lang="21"></span>
 					</div>
 				</div>
 				

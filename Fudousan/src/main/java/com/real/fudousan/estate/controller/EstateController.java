@@ -207,12 +207,12 @@ public class EstateController {
 				
 			
 			estateService.updateByIds(estate);
-			System.out.println("여기까지 1");
+			System.out.println("수정 여기까지 1");
 			int estate_id = estate.getEstateId();
-			System.out.println("여기까지2");
+			System.out.println("수정 여기까지2");
 			
 			String email = (String) session.getAttribute("loginEmail");
-			System.out.println("여기까지 3");
+			System.out.println("수정 여기까지 3");
 			int agency_id = agencyService.selectAgencyId(email);
 			
 			logger.info("estate_id : " + estate_id);

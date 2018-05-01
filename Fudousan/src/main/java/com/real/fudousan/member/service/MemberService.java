@@ -4,6 +4,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -90,9 +92,7 @@ public class MemberService {
 		member.setPermission(p);
 		
 		int result = 0; 
-		if ((result = dao.insertMember(member))>= -1 && file != null) {
-			FileService.saveFile(file, memberFileBaseDirectory + result, true);
-		}
+		result = dao.insertMember(member);
 		
 		if (result == 1) {
 			// insert success
@@ -258,11 +258,9 @@ public class MemberService {
 		Permission p= new Permission(3, "Agency");
 		member.setPermission(p);
 		System.out.println(member);
-		if ((result = dao.updateAgencyMember(member))>= -1 && file != null) {
+		result = dao.updateAgencyMember(member);
 			
-			FileService.saveFile(file, memberFileBaseDirectory + result, true);
-			
-		}
+		
 		if (result == 1) {
 			// insert success
 			return true; 

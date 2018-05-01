@@ -4,24 +4,24 @@
 	<!--  join form  -->
 	<article class="container">
         <div class="page-header">
-			<h1><span data-lang="6"></span>&nbsp;<small>basic form</small></h1>
+			<h1><span data-lang="6"></span></h1>
 		</div>
 		
 		<div class="col-md-6 col-md-offset-3">
 			<form role="form" action="insertMember" method="post" enctype="multipart/form-data" onsubmit="return formsubmit()">
 				<div class="form-group">
 					<label for="InputName" data-lang="8"></label>
-					<input type="text" class="form-control" id="InputName" name="memberName" data-lang="8">
+					<input type="text" class="form-control" id="InputName" name="memberName" data-lang="8" required="required">
 				</div>
 				
 				<div class="form-group">
 					<label for="InputPassword1" data-lang="3"></label>
-					<input type="password" class="form-control" id="InputPassword1" name="password" data-lang="3">
+					<input type="password" class="form-control" id="InputPassword1" name="password" data-lang="3" required="required">
 				</div>
 				
 				<div class="form-group">
 					<label for="InputPassword2" data-lang="9"></label>
-					<input type="password" class="form-control" id="InputPassword2" data-lang="9">
+					<input type="password" class="form-control" id="InputPassword2" data-lang="9" required="required">
 					<p class="help-block" data-lang="10"></p>
 				</div>
 				
@@ -74,7 +74,7 @@
 							<span class="fa fa-check"></span>
 							<input id="agree" type="checkbox" autocomplete="off" name="checkbox" >
 						</label>
-						<span data-lang="21"></span>&nbsp;<a href="#" data-lang="22"></a>
+						<span data-lang="21"></span>
 					</div>
 				</div>
 	         

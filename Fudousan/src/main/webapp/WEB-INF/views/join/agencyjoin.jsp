@@ -24,11 +24,10 @@
 </head>
 
 <body>
-	<!-- login modal  -->
- 	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
+
  	
 	<!-- header -->
-	<%@include file="/WEB-INF/views/include/header.jsp" %>
+	<%@include file="/WEB-INF/views/include/joinHeader.jsp" %>
 
 	
 	<!-- agency join main -->
@@ -46,10 +45,7 @@
 	
 	<!-- join.js -->
 	<script src="<c:url value="/resources/js/join.js"></c:url>"></script>
-	
-	<!-- login.js -->
-	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
-	
+
 	<!-- email check.js -->
 	<script src="<c:url value="/resources/js/checkEmail.js"></c:url>"></script>	
 	

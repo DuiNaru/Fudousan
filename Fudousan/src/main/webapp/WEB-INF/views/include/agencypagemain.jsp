@@ -12,8 +12,8 @@
 			<div role="tabpanel">
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Estate Management</a></li>
-					<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">3D Modeling Management</a></li>
+					<li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab" data-lang="147">Estate Management</a></li>
+					<li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab" data-lang="148">3D Modeling Management</a></li>
 				</ul>
 
 				<!-- Tab panes -->
@@ -69,7 +69,7 @@
 							<tbody>
 								<c:forEach var="room" items="${roomList }">	
 									<tr id="room${room.roomId}">
-										<td><c:if test="${empty room.roomTitle }">(名無し)</c:if><c:if test="${!empty room.roomTitle }">${room.roomTitle }</c:if></td>
+										<td><c:if test="${empty room.roomTitle }">${room.estate.estateName}</c:if><c:if test="${!empty room.roomTitle }">${room.roomTitle }</c:if></td>
 										<td><img style="width: 350px" class="col-sm-12" src="<c:url value="${room.snapshot}"/>"></td>
 										<td><a class="btn btn-info" data-lang="145" href="./roomPage?roomId=${room.roomId}"></a></td>
 										<td><button type="button" class="btn btn-danger" data-lang="93" onclick="roomDeleteListener(${room.roomId})">삭제</button></td>
