@@ -16,6 +16,8 @@ $(function(){
 			var str = "";
 			
 			$(data).each(function(index, reply){
+				console.log(index);
+				console.log(str);
 				
 				str +=
 					'<div id="topBox'+reply.replyId+'">'+
@@ -50,9 +52,9 @@ $(function(){
 				'</div><!-- /panel panel-default -->'+
 				'</div><!-- /col-sm-5 -->'
 				+'</div>';				
-			
-				$('#replyBox').append(str);
 			});
+			
+			$('#replyBox').append(str);
 			
 		},
 		error: function(e){

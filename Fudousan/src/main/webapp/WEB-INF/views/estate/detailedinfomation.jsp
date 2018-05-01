@@ -17,24 +17,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 
-</head>
-<body>
-
-	<!-- 3d design modal  -->
- 	<%@include file="/WEB-INF/views/include/3ddesignmodal.jsp" %>
- 	
- 	<!-- login modal  -->
- 	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
-	
-	<!-- header -->
-	<%@include file="/WEB-INF/views/include/header.jsp" %>
-
-	<!-- main -->
-	<%@include file="/WEB-INF/views/include/estatedetailmain.jsp" %>
-
-	<!-- footer  -->
-	<%@include file="/WEB-INF/views/include/footer.jsp" %>
-
 	
 	<!-- hidden value -->
 	<input type="hidden" value="${resultEstate.estateX}" id="lat">
@@ -57,6 +39,24 @@
     <!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>
 	<script src="../resources/js/translation.js"></script>
+
+</head>
+<body>
+
+	<!-- 3d design modal  -->
+ 	<%@include file="/WEB-INF/views/include/3ddesignmodal.jsp" %>
+ 	
+ 	<!-- login modal  -->
+ 	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
+	
+	<!-- header -->
+	<%@include file="/WEB-INF/views/include/header.jsp" %>
+
+	<!-- main -->
+	<%@include file="/WEB-INF/views/include/estatedetailmain.jsp" %>
+
+	<!-- footer  -->
+	<%@include file="/WEB-INF/views/include/footer.jsp" %>
     
 </body>
 </html>
