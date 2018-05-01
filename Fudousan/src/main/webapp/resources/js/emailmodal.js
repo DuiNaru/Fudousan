@@ -57,6 +57,7 @@ $(function(){
 });//레디펑션 끝
 
 function noMove(email, roomId){
+	$("#blocker").show();
 	$.ajax({
 	url : "/fudousan/helpCall",
 	type : "get",
@@ -66,10 +67,12 @@ function noMove(email, roomId){
 	},
 	success : function(){
 		alert('メールが送信できました。');
+		$("#blocker").hide();
 	},
 	error : function(e){
 		alert(JSON.stringify(e));
 		alert('メール送信失敗');
+		$("#blocker").hide();
 	}
 	}); //ajax 끝
 }
