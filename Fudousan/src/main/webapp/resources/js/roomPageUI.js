@@ -2,6 +2,7 @@
  * 
  */
 var bottomMenuDisplay = false;
+var enabledEdit = true;
 
 $(function() {
 	$("#bottom-menu").hide();
@@ -239,6 +240,7 @@ function createItemListener(item) {
  * @returns
  */
 function setRoomEditable(editable) {
+	var enabledEdit = editable;
 	var cssvalue = editable ? "visible" : "hidden";
 	
 	$("#textureInfo").css("visibility", cssvalue);
@@ -247,4 +249,16 @@ function setRoomEditable(editable) {
 	$("#itemApplyButton").css("visibility", cssvalue);
 	$(".bottom-menu").css("visibility", cssvalue);
 	$(".right-menu").css("visibility", cssvalue);
+}
+
+function openTextureMenu() {
+	if(enabledEdit) {
+		$("#textureInfo").slideDown('slide');
+	}
+}
+
+function closeTextureMenu() {
+	$("#textureInfo").slideUp({
+		duration:100
+	});
 }

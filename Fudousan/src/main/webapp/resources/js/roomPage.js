@@ -355,10 +355,7 @@ function onKeydown(event) {
  * @returns
  */
 function onDocumentMouseDown(event) {
-
-	$("#textureInfo").slideUp({
-		duration:100
-	});
+	closeTextureMenu();
 	isMouseUp = false;
 	deSelect(true);
 	
@@ -383,10 +380,10 @@ function onDocumentMouseDown(event) {
 		      switch (index) {
 		         case 2: // front
 		        	 curSelectedWallFace = index;
-		        	 $("#textureInfo").slideDown('slide');
+						openTextureMenu();
 		         case 3: // back
 		        	 curSelectedWallFace = index;
-		        	 $("#textureInfo").slideDown('slide');
+						openTextureMenu();
 		      }
 		      
 		} else {
@@ -396,10 +393,10 @@ function onDocumentMouseDown(event) {
 			if (intersects.length > 0) {
 				if(intersects[0].object == roomFloor) {
 					curSelectedRoomObject = "roomFloor";
-		        	 $("#textureInfo").slideDown('slide');
+					openTextureMenu();
 				} else if (intersects[0].object == roomCeil) {
 					curSelectedRoomObject = "roomCeil";
-		        	 $("#textureInfo").slideDown('slicd');
+					openTextureMenu();
 				}
 			}
 			
@@ -430,7 +427,7 @@ function onDocumentMouseMove(event) {
 	raycaster.setFromCamera(mouse, camera);
 	var intersects = raycaster.intersectObjects([roomFloor]);
 	if (intersects.length > 0) {
-		if (curSelected != null && !isMouseUp && !controls.enabled) {
+		if (curSelected != null && !isMouseUp && !controls.enabled && enabledEdit == true) {
 			// 드래그 중인 아이템이 있으면 지면에 맞게 움직인다.
 			var x = curSelected.roomItem.item.itemX;
 			var y = curSelected.roomItem.item.itemY;
@@ -2120,7 +2117,7 @@ function applyTexture(textureId) {
 	}
 	curSelectedRoomObject = undefined;
 	curSelectedWallFace = undefined;
-	 $("#textureInfo").hide('slide');
+	closeTextureMenu();
 }
 
 //-------------
