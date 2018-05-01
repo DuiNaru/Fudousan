@@ -18,7 +18,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		boolean result = super.preHandle(request, response, handler);
 		
 		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("loginId");
+		Integer id = (Integer) session.getAttribute("loginId");
 		
 		logger.debug("preHandler session(loginId) : " + id);
 		if (id != null) {

@@ -25,7 +25,8 @@
     <!-- Custom style -->
     <link rel="stylesheet" href="../resources/css/style.css" media="screen" title="no title" charset="utf-8">
    
-   
+   <!-- login.js -->
+	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
    
    <!-- style -->
    <style type="text/css">
@@ -46,6 +47,13 @@
    </style>
   </head>
   <body>
+  <%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
+  <!-- estate list modal  -->
+  <%@include file="estateListModal.jsp" %>
+ 	
+	<!-- header -->
+	<%@include file="/WEB-INF/views/include/header.jsp" %>
+  
   
   <!-- 로그인 모달 시작 -->
   <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
@@ -69,8 +77,8 @@
    </div>
    <!-- 로그인 모달 끝 -->
    <!-- Header -->
-       <nav class="navbar navbar-default" style="margin: auto 0"> 
-        <div class="container-fluid">
+     <!--   <nav class="navbar navbar-default" style="margin: auto 0">  -->
+        <%-- <div class="container-fluid">
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -109,7 +117,7 @@
               
             </ul>
           </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
+        </div><!-- /.container-fluid --> --%>
        </nav> 
    
  
@@ -123,29 +131,29 @@
 	       
 			<form role="form" action="estatewrite" method="post" id="estateForm">
 				<div class="form-group">
-					<label for="inputMunicipality" data-lang="95">매물이름</label>
-					<input type="text" class="form-control" id="inputestateName" placeholder="매물이름" name="estateName">
+					<label for="inputMunicipality" data-lang="121">매물이름</label>
+					<input type="text" class="form-control" id="inputestateName" data-lang="121" placeholder="매물이름" name="estateName">
 				</div>
 	
 				<div class="form-group">
-					<label for="inputType" data-lang="96">거래종류</label>
+					<label for="inputType" data-lang="122">거래종류</label>
 	             
 					<select name='transTypeId' class="form-control" data-live-search="true" >
 						<c:set var="transTypeId"/>
 						<option value='0' selected data-lang="16">-- 選択 --</option>
-						<option value='1' data-lang="98">マンション</option>
-						<option value='2' data-lang="99">住宅</option>
-						<option value='3' data-lang="100">宅地(土地)</option>
+						<option value='1' data-lang="123">マンション</option>
+						<option value='2' data-lang="124">住宅</option>
+						<option value='3' data-lang="125">宅地(土地)</option>
 					</select>
 				</div>
 				
 				<div class="form-group">
-					<label for="inputPrefecture" data-lang="97">가격</label>
-					<input type="text" class="form-control" id="inputPrefecture" data-lang="97" placeholder=" 가격" name="price">
+					<label for="inputPrefecture" data-lang="123">가격</label>
+					<input type="text" class="form-control" id="inputPrefecture" data-lang="123" placeholder=" 가격" name="price">
 				</div>
 	
 				<div class="form-group">
-					<label for="inputRegion"data-lang="101">지역이름</label>
+					<label for="inputRegion"data-lang="127">지역이름</label>
 					
 					<!-- Localname = 지역이름 -->
 					<select name='prefecture' data-live-search="true"  class="form-control">
@@ -249,32 +257,32 @@
 				</div>
 				
 				<div class="form-group">
-					<label for="inputRegion" data-lang="102">시구 도촌 </label>
+					<label for="inputRegion" data-lang="128">시구 도촌 </label>
 					<!-- Localname = 지역이름 -->
 					<input type="text" name='municipality' data-live-search="true"  class="form-control">
 	           
-					<label for="inputRegion" data-lang="103">시구 도촌 코드</label>
+					<label for="inputRegion" data-lang="129">시구 도촌 코드</label>
 					<input type="text" name="municipalitycodeId" data-live-search="true"  class="form-control">
 				</div>
 	         
 				<div class="form-group">
-					<label for="inputDistrictName" data-lang="104">지역구</label>
-					<input type="text" class="form-control" id="inputDistrictName" placeholder="지역 이름  (지구 명)" name="districtname">
+					<label for="inputDistrictName" data-lang="130">지역구</label>
+					<input type="text" class="form-control" id="inputDistrictName"  name="districtname">
 				</div>
 	           
 				<div class="form-group">
-					<label for="inputNearestStation" data-lang="105"> 나머지 주소 </label>
-					<input type="text" class="form-control" id="inputNearestStation" placeholder="나머지 주소" name="address">
+					<label for="inputNearestStation" data-lang="131"> 나머지 주소 </label>
+					<input type="text" class="form-control" id="inputNearestStation"data-lang="131"  placeholder="나머지 주소" name="address">
 				</div>
 	           
 				<div class="form-group">
-					<label for="inputNearestStation" data-lang="106"> 가까운역</label>
-					<input type="text" class="form-control" id="inputNearestStation" placeholder="전제일 가까운 역 : 명칭 " name="neareststation">
+					<label for="inputNearestStation" data-lang="132"> 가까운역</label>
+					<input type="text" class="form-control" id="inputNearestStation" data-lang="132" placeholder="제일 가까운 역 : 명칭 " name="neareststation">
 				</div>
 	        
 				<div class="form-group">
-					<label for="inputTimeToNearestStation" data-lang="107"> 역까지 걸리는 시간(분)</label>
-					<input type="text" class="form-control" id="inputTimeToNearestStation" placeholder="제일 가까운역 거리(분)" name="timetoneareststation">
+					<label for="inputTimeToNearestStation" data-lang="133"> 역까지 걸리는 시간(분)</label>
+					<input type="text" class="form-control" id="inputTimeToNearestStation" data-lang="133" placeholder="제일 가까운역 거리(분)" name="timetoneareststation">
 				</div>
 	           
 				<!-- <div class="form-group">
@@ -288,8 +296,8 @@
 				</div> -->
 
 				<div class="form-group">
-					<label for="inputFloorPlan" data-lang="110"> 構造</label>
-					<input type="text" class="form-control" id="inputFloorPlan" placeholder="구조 " name="floorplan">
+					<label for="inputFloorPlan" data-lang="136"> 구조</label>
+					<input type="text" class="form-control" id="inputFloorPlan" data-lang="136" placeholder="구조 " name="floorplan">
 				</div>
 	           
 			<!-- 	<div class="form-group">
@@ -313,8 +321,8 @@
 				</div> -->
 	           
 				<div class="form-group">
-					<label for="inputBuildingYear" data-lang="111">건축년도</label>
-					<input type="text" class="form-control" id="inputBuildingYear" placeholder="건축 년도 " name="buildingyear" data-lang="111">
+					<label for="inputBuildingYear" data-lang="138">건축년도</label>
+					<input type="text" class="form-control" id="inputBuildingYear" data-lang="138" placeholder="건축 년도 " name="buildingyear" data-lang="111">
 				</div>
 	           
 				<!-- <div class="form-group">
@@ -323,23 +331,23 @@
 				</div> -->
 	           
 				<div class="form-group">
-					<label for="inputUse" data-lang="113">용도</label>
-					<input type="text" class="form-control" id="inputUse" placeholder="용도" name="use">
+					<label for="inputUse" data-lang="139">용도</label>
+					<input type="text" class="form-control" id="inputUse" data-lang="139" placeholder="용도" name="use">
 				</div>
 	       
 				<div class="form-group">
-					<label for="inputCoverageRatio" data-lang="114">건폐율（％）</label>
-					<input type="text" class="form-control" id="inputCoverageRatio" placeholder="건폐율 (%)" name="coverageratio">
+					<label for="inputCoverageRatio" data-lang="140">건폐율（％）</label>
+					<input type="text" class="form-control" id="inputCoverageRatio" data-lang="140" placeholder="건폐율 (%)" name="coverageratio">
 				</div>
 	           
 				<div class="form-group">
-					<label for="inputFloorAreaRatio" data-lang="115">용적률（％）</label>
-					<input type="text" class="form-control" id="inputFloorAreaRatio" placeholder="용적률 (%)" name="floorarearatio">
+					<label for="inputFloorAreaRatio" data-lang="141">용적률（％）</label>
+					<input type="text" class="form-control" id="inputFloorAreaRatio" data-lang="141" placeholder="용적률 (%)" name="floorarearatio">
 				</div>
 				
 				<div class="form-group text-center">
-					<button type="button" class="btn btn-info" onclick="formcheck()"data-lang="116">登録完了<i class="fa fa-check spaceLeft"></i></button>
-					<button type="reset" class="btn btn-warning" data-lang="117">初期化<i class="fa fa-times spaceLeft"></i></button>
+					<button type="button" class="btn btn-info" onclick="formcheck()"data-lang="142">登録完了<i class="fa fa-check spaceLeft"></i></button>
+					<button type="reset" class="btn btn-warning" data-lang="143">初期化<i class="fa fa-times spaceLeft"></i></button>
 				</div>
 			</form>
 		</div>

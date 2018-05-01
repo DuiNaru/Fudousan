@@ -18,10 +18,10 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 		boolean result = super.preHandle(request, response, handler);
 		
 		HttpSession session = request.getSession();
-		String id = (String) session.getAttribute("loginId");
+		Integer id = (Integer) session.getAttribute("loginId");
 		
 		logger.debug("AdminInterceptor preHandler session(loginId) : " + id);
-		if (id != null && id.equals("admin")) {
+		if (id != null && id == 1) {
 			result &= true;
 		} else {
 			result = false;

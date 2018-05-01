@@ -30,12 +30,16 @@
 
 	<!-- 관리자 로그인 인터셉터 빈 -->
 	<beans:bean id="adminInterceptor" class="com.real.fudousan.common.interceptor.AdminInterceptor"/>
+	<!-- 인테리어 로그인 인터셉터 빈 -->
+	<beans:bean id="interiorInterceptor" class="com.real.fudousan.common.interceptor.InteriorInterceptor"/>
+	<!-- 중개사 로그인 인터셉터 빈 -->
+	<beans:bean id="agencyInterceptor" class="com.real.fudousan.common.interceptor.AgencyInterceptor"/>
 	<!-- 로그인 인터셉터 빈 -->
 	<beans:bean id="loginInterceptor" class="com.real.fudousan.common.interceptor.LoginInterceptor"/>
 
 	<!-- 인터셉터 설정 -->
-	<!-- <mvc:interceptors>
-		관리자 로그인 인터셉터
+	<mvc:interceptors>
+		<!-- 관리자 로그인 인터셉터 -->
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/**"/>
 			<mvc:mapping path="/item/itemAddPage"/>
@@ -43,22 +47,87 @@
 			<mvc:mapping path="/item/itemModifyPage"/>
 			<mvc:mapping path="/item/moditem"/>
 			<mvc:mapping path="/item/deleteItem"/>
+			<mvc:mapping path="/item/preview"/>
 			<beans:ref bean="adminInterceptor"/>
 		</mvc:interceptor>
 		
+		<!-- 중개업자 로그인 인터셉터 -->
 		<mvc:interceptor>
-			<mvc:mapping path="/interior/**"/>
-			<beans:ref bean="loginInterceptor"/>
+			<mvc:mapping path="/estatewrite"/>
+			<mvc:mapping path="/deleteEntry"/>
+			<mvc:mapping path="/bw"/>
+			<mvc:mapping path="/bc"/>
+			<mvc:mapping path="/updateByIds"/>
+			<mvc:mapping path="/bm"/>
+			<mvc:mapping path="/estatewrite"/>
+			<mvc:mapping path="/estatewrite"/>
+			<beans:ref bean="agencyInterceptor"/>
 		</mvc:interceptor>
 		
+		<!-- 인테리어 로그인 인터셉터 -->
 		<mvc:interceptor>
-			<beans:bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-				<beans:property name="paramName" value="lang"/>
-			</beans:bean>
+			<mvc:mapping path="/interior/**"/>
+			<mvc:mapping path="/estatewrite"/>
+			<mvc:mapping path="/estatewrite"/>
+			<mvc:mapping path="/estatewrite"/>
+			<mvc:mapping path="/estatewrite"/>
+			<mvc:mapping path="/estatewrite"/>
+			<mvc:mapping path="/estatewrite"/>
+			<mvc:mapping path="/estatewrite"/>
+			<mvc:mapping path="/estatewrite"/>
+			<beans:ref bean="interiorInterceptor"/>
 		</mvc:interceptor>
-	</mvc:interceptors> -->
+		
+		<!-- 로그인 인터셉터 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/interior/**"/>
+			<!-- Advice -->
+			<mvc:mapping path="/cancelAdviceTrue"/>
+			<mvc:mapping path="/unconfirm"/>
+			<mvc:mapping path="/helpCall"/>
+			<!-- Agency -->
+			<mvc:mapping path="/detailedinformation"/>
+			<!-- Favorite -->
+			<mvc:mapping path="/searchFavorite"/>
+			<mvc:mapping path="/insertFavorite"/>
+			<mvc:mapping path="/selectFavorite"/>
+			<mvc:mapping path="/deleteFavorite"/>
+			
+			<mvc:mapping path="/mypageNormalUser"/>
+			<mvc:mapping path="/helpCallPage"/>
+			<mvc:mapping path="/memberupdate/**"/>
+			<mvc:mapping path="/insertReply"/>
+			<mvc:mapping path="/selectReply"/>
+			<mvc:mapping path="/deleteReply"/>
+			<mvc:mapping path="/selectOne"/>
+			<mvc:mapping path="/updateReply"/>
+			<mvc:mapping path="/selectReplyEstate"/>
+			<mvc:mapping path="/searchMyRoom"/>
+			<mvc:mapping path="/searchMyRoom"/>
+			<mvc:mapping path="/allMyRooms"/>
+			<mvc:mapping path="/changeRoomPublic"/>
+			<mvc:mapping path="/deleteRoom"/>
+			<mvc:mapping path="/deletionLogical"/>
+			<mvc:mapping path="/newRoom"/>
+			<mvc:mapping path="/newBaseRoom"/>
+			<mvc:mapping path="/roomPage"/>
+			<mvc:mapping path="/itemlist"/>
+			<mvc:mapping path="/wallheightchange"/>
+			<mvc:mapping path="/roomTitleChange"/>
+			<mvc:mapping path="/selectRoomEstate"/>
+			<mvc:mapping path="/snapshot"/>
+			<mvc:mapping path="/changeFloorTexture"/>
+			<mvc:mapping path="/changeCeilTexture"/>
+			<mvc:mapping path="/roomItem/**"/>
+			<mvc:mapping path="/wall/**"/>
+			<mvc:mapping path="/textureuproadpage"/>
+			<mvc:mapping path="/textureuproad"/>
+			<beans:ref bean="loginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	
 	<context:component-scan base-package="com.real.fudousan" />
+	
 	<tx:annotation-driven/>
 
 
