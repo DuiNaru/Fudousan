@@ -5,7 +5,19 @@
 
 <div class="container-fluid text-center">    
   <div class="row content">
-  	<div class="col-sm-3 sidenav"></div>
+  	<div class="col-sm-3 sidenav">
+
+  	<div class="well">
+			<h6 data-lang="96" >인테리어 업자에게 도움 요청</h6>
+			<c:forEach var="helper" items="${alist}">
+				<p><c:out value="${helper.requestedMemberId}"/><span data-lang="101">님에게 도움을 요청하셨습니다.</span></p>
+			</c:forEach>
+			<!-- Clear -->
+		<div style="clear: both;"></div>
+		</div>
+
+  	
+  	</div>
   
   	<div class="col-sm-6">
   		<br>
@@ -102,14 +114,6 @@
     <!-- side nav button Start -->
     <div class="col-sm-3 sidenav">
 		
-		<div class="well">
-			<h6 data-lang="96" >인테리어 업자에게 도움 요청</h6>
-			<c:forEach var="helper" items="${alist}">
-				<p><c:out value="${helper.requestedMemberId}"/><span data-lang="101">님에게 도움을 요청하셨습니다.</span></p>
-			</c:forEach>
-			<!-- Clear -->
-		<div style="clear: both;"></div>
-		</div>
 		
 		<div class="well">
 			<h6 data-lang="97">인테리어 업자 승인 여부</h6>

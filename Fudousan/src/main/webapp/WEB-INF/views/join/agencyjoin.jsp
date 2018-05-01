@@ -46,7 +46,6 @@
 	<!-- join.js -->
 	<script src="<c:url value="/resources/js/join.js"></c:url>"></script>
 
-	
 	<!-- email check.js -->
 	<script src="<c:url value="/resources/js/checkEmail.js"></c:url>"></script>	
 	

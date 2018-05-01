@@ -18,7 +18,12 @@ function formsubmit() {
 		return false;
 	}
 	if ($("#InputPassword1").val() != $("#InputPassword2").val()) {
-		alert("insame password1 & password2");
+		alert("パスワード①とパスワード②が異なります。");
+		return false;
+	}
+	
+	if ($(".glyphicon-remove").length > 0) {
+		alert("正しいメールアドレスを入力してください");
 		return false;
 	}
 
@@ -32,7 +37,7 @@ function formsubmit() {
 	}
 	
 	if ($('#main').val() == 0) {
-		alert("main을 선택하세요");
+		alert("mainを選択してください");
 		return false;
 	}
 	if ($("#agencyaddressmiddle").val() == null || $("#agencyaddressmiddle").val() == "") {
