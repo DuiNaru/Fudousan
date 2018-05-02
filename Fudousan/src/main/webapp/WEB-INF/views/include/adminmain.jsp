@@ -82,6 +82,7 @@
 				    </div> 
 			   		<!-- 텍스쳐 리스트  -->
 				    <div role="tabpanel" class="tab-pane" id="texture">
+
 						<h1><span data-lang="204"></span></h1>
 						<a class="btn btn-info col-sm-offset-10" data-toggle="modal" href="#textureModal" data-lang="203"></a>
 						<!-- result -->      
@@ -92,16 +93,19 @@
 										<th><span data-lang="200"></span></th>
 										<th><span data-lang="201"></span></th>
 										<th><span data-lang="205"></span></th>
+										<th><span data-lang="206"></span></th>
 									</tr>
 								</thead>
-								<tbody>
-								<c:forEach var="texture" items="${textureList}">
-									<tr>
+								<tbody>								
+								<c:forEach var="texture" items="${textureList }">
+									<tr id="texture${texture.textureId}">
 										<td><c:out value="${texture.name}"/></td>
 										<td><c:out value="${texture.text}"/></td>
 										<td><img class="col-sm-12" src="<c:url value="${texture.file}"/>"></td>
+										<td><button type="button" class="btn btn-danger" onclick="deleteTexture(${texture.textureId})" data-lang="93"></button></td>
 									</tr>
 								</c:forEach>
+								<tbody>
 								</tbody>
 							</table>
 						</div>	    

@@ -61,4 +61,17 @@ public class TextureService {
 		logger.info("downloadFile({}) End", fileName);
 		return result;
 	}
+	
+	public boolean delete(int textureId) {
+		logger.info("delete("+textureId+") Start"); 
+		boolean result = false;
+		String file = dao.select(textureId).getFile();
+		result = dao.delete(textureId);
+		if (result) {
+			logger.debug("delete File : " + file);
+			FileService.deleteFile(file);
+		}
+		logger.info("delete("+textureId+") End"); 
+		return result;
+	}
 }
