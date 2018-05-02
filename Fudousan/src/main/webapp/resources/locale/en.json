@@ -150,26 +150,53 @@
     "148" : "3D Modeling Management",
     "149" : "Address",
     "150" : "Base Room",
-    "151" : "Property List"
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ,"300" : "Application list of real estate company.",
+    "151" : "Property List",
+    "152" : "MODEL",
+    "153" : "DESIGN",
+    "154" : "Details",
+    "155" : "Price",
+    "156" : "Trade Price",
+    "157" : "Unit Price",
+    "158" : "Nothing",
+    "159" : "Price Per Unit",
+    "160" : "Over View",
+    "161" : "About Estate",
+    "162" : "Area",
+    "163" : "LandShape",
+    "164" : "Frontage",
+    "165" : "TotalFloorArea",
+    "166" : "Breadth",
+    "167" : "CoverageRatio",
+    "168" : "FloorAreaRatio",
+    "169" : "BuildingYear",
+    "170" : "Structure",
+    "171" : "Direction",
+    "172" : "ETC",
+    "173" : "Use",
+    "174" : "Renovation",
+    "175" : "Classification",
+    "176" : "City Planning",
+    "177" : "Remarks",
+    "178" : "User Comment",
+    "179" : "Comment Here",
+    "180" : "Reply",
+    "181" : "Update",
+    "182" : "Delete",
+    "183" : "Input Your Comment",
+    "184" : "Ok",
+    "185" : "Cancel",
+    "186" : "Agency Info",
+    "187" : "Agency Name",
+    "188" : "Agency Trans Type",
+    "189" : "Agency Introduce",
+    "190" : "Member Info",
+    "191" : "Member Name",
+    "192" : "Email",
+    "193" : "Member Introduce",
+    "194" : "Phone",
+    "195" : "Photo",
+    "196" : "Agency Details",
+    "300" : "Application list of real estate company.",
     "301" : "Grant Applicant",
     "302" : "Approve permission",
     "303" : "Approve",
