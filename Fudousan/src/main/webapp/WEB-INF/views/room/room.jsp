@@ -189,7 +189,7 @@
 				},
 				success: function(data){
 					if(data != null || data == true || data == "true") {
-						changeHeigthListener(height);
+						socket.on("wallHeight",{height : height});
 					} else {
 						alert("방 높이 변경에 실패하였습니다.");
 					}
