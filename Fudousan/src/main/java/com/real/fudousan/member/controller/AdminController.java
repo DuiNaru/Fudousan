@@ -76,5 +76,4 @@ public class AdminController {
 		logger.info("confirm(" + agencyId +") End");
 		return "redirect:/admin/";
 	}
-	
 }

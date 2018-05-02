@@ -54,6 +54,15 @@ SEQ_TEXTURE_ID.nextval
 	<include refid="SELECT_TEXTURE_SQL"></include>
 </select>
 
+<delete id="delete">
+	DELETE FROM texture
+	WHERE texture_id = #{0}
+</delete>
+
+<select id="selectTexture" resultMap="textureResultMap">
+	<include refid="SELECT_TEXTURE_SQL"></include>
+	WHERE texture_id = #{0}
+</select>
 
 	<resultMap type="texture" id="textureResultMap">
 		<id 	property="textureId" 		column="TEXTURE_ID"/>

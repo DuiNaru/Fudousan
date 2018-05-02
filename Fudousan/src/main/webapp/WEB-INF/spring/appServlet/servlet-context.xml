@@ -48,6 +48,9 @@
 			<mvc:mapping path="/item/moditem"/>
 			<mvc:mapping path="/item/deleteItem"/>
 			<mvc:mapping path="/item/preview"/>
+			<mvc:mapping path="/textureuproadpage"/>
+			<mvc:mapping path="/textureuproad"/>
+			<mvc:mapping path="/deleteTexture"/>
 			<beans:ref bean="adminInterceptor"/>
 		</mvc:interceptor>
 		
@@ -120,8 +123,6 @@
 			<mvc:mapping path="/changeCeilTexture"/>
 			<mvc:mapping path="/roomItem/**"/>
 			<mvc:mapping path="/wall/**"/>
-			<mvc:mapping path="/textureuproadpage"/>
-			<mvc:mapping path="/textureuproad"/>
 			<beans:ref bean="loginInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

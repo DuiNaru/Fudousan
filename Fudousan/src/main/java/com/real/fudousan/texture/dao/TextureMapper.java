@@ -9,4 +9,8 @@ public interface TextureMapper {
 	public int textureuproad(Texture texture);
 	
 	public List<Texture> selectAllTexture();
+	
+	public boolean delete(int textureId);
+	
+	public Texture selectTexture(int textureId);
 }

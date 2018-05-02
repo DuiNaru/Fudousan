@@ -83,7 +83,7 @@
 			   		<!-- 텍스쳐 리스트  -->
 				    <div role="tabpanel" class="tab-pane" id="texture">
 						<h1>Texture List</h1>
-						<a class="btn btn-info col-sm-offset-10" data-toggle="modal" href="#textureModal">텍스쳐 업로드</a>
+						<a class="btn btn-info col-sm-offset-10" data-toggle="modal" href="#textureModal">Texture Upload</a>
 						<!-- result -->      
 						<div class="text-left">
 							<table class="table">
@@ -92,14 +92,16 @@
 										<th>Texture Name</th>
 										<th>Texture Text</th>
 										<th>Texture Image</th>
+										<th>Texture Delete</th>
 									</tr>
 								</thead>
 								<tbody>
 								<c:forEach var="texture" items="${textureList }">
-									<tr>
+									<tr id="texture${texture.textureId}">
 										<td><c:out value="${texture.name}"/></td>
 										<td><c:out value="${texture.text}"/></td>
 										<td><img class="col-sm-12" src="<c:url value="${texture.file}"/>"></td>
+										<td><button type="button" class="btn btn-danger" onclick="deleteTexture(${texture.textureId})">Delete</button></td>
 									</tr>
 								</c:forEach>
 								</tbody>
