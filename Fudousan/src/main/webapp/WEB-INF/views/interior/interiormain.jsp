@@ -36,7 +36,7 @@
 							<tr id="req${status.index}">
 								<td>${advice.room.estate.estateId }</td>
 								<td>${advice.room.estate.estateName }</td>
-								<td><button class="btn btn-success" data-lang="118">인테리어 시작</button></td>
+								<td><button class="btn btn-success" data-lang="118" onclick="location.href='<c:url value="/roomPage?roomId=${advice.room.roomId}"/>'">인테리어 시작</button></td>
 								<td><button class="btn btn-danger" type="button"onclick = "unConfirm(${status.index}, ${advice.requestMemberId}, ${advice.room.roomId})"><span data-lang="4"></span></button></td>
 							</tr>
 						
