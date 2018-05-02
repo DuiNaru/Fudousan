@@ -1728,7 +1728,7 @@ function roomReset() {
 				
 			} else {
 				
-				alert("리셋에 실패하였습니다.");
+			
 				
 			}
 
@@ -1738,7 +1738,7 @@ function roomReset() {
 		error:function(e) {
 			
 			console.log(e);
-			alert("리셋 중 오류가 발생하였습니다.");
+		
 
 			$( "#blocker" ).hide();
 			
