@@ -129,7 +129,10 @@ function formCheck(){
 						}else if(result.permissionId == 99){
 							str += '<li><a href="/fudousan/admin/" data-lang ="84">Admin page</a></li>';
 						}
-						
+						str +=  '<li><a href="javascript:selectLanguage(\'ko\')"><img  src="/fudousan/resources/image/if_South Korea_15986.png"></a></li>'+
+						'<li><a href="javascript:selectLanguage(\'jp\')"><img  src="/fudousan/resources/image/if_Japan_92149.png"></a></li>'+
+						'<li><a href="javascript:selectLanguage(\'en\')"><img  src="/fudousan/resources/image/if_United States of America(USA)_16036.png"></a></li>';
+							
 						$('#navbar-ul').html(str);
 						
 					}
