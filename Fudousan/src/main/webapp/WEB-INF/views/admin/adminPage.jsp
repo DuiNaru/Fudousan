@@ -23,6 +23,9 @@
 	<!-- login modal  -->
  	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
  	
+	<!-- texture modal  -->
+ 	<%@include file="/WEB-INF/views/include/texturemodal.jsp" %> 
+ 	
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
 	
