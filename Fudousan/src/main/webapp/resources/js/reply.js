@@ -43,9 +43,9 @@ $(function(){
 					str +=
 						'<hr>'+
 						'<div>'+
-						'<input type="button" class="btn btn-info" value="Update" onclick="updateReply('+reply.replyId+')">'+
+						'<button type="button" class="btn btn-info"  data-lang="181" onclick="updateReply('+reply.replyId+')"></button>'+
 						'&nbsp;'+
-						'<input type="button" class="btn btn-warning delete" value="Delete" onclick="deleteReply('+reply.replyId+')">';
+						'<button type="button" class="btn btn-warning delete"  data-lang="182" onclick="deleteReply('+reply.replyId+')"></button>';
 				}	
 				str+='</div>'+
 				'</div>'+
@@ -55,7 +55,7 @@ $(function(){
 			});
 			
 			$('#replyBox').append(str);
-			
+			translation();
 		},
 		error: function(e){
 			console.log(e);
@@ -111,9 +111,9 @@ $(function(){
 							'<p id="textBox'+reply.replyId+'">'+reply.text+'</p>'+
 							'<hr>'+
 							'<div>'+
-							'<input type="button" class="btn btn-info" value="Update" onclick="updateReply('+reply.replyId+')">'+
+							'<button type="button" class="btn btn-info" data-lang="181" onclick="updateReply('+reply.replyId+')"></button>'+
 							'&nbsp;'+
-							'<input type="button" class="btn btn-warning delete" value="Delete" onclick="deleteReply('+reply.replyId+')">'+
+							'<button type="button" class="btn btn-warning delete" data-lang="182" onclick="deleteReply('+reply.replyId+')"></button>'+
 							'</div>'+
 							'</div>'+
 							'</div><!-- /panel panel-default -->'+
@@ -125,7 +125,7 @@ $(function(){
 						$('#replyBox').append(str);
 						$('#text').val("");
 						 
-						
+						translation();
 					}
 				});
 			} 
@@ -155,14 +155,15 @@ function updateReply(replyId){
 	
 	$('#textBox'+replyId).after(
 			'<div id="updateDiv'+replyId+'">'
-			+'<input type="text" id="updateBox'+replyId+'" class="form-control" placeholder="input your new update texts">'
+			+'<input type="text" id="updateBox'+replyId+'" class="form-control" data-lang="183">'
 			+'<br>'
-			+'<input type="button" class="btn btn-success" value="Ok" id="okButton'+replyId+'"  onclick="okButton('+replyId+')">'
+			+'<button type="button" class="btn btn-success" data-lang="184" id="okButton'+replyId+'"  onclick="okButton('+replyId+')"></button>'
 			+'&nbsp;'
-			+'<input type="button" class="btn btn-danger" value="Cancel" id="cancelButton'+replyId+'"  onclick="cancelButton('+replyId+')">'
+			+'<button type="button" class="btn btn-danger" data-lang="185" id="cancelButton'+replyId+'"  onclick="cancelButton('+replyId+')"></button>'
 			+'</div>'
 	);
-
+	
+	translation();
 
 	
 }
