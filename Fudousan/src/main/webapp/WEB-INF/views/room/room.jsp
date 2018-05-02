@@ -39,10 +39,10 @@
 	<script src="<c:url value="/resources/js/Tween.js"/>"></script>
 	<script src="<c:url value="/resources/js/ConvexGeometry.js"/>"></script>
 	<script src="<c:url value="/resources/js/QuickHull.js"/>"></script>
-	<script src="<c:url value="/resources/js/MeshDepthMaterial.js"/>"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="<c:url value="/resources/js/roomPageUI.js"/>"></script>
 	<script src="<c:url value="/resources/js/node_communication.js"/>"></script>
+	<script src="<c:url value="/resources/js/translation.js"/>"></script>
 	<script type="text/javascript">
 		var room = {
 			roomId:${room.roomId}
@@ -146,7 +146,7 @@
 							
 					$.each(itemlist,function(index,item){
 						
-						str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="createItem(item'+item.itemId+');">';
+						str += '<li class="btn btn_default" value="'+item.itemId+'" onclick="NewCommand.create(item'+item.itemId+');">';
 						str += '<script type="text/javascript">';
 						str += 'var item'+item.itemId+' = new Item();';
 						str += 'item'+item.itemId+'.fileDirectory = "'+item.fileDirectory+'";';
@@ -276,7 +276,7 @@
 	
 	<div id="textureInfo" class="texture-menu">
 		<div class="form-group">
-			<label>텍스쳐 리스트</label>
+			<label data-lang="204">텍스쳐 리스트</label>
 			<div>
 				<c:forEach var="texture" items="${textureList}">
 					<div id="texture${texture.textureId }" class="form-group thumbnail btn col-sm-2" onclick="applyTexture(${texture.textureId})">
@@ -290,19 +290,19 @@
 	
 	<div id="itemInfo" class="left-menu">
 		<div class="form-group">
-			<label>아이템 이름</label>
+			<label data-lang="307">아이템 이름</label>
 			<p id="leftItemName" class="form-control-static"></p>
 		</div>
 		<div class="form-group">
-			<label>아이템 유형</label>
+			<label data-lang="312">아이템 유형</label>
 			<p id="leftItemType" class="form-control-static"></p>
 		</div>
 		<div class="form-group">
-			<label>아이템 설명</label>
+			<label data-lang="313">아이템 설명</label>
 			<p id="leftItemText" class="form-control-static"></p>
 		</div>
 		<div class="form-group">
-			<label>아이템 참고 사이트</label>
+			<label data-lang="314">아이템 참고 사이트</label>
 			<p id="leftItemSite" class="form-control-static"></p>
 		</div>
 		<div id="itemEditGroup" class="form-group">
@@ -337,15 +337,15 @@
 				<div id="pz"></div>
 			</div>
 		</div>
-		<input id="itemDeleteButton" type="button" value="삭제" onclick="deleteItemButton()">
-		<input id="itemApplyButton" type="button" value="적용" onclick="itemApplyListener()">
+		<button id="itemDeleteButton" type="button" data-lang="93" onclick="deleteItemButton()">삭제</button>
+		<button id="itemApplyButton" type="button" data-lang="180" onclick="itemApplyListener()">적용</button>
 	</div>
 	
 	<div class="bottom-menu">
-		<div id="bottom-menu-button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span>아이템목록<span class="glyphicon glyphicon-chevron-right"></span></div>
+		<div id="bottom-menu-button" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span><span data-lang="315">아이템 목록</span><span class="glyphicon glyphicon-chevron-right"></span></div>
 		<div id="bottom-menu">
 			<select id="itemList" name="itemList" onchange="getItemList()">
-				<option value='0' selected>전체 </option>
+				<option value='0' selected data-lang="321">전체 </option>
 				<c:forEach var="itemType" items="${itemTypeList }">
 					<option value="${itemType.itemTypeId}">${itemType.itemTypeName}</option>
 				</c:forEach>
@@ -353,10 +353,10 @@
 	
 			<label>${item.itemName}</label>
 		
-			<label>아이템 생성</label>
+			<label data-lang="316">아이템 생성</label>
 			<ul id="itemUl">
 				<c:forEach var="item" items="${itemList}">
-					<li class="btn btn_default" value="${item.itemId }" onclick="createItem(item${item.itemId});">
+					<li class="btn btn_default" value="${item.itemId }" onclick="NewCommand.create(item${item.itemId});">
 						<script type="text/javascript">
 								var item${item.itemId} = new Item();
 								item${item.itemId}.fileDirectory = "${item.fileDirectory}";
@@ -384,17 +384,17 @@
 	<div class="right-menu">
 		<ul class="list-group">
 			<li>
-				<span>방이름</span><br>
+				<span data-lang="317">방이름</span><br>
 				<input type="text" id="roomTitle" value="${room.roomTitle}">
-				<button type="button" onclick="changeTitle()" class="btn btn-default right-menu-btn">변경</button>
+				<button type="button" onclick="changeTitle()" class="btn btn-default right-menu-btn" data-lang="318">변경</button>
 			</li>
 			<li>
 				<button class="btn btn-success glyphicon glyphicon-backward" onclick="back()"></button>
 				<button class="btn btn-success glyphicon glyphicon-forward" onclick="forward()"></button>
 			</li>
-			<li><button class="btn btn-success right-menu-btn glyphicon glyphicon-refresh" onclick="roomReset()">&nbsp;초기화</button></li>
-			<li><button class="btn btn-danger right-menu-btn glyphicon glyphicon-remove" onclick="esc()">&nbsp;종료</button></li>
-			<li><button class="btn btn-info right-menu-btn glyphicon glyphicon-camera" onclick="takeSnapShot()">&nbsp;스냅샷</button></li>
+			<li><button class="btn btn-success right-menu-btn glyphicon glyphicon-refresh" data-lang="143" onclick="roomReset()">&nbsp;초기화</button></li>
+			<li><button class="btn btn-danger right-menu-btn glyphicon glyphicon-remove" data-lang="319" onclick="esc()">&nbsp;종료</button></li>
+			<li><button class="btn btn-info right-menu-btn glyphicon glyphicon-camera" data-lang="110" onclick="takeSnapShot()">&nbsp;스냅샷</button></li>
 			<li>
 				<a data-toggle="modal" href="#emailModal" class="btn btn-warning btn-md right-menu-btn">
 					<span class="glyphicon glyphicon-envelope"></span>&nbsp; E-MAIL
@@ -406,9 +406,9 @@
 				</c:if>
 			</li>
 			<li>
-				<span>높이</span><br>
+				<span data-lang="320">높이</span><br>
 				<input type="text" id="height">
-				<button type="button" onclick="changeheight()" class="btn btn-default right-menu-btn">변경</button>
+				<button type="button" onclick="changeheight()" class="btn btn-default right-menu-btn" data-lang="318">변경</button>
 			</li>
 		</ul>
 	</div>

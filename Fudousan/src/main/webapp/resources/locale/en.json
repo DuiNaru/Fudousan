@@ -217,5 +217,15 @@
     "308" : "Item Update",    
     "309" : "Item Delete",    
 	"310" : "Update",
-	"311" : "NoTitle"    
+	"311" : "NoTitle",
+	"312" : "Item Type",
+    "313" : "Item Description",
+    "314" : "Item Site",
+    "315" : "Item List",
+    "316" : "Create Item",
+    "317" : "Room Name",
+    "318" : "Apply",
+    "319" : "Exit",
+    "320" : "Height",
+    "321" : "All"
 }

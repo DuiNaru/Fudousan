@@ -204,8 +204,8 @@ function init() {
 	scene.add( skyBox );
 	
 	// 3차원 축
-	var axesHelper = new THREE.AxesHelper( 1000 );
-	scene.add( axesHelper );
+	//var axesHelper = new THREE.AxesHelper( 1000 );
+	//scene.add( axesHelper );
 	
 	// postprocessing
 	composer = new THREE.EffectComposer( renderer );
@@ -214,14 +214,14 @@ function init() {
 	
 	// 자신용 아웃라인
 	outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
-	outlinePass.edgeStrength = 3;
+	outlinePass.edgeStrength = 50;
 	outlinePass.edgeThickness = 1;
 	outlinePass.visibleEdgeColor.set( 0xFFFFFF );
 	composer.addPass( outlinePass );
 	
 	// 상대방용 아웃라인
 	otherOutlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
-	otherOutlinePass.edgeStrength = 3;
+	otherOutlinePass.edgeStrength = 50;
 	otherOutlinePass.edgeThickness = 1;
 	otherOutlinePass.visibleEdgeColor.set( 0xFF0000 );
 	composer.addPass( otherOutlinePass );
@@ -511,6 +511,7 @@ function changeHeigthListener(height) {
 function changeHeigth(height) {
 	room.height = height;
 	roomCeil.position.y = room.height;
+	setHeightText(height);
 	drawWall();
 }
 
