@@ -357,6 +357,7 @@ function createPeerConnection(){
 
 function handleICECandidateEvent(event){
 	console.log("--> handle ice candidate event");
+	console.dir(event.candidate);
 
 	if (event.candidate){
 		socket.emit("new-ice-candidate", {
@@ -377,28 +378,6 @@ function handleRemoveStreamEvent(event){
 	console.log("--> handle remove stream event");
 
 	closeCall();
-}
-
-function handleICEConnectionStateChangeEvent(event){
-	console.log("--> handle ice connection state change event");
-
-	switch (myPeerConnection.iceConnectionState){
-		case "closed":
-		case "failed":
-		case "disconnect":
-			hangup();
-			break;
-	}
-}
-
-function handleSignalingStateChangeEvent(event){
-	console.log("--> handle signaling state change event");
-
-	switch (myPeerConnection.signalingState){
-		case "closed":
-			hangup();
-			break;
-	}
 }
 
 function setLocalCamTo(id, width, height){
