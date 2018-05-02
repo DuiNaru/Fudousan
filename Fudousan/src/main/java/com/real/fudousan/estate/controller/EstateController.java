@@ -240,8 +240,9 @@ public class EstateController {
 		model.addAttribute("select", select);
 	
 		//에이전시 아이디 
-		//int agencyId = agencyService.selectAgencyId(email);
-		int agencyId = (int)session.getAttribute("loginId");
+		int agencyId = agencyService.selectAgencyId(email);
+		logger.debug("agencyId : " + agencyId);
+		//int agencyId = (int)session.getAttribute("loginId");
 		
 		model.addAttribute("agencyId", agencyId);
 		

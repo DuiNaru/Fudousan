@@ -28,7 +28,7 @@ var mouse = new THREE.Vector2();
 // 완성된 벽 들
 var walls = new THREE.Group();
 // 벽 두께
-var wallThickness = 10;
+var wallThickness = 2;
 // 현재 화면에 존재하는 아이템들(메시 그룹)
 var curRoomItems = [];
 // 현재 선택 중인 아이템(메시 그룹)
