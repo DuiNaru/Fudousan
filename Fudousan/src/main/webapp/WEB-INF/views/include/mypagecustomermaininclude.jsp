@@ -88,17 +88,27 @@
                 			</span>
             			</div>
         			</div>
-					<hr>
+        			<br>
 					<!-- result -->
-					<c:forEach var="favorite" items="${flist}">
-						<div class="col-sm-12 form-group" name="favorite">
-							<p><a href="/fudousan/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}">${favorite.estate.estateName}</a></p>
-							<button><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}"/>" data-lang="103">매물상세정보</a></button>
-							<input type="hidden" value="${favorite.estate.estateId}" id="favo" name="favo" >
-						</div>
-						
-					</c:forEach>
-					
+					<table class="table" name="favorite">
+						<thead>
+							<tr>
+								<th data-lang="117">Estate Id</th>
+								<th data-lang="121">Estate Name</th>
+								<th data-lang="103">Estate Detail</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="favorite" items="${flist}">
+								<tr>
+									<td><a href="/fudousan/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}">${favorite.estate.estateId}</a></td>
+									<td><a href="/fudousan/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}">${favorite.estate.estateName}</a></td>
+									<td><a class="btn btn-info" href="<c:url value="/estate/detailedinfomation?id=EstateId:${favorite.estate.estateId}"/>" data-lang="103">Estate Detail</a></td>
+									<%-- <td><input type="hidden" value="${favorite.estate.estateId}" id="favo" name="favo" ></td> --%>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
     			</div>
     		
   			</div>
