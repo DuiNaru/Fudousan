@@ -66,8 +66,8 @@ function call(){
 	
 	setStartBtn("start");
 	
-	localCam = setLocalCamTo("top-menu");
-	remoteCam = setRemoteCamTo("top-menu");
+	localCam = setLocalCamTo("top-menu", 200, 150);
+	remoteCam = setRemoteCamTo("top-menu", 200, 150);
 	
 	console.dir(localCam);
 	console.dir(remoteCam);
@@ -113,7 +113,7 @@ function showCallWindow(){
     div.style.background = "rgba(0, 0, 0, 0.5)";
     div.style.zIndex = "2";
     
-	let html = langSet[lang][2] + "<br><div id='btnDiv'><button type='button' id='cancelCallBtn'>취소</button></div>";
+	let html = langSet[lang][2] + "<br><div id='btnDiv'><button type='button' id='cancelCallBtn' class='btn btn-default'>취소</button></div>";
 	div.innerHTML = html;
 	
 	document.body.appendChild(div);
@@ -185,8 +185,9 @@ function receiveCallWindow(){
     div.style.zIndex = "2";
     
 	let html  = langSet[lang][4] + "<br>";
-		html += "<button type='button' id='acceptCallBtn'>" + langSet[lang][8] + "</button>";
-		html += "<button type='button' id='refuseCallBtn'>" + langSet[lang][3] + "</button>";
+		html += "<button type='button' id='acceptCallBtn' class='btn btn-default'>" + langSet[lang][8] + "</button>";
+		html += "&nbsp;";
+		html += "<button type='button' id='refuseCallBtn' class='btn btn-default'>" + langSet[lang][3] + "</button>";
 	div.innerHTML = html;
 	
 	document.body.appendChild(div);
@@ -259,8 +260,8 @@ socket.on("video-offer", function(sdp){
 
 	let desc = new RTCSessionDescription(sdp);
 
-	localCam = setLocalCamTo("top-menu");
-	remoteCam = setRemoteCamTo("top-menu");
+	localCam = setLocalCamTo("top-menu", 200, 150);
+	remoteCam = setRemoteCamTo("top-menu", 200, 150);
 	
 	myPeerConnection.setRemoteDescription(desc).then(function(){
 		return navigator.mediaDevices.getUserMedia({video: true, audio: true});
@@ -400,11 +401,11 @@ function handleSignalingStateChangeEvent(event){
 	}
 }
 
-function setLocalCamTo(id){
+function setLocalCamTo(id, width, height){
 	let localVideo = document.createElement("video");
 	localVideo.id = "localCam";
-	localVideo.width = 200;
-	localVideo.height = 150;
+	localVideo.width = width;
+	localVideo.height = height;
 	localVideo.autoplay = true;
 	localVideo.muted = true;
 	
@@ -413,11 +414,11 @@ function setLocalCamTo(id){
 	return localVideo;
 }
 
-function setRemoteCamTo(id){
+function setRemoteCamTo(id, width, height){
 	let remoteVideo = document.createElement("video");
 	remoteVideo.id = "remoteCam";
-	remoteVideo.width = 200;
-	remoteVideo.height = 150;
+	remoteVideo.width = width;
+	remoteVideo.height = height;
 	remoteVideo.autoplay = true;
 	
 	$("#" + id).append("<br>");
