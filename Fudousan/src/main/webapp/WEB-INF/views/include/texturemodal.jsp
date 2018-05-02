@@ -6,26 +6,32 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h4 class="modal-title">Upload Texture</h4>
+					<h4 class="modal-title"><label><span data-lang="203"></span></label></h4>
 				</div>
 				<div class="modal-body" >
 					<div class="textureModal">
 						<form action="../textureuproad" method="post" enctype="multipart/form-data">
 							<input type="hidden" name="memberId" value="${sessionScope.loginId}" readonly/>
 							<div class="form-group">
-								<label>텍스쳐 이름</label>
+								<label><span data-lang="200"></span></label>
 								<input class="form-control" type="text" name="name">
 							</div>
 							<div class="form-group">
-								<label>텍스쳐 설명</label>
+								<label><span data-lang="201"></span></label>
 								<input class="form-control" type="text" name="text">
 							</div>
-							<div class="form-group">
-								<label>텍스쳐 파일</label>
-								<input class="form-control" type="file" name="file">
+						
+							<label><span data-lang="202"></span></label>
+							<div class="input-group input-file" name="file">
+								<br>
+								<span class="input-group-btn">
+									<button class="btn btn-default btn-choose" type="button" data-lang="16"></button>
+								</span>
+								<input type="text" class="form-control" data-lang="17" name="file"/>
 							</div>
+							<br>
 							<div class="form-group">
-							<input class="form-control" type="submit" value="등록  " > 
+								<button class="form-control btn btn-info"  type="submit" data-lang="184" ></button> 
 							</div>
 						</form>
 					</div>

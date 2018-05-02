@@ -82,20 +82,20 @@
 				    </div> 
 			   		<!-- 텍스쳐 리스트  -->
 				    <div role="tabpanel" class="tab-pane" id="texture">
-						<h1>Texture List</h1>
-						<a class="btn btn-info col-sm-offset-10" data-toggle="modal" href="#textureModal">텍스쳐 업로드</a>
+						<h1><span data-lang="204"></span></h1>
+						<a class="btn btn-info col-sm-offset-10" data-toggle="modal" href="#textureModal" data-lang="203"></a>
 						<!-- result -->      
 						<div class="text-left">
 							<table class="table">
 								<thead class="table">
 									<tr>
-										<th>Texture Name</th>
-										<th>Texture Text</th>
-										<th>Texture Image</th>
+										<th><span data-lang="200"></span></th>
+										<th><span data-lang="201"></span></th>
+										<th><span data-lang="205"></span></th>
 									</tr>
 								</thead>
 								<tbody>
-								<c:forEach var="texture" items="${textureList }">
+								<c:forEach var="texture" items="${textureList}">
 									<tr>
 										<td><c:out value="${texture.name}"/></td>
 										<td><c:out value="${texture.text}"/></td>
