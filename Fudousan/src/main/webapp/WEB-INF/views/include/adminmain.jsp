@@ -50,7 +50,7 @@
 			<div class="col-sm-10 form-group">
 				<form class="form-inline" method="GET" onsubmit="return searchItem()">
 					<input class="form-control" id="itemName" name="itemName" type="text" data-lang="307" placeholder="アイテム名">
-					<input class="btn btn-info" type="submit" value="検索" data-lang="305">
+					<button class="btn btn-info" type="submit" data-lang="305">検索</button>
 				</form>
 		   </div>
 		   <!-- 아이템 등록 버튼 -->

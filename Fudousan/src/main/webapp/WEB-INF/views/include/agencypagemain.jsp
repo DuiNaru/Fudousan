@@ -60,19 +60,26 @@
 						<table class="table">
 							<thead class="table">
 								<tr>
-									<th data-lang="116">Room Title</th>
+									<th data-lang="117">Estate Id</th>
+										<th data-lang="116">Estate Name</th>
 									<th data-lang="110">Snap Shot</th>
-									<th data-lang="145">Modify</th>
+									<th data-lang="112">Modify</th>
 									<th data-lang="93">Delete</th>
+									<th data-lang="114">Open/Close</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach var="room" items="${roomList }">	
 									<tr id="room${room.roomId}">
-										<td><c:if test="${empty room.roomTitle }">${room.estate.estateName}</c:if><c:if test="${!empty room.roomTitle }">${room.roomTitle }</c:if></td>
+										<td><c:if test="${!empty room.estate.estateId}"><a href="<c:url value="estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">${room.estate.estateId}</a></c:if></td>
+										<td><c:if test="${!empty room.estate.estateId}"><a href="<c:url value="estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">${room.estate.estateName}</a></c:if></td>
 										<td><img style="width: 350px" class="col-sm-12" src="<c:url value="${room.snapshot}"/>"></td>
-										<td><a class="btn btn-info" data-lang="145" href="./roomPage?roomId=${room.roomId}"></a></td>
+										<td><a class="btn btn-info" data-lang="112" href="./roomPage?roomId=${room.roomId}"></a></td>
 										<td><button type="button" class="btn btn-danger" data-lang="93" onclick="roomDeleteListener(${room.roomId})">삭제</button></td>
+										<td>
+											<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="1" roomId="${room.roomId}"<c:if test="${room.roomPublic == 1}"> checked="checked"</c:if>><span data-lang="119">공개</span></p>
+											<p class="radio-inline"><input name="public${room.roomId}" type="radio" value="0" roomId="${room.roomId}"<c:if test="${room.roomPublic == 0}"> checked="checked"</c:if>><span data-lang="120">비공개</span></p>
+										</td>
 									</tr>
 								</c:forEach>
 							</tbody>

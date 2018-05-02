@@ -36,7 +36,7 @@
 							<tr id="req${status.index}">
 								<td>${advice.room.estate.estateId }</td>
 								<td>${advice.room.estate.estateName }</td>
-								<td><button class="btn btn-success" data-lang="118">인테리어 시작</button></td>
+								<td><button class="btn btn-success" data-lang="118" onclick="location.href='<c:url value="/roomPage?roomId=${advice.room.roomId}"/>'">인테리어 시작</button></td>
 								<td><button class="btn btn-danger" type="button"onclick = "unConfirm(${status.index}, ${advice.requestMemberId}, ${advice.room.roomId})"><span data-lang="4"></span></button></td>
 							</tr>
 						
@@ -55,6 +55,7 @@
 								<th data-lang="117">Estate Id</th>
 								<th data-lang="116">Estate Name</th>
 								<th data-lang="115">Design</th>
+								<th data-lang="110">Snap Shot</th>
 								<th data-lang="112">Modify</th>
 								<th data-lang="113">Delete</th>
 								<th data-lang="114">Open/Close</th>
@@ -64,9 +65,10 @@
 							<c:forEach var="room" varStatus="status" items="${realRoomList}">
 								<%-- <div id="room${room.roomId}" class="col-sm-12"></div> --%>
 								<tr id="room${room.roomId}">
-									<td>${room.estate.estateId }</td>
-									<td>${room.estate.estateName }</td>
+									<td><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">${room.estate.estateId}</a></td>
+									<td><a href="<c:url value="/estate/detailedinfomation?id=EstateId:${room.estate.estateId}"/>">${room.estate.estateName }</a></td>
 									<td><a class="btn btn-default" href="../newRoom?estateId=${room.estate.estateId}&roomPublic=0" data-lang="144">새로 꾸미기</a></td>
+									<td><img style="width:100px" src="<c:url value='${room.snapshot}'/>"></td>
 									<td><a class="btn btn-default" href="../roomPage?roomId=${room.roomId}" data-lang="112">수정</a></td>
 									<td><button class="btn btn-default" type="button" onclick="deleteRoom(${room.roomId})"><span data-lang="93"></span></button></td>
 									<td>

@@ -355,7 +355,7 @@ public class FileService {
 		}
 		//logger.debug("그림 파일("+img.getWidth()+"x"+img.getHeight()+") Resize : " + width + "x" + height);
 		if ( height == img.getHeight() && width == img.getWidth() ) return img;
-        Image tmp = img.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        Image tmp = img.getScaledInstance(width, height, Image.SCALE_DEFAULT);
         BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2d = resized.createGraphics();
         g2d.drawImage(tmp, 0, 0, null);

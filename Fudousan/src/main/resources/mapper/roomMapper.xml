@@ -129,13 +129,13 @@
 	<select id="allMyRoom" resultMap="roomResultMap" parameterType="int">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
-			room.MEMBER_ID = #{MEMBER_ID} and room.DEL_DATE IS NULL
+			room.MEMBER_ID = #{MEMBER_ID} and room.DEL_DATE IS NULL and NOT EXISTS (SELECT 1 FROM estate WHERE base_room_id = room.room_id)
 	</select>
 	
 	<select id="selectEstateRoom" resultMap="roomResultMap" parameterType="int">
 		<include refid="SELECT_ROOM_SQL"></include>
 		where
-			estate.estate_id = #{estateId} and room.DEL_DATE IS NULL
+			estate.estate_id = #{estateId} and room.DEL_DATE IS NULL and room_public = 1
 	</select>
 	
 	<select id="getTotal" resultType="int" parameterType="int">
