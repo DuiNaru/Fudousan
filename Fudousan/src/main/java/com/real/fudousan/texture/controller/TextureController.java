@@ -36,7 +36,7 @@ public class TextureController {
 	public String  textureuproadpage(Model model, HttpSession session , Agency agency){
 		logger.info("텍스쳐 업로드 페이지로 이동");
 	
-		return "/textureuproadpage";
+		return "redirect:admin/";
 	}
 		 
 
