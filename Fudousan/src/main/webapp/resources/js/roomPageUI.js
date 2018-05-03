@@ -91,6 +91,8 @@ $(function() {
 	$("#bottom-menu-button").click(function() {
 		$("#bottom-menu").toggle('slide');
 	});
+	
+	setHeightText(room.height);
 });
 
 /**
@@ -171,7 +173,18 @@ function initInfo() {
 	$("#leftItemName").html(curSelected.roomItem.item.itemName);
 	$("#leftItemType").html(curSelected.roomItem.item.itemType.itemTypeName);
 	$("#leftItemText").html(curSelected.roomItem.item.text);
-	$("#leftItemSite").html(curSelected.roomItem.item.refSiteSet);
+	var html = "";
+	$(curSelected.roomItem.item.refSiteSet).each(function(index, site) {
+		var url = site.url;
+		if ( url.charAt(0) == '/' ) {
+			html += "<a href='http:/"+url+"'>"+site.text+"</a><br>";
+		} else if ( url.startsWith("http://") || url.startsWith("https://")) {
+			html += "<a href='"+url+"'>"+site.text+"</a><br>";
+		} else {
+			html += "<a href='http://"+url+"'>"+site.text+"</a><br>";
+		}
+	});
+	$("#leftItemSite").html(html);
 
 	setInfoX(curSelected.roomItem.x);
 	setInfoY(curSelected.roomItem.y);
@@ -261,4 +274,8 @@ function closeTextureMenu() {
 	$("#textureInfo").slideUp({
 		duration:100
 	});
+}
+
+function setHeightText(value) {
+	$("#height").val(value);
 }

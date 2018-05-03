@@ -49,7 +49,33 @@ public class TextureDAOOracle implements TextureDAO{
 		return result;
 	}
 	
-	
+	public boolean delete(int textureId) {
+		logger.info("delete("+textureId+") Start"); 
+		boolean result = false;
+		try {
+			TextureMapper mapper = session.getMapper(TextureMapper.class);
+			result = mapper.delete(textureId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		logger.info("delete("+textureId+") End"); 
+		return result;
+	}
+
+
+	@Override
+	public Texture select(int textureId) {
+		Texture result = null;
+
+		try {
+			TextureMapper mapper = session.getMapper(TextureMapper.class);
+			result = mapper.selectTexture(textureId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 	
 	
 }

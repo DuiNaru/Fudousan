@@ -17,11 +17,18 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<%-- <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.min.css"/>"> --%>
 	<%-- <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script> --%>
-
+	<!-- font awesome -->
+	<link rel="stylesheet" href="../resources/css/font-awesome.min.css" media="screen" title="no title">
+	
+	<!-- Custom style -->
+	<link rel="stylesheet" href="../resources/css/style.css" media="screen" title="no title">
 </head>
 <body >
 	<!-- login modal  -->
  	<%@include file="/WEB-INF/views/include/loginmodal.jsp" %> 
+ 	
+	<!-- texture modal  -->
+ 	<%@include file="/WEB-INF/views/include/texturemodal.jsp" %> 
  	
 	<!-- header -->
 	<%@include file="/WEB-INF/views/include/header.jsp" %>
@@ -42,6 +49,9 @@
 
 	<!-- login.js -->
 	<script src="<c:url value="/resources/js/login.js"></c:url>"></script>
+		
+	<!-- join.js -->
+	<script src="<c:url value="/resources/js/join.js"></c:url>"></script>
 	
 	<!-- 다국어 처리 -->
 	<script src="../resources/js/cookie.js"></script>
@@ -98,6 +108,23 @@
 			});
 			
 			return false;
+		}
+		function deleteTexture(textureId) {
+			$.ajax({
+				url:"../deleteTexture?textureId="+textureId,
+				type:"GET",
+				success:function(data) {
+					if(data || data == "true") {
+						$("#texture"+textureId).remove();
+					} else {
+						alert("삭제에 실패하였습니다.");
+					}
+				},
+				error:function(e) {
+					console.log(e);
+					alert("삭제 중 오류가 발생하였습니다.");
+				}
+			});
 		}
 	</script>
 	

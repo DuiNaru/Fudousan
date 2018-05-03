@@ -28,7 +28,7 @@ var mouse = new THREE.Vector2();
 // 완성된 벽 들
 var walls = new THREE.Group();
 // 벽 두께
-var wallThickness = 10;
+var wallThickness = 2;
 // 현재 화면에 존재하는 아이템들(메시 그룹)
 var curRoomItems = [];
 // 현재 선택 중인 아이템(메시 그룹)
@@ -204,8 +204,8 @@ function init() {
 	scene.add( skyBox );
 	
 	// 3차원 축
-	var axesHelper = new THREE.AxesHelper( 1000 );
-	scene.add( axesHelper );
+	//var axesHelper = new THREE.AxesHelper( 1000 );
+	//scene.add( axesHelper );
 	
 	// postprocessing
 	composer = new THREE.EffectComposer( renderer );
@@ -214,14 +214,14 @@ function init() {
 	
 	// 자신용 아웃라인
 	outlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
-	outlinePass.edgeStrength = 3;
+	outlinePass.edgeStrength = 50;
 	outlinePass.edgeThickness = 1;
 	outlinePass.visibleEdgeColor.set( 0xFFFFFF );
 	composer.addPass( outlinePass );
 	
 	// 상대방용 아웃라인
 	otherOutlinePass = new THREE.OutlinePass( new THREE.Vector2( window.innerWidth, window.innerHeight ), scene, camera );
-	otherOutlinePass.edgeStrength = 3;
+	otherOutlinePass.edgeStrength = 50;
 	otherOutlinePass.edgeThickness = 1;
 	otherOutlinePass.visibleEdgeColor.set( 0xFF0000 );
 	composer.addPass( otherOutlinePass );
@@ -511,6 +511,7 @@ function changeHeigthListener(height) {
 function changeHeigth(height) {
 	room.height = height;
 	roomCeil.position.y = room.height;
+	setHeightText(height);
 	drawWall();
 }
 
@@ -1728,7 +1729,7 @@ function roomReset() {
 				
 			} else {
 				
-				alert("리셋에 실패하였습니다.");
+			
 				
 			}
 
@@ -1738,7 +1739,7 @@ function roomReset() {
 		error:function(e) {
 			
 			console.log(e);
-			alert("리셋 중 오류가 발생하였습니다.");
+		
 
 			$( "#blocker" ).hide();
 			

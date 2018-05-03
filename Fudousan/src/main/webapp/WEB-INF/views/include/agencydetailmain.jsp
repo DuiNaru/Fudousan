@@ -14,7 +14,7 @@
     
 <!-- text main -->
 <div class="col-sm-8 text-left"> 
-	<h1>Details</h1>
+	<h1 data-lang="196"></h1>
 	<p>${agency.addressMain}${agency.addressMiddle}${agency.addressSmall}${agency.addressSub}</p>
     <hr>
 	<!-- map  -->
@@ -24,20 +24,47 @@
       			<div class="col-sm-6">
           			<div class="price-table pt-bg-blue">
 	            	<div>
-						<span>Agency Info</span>
+						<span data-lang="186"></span>
 					</div>
 					<ul>
     					<li>
-				    		<h6>Agency Name</h6>
-				    		${agency.name}
+    						<small data-lang="187"></small>
+				    		<br>
+				    		
+				    		<c:choose>
+								<c:when test="${agency.name != null}">
+									<h6>${agency.name}</h6>
+								</c:when>	
+								<c:otherwise>
+									<small data-lang="158"></small>
+								</c:otherwise>
+							</c:choose>
+				    		
 						</li>
 						<li>
-							<h5>Agency Trans Type</h5>
-   							${agency.transType.transName}
+							<small data-lang="188"></small>
+   							<br>
+   				
+   							<c:choose>
+								<c:when test="${agency.transType.transName != null}">
+									<h6>${agency.transType.transName}</h6>
+								</c:when>	
+								<c:otherwise>
+									<small data-lang="158"></small>
+								</c:otherwise>
+							</c:choose>
 						</li>
 						<li>
-							<h5>Text</h5>
-   							${agency.text}
+							<small data-lang="189"></small>
+   							<br>
+   							<c:choose>
+								<c:when test="${agency.text != null}">
+									<h6>${agency.text}</h6>
+								</c:when>	
+								<c:otherwise>
+									<small data-lang="158"></small>
+								</c:otherwise>
+							</c:choose>
 						</li>
           			</ul>
 				</div>
@@ -45,29 +72,74 @@
 			<div class="col-sm-6">
           			<div class="price-table pt-bg-red">
 	            	<div>
-						<span>Member Info</span>
+						<span data-lang="190">Member Info</span>
 					</div>
 					<ul>
     					<li>
-				    		<h6>Member Name</h6>
-				    		${agency.member.memberName}
+				    		<small data-lang="191"></small>
+				    		<br>
+				    		
+				    		<c:choose>
+								<c:when test="${agency.member.memberName != null}">
+									<h6>${agency.member.memberName}</h6>
+								</c:when>	
+								<c:otherwise>
+									<small data-lang="158"></small>
+								</c:otherwise>
+							</c:choose>
+				    		
 						</li>
 						<li>
-							<h5>Email</h5>
-   							${agency.member.email}
+							<small data-lang="192"></small>
+   							<br>
+   							
+   							<c:choose>
+								<c:when test="${agency.member.email != null}">
+									<h6>${agency.member.email}</h6>
+								</c:when>	
+								<c:otherwise>
+									<small data-lang="158"></small>
+								</c:otherwise>
+							</c:choose>
+				    		
+   							
 						</li>
 						<li>
-							<h5>Text</h5>
-   							${agency.member.text}
+							<small data-lang="193"></small>
+   							<br>
+   						
+							<c:choose>
+								<c:when test="${agency.member.text != null}">
+									<h6>${agency.member.text}</h6>
+								</c:when>	
+								<c:otherwise>
+									<small data-lang="158"></small>
+								</c:otherwise>
+							</c:choose>						
 						</li>
 						<li>
-							<h5>Phone</h5>
-   							${agency.member.phone}
+							<small data-lang="194"></small>
+							<br>
+   							
+   							<c:choose>
+								<c:when test="${agency.member.phone != null}">
+									<h6>${agency.member.phone}</h6>
+								</c:when>	
+								<c:otherwise>
+									<small data-lang="158"></small>
+								</c:otherwise>
+							</c:choose>		
 						</li>
 						<li>
-							<h5>Photo</h5>
+						
+							<small data-lang="195"></small>
 							<div class="thumnail">
-								<img src="/fudousan${agency.member.picture}" style="width: 30%; height: auto;">
+								<c:if test="${!empty agency.member.picture}">
+									<img src="/fudousan${agency.member.picture}" style="width: 30%; height: auto;">
+								</c:if>
+								<c:if test="${empty agency.member.picture}">
+									<small data-lang="158"></small>
+								</c:if>
 								<br>
 								<br>
 							</div>

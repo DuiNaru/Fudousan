@@ -51,7 +51,6 @@
 							<button class="btn btn-default btn-choose" type="button" data-lang="16"></button>
 						</span>
 						<input type="text" class="form-control" data-lang="17" name="picture"/>
-					
 					</div>
 				</div>
 	

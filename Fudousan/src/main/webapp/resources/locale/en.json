@@ -75,11 +75,11 @@
     "73": "Miyazaki",
     "74": "Kagoshima",
     "75": "Okinawa",
-    "76": "Address2",
+    "76": "Address(市区町村名)",
     "77": "Input address(市区町村名), please.",
-    "78": "Address3",
+    "78": "Address(地区名)",
     "79": "Input address(地区名), please.",
-    "80": "Address4",
+    "80": "Address(詳細)",
     "81": "Input address(詳細), please.",
     "82": "Agency Introduction",
     "83": "Input agency introduction, please.",
@@ -94,7 +94,7 @@
     "92": "Create",
     "93": "Delete",
     "94": "3D offering check List",
-    "95": "Dibs List",
+    "95": "Favorite List",
     "96": "An invitation to the decorator",
     "97": "Results of the request for assistance",
     "98": "To decorate my house",
@@ -150,26 +150,63 @@
     "148" : "3D Modeling Management",
     "149" : "Address",
     "150" : "Base Room",
-    "151" : "Property List"
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ,"300" : "Application list of real estate company.",
+    "151" : "Property List",
+    "152" : "MODEL",
+    "153" : "DESIGN",
+    "154" : "Details",
+    "155" : "Price",
+    "156" : "Trade Price",
+    "157" : "Unit Price",
+    "158" : "Nothing",
+    "159" : "Price Per Unit",
+    "160" : "Over View",
+    "161" : "About Estate",
+    "162" : "Area",
+    "163" : "LandShape",
+    "164" : "Frontage",
+    "165" : "TotalFloorArea",
+    "166" : "Breadth",
+    "167" : "CoverageRatio",
+    "168" : "FloorAreaRatio",
+    "169" : "BuildingYear",
+    "170" : "Structure",
+    "171" : "Direction",
+    "172" : "ETC",
+    "173" : "Use",
+    "174" : "Renovation",
+    "175" : "Classification",
+    "176" : "City Planning",
+    "177" : "Remarks",
+    "178" : "User Comment",
+    "179" : "Comment Here",
+    "180" : "Reply",
+    "181" : "Update",
+    "182" : "Delete",
+    "183" : "Input Your Comment",
+    "184" : "Ok",
+    "185" : "Cancel",
+    "186" : "Agency Info",
+    "187" : "Agency Name",
+    "188" : "Agency Trans Type",
+    "189" : "Agency Introduce",
+    "190" : "Member Info",
+    "191" : "Member Name",
+    "192" : "Email",
+    "193" : "Member Introduce",
+    "194" : "Phone",
+    "195" : "Photo",
+    "196" : "Agency Details",
+    "197" : "Information",
+    "198" : "Agency Detailed Information",
+    "199" : "Estate Detailed Information",
+    "200" : "Texture Name",
+    "201" : "Texture Description",
+    "202" : "Texture File",
+    "203" : "Upload Texture",
+   	"204" : "Texture List",
+    "205" : "Texture Image",
+    "206" : "Texture Delete",
+    "300" : "Application list of real estate company.",
     "301" : "Grant Applicant",
     "302" : "Approve permission",
     "303" : "Approve",
@@ -180,5 +217,15 @@
     "308" : "Item Update",    
     "309" : "Item Delete",    
 	"310" : "Update",
-	"311" : "NoTitle"    
+	"311" : "NoTitle",
+	"312" : "Item Type",
+    "313" : "Item Description",
+    "314" : "Item Site",
+    "315" : "Item List",
+    "316" : "Create Item",
+    "317" : "Room Name",
+    "318" : "Apply",
+    "319" : "Exit",
+    "320" : "Height",
+    "321" : "All"
 }

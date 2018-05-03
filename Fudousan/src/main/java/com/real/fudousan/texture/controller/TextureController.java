@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -36,7 +37,7 @@ public class TextureController {
 	public String  textureuproadpage(Model model, HttpSession session , Agency agency){
 		logger.info("텍스쳐 업로드 페이지로 이동");
 	
-		return "/textureuproadpage";
+		return "redirect:admin/";
 	}
 		 
 
@@ -73,5 +74,16 @@ public class TextureController {
 		}
 		logger.info("getFile({}) end", fileName+"."+fileExt);
 		
+	}
+	
+
+	@ResponseBody
+	@RequestMapping(value="/deleteTexture", method=RequestMethod.GET)
+	public boolean deleteTexture(int textureId) {
+		logger.info("deleteTexture("+textureId+") Start"); 
+		boolean result = false;
+		result = textureService.delete(textureId);
+		logger.info("deleteTexture("+textureId+") End"); 
+		return result;
 	}
 }

@@ -24,6 +24,8 @@ import com.real.fudousan.item.vo.Item;
 import com.real.fudousan.item.vo.ItemType;
 import com.real.fudousan.item.vo.RefSite;
 import com.real.fudousan.member.service.MemberService;
+import com.real.fudousan.texture.service.TextureService;
+import com.real.fudousan.texture.vo.Texture;
 
 @SessionAttributes("loginId")
 @RequestMapping("admin")
@@ -40,6 +42,9 @@ public class AdminController {
 	@Autowired
 	private ItemService itemService;
 	
+	@Autowired
+	private TextureService textureService;
+	
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String adminpage(Model model) {
 		logger.info("adminpage() Start");
@@ -51,6 +56,10 @@ public class AdminController {
 		// 아이템 정보 관리
 		List<Item> itemList = itemService.allList();
 		model.addAttribute("itemList", itemList);
+		
+		// 텍스쳐 정보 관리
+		List<Texture> textureList = textureService.getTextureList();
+		model.addAttribute("textureList", textureList);
 		
 		logger.info("adminpage() End");
 		return "admin/adminPage";
@@ -67,5 +76,4 @@ public class AdminController {
 		logger.info("confirm(" + agencyId +") End");
 		return "redirect:/admin/";
 	}
-	
 }

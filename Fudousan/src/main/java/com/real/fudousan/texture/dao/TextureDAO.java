@@ -10,4 +10,8 @@ public interface TextureDAO {
 	public int textureuproad(Texture texture);
 	
 	public List<Texture> selectAllTexture();
+	
+	public boolean delete(int textureId);
+	
+	public Texture select(int textureId);
 }
