@@ -125,7 +125,7 @@
  
 	<article class="container">
 		<div class="page-header">
-			<h1 data-lang="116"> 物件登録</h1>
+			<h1 data-lang="142"> 物件登録</h1>
 		</div>
 			<div class="col-md-6 col-md-offset-3">
 	       
